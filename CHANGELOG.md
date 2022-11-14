@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add maven-enforcer-plugin: Enforces required MAVEN-Version
 * Remove parent and add mailing-lists
 * Remove MAVEN-Default-Plugin-Group (org.apache.maven.plugins)
 
