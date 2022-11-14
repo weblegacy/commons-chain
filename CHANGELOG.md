@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Remove parent and add mailing-lists
 * Remove MAVEN-Default-Plugin-Group (org.apache.maven.plugins)
 
 ## 1.3-SNAPSHOT / 2022-11-14

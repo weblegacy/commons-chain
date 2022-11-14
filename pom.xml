@@ -15,14 +15,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-parent</artifactId>
-        <version>15</version>
-    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-chain</groupId>
     <artifactId>commons-chain</artifactId>
@@ -37,6 +34,69 @@
         <url>http://issues.apache.org/jira/browse/CHAIN</url>
     </issueManagement>
     <inceptionYear>2003</inceptionYear>
+
+    <mailingLists>
+        <!-- N.B. commons-site now uses the Apache POM so has its own copy of the mailing list definitions -->
+        <mailingList>
+            <name>Commons User List</name>
+            <subscribe>user-subscribe@commons.apache.org</subscribe>
+            <unsubscribe>user-unsubscribe@commons.apache.org</unsubscribe>
+            <post>user@commons.apache.org</post>
+            <archive>http://mail-archives.apache.org/mod_mbox/commons-user/</archive>
+            <otherArchives>
+                <otherArchive>http://markmail.org/list/org.apache.commons.users/</otherArchive>
+                <otherArchive>http://old.nabble.com/Commons---User-f319.html</otherArchive>
+                <otherArchive>http://www.mail-archive.com/user@commons.apache.org/</otherArchive>
+                <otherArchive>http://news.gmane.org/gmane.comp.jakarta.commons.user</otherArchive>
+            </otherArchives>
+        </mailingList>
+        <mailingList>
+            <name>Commons Dev List</name>
+            <subscribe>dev-subscribe@commons.apache.org</subscribe>
+            <unsubscribe>dev-unsubscribe@commons.apache.org</unsubscribe>
+            <post>dev@commons.apache.org</post>
+            <archive>http://mail-archives.apache.org/mod_mbox/commons-dev/</archive>
+            <otherArchives>
+                <otherArchive>http://markmail.org/list/org.apache.commons.dev/</otherArchive>
+                <otherArchive>http://old.nabble.com/Commons---Dev-f317.html</otherArchive>
+                <otherArchive>http://www.mail-archive.com/dev@commons.apache.org/</otherArchive>
+                <otherArchive>http://news.gmane.org/gmane.comp.jakarta.commons.devel</otherArchive>
+            </otherArchives>
+        </mailingList>
+        <mailingList>
+            <name>Commons Issues List</name>
+            <subscribe>issues-subscribe@commons.apache.org</subscribe>
+            <unsubscribe>issues-unsubscribe@commons.apache.org</unsubscribe>
+            <archive>http://mail-archives.apache.org/mod_mbox/commons-issues/</archive>
+            <otherArchives>
+                <otherArchive>http://markmail.org/list/org.apache.commons.issues/</otherArchive>
+                <otherArchive>http://old.nabble.com/Commons---Issues-f25499.html</otherArchive>
+                <otherArchive>http://www.mail-archive.com/issues@commons.apache.org/</otherArchive>
+            </otherArchives>
+        </mailingList>
+        <mailingList>
+            <name>Commons Commits List</name>
+            <subscribe>commits-subscribe@commons.apache.org</subscribe>
+            <unsubscribe>commits-unsubscribe@commons.apache.org</unsubscribe>
+            <archive>http://mail-archives.apache.org/mod_mbox/commons-commits/</archive>
+            <otherArchives>
+                <otherArchive>http://markmail.org/list/org.apache.commons.commits/</otherArchive>
+                <otherArchive>http://www.mail-archive.com/commits@commons.apache.org/</otherArchive>
+            </otherArchives>
+        </mailingList>
+        <mailingList>
+            <name>Apache Announce List</name>
+            <subscribe>announce-subscribe@apache.org</subscribe>
+            <unsubscribe>announce-unsubscribe@apache.org</unsubscribe>
+            <archive>http://mail-archives.apache.org/mod_mbox/announce/</archive>
+            <otherArchives>
+                <otherArchive>http://markmail.org/list/org.apache.announce/</otherArchive>
+                <otherArchive>http://old.nabble.com/Apache-News-and-Announce-f109.html</otherArchive>
+                <otherArchive>http://www.mail-archive.com/announce@apache.org/</otherArchive>
+                <otherArchive>http://news.gmane.org/gmane.comp.apache.announce</otherArchive>
+            </otherArchives>
+        </mailingList>
+    </mailingLists>
 
     <developers>
         <developer>
