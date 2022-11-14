@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Set Java-Version to 8
 * move test-resources to maven-standard-directory
 * remove unnecessary test-resources-entry in POM
 * maven-resources-plugin: Define encoding
