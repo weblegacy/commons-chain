@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Centralize MAVAN-Plugins-Version with PluginManagement and add missing maven-plugins
 * Add maven-enforcer-plugin: Enforces required MAVEN-Version
 * Remove parent and add mailing-lists
 * Remove MAVEN-Default-Plugin-Group (org.apache.maven.plugins)
