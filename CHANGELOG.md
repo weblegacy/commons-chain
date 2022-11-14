@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* maven-resources-plugin: Define encoding
 * Centralize MAVAN-Plugins-Version with PluginManagement and add missing maven-plugins
 * Add maven-enforcer-plugin: Enforces required MAVEN-Version
 * Remove parent and add mailing-lists
