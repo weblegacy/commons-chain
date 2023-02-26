@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Move TestChain-Class from config to impl
 * Set Java-Version to 8
 * move test-resources to maven-standard-directory
 * remove unnecessary test-resources-entry in POM
