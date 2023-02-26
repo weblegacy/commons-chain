@@ -16,84 +16,73 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.generic.LookupCommand;
 
-
 /**
- * <p>{@link Command} that uses the "path info" component of the request URI
+ * {@link Command} that uses the "path info" component of the request URI
  * to select a {@link Command} from the appropriate {@link Catalog}, and
- * execute it.  To use this command, you would typically map an instance
+ * execute it. To use this command, you would typically map an instance
  * of {@link ChainProcessor} to a wildcard pattern like "/execute/*" and
- * then arrange that this is the default command to be executed.  In such
+ * then arrange that this is the default command to be executed. In such
  * an environment, a request for the context-relative URI "/execute/foo"
- * would cause the "/foo" command to be loaded and executed.</p>
+ * would cause the "/foo" command to be loaded and executed.
  *
  * @author Craig R. McClanahan
  */
-
 public class PathInfoMapper extends LookupCommand implements Command {
-
 
     // ------------------------------------------------------ Instance Variables
 
-
     private String catalogKey = ChainProcessor.CATALOG_DEFAULT;
-
 
     // -------------------------------------------------------------- Properties
 
-
     /**
-     * <p>Return the context key under which our {@link Catalog} has been
-     * stored.</p>
+     * Return the context key under which our {@link Catalog} has been
+     * stored.
      *
      * @return The context key for the Catalog.
      *
      * @deprecated Use catalogName to specify the name of the catalog in the
-     *  catalog factory
+     *             catalog factory.
      */
+    @Deprecated
     public String getCatalogKey() {
-
-        return (this.catalogKey);
-
+        return this.catalogKey;
     }
 
-
     /**
-     * <p>Set the context key under which our {@link Catalog} has been
-     * stored.</p>
+     * Set the context key under which our {@link Catalog} has been
+     * stored.
      *
      * @param catalogKey The new catalog key
      *
      * @deprecated Use catalogName to specify the name of the catalog in the
-     *  catalog factory
+     *             catalog factory.
      */
+    @Deprecated
     public void setCatalogKey(String catalogKey) {
-
         this.catalogKey = catalogKey;
-
     }
-
 
     // --------------------------------------------------------- Command Methods
 
-
     /**
-     * <p>Look up the extra path information for this request, and use it to
+     * Look up the extra path information for this request, and use it to
      * select an appropriate {@link Command} to be executed.
      *
      * @param context Context for the current request
+     *
      * @return The name of the {@link Command} instance
      *
      * @since Chain 1.2
      */
+    @Override
     protected String getCommandName(Context context) {
-
         // Look up the extra path information for this request
         ServletWebContext swcontext = (ServletWebContext) context;
         HttpServletRequest request = swcontext.getRequest();
@@ -104,19 +93,21 @@ public class PathInfoMapper extends LookupCommand implements Command {
         }
 
         return pathInfo;
-
     }
 
     /**
-     * <p>Return the {@link Catalog} to look up the {@link Command} in.</p>
+     * Return the {@link Catalog} to look up the {@link Command} in.
      *
      * @param context {@link Context} for this request
+     *
      * @return The catalog.
-     * @exception IllegalArgumentException if no {@link Catalog}
-     *  can be found
+     *
+     * @throws IllegalArgumentException if no {@link Catalog}
+     *         can be found
      *
      * @since Chain 1.2
      */
+    @Override
     protected Catalog getCatalog(Context context) {
         Catalog catalog = (Catalog) context.get(getCatalogKey());
         if (catalog == null) {
@@ -124,5 +115,4 @@ public class PathInfoMapper extends LookupCommand implements Command {
         }
         return catalog;
     }
-
 }

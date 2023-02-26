@@ -16,37 +16,29 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.AbstractSetLocaleCommand;
 
-
 /**
- * <p>Concrete implementation of {@link AbstractSetLocaleCommand} for
- * the Servlet API.</p>
+ * Concrete implementation of {@link AbstractSetLocaleCommand} for
+ * the Servlet API.
  */
-
 public class ServletSetLocaleCommand extends AbstractSetLocaleCommand {
-
 
     // ------------------------------------------------------- Protected Methods
 
-
     /**
-     * <p>Establish the specified <code>Locale</code> for this response.</p>
+     * Establish the specified {@code Locale} for this response.
      *
      * @param context The {@link Context} we are operating on.
+     *
      * @param locale The Locale for the request.
      */
     protected void setLocale(Context context, Locale locale) {
-
-    HttpServletResponse response = (HttpServletResponse)
-        context.get("response");
-    response.setLocale(locale);
-
+        HttpServletResponse response = (HttpServletResponse)
+            context.get("response");
+        response.setLocale(locale);
     }
-
-
 }

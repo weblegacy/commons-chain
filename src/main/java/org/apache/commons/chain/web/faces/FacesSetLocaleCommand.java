@@ -16,37 +16,28 @@
  */
 package org.apache.commons.chain.web.faces;
 
-
 import java.util.Locale;
 import javax.faces.context.FacesContext;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.AbstractSetLocaleCommand;
 
-
 /**
- * <p>Concrete implementation of {@link AbstractSetLocaleCommand} for
- * the JavaServer Faces API.</p>
+ * Concrete implementation of {@link AbstractSetLocaleCommand} for
+ * the JavaServer Faces API.
  */
-
 public class FacesSetLocaleCommand extends AbstractSetLocaleCommand {
-
 
     // ------------------------------------------------------- Protected Methods
 
-
     /**
-     * <p>Establish the specified <code>Locale</code> for this response.</p>
+     * Establish the specified {@code Locale} for this response.
      *
      * @param context The {@link Context} we are operating on.
      * @param locale The Locale for the request.
      */
     protected void setLocale(Context context, Locale locale) {
-
-    FacesContext fcontext = (FacesContext)
-        context.get("context");
-    fcontext.getViewRoot().setLocale(locale);
-
+        FacesContext fcontext = (FacesContext)
+            context.get("context");
+        fcontext.getViewRoot().setLocale(locale);
     }
-
-
 }

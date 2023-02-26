@@ -25,9 +25,10 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * An abstract base command which uses introspection to look up a method to execute.
- * For use by developers who prefer to group related functionality into a single class
- * rather than an inheritance family.
+ * An abstract base command which uses introspection to look up a
+ * method to execute. For use by developers who prefer to group
+ * related functionality into a single class rather than an
+ * inheritance family.
  *
  * @since Chain 1.1
  */
@@ -43,25 +44,29 @@ public abstract class DispatchCommand implements Command {
     private String methodKey = null;
 
     /**
-     * The base implementation expects dispatch methods to take a <code>Context</code>
-     * as their only argument.
+     * The base implementation expects dispatch methods to take a
+     * {@code Context} as their only argument.
      */
     protected static final Class[] DEFAULT_SIGNATURE = new Class[] {Context.class};
 
-
     /**
-     * Look up the method specified by either "method" or "methodKey" and invoke it,
-     * returning a boolean value as interpreted by <code>evaluateResult</code>.
+     * Look up the method specified by either "method" or "methodKey"
+     * and invoke it, returning a boolean value as interpreted by
+     * {@code evaluateResult}.
+     *
      * @param context The Context to be processed by this Command.
+     *
      * @return the result of method being dispatched to.
-     * @throws IllegalStateException if neither 'method' nor 'methodKey' properties are defined
-     * @throws Exception if any is thrown by the invocation.  Note that if invoking the method
-     * results in an InvocationTargetException, the cause of that exception is thrown instead of
-     * the exception itself, unless the cause is an <code>Error</code> or other <code>Throwable</code>
-     * which is not an <code>Exception</code>.
+     *
+     * @throws IllegalStateException if neither 'method' nor 'methodKey'
+     *         properties are defined
+     * @throws Exception if any is thrown by the invocation. Note that if
+     *         invoking the method results in an InvocationTargetException,
+     *         the cause of that exception is thrown instead of the
+     *         exception itself, unless the cause is an {@code Error} or
+     *         other {@code Throwable} which is not an {@code Exception}.
      */
     public boolean execute(Context context) throws Exception {
-
         if (this.getMethod() == null && this.getMethodKey() == null) {
             throw new IllegalStateException("Neither 'method' nor 'methodKey' properties are defined ");
         }
@@ -80,17 +85,20 @@ public abstract class DispatchCommand implements Command {
     }
 
     /**
-     * Extract the dispatch method.  The base implementation uses the command's
-     * <code>method</code> property as the name of a method to look up, or, if that is not defined,
-     * looks up the the method name in the Context using the <code>methodKey</code>.
+     * Extract the dispatch method. The base implementation uses the command's
+     * {@code method} property as the name of a method to look up, or, if that
+     * is not defined, looks up the the method name in the Context using the
+     * {@code methodKey}.
      *
      * @param context The Context being processed by this Command.
+     *
      * @return The method to execute
-     * @throws NoSuchMethodException if no method can be found under the specified name.
+     *
+     * @throws NoSuchMethodException if no method can be found under the
+     *         specified name.
      * @throws NullPointerException if no methodName cannot be determined
      */
     protected Method extractMethod(Context context) throws NoSuchMethodException {
-
         String methodName = this.getMethod();
 
         if (methodName == null) {
@@ -101,11 +109,10 @@ public abstract class DispatchCommand implements Command {
             methodName = methodContextObj.toString();
         }
 
-
         Method theMethod = null;
 
         synchronized (methods) {
-            theMethod = (Method) methods.get(methodName);
+            theMethod = methods.get(methodName);
 
             if (theMethod == null) {
                 theMethod = getClass().getMethod(methodName, getSignature());
@@ -117,21 +124,22 @@ public abstract class DispatchCommand implements Command {
     }
 
     /**
-     * Evaluate the result of the method invocation as a boolean value.  Base implementation
-     * expects that the invoked method returns boolean true/false, but subclasses might
-     * implement other interpretations.
-     * @param o The result of the methid execution
+     * Evaluate the result of the method invocation as a boolean value. Base
+     * implementation expects that the invoked method returns boolean
+     * true/false, but subclasses might implement other interpretations.
+     *
+     * @param o The result of the method execution
+     *
      * @return The evaluated result/
      */
     protected boolean evaluateResult(Object o) {
-
         Boolean result = (Boolean) o;
-        return (result != null && result.booleanValue());
-
+        return result != null && result.booleanValue();
     }
 
     /**
-     * Return a <code>Class[]</code> describing the expected signature of the method.
+     * Return a {@code Class[]} describing the expected signature of the method.
+     *
      * @return The method signature.
      */
     protected Class[] getSignature() {
@@ -140,11 +148,14 @@ public abstract class DispatchCommand implements Command {
 
     /**
      * Get the arguments to be passed into the dispatch method.
-     * Default implementation simply returns the context which was passed in, but subclasses
-     * could use this to wrap the context in some other type, or extract key values from the
-     * context to pass in.  The length and types of values returned by this must coordinate
-     * with the return value of <code>getSignature()</code>
+     * Default implementation simply returns the context which was passed in,
+     * but subclasses could use this to wrap the context in some other type, or
+     * extract key values from the context to pass in. The length and types of
+     * values returned by this must coordinate with the return value of
+     * {@code getSignature()}.
+     *
      * @param context The Context being processed by this Command.
+     *
      * @return The method arguments.
      */
     protected Object[] getArguments(Context context) {
@@ -153,6 +164,7 @@ public abstract class DispatchCommand implements Command {
 
     /**
      * Return the method name.
+     *
      * @return The method name.
      */
     public String getMethod() {
@@ -161,6 +173,7 @@ public abstract class DispatchCommand implements Command {
 
     /**
      * Return the Context key for the method name.
+     *
      * @return The Context key for the method name.
      */
     public String getMethodKey() {
@@ -169,6 +182,7 @@ public abstract class DispatchCommand implements Command {
 
     /**
      * Set the method name.
+     *
      * @param method The method name.
      */
     public void setMethod(String method) {
@@ -177,10 +191,10 @@ public abstract class DispatchCommand implements Command {
 
     /**
      * Set the Context key for the method name.
+     *
      * @param methodKey The Context key for the method name.
      */
     public void setMethodKey(String methodKey) {
         this.methodKey = methodKey;
     }
-
 }

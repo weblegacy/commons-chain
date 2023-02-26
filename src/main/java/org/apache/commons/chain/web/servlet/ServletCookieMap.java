@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,35 +26,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Cookie;
 import org.apache.commons.chain.web.MapEntry;
 
-
 /**
- * <p>Private implementation of <code>Map</code> for servlet cookies</p>
+ * Private implementation of {@code Map} for servlet cookies.
  *
  * @version $Revision$ $Date$
  * @since Chain 1.1
  */
-
 final class ServletCookieMap implements Map {
-
 
     public ServletCookieMap(HttpServletRequest request) {
         this.request = request;
     }
 
-
     private HttpServletRequest request = null;
 
-
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
     public boolean containsKey(Object key) {
-        return (get(key) != null);
+        return get(key) != null;
     }
 
-
+    @Override
     public boolean containsValue(Object value) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -65,10 +60,10 @@ final class ServletCookieMap implements Map {
                 }
             }
         }
-        return (false);
+        return false;
     }
 
-
+    @Override
     public Set entrySet() {
         Set set = new HashSet();
         Cookie[] cookies = request.getCookies();
@@ -77,15 +72,15 @@ final class ServletCookieMap implements Map {
                 set.add(new MapEntry(cookies[i].getName(), cookies[i], false));
             }
         }
-        return (set);
+        return set;
     }
 
-
+    @Override
     public boolean equals(Object o) {
-        return (request.equals(o));
+        return request.equals(o);
     }
 
-
+    @Override
     public Object get(Object key) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -98,17 +93,17 @@ final class ServletCookieMap implements Map {
         return null;
     }
 
-
+    @Override
     public int hashCode() {
-        return (request.hashCode());
+        return request.hashCode();
     }
 
-
+    @Override
     public boolean isEmpty() {
-        return (size() < 1);
+        return size() < 1;
     }
 
-
+    @Override
     public Set keySet() {
         Set set = new HashSet();
         Cookie[] cookies = request.getCookies();
@@ -117,52 +112,48 @@ final class ServletCookieMap implements Map {
                 set.add(cookies[i].getName());
             }
         }
-        return (set);
+        return set;
     }
 
-
+    @Override
     public Object put(Object key, Object value) {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
     public void putAll(Map map) {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
     public Object remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
     public int size() {
         Cookie[] cookies = request.getCookies();
-        return (cookies == null ?  0 : cookies.length);
+        return cookies == null ?  0 : cookies.length;
     }
 
-
+    @Override
     public Collection values() {
-        List list = new ArrayList(size());
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (int i = 0; i < cookies.length; i++) {
                 list.add(cookies[i]);
             }
         }
-        return (list);
+        return list;
     }
-
 
     private String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {
-            return ((String) key);
+            return (String) key;
         } else {
-            return (key.toString());
+            return key.toString();
         }
     }
-
-
 }

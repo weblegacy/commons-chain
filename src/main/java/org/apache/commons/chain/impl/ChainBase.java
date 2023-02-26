@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import java.util.Collection;
 import java.util.Iterator;
 import org.apache.commons.chain.Chain;
@@ -24,78 +23,65 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
 
-
 /**
- * <p>Convenience base class for {@link Chain} implementations.</p>
+ * Convenience base class for {@link Chain} implementations.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class ChainBase implements Chain {
-
 
     // ----------------------------------------------------------- Constructors
 
-
     /**
-     * <p>Construct a {@link Chain} with no configured {@link Command}s.</p>
+     * Construct a {@link Chain} with no configured {@link Command}s.
      */
     public ChainBase() {
-
     }
 
-
     /**
-     * <p>Construct a {@link Chain} configured with the specified
-     * {@link Command}.</p>
+     * Construct a {@link Chain} configured with the specified
+     * {@link Command}.
      *
      * @param command The {@link Command} to be configured
      *
-     * @exception IllegalArgumentException if <code>command</code>
-     *  is <code>null</code>
+     * @throws IllegalArgumentException if {@code command}
+     *         is {@code null}
      */
     public ChainBase(Command command) {
-
         addCommand(command);
-
     }
 
-
     /**
-     * <p>Construct a {@link Chain} configured with the specified
-     * {@link Command}s.</p>
+     * Construct a {@link Chain} configured with the specified
+     * {@link Command}s.
      *
      * @param commands The {@link Command}s to be configured
      *
-     * @exception IllegalArgumentException if <code>commands</code>,
-     *  or one of the individual {@link Command} elements,
-     *  is <code>null</code>
+     * @throws IllegalArgumentException if {@code commands},
+     *         or one of the individual {@link Command} elements,
+     *         is {@code null}
      */
     public ChainBase(Command[] commands) {
-
         if (commands == null) {
             throw new IllegalArgumentException();
         }
         for (int i = 0; i < commands.length; i++) {
             addCommand(commands[i]);
         }
-
     }
 
-
     /**
-     * <p>Construct a {@link Chain} configured with the specified
-     * {@link Command}s.</p>
+     * Construct a {@link Chain} configured with the specified
+     * {@link Command}s.
      *
      * @param commands The {@link Command}s to be configured
      *
-     * @exception IllegalArgumentException if <code>commands</code>,
-     *  or one of the individual {@link Command} elements,
-     *  is <code>null</code>
+     * @throws IllegalArgumentException if {@code commands},
+     *         or one of the individual {@link Command} elements,
+     *         is {@code null}
      */
     public ChainBase(Collection commands) {
-
         if (commands == null) {
             throw new IllegalArgumentException();
         }
@@ -103,42 +89,35 @@ public class ChainBase implements Chain {
         while (elements.hasNext()) {
             addCommand((Command) elements.next());
         }
-
     }
-
 
     // ----------------------------------------------------- Instance Variables
 
-
     /**
-     * <p>The list of {@link Command}s configured for this {@link Chain}, in
+     * The list of {@link Command}s configured for this {@link Chain}, in
      * the order in which they may delegate processing to the remainder of
-     * the {@link Chain}.</p>
+     * the {@link Chain}.
      */
     protected Command[] commands = new Command[0];
 
-
     /**
-     * <p>Flag indicating whether the configuration of our commands list
-     * has been frozen by a call to the <code>execute()</code> method.</p>
+     * Flag indicating whether the configuration of our commands list
+     * has been frozen by a call to the {@code execute()} method.
      */
     protected boolean frozen = false;
 
-
     // ---------------------------------------------------------- Chain Methods
-
 
     /**
      * See the {@link Chain} JavaDoc.
      *
      * @param command The {@link Command} to be added
      *
-     * @exception IllegalArgumentException if <code>command</code>
-     *  is <code>null</code>
-     * @exception IllegalStateException if no further configuration is allowed
+     * @throws IllegalArgumentException if {@code command}
+     *         is {@code null}
+     * @throws IllegalStateException if no further configuration is allowed
      */
     public void addCommand(Command command) {
-
         if (command == null) {
             throw new IllegalArgumentException();
         }
@@ -149,9 +128,7 @@ public class ChainBase implements Chain {
         System.arraycopy(commands, 0, results, 0, commands.length);
         results[commands.length] = command;
         commands = results;
-
     }
-
 
     /**
      * See the {@link Chain} JavaDoc.
@@ -159,19 +136,18 @@ public class ChainBase implements Chain {
      * @param context The {@link Context} to be processed by this
      *  {@link Chain}
      *
-     * @throws Exception if thrown by one of the {@link Command}s
-     *  in this {@link Chain} but not handled by a <code>postprocess()</code>
-     *  method of a {@link Filter}
-     * @throws IllegalArgumentException if <code>context</code>
-     *  is <code>null</code>
+     * @return {@code true} if the processing of this {@link Context}
+     *         has been completed, or {@code false} if the processing
+     *         of this {@link Context} should be delegated to a
+     *         subsequent {@link Command} in an enclosing {@link Chain}
      *
-     * @return <code>true</code> if the processing of this {@link Context}
-     *  has been completed, or <code>false</code> if the processing
-     *  of this {@link Context} should be delegated to a subsequent
-     *  {@link Command} in an enclosing {@link Chain}
+     * @throws Exception if thrown by one of the {@link Command}s
+     *         in this {@link Chain} but not handled by a
+     *         {@code postprocess()} method of a {@link Filter}
+     * @throws IllegalArgumentException if {@code context}
+     *         is {@code null}
      */
     public boolean execute(Context context) throws Exception {
-
         // Verify our parameters
         if (context == null) {
             throw new IllegalArgumentException();
@@ -220,28 +196,21 @@ public class ChainBase implements Chain {
         }
 
         // Return the exception or result state from the last execute()
-        if ((saveException != null) && !handled) {
+        if (saveException != null && !handled) {
             throw saveException;
         } else {
-            return (saveResult);
+            return saveResult;
         }
-
     }
-
 
     // -------------------------------------------------------- Package Methods
 
-
     /**
-     * <p>Return an array of the configured {@link Command}s for this
-     * {@link Chain}.  This method is package private, and is used only
-     * for the unit tests.</p>
+     * Return an array of the configured {@link Command}s for this
+     * {@link Chain}. This method is package private, and is used only
+     * for the unit tests.
      */
     Command[] getCommands() {
-
-        return (commands);
-
+        return commands;
     }
-
-
 }

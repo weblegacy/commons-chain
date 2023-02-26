@@ -24,113 +24,86 @@ import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 
 /**
- * <p>A simple implementation of {@link CatalogFactory}.</p>
+ * A simple implementation of {@link CatalogFactory}.
  *
  * @author Sean Schofield
  * @version $Revision$ $Date$
  */
-
 public class CatalogFactoryBase extends CatalogFactory {
-
 
     // ----------------------------------------------------------- Constructors
 
-
     /**
-     * <p>Construct an empty instance of {@link CatalogFactoryBase}.  This
-     * constructor is intended solely for use by {@link CatalogFactory}.</p>
+     * Construct an empty instance of {@link CatalogFactoryBase}. This
+     * constructor is intended solely for use by {@link CatalogFactory}.
      */
-    public CatalogFactoryBase() { }
-
+    public CatalogFactoryBase() {
+    }
 
     // ----------------------------------------------------- Instance Variables
 
-
     /**
-     * <p>The default {@link Catalog} for this {@link CatalogFactory}.</p>
+     * The default {@link Catalog} for this {@link CatalogFactory}.
      */
     private Catalog catalog = null;
 
-
     /**
-     * <p>Map of named {@link Catalog}s, keyed by catalog name.</p>
+     * Map of named {@link Catalog}s, keyed by catalog name.
      */
-    private Map catalogs = new HashMap();
-
+    private final Map<String, Catalog> catalogs = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
-
     /**
-     * <p>Gets the default instance of Catalog associated with the factory
-     * (if any); otherwise, return <code>null</code>.</p>
+     * Gets the default instance of Catalog associated with the factory
+     * (if any); otherwise, return {@code null}.
      *
      * @return the default Catalog instance
      */
     public Catalog getCatalog() {
-
         return catalog;
-
     }
 
-
     /**
-     * <p>Sets the default instance of Catalog associated with the factory.</p>
+     * Sets the default instance of Catalog associated with the factory.
      *
      * @param catalog the default Catalog instance
      */
     public void setCatalog(Catalog catalog) {
-
         this.catalog = catalog;
-
     }
 
-
     /**
-     * <p>Retrieves a Catalog instance by name (if any); otherwise
-     * return <code>null</code>.</p>
+     * Retrieves a Catalog instance by name (if any); otherwise
+     * return {@code null}.
      *
      * @param name the name of the Catalog to retrieve
+     *
      * @return the specified Catalog
      */
     public Catalog getCatalog(String name) {
-
-        synchronized (catalogs) {
-            return (Catalog) catalogs.get(name);
-        }
-
+        return catalogs.get(name);
     }
 
-
     /**
-     * <p>Adds a named instance of Catalog to the factory (for subsequent
-     * retrieval later).</p>
+     * Adds a named instance of Catalog to the factory (for subsequent
+     * retrieval later).
      *
      * @param name the name of the Catalog to add
      * @param catalog the Catalog to add
      */
     public void addCatalog(String name, Catalog catalog) {
-
-        synchronized (catalogs) {
-            catalogs.put(name, catalog);
-        }
-
+        catalogs.put(name, catalog);
     }
-
 
     /**
-     * <p>Return an <code>Iterator</code> over the set of named
+     * Return an {@code Iterator} over the set of named
      * {@link Catalog}s known to this {@link CatalogFactory}.
-     * If there are no known catalogs, an empty Iterator is returned.</p>
+     * If there are no known catalogs, an empty Iterator is returned.
+     *
      * @return An Iterator of the names of the Catalogs known by this factory.
      */
-    public Iterator getNames() {
-
-        synchronized (catalogs) {
-            return catalogs.keySet().iterator();
-        }
-
+    public Iterator<String> getNames() {
+        return catalogs.keySet().iterator();
     }
-
-
 }

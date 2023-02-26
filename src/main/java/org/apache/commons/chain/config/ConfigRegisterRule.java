@@ -16,34 +16,30 @@
  */
 package org.apache.commons.chain.config;
 
-
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.digester.Rule;
 import org.xml.sax.Attributes;
 
-
 /**
- * <p>Digester rule that will cause the top-most element on the Digester
+ * Digester rule that will cause the top-most element on the Digester
  * stack (if it is a {@link Command} to be registered with the next-to-top
  * element on the Digester stack (if it is a {@link Catalog} or {@link Chain}).
  * To be registered with a {@link Catalog}, the top-most element must contain
  * a value for the specified attribute that contains the name under which
- * it should be registered.</p>
+ * it should be registered.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
 class ConfigRegisterRule extends Rule {
 
-
     // ----------------------------------------------------------- Constructors
 
-
     /**
-     * <p>Construct a new instance of this rule that looks for an attribute
-     * with the specified name.</p>
+     * Construct a new instance of this rule that looks for an attribute
+     * with the specified name.
      *
      * @param nameAttribute Name of the attribute containing the name under
      *  which this command should be registered
@@ -53,28 +49,24 @@ class ConfigRegisterRule extends Rule {
         this.nameAttribute = nameAttribute;
     }
 
-
     // ----------------------------------------------------- Instance Variables
 
-
     /**
-     * <p>The name of the attribute under which we can retrieve the name
-     * this command should be registered with.</p>
+     * The name of the attribute under which we can retrieve the name
+     * this command should be registered with.
      */
     private String nameAttribute = null;
 
-
     // --------------------------------------------------------- Public Methods
 
-
     /**
-     * <p>Register the top {@link Command} if appropriate.</p>
+     * Register the top {@link Command} if appropriate.
      *
      * @param namespace the namespace URI of the matching element, or an
-     *   empty string if the parser is not namespace aware or the element has
-     *   no namespace
-     * @param name the local name if the parser is namespace aware, or just
-     *   the element name otherwise
+     *        empty string if the parser is not namespace aware or the
+     *        element has no namespace
+     * @param name the local name if the parser is namespace aware, or
+     *        just the element name otherwise
      * @param attributes The attribute list of this element
      */
     public void begin(String namespace, String name, Attributes attributes)
@@ -103,8 +95,5 @@ class ConfigRegisterRule extends Rule {
         } else if (next instanceof Chain) {
             ((Chain) next).addCommand(command);
         }
-
     }
-
-
 }

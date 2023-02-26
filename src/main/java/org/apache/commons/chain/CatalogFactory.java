@@ -25,83 +25,76 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * <p>A {@link CatalogFactory} is a class used to store and retrieve
- * {@link Catalog}s.  The factory allows for a default {@link Catalog}
- * as well as {@link Catalog}s stored with a name key.  Follows the
- * Factory pattern (see GoF).</p>
+ * A {@link CatalogFactory} is a class used to store and retrieve
+ * {@link Catalog}s. The factory allows for a default {@link Catalog}
+ * as well as {@link Catalog}s stored with a name key. Follows the
+ * Factory pattern (see GoF).
  *
- * <p>The base <code>CatalogFactory</code> implementation also implements
+ * <p>The base {@code CatalogFactory} implementation also implements
  * a resolution mechanism which allows lookup of a command based on a single
  * String which encodes both the catalog and command names.</p>
  *
  * @author Sean Schofield
  * @version $Revision$ $Date$
  */
-
 public abstract class CatalogFactory {
 
-
     /**
-     * <p>Values passed to the <code>getCommand(String)</code> method should
+     * Values passed to the {@code getCommand(String)} method should
      * use this as the delimiter between the "catalog" name and the "command"
-     * name.</p>
+     * name.
      */
-    public static final String DELIMITER = ":";
-
+    public final static String DELIMITER = ":";
 
     // --------------------------------------------------------- Public Methods
 
-
     /**
-     * <p>Gets the default instance of Catalog associated with the factory
-     * (if any); otherwise, return <code>null</code>.</p>
+     * Gets the default instance of Catalog associated with the factory
+     * (if any); otherwise, return {@code null}.
      *
      * @return the default Catalog instance
      */
     public abstract Catalog getCatalog();
 
-
     /**
-     * <p>Sets the default instance of Catalog associated with the factory.</p>
+     * Sets the default instance of Catalog associated with the factory.
      *
      * @param catalog the default Catalog instance
      */
     public abstract void setCatalog(Catalog catalog);
 
-
     /**
-     * <p>Retrieves a Catalog instance by name (if any); otherwise
-     * return <code>null</code>.</p>
+     * Retrieves a Catalog instance by name (if any); otherwise
+     * return {@code null}.
      *
      * @param name the name of the Catalog to retrieve
+     *
      * @return the specified Catalog
      */
     public abstract Catalog getCatalog(String name);
 
-
     /**
-     * <p>Adds a named instance of Catalog to the factory (for subsequent
-     * retrieval later).</p>
+     * Adds a named instance of Catalog to the factory (for subsequent
+     * retrieval later).
      *
      * @param name the name of the Catalog to add
      * @param catalog the Catalog to add
      */
     public abstract void addCatalog(String name, Catalog catalog);
 
-
     /**
-     * <p>Return an <code>Iterator</code> over the set of named
+     * Return an {@code Iterator} over the set of named
      * {@link Catalog}s known to this {@link CatalogFactory}.
-     * If there are no known catalogs, an empty Iterator is returned.</p>
+     * If there are no known catalogs, an empty Iterator is returned.
+     *
      * @return An Iterator of the names of the Catalogs known by this factory.
      */
     public abstract Iterator getNames();
 
-
     /**
-     * <p>Return a <code>Command</code> based on the given commandID.</p>
+     * Return a {@code Command} based on the given commandID.
      *
-     * <p>At this time, the structure of commandID is relatively simple:  if the
+     * <p>At this time, the structure of commandID is relatively simple: if the
      * commandID contains a DELIMITER, treat the segment of the commandID
      * up to (but not including) the DELIMITER as the name of a catalog, and the
      * segment following the DELIMITER as a command name within that catalog.
@@ -110,20 +103,22 @@ public abstract class CatalogFactory {
      *
      * <p>To preserve the possibility of future extensions to this lookup
      * mechanism, the DELIMITER string should be considered reserved, and
-     * should not be used in command names.  commandID values which contain
+     * should not be used in command names. commandID values which contain
      * more than one DELIMITER will cause an
-     * <code>IllegalArgumentException</code> to be thrown.</p>
+     * {@code IllegalArgumentException} to be thrown.</p>
      *
      * @param commandID the identifier of the command to return
-     * @return the command located with commandID, or <code>null</code>
-     *  if either the command name or the catalog name cannot be resolved
+     *
+     * @return the command located with commandID, or {@code null}
+     *         if either the command name or the catalog name cannot be
+     *         resolved
+     *
      * @throws IllegalArgumentException if the commandID contains more than
-     *  one DELIMITER
+     *         one DELIMITER
      *
      * @since Chain 1.1
      */
     public Command getCommand(String commandID) {
-
         String commandName = commandID;
         String catalogName = null;
         Catalog catalog = null;
@@ -158,35 +153,29 @@ public abstract class CatalogFactory {
         }
 
         return catalog.getCommand(commandName);
-
     }
-
 
     // ------------------------------------------------------- Static Variables
 
-
     /**
-     * <p>The set of registered {@link CatalogFactory} instances,
-     * keyed by the relevant class loader.</p>
+     * The set of registered {@link CatalogFactory} instances,
+     * keyed by the relevant class loader.
      */
     private static Map factories = new HashMap();
 
-
     // -------------------------------------------------------- Static Methods
 
-
     /**
-     * <p>Return the singleton {@link CatalogFactory} instance
-     * for the relevant <code>ClassLoader</code>.  For applications
+     * Return the singleton {@link CatalogFactory} instance
+     * for the relevant {@code ClassLoader}. For applications
      * that use a thread context class loader (such as web applications
      * running inside a servet container), this will return a separate
      * instance for each application, even if this class is loaded from
-     * a shared parent class loader.</p>
+     * a shared parent class loader.
      *
      * @return the per-application singleton instance of {@link CatalogFactory}
      */
     public static CatalogFactory getInstance() {
-
         CatalogFactory factory = null;
         ClassLoader cl = getClassLoader();
         synchronized (factories) {
@@ -197,41 +186,32 @@ public abstract class CatalogFactory {
             }
         }
         return factory;
-
     }
 
-
     /**
-     * <p>Clear all references to registered catalogs, as well as to the
-     * relevant class loader.  This method should be called, for example,
+     * Clear all references to registered catalogs, as well as to the
+     * relevant class loader. This method should be called, for example,
      * when a web application utilizing this class is removed from
-     * service, to allow for garbage collection.</p>
+     * service, to allow for garbage collection.
      */
     public static void clear() {
-
         synchronized (factories) {
             factories.remove(getClassLoader());
         }
-
     }
-
 
     // ------------------------------------------------------- Private Methods
 
-
     /**
-     * <p>Return the relevant <code>ClassLoader</code> to use as a Map key
-     * for this request.  If there is a thread context class loader, return
-     * that; otherwise, return the class loader that loaded this class.</p>
+     * Return the relevant {@code ClassLoader} to use as a Map key
+     * for this request. If there is a thread context class loader, return
+     * that; otherwise, return the class loader that loaded this class.
      */
     private static ClassLoader getClassLoader() {
-
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         if (cl == null) {
             cl = CatalogFactory.class.getClassLoader();
         }
         return cl;
-
     }
-
 }

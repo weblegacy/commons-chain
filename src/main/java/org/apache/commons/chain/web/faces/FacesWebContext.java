@@ -16,175 +16,140 @@
  */
 package org.apache.commons.chain.web.faces;
 
-
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import org.apache.commons.chain.web.WebContext;
 
-
 /**
- * <p>Concrete implementation of {@link WebContext} suitable for use in
- * JavaServer Faces apps.  The abstract methods are mapped to the appropriate
- * collections of the underlying <code>FacesContext</code> instance
- * that is passed to the constructor (or the initialize method).</p>
+ * Concrete implementation of {@link WebContext} suitable for use in
+ * JavaServer Faces apps. The abstract methods are mapped to the appropriate
+ * collections of the underlying {@code FacesContext} instance
+ * that is passed to the constructor (or the initialize method).
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class FacesWebContext extends WebContext {
-
 
     // ------------------------------------------------------------ Constructors
 
-
     /**
-     * <p>Construct an uninitialized {@link FacesWebContext} instance.</p>
+     * Construct an uninitialized {@link FacesWebContext} instance.
      */
     public FacesWebContext() {
     }
 
-
     /**
-     * <p>Construct a {@link FacesWebContext} instance that is initialized
-     * with the specified JavaServer Faces API objects.</p>
+     * Construct a {@link FacesWebContext} instance that is initialized
+     * with the specified JavaServer Faces API objects.
      *
-     * @param context The <code>FacesContext</code> for this request
+     * @param context The {@code FacesContext} for this request
      */
     public FacesWebContext(FacesContext context) {
-
         initialize(context);
-
     }
-
 
     // ------------------------------------------------------ Instance Variables
 
-
     /**
-     * <p>The <code>FacesContext</code> instance for the request represented
-     * by this {@link WebContext}.</p>
+     * The {@code FacesContext} instance for the request represented
+     * by this {@link WebContext}.
      */
     private FacesContext context = null;
 
-
     // ---------------------------------------------------------- Public Methods
 
-
     /**
-     * <p>Return the <code>FacesContext</code> instance for the request
-     * associated with this {@link FacesWebContext}.</p>
+     * Return the {@code FacesContext} instance for the request
+     * associated with this {@link FacesWebContext}.
      *
-     * @return The <code>FacesContext</code> for this request
+     * @return The {@code FacesContext} for this request
      */
     public FacesContext getContext() {
-
-    return (this.context);
-
+        return this.context;
     }
 
-
     /**
-     * <p>Initialize (or reinitialize) this {@link FacesWebContext} instance
-     * for the specified JavaServer Faces API objects.</p>
+     * Initialize (or reinitialize) this {@link FacesWebContext} instance
+     * for the specified JavaServer Faces API objects.
      *
-     * @param context The <code>FacesContext</code> for this request
+     * @param context The {@code FacesContext} for this request
      */
     public void initialize(FacesContext context) {
-
         this.context = context;
-
     }
-
 
     /**
-     * <p>Release references to allocated resources acquired in
-     * <code>initialize()</code> of via subsequent processing.  After this
+     * Release references to allocated resources acquired in
+     * {@code initialize()} of via subsequent processing. After this
      * method is called, subsequent calls to any other method than
-     * <code>initialize()</code> will return undefined results.</p>
+     * {@code initialize()} will return undefined results.
      */
     public void release() {
-
         context = null;
-
     }
 
-
-
     // ------------------------------------------------------ WebContext Methods
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Application scope Map.
      */
+    @Override
     public Map getApplicationScope() {
-
-    return (context.getExternalContext().getApplicationMap());
-
+        return context.getExternalContext().getApplicationMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Header values Map.
      */
+    @Override
     public Map getHeader() {
-
-    return (context.getExternalContext().getRequestHeaderMap());
-
+        return context.getExternalContext().getRequestHeaderMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Header values Map.
      */
+    @Override
     public Map getHeaderValues() {
-
-    return (context.getExternalContext().getRequestHeaderValuesMap());
-
+        return context.getExternalContext().getRequestHeaderValuesMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Initialization parameter Map.
      */
+    @Override
     public Map getInitParam() {
-
-    return (context.getExternalContext().getInitParameterMap());
-
+        return context.getExternalContext().getInitParameterMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Request parameter Map.
      */
+    @Override
     public Map getParam() {
-
-    return (context.getExternalContext().getRequestParameterMap());
-
+        return context.getExternalContext().getRequestParameterMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Request parameter Map.
      */
+    @Override
     public Map getParamValues() {
-
-    return (context.getExternalContext().getRequestParameterValuesMap());
-
+        return context.getExternalContext().getRequestParameterValuesMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
@@ -192,36 +157,28 @@ public class FacesWebContext extends WebContext {
      * @return Map of Cookies.
      * @since Chain 1.1
      */
+    @Override
     public Map getCookies() {
-
-        return (context.getExternalContext().getRequestCookieMap());
-
+        return context.getExternalContext().getRequestCookieMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Request scope Map.
      */
+    @Override
     public Map getRequestScope() {
-
-    return (context.getExternalContext().getRequestMap());
-
+        return context.getExternalContext().getRequestMap();
     }
-
 
     /**
      * See the {@link WebContext}'s Javadoc.
      *
      * @return Session scope Map.
      */
+    @Override
     public Map getSessionScope() {
-
-    return (context.getExternalContext().getSessionMap());
-
+        return context.getExternalContext().getSessionMap();
     }
-
-
-
 }

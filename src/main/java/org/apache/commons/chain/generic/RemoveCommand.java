@@ -16,68 +16,53 @@
  */
 package org.apache.commons.chain.generic;
 
-
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Remove any context attribute stored under the <code>fromKey</code>.</p>
+ * Remove any context attribute stored under the {@code fromKey}.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class RemoveCommand implements Command {
-
 
     // -------------------------------------------------------------- Properties
 
-
     private String fromKey = null;
 
-
     /**
-     * <p>Return the context attribute key for the attribute.</p>
+     * Return the context attribute key for the attribute.
+     *
      * @return The context attribute key.
      */
     public String getFromKey() {
-
-    return (this.fromKey);
-
+        return this.fromKey;
     }
 
-
     /**
-     * <p>Set the context attribute key for the attribute.</p>
+     * Set the context attribute key for the attribute.
      *
      * @param fromKey The new key
      */
     public void setFromKey(String fromKey) {
-
-    this.fromKey = fromKey;
-
+        this.fromKey = fromKey;
     }
-
 
     // ---------------------------------------------------------- Filter Methods
 
-
     /**
-     * <p>Copy the specified source attribute to the specified destination
-     * attribute.</p>
+     * Copy the specified source attribute to the specified destination
+     * attribute.
      *
      * @param context {@link Context} in which we are operating
      *
-     * @return <code>false</code> so that processing will continue
+     * @return {@code false} so that processing will continue
+     *
      * @throws Exception if and error occurs.
      */
     public boolean execute(Context context) throws Exception {
-
-    context.remove(getFromKey());
-    return (false);
-
+        context.remove(getFromKey());
+        return false;
     }
-
-
 }

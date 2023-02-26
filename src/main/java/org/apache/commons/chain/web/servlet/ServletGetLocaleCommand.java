@@ -16,37 +16,30 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.AbstractGetLocaleCommand;
 
-
 /**
- * <p>Concrete implementation of {@link AbstractGetLocaleCommand} for
- * the Servlet API.</p>
+ * Concrete implementation of {@link AbstractGetLocaleCommand} for
+ * the Servlet API.
  */
-
 public class ServletGetLocaleCommand extends AbstractGetLocaleCommand {
-
 
     // ------------------------------------------------------- Protected Methods
 
-
     /**
-     * <p>Retrieve and return the <code>Locale</code> for this request.</p>
+     * Retrieve and return the {@code Locale} for this request.
      *
      * @param context The {@link Context} we are operating on.
+     *
      * @return The Locale for the request.
      */
+    @Override
     protected Locale getLocale(Context context) {
-
-    HttpServletRequest request = (HttpServletRequest)
-        context.get("request");
-    return (request.getLocale());
-
+        HttpServletRequest request = (HttpServletRequest)
+            context.get("request");
+        return request.getLocale();
     }
-
-
 }

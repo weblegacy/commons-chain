@@ -16,117 +16,93 @@
  */
 package org.apache.commons.chain.generic;
 
-
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Copy a specified literal value, or a context attribute stored under
- * the <code>fromKey</code> (if any), to the <code>toKey</code>.</p>
+ * Copy a specified literal value, or a context attribute stored under
+ * the {@code fromKey} (if any), to the {@code toKey}.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class CopyCommand implements Command {
-
 
     // -------------------------------------------------------------- Properties
 
-
     private String fromKey = null;
 
-
     /**
-     * <p>Return the context attribute key for the source attribute.</p>
+     * Return the context attribute key for the source attribute.
+     *
      * @return The source attribute key.
      */
     public String getFromKey() {
-
-    return (this.fromKey);
-
+        return this.fromKey;
     }
 
-
     /**
-     * <p>Set the context attribute key for the source attribute.</p>
+     * Set the context attribute key for the source attribute.
      *
      * @param fromKey The new key
      */
     public void setFromKey(String fromKey) {
-
-    this.fromKey = fromKey;
-
+        this.fromKey = fromKey;
     }
-
 
     private String toKey = null;
 
-
     /**
-     * <p>Return the context attribute key for the destination attribute.</p>
+     * Return the context attribute key for the destination attribute.
+     *
      * @return The destination attribute key.
      */
     public String getToKey() {
-
-    return (this.toKey);
-
+        return this.toKey;
     }
 
-
     /**
-     * <p>Set the context attribute key for the destination attribute.</p>
+     * Set the context attribute key for the destination attribute.
      *
      * @param toKey The new key
      */
     public void setToKey(String toKey) {
-
-    this.toKey = toKey;
-
+        this.toKey = toKey;
     }
-
 
     private String value = null;
 
-
     /**
-     * <p>Return the literal value to be copied.</p>
+     * Return the literal value to be copied.
+     *
      * @return The literal value.
      */
     public String getValue() {
-
-        return (this.value);
-
+        return this.value;
     }
 
-
     /**
-     * <p>Set the literal value to be copied.</p>
+     * Set the literal value to be copied.
      *
      * @param value The new value
      */
     public void setValue(String value) {
-
         this.value = value;
-
     }
-
 
     // ---------------------------------------------------------- Filter Methods
 
-
     /**
-     * <p>Copy a specified literal value, or a context attribute stored under
-     * the <code>fromKey</code> (if any), to the <code>toKey</code>.</p>
+     * Copy a specified literal value, or a context attribute stored under
+     * the {@code fromKey} (if any), to the {@code toKey}.
      *
      * @param context {@link Context} in which we are operating
      *
-     * @return <code>false</code> so that processing will continue
+     * @return {@code false} so that processing will continue
+     *
      * @throws Exception in the if an error occurs during execution.
      */
     public boolean execute(Context context) throws Exception {
-
         Object value = this.value;
 
         if (value == null) {
@@ -139,9 +115,6 @@ public class CopyCommand implements Command {
             context.remove(getToKey());
         }
 
-        return (false);
-
+        return false;
     }
-
-
 }

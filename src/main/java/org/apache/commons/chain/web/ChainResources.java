@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,26 +25,22 @@ import org.apache.commons.chain.config.ConfigParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 /**
- * <p>Utility methods for loading class loader and web application resources
- * to configure a {@link Catalog}.  These methods are shared between
- * <code>ChainListener</code> and <code>ChainServlet</code>.</p>
+ * Utility methods for loading class loader and web application resources
+ * to configure a {@link Catalog}. These methods are shared between
+ * {@code ChainListener} and {@code ChainServlet}.
  *
  * @author Craig R. McClanahan
  * @author Ted Husted
  */
-
 final class ChainResources {
-
 
     // ---------------------------------------------------------- Static Methods
 
-
     /**
-     * <p>Parse the specified class loader resources.</p>
+     * Parse the specified class loader resources.
      *
-     * @param resources Comma-delimited list of resources (or <code>null</code>)
+     * @param resources Comma-delimited list of resources (or {@code null})
      * @param parser {@link ConfigParser} to use for parsing
      */
     static void parseClassResources(String resources,
@@ -80,20 +75,19 @@ final class ChainResources {
                 ("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
-
     }
 
-
     /**
-     * <p>Parse the specified class loader resources.</p>
+     * Parse the specified class loader resources.
      *
      * @param catalog {@link Catalog} we are populating
-     * @param resources Comma-delimited list of resources (or <code>null</code>)
+     * @param resources Comma-delimited list of resources (or {@code null})
      * @param parser {@link ConfigParser} to use for parsing
      *
      * @deprecated Use the variant that does not take a catalog, on a
-     *  configuration resource containing "catalog" element(s)
+     *             configuration resource containing "catalog" element(s)
      */
+    @Deprecated
     static void parseClassResources(Catalog catalog, String resources,
                                     ConfigParser parser) {
 
@@ -126,15 +120,13 @@ final class ChainResources {
                 ("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
-
     }
 
-
     /**
-     * <p>Parse the specified web application resources.</p>
+     * Parse the specified web application resources.
      *
-     * @param context <code>ServletContext</code> for this web application
-     * @param resources Comma-delimited list of resources (or <code>null</code>)
+     * @param context {@code ServletContext} for this web application
+     * @param resources Comma-delimited list of resources (or {@code null})
      * @param parser {@link ConfigParser} to use for parsing
      */
     static void parseWebResources(ServletContext context,
@@ -165,21 +157,20 @@ final class ChainResources {
                 ("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
-
     }
 
-
     /**
-     * <p>Parse the specified web application resources.</p>
+     * Parse the specified web application resources.
      *
      * @param catalog {@link Catalog} we are populating
-     * @param context <code>ServletContext</code> for this web application
-     * @param resources Comma-delimited list of resources (or <code>null</code>)
+     * @param context {@code ServletContext} for this web application
+     * @param resources Comma-delimited list of resources (or {@code null})
      * @param parser {@link ConfigParser} to use for parsing
      *
      * @deprecated Use the variant that does not take a catalog, on a
-     *  configuration resource containing "catalog" element(s)
+     *             configuration resource containing "catalog" element(s)
      */
+    @Deprecated
     static void parseWebResources(Catalog catalog, ServletContext context,
                                   String resources,
                                   ConfigParser parser) {
@@ -208,16 +199,14 @@ final class ChainResources {
                 ("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
-
     }
 
-
     /**
-     * <p> Parse the resource string into an array of paths. Empty entries will
-     * be skipped. (That is, all entries in the array are non-empty paths.)</p>
+     * Parse the resource string into an array of paths. Empty entries will
+     * be skipped. (That is, all entries in the array are non-empty paths.)
      *
      * @param resources A comma-delimited list of resource paths (or
-     *                  <code>null</code>).
+     *        {@code null}).
      *
      * @return An array of non-empty paths. The array itself may be empty.
      *
@@ -245,6 +234,4 @@ final class ChainResources {
 
         return (String[]) paths.toArray(new String[0]);
     }
-
-
 }

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -28,26 +27,22 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.chain.web.MapEntry;
 
-
 /**
- * <p>Private implementation of <code>Map</code> for servlet request
- * attributes.</p>
+ * Private implementation of {@code Map} for servlet request
+ * attributes.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 final class ServletRequestScopeMap implements Map {
-
 
     public ServletRequestScopeMap(HttpServletRequest request) {
         this.request = request;
     }
 
-
     private HttpServletRequest request = null;
 
-
+    @Override
     public void clear() {
         Iterator keys = keySet().iterator();
         while (keys.hasNext()) {
@@ -55,12 +50,12 @@ final class ServletRequestScopeMap implements Map {
         }
     }
 
-
+    @Override
     public boolean containsKey(Object key) {
-        return (request.getAttribute(key(key)) != null);
+        return request.getAttribute(key(key)) != null;
     }
 
-
+    @Override
     public boolean containsValue(Object value) {
         if (value == null) {
             return (false);
@@ -69,13 +64,13 @@ final class ServletRequestScopeMap implements Map {
         while (keys.hasMoreElements()) {
             Object next = request.getAttribute((String) keys.nextElement());
             if (value.equals(next)) {
-                return (true);
+                return true;
             }
         }
-        return (false);
+        return false;
     }
 
-
+    @Override
     public Set entrySet() {
         Set set = new HashSet();
         Enumeration keys = request.getAttributeNames();
@@ -84,51 +79,51 @@ final class ServletRequestScopeMap implements Map {
             key = (String) keys.nextElement();
             set.add(new MapEntry(key, request.getAttribute(key), true));
         }
-        return (set);
+        return set;
     }
 
-
+    @Override
     public boolean equals(Object o) {
-        return (request.equals(o));
+        return request.equals(o);
     }
 
-
+    @Override
     public Object get(Object key) {
-        return (request.getAttribute(key(key)));
+        return request.getAttribute(key(key));
     }
 
-
+    @Override
     public int hashCode() {
-        return (request.hashCode());
+        return request.hashCode();
     }
 
-
+    @Override
     public boolean isEmpty() {
-        return (size() < 1);
+        return size() < 1;
     }
 
-
+    @Override
     public Set keySet() {
         Set set = new HashSet();
         Enumeration keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
             set.add(keys.nextElement());
         }
-        return (set);
+        return set;
     }
 
-
+    @Override
     public Object put(Object key, Object value) {
         if (value == null) {
-            return (remove(key));
+            return remove(key);
         }
         String skey = key(key);
         Object previous = request.getAttribute(skey);
         request.setAttribute(skey, value);
-        return (previous);
+        return previous;
     }
 
-
+    @Override
     public void putAll(Map map) {
         Iterator entries = map.entrySet().iterator();
         while (entries.hasNext()) {
@@ -137,7 +132,7 @@ final class ServletRequestScopeMap implements Map {
         }
     }
 
-
+    @Override
     public Object remove(Object key) {
         String skey = key(key);
         Object previous = request.getAttribute(skey);
@@ -145,7 +140,7 @@ final class ServletRequestScopeMap implements Map {
         return (previous);
     }
 
-
+    @Override
     public int size() {
         int n = 0;
         Enumeration keys = request.getAttributeNames();
@@ -153,29 +148,26 @@ final class ServletRequestScopeMap implements Map {
             keys.nextElement();
             n++;
         }
-        return (n);
+        return n;
     }
 
-
+    @Override
     public Collection values() {
         List list = new ArrayList();
         Enumeration keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
             list.add(request.getAttribute((String) keys.nextElement()));
         }
-        return (list);
+        return list;
     }
-
 
     private String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {
-            return ((String) key);
+            return (String) key;
         } else {
-            return (key.toString());
+            return key.toString();
         }
     }
-
-
 }

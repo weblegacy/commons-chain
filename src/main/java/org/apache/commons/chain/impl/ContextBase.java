@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -31,122 +30,103 @@ import java.util.Set;
 import java.io.Serializable;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Convenience base class for {@link Context} implementations.</p>
+ * Convenience base class for {@link Context} implementations.
  *
  * <p>In addition to the minimal functionality required by the {@link Context}
  * interface, this class implements the recommended support for
  * <em>Attribute-Property Transparency</em>. This is implemented by
  * analyzing the available JavaBeans properties of this class (or its
- * subclass), exposes them as key-value pairs in the <code>Map</code>,
+ * subclass), exposes them as key-value pairs in the {@code Map},
  * with the key being the name of the property itself.</p>
  *
- * <p><strong>IMPLEMENTATION NOTE</strong> - Because <code>empty</code> is a
- * read-only property defined by the <code>Map</code> interface, it may not
+ * <p><strong>IMPLEMENTATION NOTE</strong> - Because {@code empty} is a
+ * read-only property defined by the {@code Map} interface, it may not
  * be utilized as an attribute key or property name.</p>
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class ContextBase extends HashMap implements Context {
 
-
     // ------------------------------------------------------------ Constructors
-
 
     /**
      * Default, no argument constructor.
      */
     public ContextBase() {
-
         super();
         initialize();
-
     }
 
-
     /**
-     * <p>Initialize the contents of this {@link Context} by copying the
-     * values from the specified <code>Map</code>.  Any keys in <code>map</code>
+     * Initialize the contents of this {@link Context} by copying the
+     * values from the specified {@code Map}. Any keys in {@code map}
      * that correspond to local properties will cause the setter method for
-     * that property to be called.</p>
+     * that property to be called.
      *
      * @param map Map whose key-value pairs are added
      *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  writing a local property value
-     * @exception UnsupportedOperationException if a local property does not
-     *  have a write method.
+     * @throws IllegalArgumentException if an exception is thrown
+     *         writing a local property value.
+     * @throws UnsupportedOperationException if a local property does not
+     *         have a write method.
      */
     public ContextBase(Map map) {
-
         super(map);
         initialize();
         putAll(map);
-
     }
-
 
     // ------------------------------------------------------ Instance Variables
 
-
     // NOTE - PropertyDescriptor instances are not Serializable, so the
-    // following variables must be declared as transient.  When a ContextBase
+    // following variables must be declared as transient. When a ContextBase
     // instance is deserialized, the no-arguments constructor is called,
-    // and the initialize() method called there will repoopulate them.
+    // and the initialize() method called there will repopulate them.
     // Therefore, no special restoration activity is required.
 
     /**
-     * <p>The <code>PropertyDescriptor</code>s for all JavaBeans properties
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
      * of this {@link Context} implementation class, keyed by property name.
      * This collection is allocated only if there are any JavaBeans
-     * properties.</p>
+     * properties.
      */
     private transient Map descriptors = null;
 
-
     /**
-     * <p>The same <code>PropertyDescriptor</code>s as an array.</p>
+     * The same {@code PropertyDescriptor}s as an array.
      */
     private transient PropertyDescriptor[] pd = null;
 
-
     /**
-     * <p>Distinguished singleton value that is stored in the map for each
-     * key that is actually a property.  This value is used to ensure that
-     * <code>equals()</code> comparisons will always fail.</p>
+     * Distinguished singleton value that is stored in the map for each
+     * key that is actually a property. This value is used to ensure that
+     * {@code equals()} comparisons will always fail.
      */
     private static Object singleton;
 
     static {
-
         singleton = new Serializable() {
                 public boolean equals(Object object) {
-                    return (false);
+                    return false;
                 }
             };
-
     }
 
-
     /**
-     * <p>Zero-length array of parameter values for calling property getters.
-     * </p>
+     * Zero-length array of parameter values for calling property getters.
      */
     private static Object[] zeroParams = new Object[0];
 
-
     // ------------------------------------------------------------- Map Methods
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to clear all keys and
-     * values except those corresponding to JavaBeans properties.</p>
+     * Override the default {@code Map} behavior to clear all keys and
+     * values except those corresponding to JavaBeans properties.
      */
+    @Override
     public void clear() {
-
         if (descriptors == null) {
             super.clear();
         } else {
@@ -158,31 +138,32 @@ public class ContextBase extends HashMap implements Context {
                 }
             }
         }
-
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to return
-     * <code>true</code> if the specified value is present in either the
-     * underlying <code>Map</code> or one of the local property values.</p>
+     * Override the default {@code Map} behavior to return
+     * {@code true} if the specified value is present in either the
+     * underlying {@code Map} or one of the local property values.
      *
      * @param value the value look for in the context.
-     * @return <code>true</code> if found in this context otherwise
-     *  <code>false</code>.
-     * @exception IllegalArgumentException if a property getter
-     *  throws an exception
+     *
+     * @return {@code true} if found in this context otherwise
+     *         {@code false}.
+     *
+     * @throws IllegalArgumentException if a property getter
+     *         throws an exception
      */
+    @Override
     public boolean containsValue(Object value) {
 
         // Case 1 -- no local properties
         if (descriptors == null) {
-            return (super.containsValue(value));
+            return super.containsValue(value);
         }
 
         // Case 2 -- value found in the underlying Map
         else if (super.containsValue(value)) {
-            return (true);
+            return true;
         }
 
         // Case 3 -- check the values of our readable properties
@@ -191,57 +172,53 @@ public class ContextBase extends HashMap implements Context {
                 Object prop = readProperty(pd[i]);
                 if (value == null) {
                     if (prop == null) {
-                        return (true);
+                        return true;
                     }
                 } else if (value.equals(prop)) {
-                    return (true);
+                    return true;
                 }
             }
         }
-        return (false);
-
+        return false;
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to return a
-     * <code>Set</code> that meets the specified default behavior except
+     * Override the default {@code Map} behavior to return a
+     * {@code Set} that meets the specified default behavior except
      * for attempts to remove the key for a property of the {@link Context}
      * implementation class, which will throw
-     * <code>UnsupportedOperationException</code>.</p>
+     * {@code UnsupportedOperationException}.
      *
      * @return Set of entries in the Context.
      */
+    @Override
     public Set entrySet() {
-
-        return (new EntrySetImpl());
-
+        return new EntrySetImpl();
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to return the value
+     * Override the default {@code Map} behavior to return the value
      * of a local property if the specified key matches a local property name.
-     * </p>
      *
      * <p><strong>IMPLEMENTATION NOTE</strong> - If the specified
-     * <code>key</code> identifies a write-only property, <code>null</code>
+     * {@code key} identifies a write-only property, {@code null}
      * will arbitrarily be returned, in order to avoid difficulties implementing
-     * the contracts of the <code>Map</code> interface.</p>
+     * the contracts of the {@code Map} interface.</p>
      *
      * @param key Key of the value to be returned
+     *
      * @return The value for the specified key.
      *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  reading this local property value
-     * @exception UnsupportedOperationException if this local property does not
-     *  have a read method.
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a read method.
      */
+    @Override
     public Object get(Object key) {
-
         // Case 1 -- no local properties
         if (descriptors == null) {
-            return (super.get(key));
+            return super.get(key);
         }
 
         // Case 2 -- this is a local property
@@ -250,76 +227,69 @@ public class ContextBase extends HashMap implements Context {
                 (PropertyDescriptor) descriptors.get(key);
             if (descriptor != null) {
                 if (descriptor.getReadMethod() != null) {
-                    return (readProperty(descriptor));
+                    return readProperty(descriptor);
                 } else {
-                    return (null);
+                    return null;
                 }
             }
         }
 
         // Case 3 -- retrieve value from our underlying Map
-        return (super.get(key));
-
+        return super.get(key);
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to return
-     * <code>true</code> if the underlying <code>Map</code> only contains
-     * key-value pairs for local properties (if any).</p>
+     * Override the default {@code Map} behavior to return
+     * {@code true} if the underlying {@code Map} only contains
+     * key-value pairs for local properties (if any).
      *
-     * @return <code>true</code> if this Context is empty, otherwise
-     *  <code>false</code>.
+     * @return {@code true} if this Context is empty, otherwise
+     *         {@code false}.
      */
+    @Override
     public boolean isEmpty() {
-
         // Case 1 -- no local properties
         if (descriptors == null) {
-            return (super.isEmpty());
+            return super.isEmpty();
         }
 
         // Case 2 -- compare key count to property count
-        return (super.size() <= descriptors.size());
-
+        return super.size() <= descriptors.size();
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to return a
-     * <code>Set</code> that meets the specified default behavior except
+     * Override the default {@code Map} behavior to return a
+     * {@code Set} that meets the specified default behavior except
      * for attempts to remove the key for a property of the {@link Context}
      * implementation class, which will throw
-     * <code>UnsupportedOperationException</code>.</p>
+     * {@code UnsupportedOperationException}.
      *
      * @return The set of keys for objects in this Context.
      */
+    @Override
     public Set keySet() {
-
-
-        return (super.keySet());
-
+        return super.keySet();
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to set the value
-     * of a local property if the specified key matches a local property name.
-     * </p>
+     * Override the default {@code Map} behavior to set the value of a
+     * local property if the specified key matches a local property name.
      *
      * @param key Key of the value to be stored or replaced
      * @param value New value to be stored
+     *
      * @return The value added to the Context.
      *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  reading or wrting this local property value
-     * @exception UnsupportedOperationException if this local property does not
-     *  have both a read method and a write method
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading or writing this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have both a read method and a write method
      */
+    @Override
     public Object put(Object key, Object value) {
-
         // Case 1 -- no local properties
         if (descriptors == null) {
-            return (super.put(key, value));
+            return super.put(key, value);
         }
 
         // Case 2 -- this is a local property
@@ -332,56 +302,53 @@ public class ContextBase extends HashMap implements Context {
                     previous = readProperty(descriptor);
                 }
                 writeProperty(descriptor, value);
-                return (previous);
+                return previous;
             }
         }
 
         // Case 3 -- store or replace value in our underlying map
-        return (super.put(key, value));
-
+        return super.put(key, value);
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to call the
-     * <code>put()</code> method individually for each key-value pair
-     * in the specified <code>Map</code>.</p>
+     * Override the default {@code Map} behavior to call the
+     * {@code put()} method individually for each key-value pair
+     * in the specified {@code Map}.
      *
-     * @param map <code>Map</code> containing key-value pairs to store
-     *  (or replace)
+     * @param map {@code Map} containing key-value pairs to store
+     *        (or replace)
      *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  reading or wrting a local property value
-     * @exception UnsupportedOperationException if a local property does not
-     *  have both a read method and a write method
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading or writing a local property value.
+     * @throws UnsupportedOperationException if a local property does not
+     *         have both a read method and a write method
      */
+    @Override
     public void putAll(Map map) {
-
         Iterator pairs = map.entrySet().iterator();
         while (pairs.hasNext()) {
             Map.Entry pair = (Map.Entry) pairs.next();
             put(pair.getKey(), pair.getValue());
         }
-
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to throw
-     * <code>UnsupportedOperationException</code> on any attempt to
-     * remove a key that is the name of a local property.</p>
+     * Override the default {@code Map} behavior to throw
+     * {@code UnsupportedOperationException} on any attempt to
+     * remove a key that is the name of a local property.
      *
      * @param key Key to be removed
+     *
      * @return The value removed from the Context.
      *
-     * @exception UnsupportedOperationException if the specified
-     *  <code>key</code> matches the name of a local property
+     * @throws UnsupportedOperationException if the specified
+     *         {@code key} matches the name of a local property
      */
+    @Override
     public Object remove(Object key) {
-
         // Case 1 -- no local properties
         if (descriptors == null) {
-            return (super.remove(key));
+            return super.remove(key);
         }
 
         // Case 2 -- this is a local property
@@ -395,75 +362,62 @@ public class ContextBase extends HashMap implements Context {
         }
 
         // Case 3 -- remove from underlying Map
-        return (super.remove(key));
-
+        return super.remove(key);
     }
 
-
     /**
-     * <p>Override the default <code>Map</code> behavior to return a
-     * <code>Collection</code> that meets the specified default behavior except
+     * Override the default {@code Map} behavior to return a
+     * {@code Collection} that meets the specified default behavior except
      * for attempts to remove the key for a property of the {@link Context}
      * implementation class, which will throw
-     * <code>UnsupportedOperationException</code>.</p>
+     * {@code UnsupportedOperationException}.
      *
      * @return The collection of values in this Context.
      */
+    @Override
     public Collection values() {
-
-        return (new ValuesImpl());
-
+        return new ValuesImpl();
     }
-
 
     // --------------------------------------------------------- Private Methods
 
-
     /**
-     * <p>Return an <code>Iterator</code> over the set of <code>Map.Entry</code>
-     * objects representing our key-value pairs.</p>
+     * Return an {@code Iterator} over the set of {@code Map.Entry}
+     * objects representing our key-value pairs.
      */
     private Iterator entriesIterator() {
-
-        return (new EntrySetIterator());
-
+        return new EntrySetIterator();
     }
 
-
     /**
-     * <p>Return a <code>Map.Entry</code> for the specified key value, if it
-     * is present; otherwise, return <code>null</code>.</p>
+     * Return a {@code Map.Entry} for the specified key value, if it
+     * is present; otherwise, return {@code null}.
      *
      * @param key Attribute key or property name
      */
     private Map.Entry entry(Object key) {
-
         if (containsKey(key)) {
-            return (new MapEntryImpl(key, get(key)));
+            return new MapEntryImpl(key, get(key));
         } else {
-            return (null);
+            return null;
         }
-
     }
 
-
     /**
-     * <p>Customize the contents of our underlying <code>Map</code> so that
+     * Customize the contents of our underlying {@code>Map} so that
      * it contains keys corresponding to all of the JavaBeans properties of
-     * the {@link Context} implementation class.</p>
+     * the {@link Context} implementation class.
      *
-     *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  writing this local property value
-     * @exception UnsupportedOperationException if this local property does not
-     *  have a write method.
+     * @throws IllegalArgumentException if an exception is thrown
+     *         writing this local property value
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a write method.
      */
     private void initialize() {
-
         // Retrieve the set of property descriptors for this Context class
         try {
-            pd = Introspector.getBeanInfo
-                (getClass()).getPropertyDescriptors();
+            pd = Introspector.getBeanInfo(getClass())
+                    .getPropertyDescriptors();
         } catch (IntrospectionException e) {
             pd = new PropertyDescriptor[0]; // Should never happen
         }
@@ -475,29 +429,28 @@ public class ContextBase extends HashMap implements Context {
             // Add descriptor (ignoring getClass() and isEmpty())
             if (!("class".equals(name) || "empty".equals(name))) {
                 if (descriptors == null) {
-                    descriptors = new HashMap((pd.length - 2));
+                    descriptors = new HashMap(pd.length - 2);
                 }
                 descriptors.put(name, pd[i]);
                 super.put(name, singleton);
             }
         }
-
     }
 
-
     /**
-     * <p>Get and return the value for the specified property.</p>
+     * Get and return the value for the specified property.
      *
-     * @param descriptor <code>PropertyDescriptor</code> for the
-     *  specified property
+     * @param descriptor {@code PropertyDescriptor} for the
+     *        specified property
      *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  reading this local property value
-     * @exception UnsupportedOperationException if this local property does not
-     *  have a read method.
+     * @return the value of the specified property
+     * 
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a read method.
      */
     private Object readProperty(PropertyDescriptor descriptor) {
-
         try {
             Method method = descriptor.getReadMethod();
             if (method == null) {
@@ -505,67 +458,57 @@ public class ContextBase extends HashMap implements Context {
                     ("Property '" + descriptor.getName()
                      + "' is not readable");
             }
-            return (method.invoke(this, zeroParams));
+            return method.invoke(this, zeroParams);
         } catch (Exception e) {
             throw new UnsupportedOperationException
                 ("Exception reading property '" + descriptor.getName()
                  + "': " + e.getMessage());
         }
-
     }
 
-
     /**
-     * <p>Remove the specified key-value pair, if it exists, and return
-     * <code>true</code>.  If this pair does not exist, return
-     * <code>false</code>.</p>
+     * Remove the specified key-value pair, if it exists, and return
+     * {@code true}. If this pair does not exist, return {@code false}.
      *
      * @param entry Key-value pair to be removed
      *
-     * @exception UnsupportedOperationException if the specified key
-     *  identifies a property instead of an attribute
+     * @throws UnsupportedOperationException if the specified key
+     *         identifies a property instead of an attribute.
      */
     private boolean remove(Map.Entry entry) {
-
         Map.Entry actual = entry(entry.getKey());
         if (actual == null) {
-            return (false);
+            return false;
         } else if (!entry.equals(actual)) {
-            return (false);
+            return false;
         } else {
             remove(entry.getKey());
-            return (true);
+            return true;
         }
-
     }
 
-
     /**
-     * <p>Return an <code>Iterator</code> over the set of values in this
-     * <code>Map</code>.</p>
+     * Return an {@code Iterator} over the set of values in this
+     * {@code Map}.
      */
     private Iterator valuesIterator() {
-
-        return (new ValuesIterator());
-
+        return new ValuesIterator();
     }
 
-
     /**
-     * <p>Set the value for the specified property.</p>
+     * Set the value for the specified property.
      *
-     * @param descriptor <code>PropertyDescriptor</code> for the
-     *  specified property
+     * @param descriptor {@code PropertyDescriptor} for the
+     *        specified property
      * @param value The new value for this property (must be of the
-     *  correct type)
+     *        correct type)
      *
-     * @exception IllegalArgumentException if an exception is thrown
-     *  writing this local property value
-     * @exception UnsupportedOperationException if this local property does not
-     *  have a write method.
+     * @throws IllegalArgumentException if an exception is thrown
+     *         writing this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a write method.
      */
     private void writeProperty(PropertyDescriptor descriptor, Object value) {
-
         try {
             Method method = descriptor.getWriteMethod();
             if (method == null) {
@@ -579,87 +522,89 @@ public class ContextBase extends HashMap implements Context {
                 ("Exception writing property '" + descriptor.getName()
                  + "': " + e.getMessage());
         }
-
     }
-
 
     // --------------------------------------------------------- Private Classes
 
-
     /**
-     * <p>Private implementation of <code>Set</code> that implements the
-     * semantics required for the value returned by <code>entrySet()</code>.</p>
+     * Private implementation of {@code Set} that implements the
+     * semantics required for the value returned by {@code entrySet()}.
      */
     private class EntrySetImpl extends AbstractSet {
 
+        @Override
         public void clear() {
             ContextBase.this.clear();
         }
 
+        @Override
         public boolean contains(Object obj) {
             if (!(obj instanceof Map.Entry)) {
-                return (false);
+                return false;
             }
             Map.Entry entry = (Map.Entry) obj;
             Entry actual = ContextBase.this.entry(entry.getKey());
             if (actual != null) {
-                return (actual.equals(entry));
+                return actual.equals(entry);
             } else {
-                return (false);
+                return false;
             }
         }
 
+        @Override
         public boolean isEmpty() {
-            return (ContextBase.this.isEmpty());
+            return ContextBase.this.isEmpty();
         }
 
+        @Override
         public Iterator iterator() {
-            return (ContextBase.this.entriesIterator());
+            return ContextBase.this.entriesIterator();
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry) {
-                return (ContextBase.this.remove((Map.Entry) obj));
+                return ContextBase.this.remove((Map.Entry) obj);
             } else {
-                return (false);
+                return false;
             }
         }
 
+        @Override
         public int size() {
-            return (ContextBase.this.size());
+            return ContextBase.this.size();
         }
-
     }
 
-
     /**
-     * <p>Private implementation of <code>Iterator</code> for the
-     * <code>Set</code> returned by <code>entrySet()</code>.</p>
+     * Private implementation of {@code Iterator} for the
+     * {@code Set} returned by {@code entrySet()}.
      */
     private class EntrySetIterator implements Iterator {
 
         private Map.Entry entry = null;
         private Iterator keys = ContextBase.this.keySet().iterator();
 
+        @Override
         public boolean hasNext() {
-            return (keys.hasNext());
+            return keys.hasNext();
         }
 
-        public Object next() {
+        @Override
+        public Map.Entry next() {
             entry = ContextBase.this.entry(keys.next());
-            return (entry);
+            return entry;
         }
 
+        @Override
         public void remove() {
             ContextBase.this.remove(entry);
         }
-
     }
 
-
     /**
-     * <p>Private implementation of <code>Map.Entry</code> for each item in
-     * <code>EntrySetImpl</code>.</p>
+     * Private implementation of {@code Map.Entry} for each item in
+     * {@code EntrySetImpl}.
      */
     private class MapEntryImpl implements Map.Entry {
 
@@ -671,117 +616,125 @@ public class ContextBase extends HashMap implements Context {
         private Object key;
         private Object value;
 
+        @Override
         public boolean equals(Object obj) {
             if (obj == null) {
-                return (false);
+                return false;
             } else if (!(obj instanceof Map.Entry)) {
-                return (false);
+                return false;
             }
             Map.Entry entry = (Map.Entry) obj;
             if (key == null) {
-                return (entry.getKey() == null);
+                return entry.getKey() == null;
             }
             if (key.equals(entry.getKey())) {
                 if (value == null) {
-                    return (entry.getValue() == null);
+                    return entry.getValue() == null;
                 } else {
-                    return (value.equals(entry.getValue()));
+                    return value.equals(entry.getValue());
                 }
             } else {
-                return (false);
+                return false;
             }
         }
 
+        @Override
         public Object getKey() {
-            return (this.key);
+            return this.key;
         }
 
+        @Override
         public Object getValue() {
-            return (this.value);
+            return this.value;
         }
 
+        @Override
         public int hashCode() {
-            return (((key == null) ? 0 : key.hashCode())
-                   ^ ((value == null) ? 0 : value.hashCode()));
+            return ((key == null ? 0 : key.hashCode())
+                   ^ (value == null ? 0 : value.hashCode()));
         }
 
+        @Override
         public Object setValue(Object value) {
             Object previous = this.value;
             ContextBase.this.put(this.key, value);
             this.value = value;
-            return (previous);
+            return previous;
         }
 
+        @Override
         public String toString() {
             return getKey() + "=" + getValue();
         }
     }
 
-
     /**
-     * <p>Private implementation of <code>Collection</code> that implements the
-     * semantics required for the value returned by <code>values()</code>.</p>
+     * Private implementation of {@code Collection} that implements the
+     * semantics required for the value returned by {@code values()}.
      */
     private class ValuesImpl extends AbstractCollection {
 
+        @Override
         public void clear() {
             ContextBase.this.clear();
         }
 
+        @Override
         public boolean contains(Object obj) {
             if (!(obj instanceof Map.Entry)) {
-                return (false);
+                return false;
             }
             Map.Entry entry = (Map.Entry) obj;
-            return (ContextBase.this.containsValue(entry.getValue()));
+            return ContextBase.this.containsValue(entry.getValue());
         }
 
+        @Override
         public boolean isEmpty() {
-            return (ContextBase.this.isEmpty());
+            return ContextBase.this.isEmpty();
         }
 
+        @Override
         public Iterator iterator() {
-            return (ContextBase.this.valuesIterator());
+            return ContextBase.this.valuesIterator();
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry) {
-                return (ContextBase.this.remove((Map.Entry) obj));
+                return ContextBase.this.remove((Map.Entry) obj);
             } else {
-                return (false);
+                return false;
             }
         }
 
         public int size() {
-            return (ContextBase.this.size());
+            return ContextBase.this.size();
         }
-
     }
 
-
     /**
-     * <p>Private implementation of <code>Iterator</code> for the
-     * <code>Collection</code> returned by <code>values()</code>.</p>
+     * Private implementation of {@code Iterator} for the
+     * {@code Collection} returned by {@code values()}.
      */
     private class ValuesIterator implements Iterator {
 
         private Map.Entry entry = null;
         private Iterator keys = ContextBase.this.keySet().iterator();
 
+        @Override
         public boolean hasNext() {
-            return (keys.hasNext());
+            return keys.hasNext();
         }
 
+        @Override
         public Object next() {
             entry = ContextBase.this.entry(keys.next());
-            return (entry.getValue());
+            return entry.getValue();
         }
 
+        @Override
         public void remove() {
             ContextBase.this.remove(entry);
         }
-
     }
-
-
 }

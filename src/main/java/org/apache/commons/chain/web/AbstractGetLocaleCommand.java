@@ -16,88 +16,73 @@
  */
 package org.apache.commons.chain.web;
 
-
 import java.util.Locale;
+
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Abstract base {@link Command} implementation for retrieving the
+ * Abstract base {@link Command} implementation for retrieving the
  * requested Locale from our {@link Context}, and storing it under the
- * context attribute key returned by the <code>localeKey</code> property.</p>
+ * context attribute key returned by the {@code localeKey} property.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public abstract class AbstractGetLocaleCommand implements Command {
-
 
     // -------------------------------------------------------------- Properties
 
-
     /**
-     * <p>The context attribute key used to store the <code>Locale</code>.</p>
+     * The context attribute key used to store the {@code Locale}.
      */
     private String localeKey = "locale";
 
-
     /**
-     * <p>Return the context attribute key under which we will store
-     * the request <code>Locale</code>.</p>
+     * Return the context attribute key under which we will store
+     * the request {@code Locale}.
      *
-     * @return The context attribute key of the request <code>Locale</code>.
+     * @return The context attribute key of the request {@code Locale}.
      */
     public String getLocaleKey() {
-
-    return (this.localeKey);
-
+        return this.localeKey;
     }
 
-
     /**
-     * <p>Set the context attribute key under which we will store
-     * the request <code>Locale</code>.</p>
+     * Set the context attribute key under which we will store
+     * the request {@code Locale}.
      *
      * @param localeKey The new context attribute key
      */
     public void setLocaleKey(String localeKey) {
-
-    this.localeKey = localeKey;
-
+        this.localeKey = localeKey;
     }
-
 
     // --------------------------------------------------------- Command Methods
 
-
     /**
-     * <p>Retrieve the <code>Locale</code> for this request, and store it
-     * under the specified context attribute.</p>
+     * Retrieve the {@code Locale} for this request, and store it
+     * under the specified context attribute.
      *
      * @param context The {@link Context} we are operating on
      *
-     * @return <code>false</code> so that processng will continue
+     * @return {@code false} so that processing will continue
+     *
      * @throws Exception If an error occurs during execution.
      */
     public boolean execute(Context context) throws Exception {
-
-    context.put(getLocaleKey(), getLocale(context));
-    return (false);
-
+        context.put(getLocaleKey(), getLocale(context));
+        return false;
     }
-
 
     // ------------------------------------------------------- Protected Methods
 
-
     /**
-     * <p>Retrieve and return the <code>Locale</code> for this request.</p>
+     * Retrieve and return the {@code Locale} for this request.
+     *
      * @param context The {@link Context} we are operating on.
+     *
      * @return The Locale for the request.
      */
     protected abstract Locale getLocale(Context context);
-
-
 }

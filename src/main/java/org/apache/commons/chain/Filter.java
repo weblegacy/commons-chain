@@ -16,53 +16,48 @@
  */
 package org.apache.commons.chain;
 
-
 /**
- * <p>A {@link Filter} is a specialized {@link Command} that also expects
+ * A {@link Filter} is a specialized {@link Command} that also expects
  * the {@link Chain} that is executing it to call the
- * <code>postprocess()</code> method if it called the <code>execute()</code>
- * method.  This promise must be fulfilled in spite of any possible
- * exceptions thrown by the <code>execute()</code> method of this
+ * {@code postprocess()} method if it called the {@code execute()}
+ * method. This promise must be fulfilled in spite of any possible
+ * exceptions thrown by the {@code execute()} method of this
  * {@link Command}, or any subsequent {@link Command} whose
- * <code>execute()</code> method was called.  The owning {@link Chain}
- * must call the <code>postprocess()</code> method of each {@link Filter}
+ * {@code execute()} method was called. The owning {@link Chain}
+ * must call the {@code postprocess()} method of each {@link Filter}
  * in a {@link Chain} in reverse order of the invocation of their
- * <code>execute()</code> methods.</p>
+ * {@code execute()} methods.
  *
  * <p>The most common use case for a {@link Filter}, as opposed to a
  * {@link Command}, is where potentially expensive resources must be acquired
  * and held until the processing of a particular request has been completed,
  * even if execution is delegated to a subsequent {@link Command} via the
- * <code>execute()</code> returning <code>false</code>.  A {@link Filter}
- * can reliably release such resources in the <code>postprocess()</code>
+ * {@code execute()} returning {@code false}. A {@link Filter}
+ * can reliably release such resources in the {@code postprocess()}
  * method, which is guaranteed to be called by the owning {@link Chain}.</p>
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public interface Filter extends Command {
 
-
     /**
-     * <p>Execute any cleanup activities, such as releasing resources that
-     * were acquired during the <code>execute()</code> method of this
-     * {@link Filter} instance.</p>
+     * Execute any cleanup activities, such as releasing resources that
+     * were acquired during the {@code execute()} method of this
+     * {@link Filter} instance.
      *
      * @param context The {@link Context} to be processed by this
-     *  {@link Filter}
-     * @param exception The <code>Exception</code> (if any) that was thrown
-     *  by the last {@link Command} that was executed; otherwise
-     *  <code>null</code>
+     *        {@link Filter}
+     * @param exception The {@code Exception} (if any) that was thrown
+     *        by the last {@link Command} that was executed; otherwise
+     *        {@code null}
      *
-     * @exception IllegalArgumentException if <code>context</code>
-     *  is <code>null</code>
+     * @return If a non-null {@code exception} was "handled" by this
+     *         method (and therefore need not be rethrown), return
+     *         {@code true}; otherwise return {@code false}
      *
-     * @return If a non-null <code>exception</code> was "handled" by this
-     *  method (and therefore need not be rethrown), return <code>true</code>;
-     *  otherwise return <code>false</code>
+     * @throws IllegalArgumentException if {@code context}
+     *         is {@code null}
      */
    boolean postprocess(Context context, Exception exception);
-
-
 }

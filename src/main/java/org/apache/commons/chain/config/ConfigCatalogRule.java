@@ -16,38 +16,34 @@
  */
 package org.apache.commons.chain.config;
 
-
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.digester.Rule;
 import org.xml.sax.Attributes;
 
-
 /**
- * <p>Digester rule that will cause the top-most element on the Digester
+ * Digester rule that will cause the top-most element on the Digester
  * stack (if it is a {@link Catalog} to be registered with the
- * {@link CatalogFactory} instance for our application.  If the attribute
+ * {@link CatalogFactory} instance for our application. If the attribute
  * specified to our constructor has a value, that will be used as the name
- * under which to register this {@link Catalog}.  Otherwise, this will
- * become the default {@link Catalog} for this application.</p>
+ * under which to register this {@link Catalog}. Otherwise, this will
+ * become the default {@link Catalog} for this application.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
 class ConfigCatalogRule extends Rule {
 
-
     // ----------------------------------------------------------- Constructors
 
-
     /**
-     * <p>Construct a new instance of this rule that looks for an attribute
-     * with the specified name.</p>
+     * Construct a new instance of this rule that looks for an attribute
+     * with the specified name.
      *
      * @param nameAttribute Name of the attribute containing the name under
-     *  which this command should be registered
+     *        which this command should be registered
      * @param catalogClass Name of the implementation class for newly
-     *  created {@link Catalog} instances
+     *        created {@link Catalog} instances
      */
     public ConfigCatalogRule(String nameAttribute, String catalogClass) {
         super();
@@ -55,38 +51,33 @@ class ConfigCatalogRule extends Rule {
         this.catalogClass = catalogClass;
     }
 
-
     // ----------------------------------------------------- Instance Variables
 
-
     /**
-     * <p>The fully qualified class name of a {@link Catalog} class to use for
-     * instantiating new instances.</p>
+     * The fully qualified class name of a {@link Catalog} class to use for
+     * instantiating new instances.
      */
     private String catalogClass = null;
 
-
     /**
-     * <p>The name of the attribute under which we can retrieve the name
-     * this catalog should be registered with (if any).</p>
+     * The name of the attribute under which we can retrieve the name
+     * this catalog should be registered with (if any).
      */
     private String nameAttribute = null;
 
-
     // --------------------------------------------------------- Public Methods
 
-
     /**
-     * <p>Retrieve or create a {@link Catalog} with the name specified by
-     * the <code>nameAttribute</code> attribute, or the default {@link Catalog}
-     * if there is no such attribute defined.  Push it onto the top of the
-     * stack.</p>
+     * Retrieve or create a {@link Catalog} with the name specified by
+     * the {@code nameAttribute} attribute, or the default {@link Catalog}
+     * if there is no such attribute defined. Push it onto the top of the
+     * stack.
      *
      * @param namespace the namespace URI of the matching element, or an
-     *   empty string if the parser is not namespace aware or the element has
-     *   no namespace
-     * @param name the local name if the parser is namespace aware, or just
-     *   the element name otherwise
+     *        empty string if the parser is not namespace aware or the
+     *        element has no namespace
+     * @param name the local name if the parser is namespace aware, or
+     *        just the element name otherwise
      * @param attributes The attribute list of this element
      */
     public void begin(String namespace, String name, Attributes attributes)
@@ -115,8 +106,5 @@ class ConfigCatalogRule extends Rule {
 
         // Push this Catalog onto the top of the stack
         digester.push(catalog);
-
     }
-
-
 }
