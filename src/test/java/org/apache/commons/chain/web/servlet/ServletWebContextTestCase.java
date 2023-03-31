@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.commons.chain.Context;
@@ -34,14 +33,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Collection;
 
-
 /**
- * Extension of <code>ContextBaseTestCase</code> to validate the
+ * Extension of {@code ContextBaseTestCase} to validate the
  * extra functionality of this implementation.
  */
-
 public class ServletWebContextTestCase extends ContextBaseTestCase {
-
 
     // ---------------------------------------------------------- Constructors
 
@@ -54,19 +50,29 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         super(name);
     }
 
-
     // ----------------------------------------------------- Instance Variables
 
-
-    // Servlet API Objects
+    /**
+     * Servlet API Objects - Context
+     */
     protected ServletContext scontext = null;
+
+    /**
+     * Servlet API Objects - Request
+     */
     protected HttpServletRequest request = null;
+
+    /**
+     * Servlet API Objects - Response
+     */
     protected HttpServletResponse response = null;
+
+    /**
+     * Servlet API Objects - Session
+     */
     protected HttpSession session = null;
 
-
     // -------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
@@ -101,14 +107,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         context = createContext();
     }
 
-
     /**
      * Return the tests included in this test suite.
      */
     public static Test suite() {
-        return (new TestSuite(ServletWebContextTestCase.class));
+        return new TestSuite(ServletWebContextTestCase.class);
     }
-
 
     /**
      * Tear down instance variables required by this test case.
@@ -121,13 +125,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         context = null;
     }
 
-
     // ------------------------------------------------ Individual Test Methods
 
-
-    // Test getApplicationScope()
+    /**
+     * Test {@code getApplicationScope()}
+     */
     public void testApplicationScope() {
-
         Map map = ((WebContext) context).getApplicationScope();
         assertNotNull(map);
 
@@ -185,11 +188,11 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         checkMapSize(map, 2);
     }
 
-
-    // Test equals() and hashCode()
-    // Copied from ContextBaseTestCase with customized creation of "other"
+    /**
+     * Test {@code equals()} and {@code hashCode()}
+     * Copied from ContextBaseTestCase with customized creation of "other"
+     */
     public void testEquals() {
-
         // FIXME - ServletWebContext needs a better equals()
 
         // Compare to self
@@ -211,13 +214,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         context.put("bop", "bop value");
         // assertTrue(!context.equals(other));
         assertTrue(context.hashCode() != other.hashCode());
+    }
 
-    }        
-
-
-    // Test getHeader()
+    /**
+     * Test {@code getHeader()}
+     */
     public void testHeader() {
-
         Map map = ((WebContext) context).getHeader();
         assertNotNull(map);
 
@@ -258,13 +260,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         } catch (UnsupportedOperationException e) {
             ; // expected result
         }
-
     }
 
-
-    // Test getHeaderValues()
+    /**
+     * Test {@code getHeaderValues()}
+     */
     public void testHeaderValues() {
-
         Map map = ((WebContext) context).getHeaderValues();
         assertNotNull(map);
 
@@ -316,13 +317,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         } catch (UnsupportedOperationException e) {
             ; // expected result
         }
-
     }
 
-
-    // Test getInitParam()
+    /**
+     * Test {@code getInitParam()}
+     */
     public void testInitParam() {
-
         Map map = ((WebContext) context).getInitParam();
         assertNotNull(map);
 
@@ -366,13 +366,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         } catch (UnsupportedOperationException e) {
             ; // expected result
         }
-
     }
 
-
-    // Test getParam()
+    /**
+     * Test {@code getParam()}
+     */
     public void testParam() {
-
         Map map = ((WebContext) context).getParam();
         assertNotNull(map);
 
@@ -412,13 +411,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         } catch (UnsupportedOperationException e) {
             ; // expected result
         }
-
     }
 
-
-    // Test getParamValues()
+    /**
+     * Test {@code getParamValues()}
+     */
     public void testParamValues() {
-
         Map map = ((WebContext) context).getParamValues();
         assertNotNull(map);
 
@@ -467,13 +465,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         } catch (UnsupportedOperationException e) {
             ; // expected result
         }
-
     }
 
-
-    // Test getCookies()
+    /**
+     * Test {@code getCookies()}
+     */
     public void testCookies() {
-
         Map map = ((WebContext) context).getCookies();
         assertNotNull(map);
 
@@ -515,12 +512,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         } catch (UnsupportedOperationException e) {
             ; // expected result
         }
-
     }
 
-    // Test state of newly created instance
+    /**
+     * Test state of newly created instance
+     */
     public void testPristine() {
-
         super.testPristine();
         ServletWebContext swcontext = (ServletWebContext) context;
 
@@ -554,13 +551,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
                      swcontext.get("requestScope"));
         assertTrue(swcontext.getSessionScope() ==
                      swcontext.get("sessionScope"));
-
     }
 
-
-    // Test release()
+    /**
+     * Test {@code release()}
+     */
     public void testRelease() {
-
         ServletWebContext swcontext = (ServletWebContext) context;
         swcontext.release();
 
@@ -585,13 +581,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         assertNull(swcontext.get("cookies"));
         assertNull(swcontext.get("requestScope"));
         assertNull(swcontext.get("sessionScope"));
-
     }
 
-
-    // Test getRequestScope()
+    /**
+     * Test {@code getRequestScope()}
+     */
     public void testRequestScope() {
-
         Map map = ((WebContext) context).getRequestScope();
         assertNotNull(map);
 
@@ -645,13 +640,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         assertEquals("putAll(1)", "One", map.get("1"));
         assertEquals("putAll(2)", "Two", map.get("2"));
         checkMapSize(map, 2);
-        
     }
 
-
-    // Test getSessionScope()
+    /**
+     * Test {@code getSessionScope()}
+     */
     public void testSessionScope() {
-
         Map map = ((WebContext) context).getSessionScope();
         assertNotNull(map);
 
@@ -706,13 +700,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         assertEquals("putAll(1)", "One", map.get("1"));
         assertEquals("putAll(2)", "Two", map.get("2"));
         checkMapSize(map, 2);
-
     }
 
-
-    // Test getSessionScope() without Session
+    /**
+     * Test {@code getSessionScope()} without Session
+     */
     public void testSessionScopeWithoutSession() {
-
         // Create a Context without a session
         ServletWebContext ctx = new ServletWebContext(scontext, 
            new MockHttpServletRequest(), response);
@@ -789,12 +782,9 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
             // expected: currently MockHttpServletRequest throws this
             //           when trying to create a HttpSession
         }
-
     }
 
-
     // ------------------------------------------------------- Protected Methods
-
 
     protected void checkMapSize(Map map, int size) {
         // Check reported size of the map
@@ -819,7 +809,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         assertEquals(size, map.values().size());
     }
 
-    // Test to ensure proper entrySet() and are modifiable optionally
+    /**
+     * Test to ensure proper entrySet() and are modifiable optionally
+     *
+     * @param map to test
+     * @param modifiable {@code true} if map is modifiable
+     */
     protected void checkEntrySet(Map map, boolean modifiable) {
         assertTrue(map.size() > 1);
         Set entries = map.entrySet();
@@ -839,13 +834,15 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
             // Should pass and not throw UnsupportedOperationException
             Map.Entry e = (Map.Entry)o;
             e.setValue(e.setValue(new Object()));
-        }    
-    }    
-
-    // Create a new instance of the appropriate Context type for this test case
-    protected Context createContext() {
-        return (new ServletWebContext(scontext, request, response));
+        }
     }
 
-
+    /**
+     * Create a new instance of the appropriate Context type for this test case
+     *
+     * @return a new instance of the appropriate Context type
+     */
+    protected Context createContext() {
+        return new ServletWebContext(scontext, request, response);
+    }
 }

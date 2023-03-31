@@ -24,8 +24,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpSession;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.chain.web.MapEntry;
 
 /**
@@ -35,22 +37,21 @@ import org.apache.commons.chain.web.MapEntry;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-final class ServletSessionScopeMap implements Map {
+final class ServletSessionScopeMap implements Map<String, Object> {
+
+    private HttpSession session = null;
+    private HttpServletRequest request = null;
 
     public ServletSessionScopeMap(HttpServletRequest request) {
         this.request = request;
         sessionExists();
     }
 
-    private HttpSession session = null;
-    private HttpServletRequest request = null;
-
-    @Override
     public void clear() {
         if (sessionExists()) {
-            Iterator keys = keySet().iterator();
+            Iterator<String> keys = keySet().iterator();
             while (keys.hasNext()) {
-                session.removeAttribute((String) keys.next());
+                session.removeAttribute(keys.next().toString());
             }
         }
     }
@@ -69,9 +70,9 @@ final class ServletSessionScopeMap implements Map {
         if (value == null || !sessionExists()) {
             return false;
         }
-        Enumeration keys = session.getAttributeNames();
+        Enumeration<?> keys = session.getAttributeNames();
         while (keys.hasMoreElements()) {
-            Object next = session.getAttribute((String) keys.nextElement());
+            Object next = session.getAttribute(keys.nextElement().toString());
             if (value.equals(next)) {
                 return true;
             }
@@ -79,15 +80,14 @@ final class ServletSessionScopeMap implements Map {
         return false;
     }
 
-    @Override
-    public Set entrySet() {
-        Set set = new HashSet();
+    public Set<Map.Entry<String, Object>> entrySet() {
+        Set<Map.Entry<String, Object>> set = new HashSet<>();
         if (sessionExists()) {
-            Enumeration keys = session.getAttributeNames();
+            Enumeration<?> keys = session.getAttributeNames();
             String key;
             while (keys.hasMoreElements()) {
-                key = (String) keys.nextElement();
-                set.add(new MapEntry(key, session.getAttribute(key), true));
+                key = keys.nextElement().toString();
+                set.add(new MapEntry<Object>(key, session.getAttribute(key), true));
             }
         }
         return (set);
@@ -130,20 +130,18 @@ final class ServletSessionScopeMap implements Map {
         }
     }
 
-    @Override
-    public Set keySet() {
-        Set set = new HashSet();
+    public Set<String> keySet() {
+        Set<String> set = new HashSet<>();
         if (sessionExists()) {
-            Enumeration keys = session.getAttributeNames();
+            Enumeration<?> keys = session.getAttributeNames();
             while (keys.hasMoreElements()) {
-                set.add(keys.nextElement());
+                set.add(keys.nextElement().toString());
             }
         }
         return set;
     }
 
-    @Override
-    public Object put(Object key, Object value) {
+    public Object put(String key, Object value) {
         if (value == null) {
             return remove(key);
         }
@@ -155,19 +153,13 @@ final class ServletSessionScopeMap implements Map {
             request = null;
         }
 
-        String skey = key(key);
-        Object previous = session.getAttribute(skey);
-        session.setAttribute(skey, value);
+        Object previous = session.getAttribute(key);
+        session.setAttribute(key, value);
         return previous;
     }
 
-    @Override
-    public void putAll(Map map) {
-        Iterator entries = map.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry)entries.next();
-            put(entry.getKey(), entry.getValue());
-        }
+    public void putAll(Map<? extends String, ? extends Object> map) {
+        map.forEach(this::put);
     }
 
     @Override
@@ -186,7 +178,7 @@ final class ServletSessionScopeMap implements Map {
     public int size() {
         int n = 0;
         if (sessionExists()) {
-            Enumeration keys = session.getAttributeNames();
+            Enumeration<?> keys = session.getAttributeNames();
             while (keys.hasMoreElements()) {
                 keys.nextElement();
                 n++;
@@ -195,13 +187,12 @@ final class ServletSessionScopeMap implements Map {
         return n;
     }
 
-    @Override
-    public Collection values() {
-        List list = new ArrayList();
+    public Collection<Object> values() {
+        List<Object> list = new ArrayList<>();
         if (sessionExists()) {
-            Enumeration keys = session.getAttributeNames();
+            Enumeration<?> keys = session.getAttributeNames();
             while (keys.hasMoreElements()) {
-                list.add(session.getAttribute((String) keys.nextElement()));
+                list.add(session.getAttribute(keys.nextElement().toString()));
             }
         }
         return list;

@@ -408,7 +408,7 @@ public class LookupCommand implements Filter {
     protected String getCommandName(Context context) {
         String name = getName();
         if (name == null) {
-            name = (String) context.get(getNameKey());
+            name = context.get(getNameKey()).toString();
         }
         return name;
     }

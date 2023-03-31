@@ -17,6 +17,7 @@
 package org.apache.commons.chain.config;
 
 import java.net.URL;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.RuleSet;

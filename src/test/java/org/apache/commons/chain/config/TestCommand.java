@@ -16,40 +16,33 @@
  */
 package org.apache.commons.chain.config;
 
-
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Test implementation of <code>Command</code> that exposes
- * configurable properties.</p>
+ * Test implementation of {@code Command} that exposes
+ * configurable properties.
  */
-
 public class TestCommand implements Command {
-
-
     private String bar = null;
     public String getBar() {
-    return (this.bar);
-    }
-    public void setBar(String bar) {
-    this.bar = bar;
+        return this.bar;
     }
 
+    public void setBar(String bar) {
+        this.bar = bar;
+    }
 
     private String foo = null;
     public String getFoo() {
-    return (this.foo);
-    }
-    public void setFoo(String foo) {
-    this.foo = foo;
+        return this.foo;
     }
 
+    public void setFoo(String foo) {
+        this.foo = foo;
+    }
 
     public boolean execute(Context context) throws Exception {
-    return (false);
+        return false;
     }
-
-
 }

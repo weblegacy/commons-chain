@@ -16,8 +16,10 @@
  */
 package org.apache.commons.chain.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -66,8 +68,8 @@ public class ChainBase implements Chain {
         if (commands == null) {
             throw new IllegalArgumentException();
         }
-        for (int i = 0; i < commands.length; i++) {
-            addCommand(commands[i]);
+        for (Command command : commands) {
+            addCommand(command);
         }
     }
 
@@ -81,14 +83,11 @@ public class ChainBase implements Chain {
      *         or one of the individual {@link Command} elements,
      *         is {@code null}
      */
-    public ChainBase(Collection commands) {
+    public ChainBase(Collection<Command> commands) {
         if (commands == null) {
             throw new IllegalArgumentException();
         }
-        Iterator elements = commands.iterator();
-        while (elements.hasNext()) {
-            addCommand((Command) elements.next());
-        }
+        commands.forEach(this::addCommand);
     }
 
     // ----------------------------------------------------- Instance Variables
@@ -98,7 +97,7 @@ public class ChainBase implements Chain {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    protected Command[] commands = new Command[0];
+    protected final ArrayList<Command> commands = new ArrayList<>();
 
     /**
      * Flag indicating whether the configuration of our commands list
@@ -124,10 +123,7 @@ public class ChainBase implements Chain {
         if (frozen) {
             throw new IllegalStateException();
         }
-        Command[] results = new Command[commands.length + 1];
-        System.arraycopy(commands, 0, results, 0, commands.length);
-        results[commands.length] = command;
-        commands = results;
+        commands.add(command);
     }
 
     /**
@@ -154,17 +150,20 @@ public class ChainBase implements Chain {
         }
 
         // Freeze the configuration of the command list
-        frozen = true;
+        if (!frozen) {
+            frozen = true;
+            commands.trimToSize();
+        }
 
         // Execute the commands in this list until one returns true
         // or throws an exception
         boolean saveResult = false;
         Exception saveException = null;
         int i = 0;
-        int n = commands.length;
+        int n = commands.size();
         for (i = 0; i < n; i++) {
             try {
-                saveResult = commands[i].execute(context);
+                saveResult = commands.get(i).execute(context);
                 if (saveResult) {
                     break;
                 }
@@ -181,11 +180,12 @@ public class ChainBase implements Chain {
         boolean handled = false;
         boolean result = false;
         for (int j = i; j >= 0; j--) {
-            if (commands[j] instanceof Filter) {
+            Command command = commands.get(j);
+            if (command instanceof Filter) {
                 try {
                     result =
-                        ((Filter) commands[j]).postprocess(context,
-                                                           saveException);
+                        ((Filter) command).postprocess(context,
+                                                       saveException);
                     if (result) {
                         handled = true;
                     }
@@ -210,7 +210,7 @@ public class ChainBase implements Chain {
      * {@link Chain}. This method is package private, and is used only
      * for the unit tests.
      */
-    Command[] getCommands() {
+    List<Command> getCommands() {
         return commands;
     }
 }

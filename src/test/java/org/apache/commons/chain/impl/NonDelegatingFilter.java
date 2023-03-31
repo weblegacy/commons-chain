@@ -16,67 +16,89 @@
  */
 package org.apache.commons.chain.impl;
 
-
+import org.apache.commons.chain.Chain;
+import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
 
-
 /**
- * <p>Implementation of {@link Filter} that logs its identifier and
- * and returns <code>true</code>.</p>
+ * Implementation of {@link Filter} that logs its identifier and
+ * and returns [@code true}.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class NonDelegatingFilter extends NonDelegatingCommand
     implements Filter {
 
-
     // ------------------------------------------------------------- Constructor
 
-
     public NonDelegatingFilter() {
-    this("", "");
+        this("", "");
     }
 
-
-    // Construct an instance that will log the specified identifier
+    /**
+     * Construct an instance that will log the specified identifier
+     *
+     * @param id1 first identifier to log for this Command instance
+     * @param id2 second identifier to log for this Command instance
+     */
     public NonDelegatingFilter(String id1, String id2) {
         super(id1);
         this.id2 = id2;
     }
 
-
     // -------------------------------------------------------------- Properties
-
 
     protected String id2 = null;
     public String getId2() {
-    return (this.id2);
+        return this.id2;
     }
     public void setId2(String id2) {
-    this.id2 = id2;
+        this.id2 = id2;
     }
-
 
     // --------------------------------------------------------- Command Methods
 
-
-    // Execution method for this Command
+    /**
+     * Execution method for this Command
+     *
+     * @param context The {@link Context} to be processed by this
+     *        {@link Command}
+     *
+     * @return {@code true} if the processing of this {@link Context}
+     *         has been completed, or {@code false} if the processing
+     *         of this {@link Context} should be delegated to a
+     *         subsequent {@link Command} in an enclosing {@link Chain}
+     *
+     * @throws Exception general purpose exception return
+     *         to indicate abnormal termination
+     * @throws IllegalArgumentException if {@code context}
+     *         is {@code null}
+     */
     public boolean execute(Context context) throws Exception {
-
         super.execute(context);
-        return (true);
-
+        return true;
     }
 
-
-    // Postprocess method for this Filter
+    /**
+     * Postprocess method for this Filter
+      *
+     * @param context The {@link Context} to be processed by this
+     *        {@link Filter}
+     * @param exception The {@code Exception} (if any) that was thrown
+     *        by the last {@link Command} that was executed; otherwise
+     *        {@code null}
+     *
+     * @return If a non-null {@code exception} was "handled" by this
+     *         method (and therefore need not be rethrown), return
+     *         {@code true}; otherwise return {@code false}
+     *
+     * @throws IllegalArgumentException if {@code context}
+     *         is {@code null}
+     */
     public boolean postprocess(Context context, Exception exception) {
         log(context, id2);
-        return (false);
+        return false;
     }
-
-
 }

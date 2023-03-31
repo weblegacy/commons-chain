@@ -16,16 +16,14 @@
  */
 package org.apache.commons.chain.web;
 
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-
-// Test case for org.apache.commons.chain.web.ChainResources
-
+/**
+ * Test case for {@link org.apache.commons.chain.web.ChainResources}
+ */
 public class ChainResourcesTestCase extends TestCase {
-
 
     // ---------------------------------------------------------- Constructors
 
@@ -38,27 +36,22 @@ public class ChainResourcesTestCase extends TestCase {
         super(name);
     }
 
-
     // ----------------------------------------------------- Instance Variables
 
-
-    protected TestData[] data = new TestData[]
-        {
-            new TestData("a,b,c",            new String[] {"a", "b", "c"}),
-            new TestData("a , b , c ",       new String[] {"a", "b", "c"}),
-            new TestData("a,\tb,\tc ",       new String[] {"a", "b", "c"}),
-            new TestData("\na,\nb,\nc\n",    new String[] {"a", "b", "c"}),
-            new TestData("a,,b,c ",          new String[] {"a", "b", "c"}),
-            new TestData(",a,b,,c,,",        new String[] {"a", "b", "c"}),
-            new TestData(null,               new String[] {}),
-            new TestData("",                 new String[] {}),
-            new TestData(",",                new String[] {}),
-            new TestData(",,",               new String[] {})
-        };
-
+    protected TestData[] data = new TestData[] {
+        new TestData("a,b,c",            new String[] {"a", "b", "c"}),
+        new TestData("a , b , c ",       new String[] {"a", "b", "c"}),
+        new TestData("a,\tb,\tc ",       new String[] {"a", "b", "c"}),
+        new TestData("\na,\nb,\nc\n",    new String[] {"a", "b", "c"}),
+        new TestData("a,,b,c ",          new String[] {"a", "b", "c"}),
+        new TestData(",a,b,,c,,",        new String[] {"a", "b", "c"}),
+        new TestData(null,               new String[] {}),
+        new TestData("",                 new String[] {}),
+        new TestData(",",                new String[] {}),
+        new TestData(",,",               new String[] {})
+    };
 
     // ------------------------------------------------ Individual Test Methods
-
 
     public void testGetPaths() throws Exception {
         for (int i = 0; i < data.length; i++) {
@@ -74,11 +67,11 @@ public class ChainResourcesTestCase extends TestCase {
         }
     }
 
-
     // ---------------------------------------------------------- Inner classes
 
-
-    // Container for test data for one test
+    /**
+     * Container for test data for one test
+     */
     public static final class TestData {
         private String input;
         private String[] expected;
@@ -93,5 +86,4 @@ public class ChainResourcesTestCase extends TestCase {
             return expected;
         }
     }
-
 }

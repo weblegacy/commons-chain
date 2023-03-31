@@ -17,12 +17,14 @@
 package org.apache.commons.chain.web;
 
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.config.ConfigParser;
@@ -91,6 +93,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Ted Husted
  */
 public class ChainServlet extends HttpServlet {
+    private static final long serialVersionUID = -6545081938506661333L;
 
     // ------------------------------------------------------ Manifest Constants
 
@@ -179,8 +182,10 @@ public class ChainServlet extends HttpServlet {
                 if (loader == null) {
                     loader = this.getClass().getClassLoader();
                 }
-                Class clazz = loader.loadClass(ruleSet);
-                parser.setRuleSet((RuleSet) clazz.newInstance());
+                Class<? extends RuleSet> clazz = loader
+                        .loadClass(ruleSet)
+                        .asSubclass(RuleSet.class);
+                parser.setRuleSet(clazz.getDeclaredConstructor().newInstance());
             } catch (Exception e) {
                 throw new ServletException("Exception initalizing RuleSet '"
                                            + ruleSet + "' instance", e);

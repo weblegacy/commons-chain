@@ -17,7 +17,9 @@
 package org.apache.commons.chain.web.faces;
 
 import java.util.Locale;
+
 import javax.faces.context.FacesContext;
+
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.AbstractGetLocaleCommand;
 

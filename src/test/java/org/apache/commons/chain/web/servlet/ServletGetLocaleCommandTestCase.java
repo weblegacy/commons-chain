@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,11 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
-
-// Test case for org.apache.commons.chain.web.servlet.ServletGetLocaleCommand
-
+/**
+ * Test case for {@link org.apache.commons.chain.web.servlet.ServletGetLocaleCommand}
+ */
 public class ServletGetLocaleCommandTestCase extends TestCase {
-
 
     // ---------------------------------------------------------- Constructors
 
@@ -45,115 +43,119 @@ public class ServletGetLocaleCommandTestCase extends TestCase {
         super(name);
     }
 
-
     // ----------------------------------------------------- Instance Variables
-
 
     protected Locale locale = null;
 
-    // Servlet API Objects
+    /**
+     * Servlet API Objects - Context
+     */
     protected ServletContext scontext = null;
+
+    /**
+     * Servlet API Objects - Request
+     */
     protected HttpServletRequest request = null;
+
+    /**
+     * Servlet API Objects - Response
+     */
     protected HttpServletResponse response = null;
+
+    /**
+     * Servlet API Objects - Session
+     */
     protected HttpSession session = null;
 
-    // Chain API Objects
+    /**
+     * Chain API Objects - context
+     */
     protected Context context = null;
+
+    /**
+     * Chain API Objects - command
+     */
     protected ServletGetLocaleCommand command = null;
 
-
     // -------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
      */
     public void setUp() {
+        locale = new Locale("en", "US");
 
-    locale = new Locale("en", "US");
-
-    // Set up Servlet API Objects
+        // Set up Servlet API Objects
         scontext = new MockServletContext();
         session = new MockHttpSession(scontext);
         request = new MockHttpServletRequest("/context", "/servlet",
                                              "/path/info", "a=b&c=d",
                                              session);
-    ((MockHttpServletRequest) request).setLocale(locale);
+        ((MockHttpServletRequest) request).setLocale(locale);
         response = new MockHttpServletResponse();
 
-    // Set up Chain API Objects
+        // Set up Chain API Objects
         context = new ServletWebContext(scontext, request, response);
-    command = new ServletGetLocaleCommand();
-
+        command = new ServletGetLocaleCommand();
     }
-
 
     /**
      * Return the tests included in this test suite.
      */
     public static Test suite() {
-
-        return (new TestSuite(ServletGetLocaleCommandTestCase.class));
-
+        return new TestSuite(ServletGetLocaleCommandTestCase.class);
     }
-
 
     /**
      * Tear down instance variables required by this test case.
      */
     public void tearDown() {
-
         scontext = null;
         session = null;
         request = null;
         response = null;
 
         context = null;
-    command = null;
-
+        command = null;
     }
-
 
     // ------------------------------------------------- Individual Test Methods
 
-
-    // Test configured behavior
+    /**
+     * Test configured behavior
+     *
+     * @throws Exception any error
+     */
     public void testConfigured() throws Exception {
-
-    command.setLocaleKey("special");
-    assertEquals("special", command.getLocaleKey());
-    check(context, command);
-
+        command.setLocaleKey("special");
+        assertEquals("special", command.getLocaleKey());
+        check(context, command);
     }
 
-
-    // Test default behavior
+    /**
+     * Test default behavior
+     *
+     * @throws Exception any error
+     */
     public void testDefaut() throws Exception {
-
-    assertEquals("locale", command.getLocaleKey());
-    check(context, command);
-
+        assertEquals("locale", command.getLocaleKey());
+        check(context, command);
     }
-
 
     // --------------------------------------------------------- Support Methods
 
-
     protected void check(Context context, ServletGetLocaleCommand command)
-    throws Exception {
+            throws Exception {
 
-    String localeKey = command.getLocaleKey();
-    assertNotNull(localeKey);
-    Object value = context.get(localeKey);
-    assertNull(value);
-    boolean result = command.execute(context);
-    assertFalse(result);
-    value = context.get(localeKey);
-    assertNotNull(value);
-    assertTrue(value instanceof Locale);
-    assertEquals(locale, (Locale) value);
-
+        String localeKey = command.getLocaleKey();
+        assertNotNull(localeKey);
+        Object value = context.get(localeKey);
+        assertNull(value);
+        boolean result = command.execute(context);
+        assertFalse(result);
+        value = context.get(localeKey);
+        assertNotNull(value);
+        assertTrue(value instanceof Locale);
+        assertEquals(locale, (Locale) value);
     }
-
-
 }

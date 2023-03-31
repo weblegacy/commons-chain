@@ -23,8 +23,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+
 import javax.portlet.PortletRequest;
+
 import org.apache.commons.chain.web.MapEntry;
 
 /**
@@ -34,13 +37,13 @@ import org.apache.commons.chain.web.MapEntry;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-final class PortletParamValuesMap implements Map {
+final class PortletParamValuesMap implements Map<String, String[]> {
+
+    private final PortletRequest request;
 
     public PortletParamValuesMap(PortletRequest request) {
         this.request = request;
     }
-
-    private PortletRequest request = null;
 
     @Override
     public void clear() {
@@ -54,9 +57,9 @@ final class PortletParamValuesMap implements Map {
 
     @Override
     public boolean containsValue(Object value) {
-        Iterator values = values().iterator();
+        Iterator<String[]> values = values().iterator();
         while (values.hasNext()) {
-            if (value.equals(values.next())) {
+            if (Objects.deepEquals(value, values.next())) {
                 return true;
             }
         }
@@ -64,13 +67,13 @@ final class PortletParamValuesMap implements Map {
     }
 
     @Override
-    public Set entrySet() {
-        Set set = new HashSet();
-        Enumeration keys = request.getParameterNames();
+    public Set<Map.Entry<String, String[]>> entrySet() {
+        Set<Map.Entry<String, String[]>> set = new HashSet<>();
+        Enumeration<?> keys = request.getParameterNames();
         String key;
         while (keys.hasMoreElements()) {
-            key = (String) keys.nextElement();
-            set.add(new MapEntry(key, request.getParameterValues(key), false));
+            key = keys.nextElement().toString();
+            set.add(new MapEntry<String[]>(key, request.getParameterValues(key), false));
         }
         return set;
     }
@@ -81,7 +84,7 @@ final class PortletParamValuesMap implements Map {
     }
 
     @Override
-    public Object get(Object key) {
+    public String[] get(Object key) {
         return request.getParameterValues(key(key));
     }
 
@@ -96,34 +99,31 @@ final class PortletParamValuesMap implements Map {
     }
 
     @Override
-    public Set keySet() {
-        Set set = new HashSet();
-        Enumeration keys = request.getParameterNames();
+    public Set<String> keySet() {
+        Set<String> set = new HashSet<>();
+        Enumeration<?> keys = request.getParameterNames();
         while (keys.hasMoreElements()) {
-            set.add(keys.nextElement());
+            set.add(keys.nextElement().toString());
         }
         return set;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public String[] put(String key, String[] value) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void putAll(Map map) {
+    public void putAll(Map<? extends String, ? extends String[]> map) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Object remove(Object key) {
+    public String[] remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public int size() {
         int n = 0;
-        Enumeration keys = request.getParameterNames();
+        Enumeration<?> keys = request.getParameterNames();
         while (keys.hasMoreElements()) {
             keys.nextElement();
             n++;
@@ -131,17 +131,16 @@ final class PortletParamValuesMap implements Map {
         return n;
     }
 
-    @Override
-    public Collection values() {
-        List list = new ArrayList();
-        Enumeration keys = request.getParameterNames();
+    public Collection<String[]> values() {
+        List<String[]> list = new ArrayList<>();
+        Enumeration<?> keys = request.getParameterNames();
         while (keys.hasMoreElements()) {
-            list.add(request.getParameterValues((String) keys.nextElement()));
+            list.add(request.getParameterValues(keys.nextElement().toString()));
         }
         return list;
     }
 
-    private String key(Object key) {
+    private static String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {

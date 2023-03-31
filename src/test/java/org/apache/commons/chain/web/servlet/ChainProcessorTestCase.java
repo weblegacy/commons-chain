@@ -16,8 +16,8 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import java.io.ByteArrayInputStream;
+
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -46,12 +46,12 @@ public class ChainProcessorTestCase extends TestCase {
 
     /**
      * Return the tests included in this test suite.
+     *
      * @return the test suite
      */
     public static Test suite() {
         return new TestSuite(ChainProcessorTestCase.class);
     }
-
 
     /**
      * Set up instance variables required by this test case.
@@ -69,7 +69,6 @@ public class ChainProcessorTestCase extends TestCase {
      * Test serialization.
      */
     public void testSerialize() {
-
         // Initialize a ChainProcessor
         ChainProcessor processor = initServlet(new ChainProcessor(), new MockServletConfig("test"));
 
@@ -82,6 +81,7 @@ public class ChainProcessorTestCase extends TestCase {
      *
      * @param processor The chain processor instance
      * @param config The servlet config to initialize with
+     *
      * @return The chain processor
      */
     private ChainProcessor initServlet(ChainProcessor processor, ServletConfig config) {
@@ -98,7 +98,6 @@ public class ChainProcessorTestCase extends TestCase {
      * Do serialization and deserialization.
      */
     private Object serializeDeserialize(Object target, String text) {
-
         // Serialize the test object
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
@@ -121,7 +120,7 @@ public class ChainProcessorTestCase extends TestCase {
         } catch (Exception e) {
             fail(text + ": Exception during deserialization: " + e);
         }
-        return result;
 
+        return result;
     }
 }

@@ -16,46 +16,46 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Implementation of {@link Command} that logs its identifier and
- * and throws an Exception.</p>
+ * Implementation of {@link Command} that logs its identifier and
+ * and throws an Exception.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
 public class ExceptionCommand extends NonDelegatingCommand {
 
-
     // ------------------------------------------------------------ Constructor
 
-
     public ExceptionCommand() {
-    this("");
+        this("");
     }
 
-
-    // Construct an instance that will log the specified identifier
+    /**
+     * Construct an instance that will log the specified identifier
+     *
+     * @param id identifier to log for this Command instance
+     */
     public ExceptionCommand(String id) {
         super(id);
     }
 
-
     // -------------------------------------------------------- Command Methods
 
-
-    // Execution method for this Command
+    /**
+     * Execution method for this Command
+     *
+     * @param context
+     * @param chain
+     *
+     * @throws Exception any error
+     */
     public void execute(Context context, Chain chain) throws Exception {
-
         super.execute(context);
         throw new ArithmeticException(this.id);
-
     }
-
-
 }

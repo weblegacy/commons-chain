@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
@@ -27,11 +26,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
-
-// Mock Object for PortletContext
+/**
+ * Mock Object for {@code PortletContext}
+ */
 public class MockPortletContext implements PortletContext {
-
-
     private int majorVersion = 1;
     private int minorVersion = 0;
     private String portletContextName = "MockPortletContext";
@@ -39,9 +37,7 @@ public class MockPortletContext implements PortletContext {
     private Hashtable parameters = new Hashtable();
     private Hashtable attributes = new Hashtable();
 
-
     // --------------------------------------------------------- Public Methods
-
 
     public void setPortletContextName(String portletContextName) {
         this.portletContextName = portletContextName;
@@ -55,9 +51,7 @@ public class MockPortletContext implements PortletContext {
         parameters.put(name, value);
     }
 
-
     // ------------------------------------------------- PortletContext Methods
-
 
     public Object getAttribute(String name) {
         return attributes.get(name);
@@ -134,5 +128,4 @@ public class MockPortletContext implements PortletContext {
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
     }
-
 }

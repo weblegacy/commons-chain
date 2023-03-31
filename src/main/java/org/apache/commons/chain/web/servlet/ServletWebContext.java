@@ -17,9 +17,12 @@
 package org.apache.commons.chain.web.servlet;
 
 import java.util.Map;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.chain.web.WebContext;
 
 /**
@@ -32,6 +35,77 @@ import org.apache.commons.chain.web.WebContext;
  * @version $Revision$ $Date$
  */
 public class ServletWebContext extends WebContext {
+    private static final long serialVersionUID = 5302874006663111922L;
+
+    // ------------------------------------------------------ Instance Variables
+
+    /**
+     * The lazily instantiated {@code Map} of application scope
+     * attributes.
+     */
+    private Map<String, Object> applicationScope = null;
+
+    /**
+     * The {@code ServletContext} for this web application.
+     */
+    protected ServletContext context = null;
+
+    /**
+     * The lazily instantiated {@code Map} of header name-value
+     * combinations (immutable).
+     */
+    private Map<String, String> header = null;
+
+    /**
+     * The lazily instantiated {@code Map} of header name-values
+     * combinations (immutable).
+     */
+    private Map<String, String[]> headerValues = null;
+
+    /**
+     * The lazily instantiated {@code Map} of context initialization
+     * parameters.
+     */
+    private Map<String, String> initParam = null;
+
+    /**
+     * The lazily instantiated {@code Map} of cookies.
+     */
+    private Map<String, Cookie> cookieValues = null;
+
+    /**
+     * The lazily instantiated {@code Map} of request
+     * parameter name-value.
+     */
+    private Map<String, String> param = null;
+
+    /**
+     * The lazily instantiated {@code Map} of request
+     * parameter name-values.
+     */
+    private Map<String, String[]> paramValues = null;
+
+    /**
+     * The {@code HttpServletRequest} for this request.
+     */
+    protected HttpServletRequest request = null;
+
+    /**
+     * The lazily instantiated {@code Map} of request scope
+     * attributes.
+     */
+    private Map<String, Object> requestScope = null;
+
+    /**
+     * The {@code HttpServletResponse} for this request.
+     */
+    protected HttpServletResponse response = null;
+
+    /**
+     * The lazily instantiated {@code Map} of session scope
+     * attributes.
+     */
+    private Map<String, Object> sessionScope = null;
 
     // ------------------------------------------------------------ Constructors
 
@@ -55,76 +129,6 @@ public class ServletWebContext extends WebContext {
 
         initialize(context, request, response);
     }
-
-    // ------------------------------------------------------ Instance Variables
-
-    /**
-     * The lazily instantiated {@code Map} of application scope
-     * attributes.
-     */
-    private Map applicationScope = null;
-
-    /**
-     * The {@code ServletContext} for this web application.
-     */
-    protected ServletContext context = null;
-
-    /**
-     * The lazily instantiated {@code Map} of header name-value
-     * combinations (immutable).
-     */
-    private Map header = null;
-
-    /**
-     * The lazily instantiated {@code Map} of header name-values
-     * combinations (immutable).
-     */
-    private Map headerValues = null;
-
-    /**
-     * The lazily instantiated {@code Map} of context initialization
-     * parameters.
-     */
-    private Map initParam = null;
-
-    /**
-     * The lazily instantiated {@code Map} of cookies.
-     */
-    private Map cookieValues = null;
-
-    /**
-     * The lazily instantiated {@code Map} of request
-     * parameter name-value.
-     */
-    private Map param = null;
-
-    /**
-     * The lazily instantiated {@code Map} of request
-     * parameter name-values.
-     */
-    private Map paramValues = null;
-
-    /**
-     * The {@code HttpServletRequest} for this request.
-     */
-    protected HttpServletRequest request = null;
-
-    /**
-     * The lazily instantiated {@code Map} of request scope
-     * attributes.
-     */
-    private Map requestScope = null;
-
-    /**
-     * The {@code HttpServletResponse} for this request.
-     */
-    protected HttpServletResponse response = null;
-
-    /**
-     * The lazily instantiated {@code Map} of session scope
-     * attributes.
-     */
-    private Map sessionScope = null;
 
     // ---------------------------------------------------------- Public Methods
 
@@ -207,7 +211,7 @@ public class ServletWebContext extends WebContext {
      * @return Application scope Map.
      */
     @Override
-    public Map getApplicationScope() {
+    public Map<String, Object> getApplicationScope() {
         if (applicationScope == null && context != null) {
             applicationScope = new ServletApplicationScopeMap(context);
         }
@@ -220,7 +224,7 @@ public class ServletWebContext extends WebContext {
      * @return Header values Map.
      */
     @Override
-    public Map getHeader() {
+    public Map<String, String> getHeader() {
         if (header == null && request != null) {
             header = new ServletHeaderMap(request);
         }
@@ -233,7 +237,7 @@ public class ServletWebContext extends WebContext {
      * @return Header values Map.
      */
     @Override
-    public Map getHeaderValues() {
+    public Map<String, String[]> getHeaderValues() {
         if (headerValues == null && request != null) {
             headerValues = new ServletHeaderValuesMap(request);
         }
@@ -246,7 +250,7 @@ public class ServletWebContext extends WebContext {
      * @return Initialization parameter Map.
      */
     @Override
-    public Map getInitParam() {
+    public Map<String, String> getInitParam() {
         if (initParam == null && context != null) {
             initParam = new ServletInitParamMap(context);
         }
@@ -259,7 +263,7 @@ public class ServletWebContext extends WebContext {
      * @return Request parameter Map.
      */
     @Override
-    public Map getParam() {
+    public Map<String, String> getParam() {
         if (param == null && request != null) {
             param = new ServletParamMap(request);
         }
@@ -272,7 +276,7 @@ public class ServletWebContext extends WebContext {
      * @return Request parameter Map.
      */
     @Override
-    public Map getParamValues() {
+    public Map<String, String[]> getParamValues() {
         if (paramValues == null && request != null) {
             paramValues = new ServletParamValuesMap(request);
         }
@@ -286,7 +290,7 @@ public class ServletWebContext extends WebContext {
      * @since Chain 1.1
      */
     @Override
-    public Map getCookies() {
+    public Map<String, Cookie> getCookies() {
         if (cookieValues == null && request != null) {
             cookieValues = new ServletCookieMap(request);
         }
@@ -299,7 +303,7 @@ public class ServletWebContext extends WebContext {
      * @return Request scope Map.
      */
     @Override
-    public Map getRequestScope() {
+    public Map<String, Object> getRequestScope() {
         if (requestScope == null && request != null) {
             requestScope = new ServletRequestScopeMap(request);
         }
@@ -312,7 +316,7 @@ public class ServletWebContext extends WebContext {
      * @return Session scope Map.
      */
     @Override
-    public Map getSessionScope() {
+    public Map<String, Object> getSessionScope() {
         if (sessionScope == null && request != null) {
             sessionScope = new ServletSessionScopeMap(request);
         }

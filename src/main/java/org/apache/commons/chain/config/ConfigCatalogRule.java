@@ -34,6 +34,20 @@ import org.xml.sax.Attributes;
  */
 class ConfigCatalogRule extends Rule {
 
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The fully qualified class name of a {@link Catalog} class to use for
+     * instantiating new instances.
+     */
+    private final String catalogClass;
+
+    /**
+     * The name of the attribute under which we can retrieve the name
+     * this catalog should be registered with (if any).
+     */
+    private final String nameAttribute;
+
     // ----------------------------------------------------------- Constructors
 
     /**
@@ -50,20 +64,6 @@ class ConfigCatalogRule extends Rule {
         this.nameAttribute = nameAttribute;
         this.catalogClass = catalogClass;
     }
-
-    // ----------------------------------------------------- Instance Variables
-
-    /**
-     * The fully qualified class name of a {@link Catalog} class to use for
-     * instantiating new instances.
-     */
-    private String catalogClass = null;
-
-    /**
-     * The name of the attribute under which we can retrieve the name
-     * this catalog should be registered with (if any).
-     */
-    private String nameAttribute = null;
 
     // --------------------------------------------------------- Public Methods
 
@@ -95,8 +95,10 @@ class ConfigCatalogRule extends Rule {
 
         // Create and register a new Catalog instance if necessary
         if (catalog == null) {
-            Class clazz = digester.getClassLoader().loadClass(catalogClass);
-            catalog = (Catalog) clazz.newInstance();
+            Class<? extends Catalog> clazz = digester.getClassLoader()
+                    .loadClass(catalogClass)
+                    .asSubclass(Catalog.class);
+            catalog = clazz.getDeclaredConstructor().newInstance();
             if (nameValue == null) {
                 factory.setCatalog(catalog);
             } else {

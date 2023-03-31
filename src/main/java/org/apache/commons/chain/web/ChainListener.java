@@ -21,9 +21,11 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.config.ConfigParser;
@@ -183,8 +185,10 @@ public class ChainListener implements ServletContextListener {
                 if (loader == null) {
                     loader = this.getClass().getClassLoader();
                 }
-                Class clazz = loader.loadClass(ruleSet);
-                parser.setRuleSet((RuleSet) clazz.newInstance());
+                Class<? extends RuleSet> clazz = loader
+                        .loadClass(ruleSet)
+                        .asSubclass(RuleSet.class);
+                parser.setRuleSet(clazz.getDeclaredConstructor().newInstance());
             } catch (Exception e) {
                 throw new RuntimeException("Exception initalizing RuleSet '"
                                            + ruleSet + "' instance: "
@@ -225,15 +229,15 @@ public class ChainListener implements ServletContextListener {
     private void parseJarResources(ServletContext context,
                                    ConfigParser parser, Log log) {
 
-        Set jars = context.getResourcePaths("/WEB-INF/lib");
+        Set<?> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
-            jars = new HashSet();
+            jars = new HashSet<String>();
         }
         String path = null;
-        Iterator paths = jars.iterator();
+        Iterator<?> paths = jars.iterator();
         while (paths.hasNext()) {
 
-            path = (String) paths.next();
+            path = paths.next().toString();
             if (!path.endsWith(".jar")) {
                 continue;
             }
@@ -288,15 +292,15 @@ public class ChainListener implements ServletContextListener {
     private void parseJarResources(Catalog catalog, ServletContext context,
                                    ConfigParser parser, Log log) {
 
-        Set jars = context.getResourcePaths("/WEB-INF/lib");
+        Set<?> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
-            jars = new HashSet();
+            jars = new HashSet<String>();
         }
         String path = null;
-        Iterator paths = jars.iterator();
+        Iterator<?> paths = jars.iterator();
         while (paths.hasNext()) {
 
-            path = (String) paths.next();
+            path = paths.next().toString();
             if (!path.endsWith(".jar")) {
                 continue;
             }

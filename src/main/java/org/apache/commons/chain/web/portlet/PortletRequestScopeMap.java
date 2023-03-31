@@ -24,7 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.portlet.PortletRequest;
+
 import org.apache.commons.chain.web.MapEntry;
 
 /**
@@ -34,19 +36,19 @@ import org.apache.commons.chain.web.MapEntry;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-final class PortletRequestScopeMap implements Map {
+final class PortletRequestScopeMap implements Map<String, Object> {
+
+    private final PortletRequest request;
 
     public PortletRequestScopeMap(PortletRequest request) {
         this.request = request;
     }
 
-    private PortletRequest request = null;
-
     @Override
     public void clear() {
-        Iterator keys = keySet().iterator();
+        Iterator<String> keys = keySet().iterator();
         while (keys.hasNext()) {
-            request.removeAttribute((String) keys.next());
+            request.removeAttribute(keys.next());
         }
     }
 
@@ -60,9 +62,9 @@ final class PortletRequestScopeMap implements Map {
         if (value == null) {
             return false;
         }
-        Enumeration keys = request.getAttributeNames();
+        Enumeration<?> keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
-            Object next = request.getAttribute((String) keys.nextElement());
+            Object next = request.getAttribute(keys.nextElement().toString());
             if (value.equals(next)) {
                 return true;
             }
@@ -71,13 +73,13 @@ final class PortletRequestScopeMap implements Map {
     }
 
     @Override
-    public Set entrySet() {
-        Set set = new HashSet();
-        Enumeration keys = request.getAttributeNames();
+    public Set<Map.Entry<String, Object>> entrySet() {
+        Set<Map.Entry<String, Object>> set = new HashSet<>();
+        Enumeration<?> keys = request.getAttributeNames();
         String key;
         while (keys.hasMoreElements()) {
-            key = (String) keys.nextElement();
-            set.add(new MapEntry(key, request.getAttribute(key), true));
+            key = keys.nextElement().toString();
+            set.add(new MapEntry<Object>(key, request.getAttribute(key), true));
         }
         return set;
     }
@@ -103,33 +105,28 @@ final class PortletRequestScopeMap implements Map {
     }
 
     @Override
-    public Set keySet() {
-        Set set = new HashSet();
-        Enumeration keys = request.getAttributeNames();
+    public Set<String> keySet() {
+        Set<String> set = new HashSet<>();
+        Enumeration<?> keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
-            set.add(keys.nextElement());
+            set.add(keys.nextElement().toString());
         }
         return set;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public Object put(String key, Object value) {
         if (value == null) {
             return remove(key);
         }
-        String skey = key(key);
-        Object previous = request.getAttribute(skey);
-        request.setAttribute(skey, value);
+        Object previous = request.getAttribute(key);
+        request.setAttribute(key, value);
         return previous;
     }
 
     @Override
-    public void putAll(Map map) {
-        Iterator entries = map.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry)entries.next();
-            put(entry.getKey(), entry.getValue());
-        }
+    public void putAll(Map<? extends String, ? extends Object> map) {
+        map.forEach(this::put);
     }
 
     @Override
@@ -143,7 +140,7 @@ final class PortletRequestScopeMap implements Map {
     @Override
     public int size() {
         int n = 0;
-        Enumeration keys = request.getAttributeNames();
+        Enumeration<?> keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
             keys.nextElement();
             n++;
@@ -152,11 +149,11 @@ final class PortletRequestScopeMap implements Map {
     }
 
     @Override
-    public Collection values() {
-        List list = new ArrayList();
-        Enumeration keys = request.getAttributeNames();
+    public Collection<Object> values() {
+        List<Object> list = new ArrayList<>();
+        Enumeration<?> keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
-            list.add(request.getAttribute((String) keys.nextElement()));
+            list.add(request.getAttribute(keys.nextElement().toString()));
         }
         return list;
     }

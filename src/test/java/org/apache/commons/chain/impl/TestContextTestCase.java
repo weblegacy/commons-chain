@@ -16,19 +16,15 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.commons.chain.Context;
 
-
 /**
- * Extension of <code>ContextBaseTestCase</code> to validate property
+ * Extension of {@code ContextBaseTestCase} to validate property
  * delegation.
  */
-
 public class TestContextTestCase extends ContextBaseTestCase {
-
 
     // ------------------------------------------------------------ Constructors
 
@@ -41,9 +37,7 @@ public class TestContextTestCase extends ContextBaseTestCase {
         super(name);
     }
 
-
     // ---------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
@@ -52,32 +46,29 @@ public class TestContextTestCase extends ContextBaseTestCase {
         context = createContext();
     }
 
-
     /**
      * Return the tests included in this test suite.
      */
     public static Test suite() {
-        return (new TestSuite(TestContextTestCase.class));
+        return new TestSuite(TestContextTestCase.class);
     }
-
 
     // ------------------------------------------------- Individual Test Methods
 
-
-    // Test state of newly created instance
+    /**
+     * Test state of newly created instance
+     */
     public void testPristine() {
-
         super.testPristine();
         assertEquals("readOnly", (String) context.get("readOnly"));
         assertEquals("readWrite", (String) context.get("readWrite"));
         assertEquals("writeOnly", ((TestContext) context).returnWriteOnly());
-
     }
 
-
-    // Test a read only property on the Context implementation class
+    /**
+     * Test a read only property on the Context implementation class
+     */
     public void testReadOnly() {
-
         Object readOnly = context.get("readOnly");
         assertNotNull("readOnly found", readOnly);
         assertTrue("readOnly String",
@@ -92,13 +83,12 @@ public class TestContextTestCase extends ContextBaseTestCase {
         }
         assertEquals("readOnly unchanged", "readOnly",
                      (String) context.get("readOnly"));
-
     }
 
-
-    // Test a read write property on the Context implementation class
+    /**
+     * Test a read write property on the Context implementation class
+     */
     public void testReadWrite() {
-
         Object readWrite = context.get("readWrite");
         assertNotNull("readWrite found", readWrite);
         assertTrue("readWrite String",
@@ -111,13 +101,12 @@ public class TestContextTestCase extends ContextBaseTestCase {
         assertTrue("readWrite String",
                    readWrite instanceof String);
         assertEquals("readWrite value", "new readWrite", readWrite);
-
     }
 
-
-    // Test a write only property on the Context implementation class
+    /**
+     * Test a write only property on the Context implementation class
+     */
     public void testWriteOnly() {
-
         Object writeOnly = ((TestContext) context).returnWriteOnly();
         assertNotNull("writeOnly found", writeOnly);
         assertTrue("writeOnly String",
@@ -130,17 +119,14 @@ public class TestContextTestCase extends ContextBaseTestCase {
         assertTrue("writeOnly String",
                    writeOnly instanceof String);
         assertEquals("writeOnly value", "new writeOnly", writeOnly);
-
     }
-
 
     // ------------------------------------------------------- Protected Methods
 
-
-    // Create a new instance of the appropriate Context type for this test case
+    /**
+     * Create a new instance of the appropriate Context type for this test case
+     */
     protected Context createContext() {
-        return (new TestContext());
+        return new TestContext();
     }
-
-
 }

@@ -16,39 +16,38 @@
  */
 package org.apache.commons.chain.impl;
 
-
 /**
- * Subclass of <code>ContextBase</code> to exercize the automatic
- * delegation to properties of the <code>Context</code> class.
+ * Subclass of {@code ContextBase} to exercise the automatic
+ * delegation to properties of the {@code Context} class.
  */
-
 public class TestContext extends ContextBase {
-
-
-    // Read-only property
+    /**
+     * Read-only property
+     */
     private String readOnly = "readOnly";
     public String getReadOnly() {
-        return (this.readOnly);
+        return this.readOnly;
     }
 
-    // Read-write property
+    /**
+     * Read-write property
+     */
     private String readWrite = "readWrite";
     public String getReadWrite() {
-        return (this.readWrite);
+        return this.readWrite;
     }
     public void setReadWrite(String readWrite) {
         this.readWrite = readWrite;
     }
 
-    // Write-only property
+    /**
+     * Write-only property
+     */
     private String writeOnly = "writeOnly";
     public String returnWriteOnly() { // Not a JavaBeans getter
-        return (this.writeOnly);
+        return this.writeOnly;
     }
     public void setWriteOnly(String writeOnly) {
         this.writeOnly = writeOnly;
     }
-
-
 }
-

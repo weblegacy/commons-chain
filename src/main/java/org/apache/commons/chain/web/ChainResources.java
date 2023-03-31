@@ -19,7 +19,9 @@ package org.apache.commons.chain.web;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletContext;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.config.ConfigParser;
 import org.apache.commons.logging.Log;
@@ -213,25 +215,26 @@ final class ChainResources {
      * @since Chain 1.1
      */
     static String[] getResourcePaths(String resources) {
-        List paths = new ArrayList();
+        List<String> paths = new ArrayList<>();
 
         if (resources != null) {
             String path;
             int comma;
 
-            while ((comma = resources.indexOf(',')) >= 0) {
-                path = resources.substring(0, comma).trim();
+            int lastComma = 0;
+            while ((comma = resources.indexOf(',', lastComma)) >= 0) {
+                path = resources.substring(lastComma, comma).trim();
                 if (path.length() > 0) {
                     paths.add(path);
                 }
-                resources = resources.substring(comma + 1);
+                lastComma = comma + 1;
             }
-            resources = resources.trim();
-            if (resources.length() > 0) {
-                paths.add(resources);
+            path = resources.substring(lastComma).trim();
+            if (path.length() > 0) {
+                paths.add(path);
             }
         }
 
-        return (String[]) paths.toArray(new String[0]);
+        return paths.toArray(new String[0]);
     }
 }

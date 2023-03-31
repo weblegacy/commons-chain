@@ -17,9 +17,10 @@
 package org.apache.commons.chain.web.servlet;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.chain.Catalog;
-import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
 import org.apache.commons.chain.generic.LookupCommand;
 
 /**

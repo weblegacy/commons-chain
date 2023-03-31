@@ -32,6 +32,21 @@ import org.xml.sax.Attributes;
  */
 class ConfigDefineRule extends Rule {
 
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The name of the attribute under which we can retrieve the
+     * fully qualified class name of the implementation class for this
+     * new element.
+     */
+    private final String classAttribute;
+
+    /**
+     * The name of the attribute under which we can retrieve the name
+     * this element for which rules should be created.
+     */
+    private final String nameAttribute;
+
     // ----------------------------------------------------------- Constructors
 
     /**
@@ -48,21 +63,6 @@ class ConfigDefineRule extends Rule {
         this.nameAttribute = nameAttribute;
         this.classAttribute = classAttribute;
     }
-
-    // ----------------------------------------------------- Instance Variables
-
-    /**
-     * The name of the attribute under which we can retrieve the
-     * fully qualified class name of the implementation class for this
-     * new element.
-     */
-    private String classAttribute = null;
-
-    /**
-     * The name of the attribute under which we can retrieve the name
-     * this element for which rules should be created.
-     */
-    private String nameAttribute = null;
 
     // --------------------------------------------------------- Public Methods
 

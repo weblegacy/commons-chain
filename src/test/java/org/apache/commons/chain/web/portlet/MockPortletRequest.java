@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-
 import org.apache.commons.chain.web.MockEnumeration;
 import org.apache.commons.chain.web.MockPrincipal;
 
@@ -33,11 +32,10 @@ import java.util.HashMap;
 import java.util.Enumeration;
 import java.util.Locale;
 
-
-
-// Mock Object for PortletRequest
+/**
+ * Mock Object for {@code PortletRequest}
+ */
 public class MockPortletRequest implements PortletRequest {
-
     private String contextPath;
     private String authType;
     private Locale locale;
@@ -55,14 +53,13 @@ public class MockPortletRequest implements PortletRequest {
     private Map attributes = new HashMap();
     private Map properties = new HashMap();
 
-
     public MockPortletRequest() {
         this(null, null, null);
     }
 
     public MockPortletRequest(String contextPath, PortletContext context, PortletSession session) {
         this.contextPath = contextPath;
-        this.context = (context == null ? new MockPortletContext() : context);
+        this.context = context == null ? new MockPortletContext() : context;
         this.session = session;
     }
 
@@ -145,7 +142,6 @@ public class MockPortletRequest implements PortletRequest {
     public void setUserPrincipal(WindowState windowState) {
         this.windowState = windowState;
     }
-
 
     // --------------------------------------------- PortletRequest Methods
 
@@ -234,7 +230,6 @@ public class MockPortletRequest implements PortletRequest {
         return new MockEnumeration(properties.keySet().iterator());
     }
 
-
     public String getRemoteUser() {
         if (principal != null) {
             return principal.getName();
@@ -311,5 +306,4 @@ public class MockPortletRequest implements PortletRequest {
             attributes.put(name, value);
         }
     }
-
 }

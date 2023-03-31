@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -32,33 +31,28 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
-
-// Mock Object for ServletContext (Version 2.3)
+/**
+ * Mock Object for {@code ServletContext} (Version 2.3)
+ */
 public class MockServletContext implements ServletContext {
-
-
     private Log log = LogFactory.getLog(MockServletContext.class);
     private Hashtable attributes = new Hashtable();
     private Hashtable parameters = new Hashtable();
 
-
     // --------------------------------------------------------- Public Methods
-
 
     public void addInitParameter(String name, String value) {
         parameters.put(name, value);
     }
 
-
     // ------------------------------------------------- ServletContext Methods
 
-
     public Object getAttribute(String name) {
-        return (attributes.get(name));
+        return attributes.get(name);
     }
 
     public Enumeration getAttributeNames() {
-        return (attributes.keys());
+        return attributes.keys();
     }
 
     public ServletContext getContext(String uripath) {
@@ -70,11 +64,11 @@ public class MockServletContext implements ServletContext {
     }
 
     public Enumeration getInitParameterNames() {
-        return (parameters.keys());
+        return parameters.keys();
     }
 
     public int getMajorVersion() {
-        return (2);
+        return 2;
     }
 
     public String getMimeType(String path) {
@@ -82,7 +76,7 @@ public class MockServletContext implements ServletContext {
     }
 
     public int getMinorVersion() {
-        return (3);
+        return 3;
     }
 
     public RequestDispatcher getNamedDispatcher(String name) {
@@ -114,11 +108,11 @@ public class MockServletContext implements ServletContext {
     }
 
     public String getServletContextName() {
-        return ("MockServletContext");
+        return "MockServletContext";
     }
 
     public String getServerInfo() {
-        return ("MockServletContext");
+        return "MockServletContext";
     }
 
     public Enumeration getServlets() {
@@ -148,6 +142,4 @@ public class MockServletContext implements ServletContext {
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
     }
-
-
 }

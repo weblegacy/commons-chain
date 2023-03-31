@@ -24,7 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.servlet.ServletContext;
+
 import org.apache.commons.chain.web.MapEntry;
 
 /**
@@ -34,13 +36,13 @@ import org.apache.commons.chain.web.MapEntry;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-final class ServletInitParamMap implements Map {
+final class ServletInitParamMap implements Map<String, String> {
+
+    private final ServletContext context;
 
     public ServletInitParamMap(ServletContext context) {
         this.context = context;
     }
-
-    private ServletContext context = null;
 
     @Override
     public void clear() {
@@ -54,7 +56,7 @@ final class ServletInitParamMap implements Map {
 
     @Override
     public boolean containsValue(Object value) {
-        Iterator values = values().iterator();
+        Iterator<String> values = values().iterator();
         while (values.hasNext()) {
             if (value.equals(values.next())) {
                 return true;
@@ -64,13 +66,13 @@ final class ServletInitParamMap implements Map {
     }
 
     @Override
-    public Set entrySet() {
-        Set set = new HashSet();
-        Enumeration keys = context.getInitParameterNames();
+    public Set<Map.Entry<String, String>> entrySet() {
+        Set<Map.Entry<String, String>> set = new HashSet<>();
+        Enumeration<?> keys = context.getInitParameterNames();
         String key;
         while (keys.hasMoreElements()) {
-            key = (String) keys.nextElement();
-            set.add(new MapEntry(key, context.getInitParameter(key), false));
+            key = keys.nextElement().toString();
+            set.add(new MapEntry<String>(key, context.getInitParameter(key), false));
         }
         return set;
     }
@@ -81,7 +83,7 @@ final class ServletInitParamMap implements Map {
     }
 
     @Override
-    public Object get(Object key) {
+    public String get(Object key) {
         return context.getInitParameter(key(key));
     }
 
@@ -96,34 +98,34 @@ final class ServletInitParamMap implements Map {
     }
 
     @Override
-    public Set keySet() {
-        Set set = new HashSet();
-        Enumeration keys = context.getInitParameterNames();
+    public Set<String> keySet() {
+        Set<String> set = new HashSet<>();
+        Enumeration<?> keys = context.getInitParameterNames();
         while (keys.hasMoreElements()) {
-            set.add(keys.nextElement());
+            set.add(keys.nextElement().toString());
         }
         return set;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public String put(String key, String value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(Map map) {
+    public void putAll(Map<? extends String, ? extends String> map) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Object remove(Object key) {
+    public String remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public int size() {
         int n = 0;
-        Enumeration keys = context.getInitParameterNames();
+        Enumeration<?> keys = context.getInitParameterNames();
         while (keys.hasMoreElements()) {
             keys.nextElement();
             n++;
@@ -132,11 +134,11 @@ final class ServletInitParamMap implements Map {
     }
 
     @Override
-    public Collection values() {
-        List list = new ArrayList();
-        Enumeration keys = context.getInitParameterNames();
+    public Collection<String> values() {
+        List<String> list = new ArrayList<>();
+        Enumeration<?> keys = context.getInitParameterNames();
         while (keys.hasMoreElements()) {
-            list.add(context.getInitParameter((String) keys.nextElement()));
+            list.add(context.getInitParameter(keys.nextElement().toString()));
         }
         return list;
     }

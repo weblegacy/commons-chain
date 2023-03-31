@@ -17,7 +17,10 @@
 package org.apache.commons.chain.web.faces;
 
 import java.util.Map;
+
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.chain.web.WebContext;
 
 /**
@@ -30,6 +33,15 @@ import org.apache.commons.chain.web.WebContext;
  * @version $Revision$ $Date$
  */
 public class FacesWebContext extends WebContext {
+    private static final long serialVersionUID = -1429681424077509130L;
+
+    // ------------------------------------------------------ Instance Variables
+
+    /**
+     * The {@code FacesContext} instance for the request represented
+     * by this {@link WebContext}.
+     */
+    private FacesContext context = null;
 
     // ------------------------------------------------------------ Constructors
 
@@ -48,15 +60,6 @@ public class FacesWebContext extends WebContext {
     public FacesWebContext(FacesContext context) {
         initialize(context);
     }
-
-    // ------------------------------------------------------ Instance Variables
-
-    /**
-     * The {@code FacesContext} instance for the request represented
-     * by this {@link WebContext}.
-     */
-    private FacesContext context = null;
-
     // ---------------------------------------------------------- Public Methods
 
     /**
@@ -96,8 +99,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Application scope Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getApplicationScope() {
+    public Map<String, Object> getApplicationScope() {
         return context.getExternalContext().getApplicationMap();
     }
 
@@ -106,8 +110,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Header values Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getHeader() {
+    public Map<String, String> getHeader() {
         return context.getExternalContext().getRequestHeaderMap();
     }
 
@@ -116,8 +121,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Header values Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getHeaderValues() {
+    public Map<String, String[]> getHeaderValues() {
         return context.getExternalContext().getRequestHeaderValuesMap();
     }
 
@@ -126,8 +132,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Initialization parameter Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getInitParam() {
+    public Map<String, String> getInitParam() {
         return context.getExternalContext().getInitParameterMap();
     }
 
@@ -136,8 +143,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Request parameter Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getParam() {
+    public Map<String, String> getParam() {
         return context.getExternalContext().getRequestParameterMap();
     }
 
@@ -146,8 +154,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Request parameter Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getParamValues() {
+    public Map<String, String[]> getParamValues() {
         return context.getExternalContext().getRequestParameterValuesMap();
     }
 
@@ -157,8 +166,9 @@ public class FacesWebContext extends WebContext {
      * @return Map of Cookies.
      * @since Chain 1.1
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getCookies() {
+    public Map<String, Cookie> getCookies() {
         return context.getExternalContext().getRequestCookieMap();
     }
 
@@ -167,8 +177,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Request scope Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getRequestScope() {
+    public Map<String, Object> getRequestScope() {
         return context.getExternalContext().getRequestMap();
     }
 
@@ -177,8 +188,9 @@ public class FacesWebContext extends WebContext {
      *
      * @return Session scope Map.
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Map getSessionScope() {
+    public Map<String, Object> getSessionScope() {
         return context.getExternalContext().getSessionMap();
     }
 }

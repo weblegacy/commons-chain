@@ -17,9 +17,11 @@
 package org.apache.commons.chain.web.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
@@ -53,6 +55,7 @@ import org.apache.commons.chain.web.ChainServlet;
  */
 
 public class ChainProcessor extends ChainServlet {
+    private static final long serialVersionUID = -6817532768031279260L;
 
     // ------------------------------------------------------ Manifest Constants
 

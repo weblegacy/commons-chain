@@ -16,54 +16,65 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-
 /**
- * <p>Implementation of {@link Command} that logs its identifier and
- * and attempts to add a new {@link Command} to the {@link Chain}.  This
+ * Implementation of {@link Command} that logs its identifier and
+ * and attempts to add a new {@link Command} to the {@link Chain}. This
  * should cause an IllegalStateException if the {@link Chain} implementation
- * subclasses <code>ChainBase</code>.</p>
+ * subclasses {@code ChainBase}.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class AddingCommand extends NonDelegatingCommand {
-
 
     // ------------------------------------------------------------ Constructor
 
-
     public AddingCommand() {
-    this("", null);
+        this("", null);
     }
 
-    // Construct an instance that will log the specified identifier
+    /**
+     * Construct an instance that will log the specified identifier
+     *
+     * @param id identifier to log for this Command instance
+     * @param parent the parent Chain
+     */
     public AddingCommand(String id, Chain parent) {
         super(id);
         this.parent = parent;
     }
 
-
-    // The parent Chain
+    /**
+     * The parent Chain
+     */
     private Chain parent = null;
-
 
     // -------------------------------------------------------- Command Methods
 
-
-    // Execution method for this Command
+    /**
+     * Execution method for this Command
+     *
+     * @param context The {@link Context} to be processed by this
+     *        {@link Command}
+     * @param chain the parent Chain
+     *
+     * @return {@code true} if the processing of this {@link Context}
+     *         has been completed, or {@code false} if the processing
+     *         of this {@link Context} should be delegated to a
+     *         subsequent {@link Command} in an enclosing {@link Chain}
+     *
+     * @throws Exception general purpose exception return
+     *         to indicate abnormal termination
+     * @throws IllegalArgumentException if {@code context}
+     *         is {@code null}
+     */
     public boolean execute(Context context, Chain chain) throws Exception {
-
         super.execute(context);
         parent.addCommand(new NonDelegatingCommand("NEW")); // Should cause ISE
-        return (true);
-
+        return true;
     }
-
-
 }

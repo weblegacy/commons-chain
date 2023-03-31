@@ -17,29 +17,32 @@
 package org.apache.commons.chain.web;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * {@code Map.Entry} implementation that can be constructed to either be read-only
  * or not.
  *
  * @version $Revision$ $Date$
+ *
+ * @param <T> type of the value
  */
-public class MapEntry implements Map.Entry {
+public class MapEntry<T> implements Map.Entry<String, T> {
 
     /**
      * The entry key.
      */
-    private Object key;
+    private final String key;
 
     /**
      * The entry value.
      */
-    private Object value;
+    private T value;
 
     /**
      * Whether the entry can be modified.
      */
-    private boolean modifiable = false;
+    private final boolean modifiable;
 
     /**
      * Creates a map entry that can either allow modifications or not.
@@ -48,7 +51,7 @@ public class MapEntry implements Map.Entry {
      * @param value The entry value
      * @param modifiable Whether the entry should allow modification or not
      */
-    public MapEntry(Object key, Object value, boolean modifiable) {
+    public MapEntry(String key, T value, boolean modifiable) {
         this.key = key;
         this.value = value;
         this.modifiable = modifiable;
@@ -60,7 +63,7 @@ public class MapEntry implements Map.Entry {
      * @return The entry key
      */
     @Override
-    public Object getKey() {
+    public String getKey() {
         return key;
     }
 
@@ -70,7 +73,7 @@ public class MapEntry implements Map.Entry {
      * @return The entry key
      */
     @Override
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
 
@@ -84,9 +87,9 @@ public class MapEntry implements Map.Entry {
      * @throws UnsupportedOperationException If the entry cannot be modified
      */
     @Override
-    public Object setValue(Object val) {
+    public T setValue(T val) {
         if (modifiable) {
-            Object oldVal = this.value;
+            T oldVal = this.value;
             this.value = val;
             return oldVal;
         } else {
@@ -103,14 +106,17 @@ public class MapEntry implements Map.Entry {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Map.Entry) {
-            Map.Entry entry = (Map.Entry)o;
-            return (this.getKey() == null ?
-                    entry.getKey() == null : this.getKey().equals(entry.getKey()))  &&
-                   (this.getValue() == null ?
-                    entry.getValue() == null : this.getValue().equals(entry.getValue()));
+        if (this == o) {
+            return true;
         }
-        return false;
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+        MapEntry<?> other = (MapEntry<?>) o;
+        return Objects.equals(key, other.key) && Objects.equals(value, other.value);
     }
 
     /**
@@ -120,7 +126,6 @@ public class MapEntry implements Map.Entry {
      */
     @Override
     public int hashCode() {
-        return (this.getKey() == null   ? 0 : this.getKey().hashCode()) ^
-               (this.getValue() == null ? 0 : this.getValue().hashCode());
+        return Objects.hashCode(getKey()) ^ Objects.hashCode(getValue());
     }
 }

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.generic;
 
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -30,14 +29,12 @@ import org.apache.commons.chain.impl.DelegatingCommand;
 import org.apache.commons.chain.impl.NonDelegatingCommand;
 
 /**
- * <p>Test case for the <code>LookupCommand</code> class.</p>
+ * Test case for the {@code LookupCommand} class.
  *
  * @author Sean Schofield
  * @version $Revision$
  */
-
 public class LookupCommandTestCase extends TestCase {
-
 
     // ---------------------------------------------------- Instance Variables
 
@@ -56,7 +53,6 @@ public class LookupCommandTestCase extends TestCase {
      */
     protected Context context = null;
 
-
     // ---------------------------------------------------------- Constructors
 
     /**
@@ -68,9 +64,7 @@ public class LookupCommandTestCase extends TestCase {
         super(name);
     }
 
-
     // -------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
@@ -81,7 +75,6 @@ public class LookupCommandTestCase extends TestCase {
         command = new LookupCommand();        
         context = new ContextBase();
     }
-
 
     /**
      * Return the tests included in this test suite.
@@ -100,13 +93,12 @@ public class LookupCommandTestCase extends TestCase {
         context = null;
     }
 
-
     // ------------------------------------------------ Individual Test Methods
 
-
-    // Test ability to lookup and execute single non-delegating command
+    /**
+     * Test ability to lookup and execute single non-delegating command
+     */
     public void testExecuteMethodLookup_1a() {
-
         // use default catalog
         catalog.addCommand("foo", new NonDelegatingCommand("1a"));
         command.setName("foo");
@@ -120,14 +112,15 @@ public class LookupCommandTestCase extends TestCase {
         checkExecuteLog("1a");
     }
 
-    // Test ability to lookup and execute a chain
+    /**
+     * Test ability to lookup and execute a chain
+     */
     public void testExecuteMethodLookup_1b() {
-
         ChainBase chain = new ChainBase();
         chain.addCommand(new DelegatingCommand("1b1"));
         chain.addCommand(new DelegatingCommand("1b2"));
         chain.addCommand(new NonDelegatingCommand("1b3"));
-        
+
         // use default catalog
         catalog.addCommand("foo", chain);
         command.setName("foo");
@@ -141,10 +134,11 @@ public class LookupCommandTestCase extends TestCase {
         checkExecuteLog("1b1/1b2/1b3");
     }
 
-    // Test ability to lookup and execute single non-delegating command
-    // using the context
+    /**
+     * Test ability to lookup and execute single non-delegating command
+     * using the context
+     */
     public void testExecuteMethodLookup_2a() {
-
         // use default catalog
         catalog.addCommand("foo", new NonDelegatingCommand("2a"));
         command.setNameKey("nameKey");
@@ -159,9 +153,10 @@ public class LookupCommandTestCase extends TestCase {
         checkExecuteLog("2a");
     }
 
-    // Test ability to lookup and execute a chain using the context 
+    /**
+     * Test ability to lookup and execute a chain using the context 
+     */
     public void testExecuteMethodLookup_2b() {
-
         ChainBase chain = new ChainBase();
         chain.addCommand(new DelegatingCommand("2b1"));
         chain.addCommand(new DelegatingCommand("2b2"));
@@ -181,9 +176,10 @@ public class LookupCommandTestCase extends TestCase {
         checkExecuteLog("2b1/2b2/2b3");
     }
 
-    // Test ability to lookup and execute single non-delegating command, ignoring its result
+    /**
+     * Test ability to lookup and execute single non-delegating command, ignoring its result
+     */
     public void testExecuteMethodLookup_3a() {
-
         // use default catalog
         catalog.addCommand("foo", new NonDelegatingCommand("3a"));
         command.setIgnoreExecuteResult(true);
@@ -198,17 +194,17 @@ public class LookupCommandTestCase extends TestCase {
         checkExecuteLog("3a");
     }
 
-
     // -------------------------------------------------------- Support Methods
 
-
-    // Verify the contents of the execution log
+    /**
+     * Verify the contents of the execution log
+     *
+     * @param expected the expected value
+     */
     protected void checkExecuteLog(String expected) {
         StringBuffer log = (StringBuffer) context.get("log");
         assertNotNull("Context failed to return log", log);
         assertEquals("Context returned correct log",
                      expected, log.toString());
     }
-
-
 }

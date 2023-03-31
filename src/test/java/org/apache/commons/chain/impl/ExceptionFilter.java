@@ -16,55 +16,52 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
 
-
 /**
- * <p>Implementation of {@link Filter} that logs its identifier and
- * and throws an Exception.</p>
+ * Implementation of {@link Filter} that logs its identifier and
+ * and throws an Exception.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
 public class ExceptionFilter extends ExceptionCommand implements Filter {
 
-
     // ------------------------------------------------------------- Constructor
 
-
     public ExceptionFilter() {
-    this("", "");
+        this("", "");
     }
 
-
-    // Construct an instance that will log the specified identifier
+    /**
+     * Construct an instance that will log the specified identifier
+     *
+     * @param id1 first identifier to log for this Filter instance
+     * @param id2 second identifier to log for this Filter instance
+     */
     public ExceptionFilter(String id1, String id2) {
         super(id1);
         this.id2 = id2;
     }
 
-
     // -------------------------------------------------------------- Properties
 
     protected String id2 = null;
     public String getId2() {
-    return (this.id2);
+        return this.id2;
     }
     public void setId2(String id2) {
-    this.id2 = id2;
+        this.id2 = id2;
     }
-
 
     // --------------------------------------------------------- Command Methods
 
-
-    // Postprocess command for this Filter
+    /**
+     * Postprocess command for this Filter
+     */
     public boolean postprocess(Context context, Exception exception) {
         log(context, id2);
-        return (false);
+        return false;
     }
-
-
 }

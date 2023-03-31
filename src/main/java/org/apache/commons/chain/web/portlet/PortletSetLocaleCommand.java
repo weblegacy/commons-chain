@@ -17,6 +17,7 @@
 package org.apache.commons.chain.web.portlet;
 
 import java.util.Locale;
+
 //import javax.portlet.PortletResponse;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.AbstractSetLocaleCommand;

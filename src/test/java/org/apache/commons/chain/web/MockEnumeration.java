@@ -16,35 +16,26 @@
  */
 package org.apache.commons.chain.web;
 
-
 import java.util.Enumeration;
 import java.util.Iterator;
 
-
 /**
- * <p>General purpose <code>Enumeration</code> wrapper around an
- * <code>Iterator</code> specified to our controller.</p>
+ * General purpose {@code Enumeration} wrapper around an
+ * {@code Iterator} specified to our controller.
  */
-
 public class MockEnumeration implements Enumeration {
-
 
     public MockEnumeration(Iterator iterator) {
         this.iterator = iterator;
     }
 
-
     protected Iterator iterator;
 
-
     public boolean hasMoreElements() {
-        return (iterator.hasNext());
+        return iterator.hasNext();
     }
-
 
     public Object nextElement() {
-        return (iterator.next());
+        return iterator.next();
     }
-
-
 }

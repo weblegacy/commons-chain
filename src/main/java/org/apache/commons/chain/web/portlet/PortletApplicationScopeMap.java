@@ -24,7 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.portlet.PortletContext;
+
 import org.apache.commons.chain.web.MapEntry;
 
 /**
@@ -36,15 +38,15 @@ import org.apache.commons.chain.web.MapEntry;
  */
 final class PortletApplicationScopeMap implements Map<String, Object> {
 
+    private final PortletContext context;
+
     public PortletApplicationScopeMap(PortletContext context) {
         this.context = context;
     }
 
-    private PortletContext context = null;
-
     @Override
     public void clear() {
-        Iterator keys = keySet().iterator();
+        Iterator<String> keys = keySet().iterator();
         while (keys.hasNext()) {
             context.removeAttribute((String) keys.next());
         }
@@ -60,9 +62,9 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
         if (value == null) {
             return false;
         }
-        Enumeration keys = context.getAttributeNames();
+        Enumeration<?> keys = context.getAttributeNames();
         while (keys.hasMoreElements()) {
-            Object next = context.getAttribute((String) keys.nextElement());
+            Object next = context.getAttribute(keys.nextElement().toString());
             if (value.equals(next)) {
                 return true;
             }
@@ -71,13 +73,13 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
     }
 
     @Override
-    public Set entrySet() {
-        Set set = new HashSet();
-        Enumeration keys = context.getAttributeNames();
+    public Set<Map.Entry<String, Object>> entrySet() {
+        Set<Map.Entry<String, Object>> set = new HashSet<>();
+        Enumeration<?> keys = context.getAttributeNames();
         String key;
         while (keys.hasMoreElements()) {
-            key = (String)keys.nextElement();
-            set.add(new MapEntry(key, context.getAttribute(key), true));
+            key = keys.nextElement().toString();
+            set.add(new MapEntry<Object>(key, context.getAttribute(key), true));
         }
         return set;
     }
@@ -103,33 +105,28 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
     }
 
     @Override
-    public Set keySet() {
-        Set set = new HashSet();
-        Enumeration keys = context.getAttributeNames();
+    public Set<String> keySet() {
+        Set<String> set = new HashSet<>();
+        Enumeration<?> keys = context.getAttributeNames();
         while (keys.hasMoreElements()) {
-            set.add(keys.nextElement());
+            set.add(keys.nextElement().toString());
         }
         return set;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public Object put(String key, Object value) {
         if (value == null) {
             return remove(key);
         }
-        String skey = key(key);
-        Object previous = context.getAttribute(skey);
-        context.setAttribute(skey, value);
+        Object previous = context.getAttribute(key);
+        context.setAttribute(key, value);
         return previous;
     }
 
     @Override
-    public void putAll(Map map) {
-        Iterator entries = map.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry)entries.next();
-            put(entry.getKey(), entry.getValue());
-        }
+    public void putAll(Map<? extends String, ? extends Object> map) {
+        map.forEach(this::put);
     }
 
     @Override
@@ -143,7 +140,7 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
     @Override
     public int size() {
         int n = 0;
-        Enumeration keys = context.getAttributeNames();
+        Enumeration<?> keys = context.getAttributeNames();
         while (keys.hasMoreElements()) {
             keys.nextElement();
             n++;
@@ -152,16 +149,16 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
     }
 
     @Override
-    public Collection values() {
-        List list = new ArrayList();
-        Enumeration keys = context.getAttributeNames();
+    public Collection<Object> values() {
+        List<Object> list = new ArrayList<>();
+        Enumeration<?> keys = context.getAttributeNames();
         while (keys.hasMoreElements()) {
-            list.add(context.getAttribute((String) keys.nextElement()));
+            list.add(context.getAttribute(keys.nextElement().toString()));
         }
         return list;
     }
 
-    private String key(Object key) {
+    private static String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {

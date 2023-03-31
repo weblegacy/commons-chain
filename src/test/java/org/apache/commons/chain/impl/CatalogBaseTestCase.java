@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,25 +24,20 @@ import org.apache.commons.chain.Command;
 
 import java.util.Iterator;
 
-
 /**
- * <p>Test case for the <code>CatalogBase</code> class.</p>
+ * Test case for the {@code CatalogBase} class.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class CatalogBaseTestCase extends TestCase {
 
-
     // ---------------------------------------------------- Instance Variables
-
 
     /**
      * The {@link Catalog} instance under test.
      */
     protected CatalogBase catalog = null;
-
 
     // ---------------------------------------------------------- Constructors
 
@@ -56,9 +50,7 @@ public class CatalogBaseTestCase extends TestCase {
         super(name);
     }
 
-
     // -------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
@@ -66,7 +58,6 @@ public class CatalogBaseTestCase extends TestCase {
     public void setUp() {
         catalog = new CatalogBase();
     }
-
 
     /**
      * Return the tests included in this test suite.
@@ -82,20 +73,20 @@ public class CatalogBaseTestCase extends TestCase {
         catalog = null;
     }
 
-
     // ------------------------------------------------ Individual Test Methods
 
-
-    // Test adding commands
+    /**
+     * Test adding commands
+     */
     public void testAddCommand() {
         addCommands();
         checkCommandCount(8);
     }
 
-
-    // Test getting commands
+    /**
+     * Test getting commands
+     */
     public void testGetCommand() {
-
         addCommands();
         Command command = null;
 
@@ -130,14 +121,13 @@ public class CatalogBaseTestCase extends TestCase {
         command = catalog.getCommand("ChainBase");
         assertNotNull(command);
         assertTrue(command instanceof ChainBase);
-
     }
-
 
     // The getNames() method is implicitly tested by checkCommandCount()
 
-
-    // Test pristine instance
+    /**
+     * Test pristine instance
+     */
     public void testPristine() {
         checkCommandCount(0);
         assertNull(catalog.getCommand("AddingCommand"));
@@ -150,13 +140,11 @@ public class CatalogBaseTestCase extends TestCase {
         assertNull(catalog.getCommand("ChainBase"));
     }
 
-
-
-
     // -------------------------------------------------------- Support Methods
 
-
-    // Add an interesting set of commands to the catalog
+    /**
+     * Add an interesting set of commands to the catalog
+     */
     protected void addCommands() {
         catalog.addCommand("AddingCommand", new AddingCommand("", null));
         catalog.addCommand("DelegatingCommand", new DelegatingCommand(""));
@@ -168,8 +156,11 @@ public class CatalogBaseTestCase extends TestCase {
         catalog.addCommand("ChainBase", new ChainBase());
     }
 
-
-    // Verify the number of configured commands
+    /**
+     * Verify the number of configured commands
+     *
+     * @param expected the expected value
+     */
     protected void checkCommandCount(int expected) {
         int n = 0;
         Iterator names = catalog.getNames();
@@ -180,6 +171,4 @@ public class CatalogBaseTestCase extends TestCase {
         }
         assertEquals("Correct command count", expected, n);
     }
-
-
 }

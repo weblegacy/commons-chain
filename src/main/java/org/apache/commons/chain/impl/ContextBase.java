@@ -19,6 +19,7 @@ package org.apache.commons.chain.impl;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
@@ -26,8 +27,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-import java.io.Serializable;
+
 import org.apache.commons.chain.Context;
 
 /**
@@ -47,7 +49,45 @@ import org.apache.commons.chain.Context;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ContextBase extends HashMap implements Context {
+public class ContextBase extends HashMap<String, Object> implements Context {
+    private static final long serialVersionUID = 8739326206700827827L;
+
+    // ------------------------------------------------------ Static Variables
+
+    /**
+     * Distinguished singleton value that is stored in the map for each
+     * key that is actually a property. This value is used to ensure that
+     * {@code equals()} comparisons will always fail.
+     */
+    private final static Object SINGLETON = new Serializable() {
+        private static final long serialVersionUID = -6023767081282668587L;
+
+        public boolean equals(Object object) {
+            return false;
+        }
+    };
+
+    // ------------------------------------------------------ Instance Variables
+
+    // NOTE - PropertyDescriptor instances are not Serializable, so the
+    // following variables must be declared as transient. When a ContextBase
+    // instance is deserialized, the no-arguments constructor is called,
+    // and the initialize() method called there will repopulate them.
+    // Therefore, no special restoration activity is required.
+
+    /**
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
+     * of this {@link Context} implementation class as an array.
+     */
+    private final transient PropertyDescriptor[] pds = getPropertyDescriptors();
+
+    /**
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
+     * of this {@link Context} implementation class, keyed by property name.
+     * This collection is allocated only if there are any JavaBeans
+     * properties.
+     */
+    private final transient Map<String, PropertyDescriptor> descriptors = getMapDescriptors();
 
     // ------------------------------------------------------------ Constructors
 
@@ -56,7 +96,6 @@ public class ContextBase extends HashMap implements Context {
      */
     public ContextBase() {
         super();
-        initialize();
     }
 
     /**
@@ -72,52 +111,10 @@ public class ContextBase extends HashMap implements Context {
      * @throws UnsupportedOperationException if a local property does not
      *         have a write method.
      */
-    public ContextBase(Map map) {
+    public ContextBase(Map<String, Object> map) {
         super(map);
-        initialize();
         putAll(map);
     }
-
-    // ------------------------------------------------------ Instance Variables
-
-    // NOTE - PropertyDescriptor instances are not Serializable, so the
-    // following variables must be declared as transient. When a ContextBase
-    // instance is deserialized, the no-arguments constructor is called,
-    // and the initialize() method called there will repopulate them.
-    // Therefore, no special restoration activity is required.
-
-    /**
-     * The {@code PropertyDescriptor}s for all JavaBeans properties
-     * of this {@link Context} implementation class, keyed by property name.
-     * This collection is allocated only if there are any JavaBeans
-     * properties.
-     */
-    private transient Map descriptors = null;
-
-    /**
-     * The same {@code PropertyDescriptor}s as an array.
-     */
-    private transient PropertyDescriptor[] pd = null;
-
-    /**
-     * Distinguished singleton value that is stored in the map for each
-     * key that is actually a property. This value is used to ensure that
-     * {@code equals()} comparisons will always fail.
-     */
-    private static Object singleton;
-
-    static {
-        singleton = new Serializable() {
-                public boolean equals(Object object) {
-                    return false;
-                }
-            };
-    }
-
-    /**
-     * Zero-length array of parameter values for calling property getters.
-     */
-    private static Object[] zeroParams = new Object[0];
 
     // ------------------------------------------------------------- Map Methods
 
@@ -130,9 +127,9 @@ public class ContextBase extends HashMap implements Context {
         if (descriptors == null) {
             super.clear();
         } else {
-            Iterator keys = keySet().iterator();
+            Iterator<String> keys = keySet().iterator();
             while (keys.hasNext()) {
-                Object key = keys.next();
+                String key = keys.next();
                 if (!descriptors.containsKey(key)) {
                     keys.remove();
                 }
@@ -155,21 +152,22 @@ public class ContextBase extends HashMap implements Context {
      */
     @Override
     public boolean containsValue(Object value) {
+        boolean b = super.containsValue(value);
 
         // Case 1 -- no local properties
         if (descriptors == null) {
-            return super.containsValue(value);
+            return b;
         }
 
         // Case 2 -- value found in the underlying Map
-        else if (super.containsValue(value)) {
+        if (b) {
             return true;
         }
 
         // Case 3 -- check the values of our readable properties
-        for (int i = 0; i < pd.length; i++) {
-            if (pd[i].getReadMethod() != null) {
-                Object prop = readProperty(pd[i]);
+        for (PropertyDescriptor pd : pds) {
+            if (pd.getReadMethod() != null) {
+                Object prop = readProperty(pd);
                 if (value == null) {
                     if (prop == null) {
                         return true;
@@ -192,7 +190,7 @@ public class ContextBase extends HashMap implements Context {
      * @return Set of entries in the Context.
      */
     @Override
-    public Set entrySet() {
+    public Set<Map.Entry<String, Object>> entrySet() {
         return new EntrySetImpl();
     }
 
@@ -223,8 +221,7 @@ public class ContextBase extends HashMap implements Context {
 
         // Case 2 -- this is a local property
         if (key != null) {
-            PropertyDescriptor descriptor =
-                (PropertyDescriptor) descriptors.get(key);
+            PropertyDescriptor descriptor = descriptors.get(key);
             if (descriptor != null) {
                 if (descriptor.getReadMethod() != null) {
                     return readProperty(descriptor);
@@ -267,7 +264,7 @@ public class ContextBase extends HashMap implements Context {
      * @return The set of keys for objects in this Context.
      */
     @Override
-    public Set keySet() {
+    public Set<String> keySet() {
         return super.keySet();
     }
 
@@ -286,7 +283,7 @@ public class ContextBase extends HashMap implements Context {
      *         have both a read method and a write method
      */
     @Override
-    public Object put(Object key, Object value) {
+    public Object put(String key, Object value) {
         // Case 1 -- no local properties
         if (descriptors == null) {
             return super.put(key, value);
@@ -294,8 +291,7 @@ public class ContextBase extends HashMap implements Context {
 
         // Case 2 -- this is a local property
         if (key != null) {
-            PropertyDescriptor descriptor =
-                (PropertyDescriptor) descriptors.get(key);
+            PropertyDescriptor descriptor = descriptors.get(key);
             if (descriptor != null) {
                 Object previous = null;
                 if (descriptor.getReadMethod() != null) {
@@ -324,12 +320,8 @@ public class ContextBase extends HashMap implements Context {
      *         have both a read method and a write method
      */
     @Override
-    public void putAll(Map map) {
-        Iterator pairs = map.entrySet().iterator();
-        while (pairs.hasNext()) {
-            Map.Entry pair = (Map.Entry) pairs.next();
-            put(pair.getKey(), pair.getValue());
-        }
+    public void putAll(Map<? extends String, ? extends Object> map) {
+        map.forEach(this::put);
     }
 
     /**
@@ -353,8 +345,7 @@ public class ContextBase extends HashMap implements Context {
 
         // Case 2 -- this is a local property
         if (key != null) {
-            PropertyDescriptor descriptor =
-                (PropertyDescriptor) descriptors.get(key);
+            PropertyDescriptor descriptor = descriptors.get(key);
             if (descriptor != null) {
                 throw new UnsupportedOperationException
                     ("Local property '" + key + "' cannot be removed");
@@ -375,7 +366,7 @@ public class ContextBase extends HashMap implements Context {
      * @return The collection of values in this Context.
      */
     @Override
-    public Collection values() {
+    public Collection<Object> values() {
         return new ValuesImpl();
     }
 
@@ -385,7 +376,7 @@ public class ContextBase extends HashMap implements Context {
      * Return an {@code Iterator} over the set of {@code Map.Entry}
      * objects representing our key-value pairs.
      */
-    private Iterator entriesIterator() {
+    private Iterator<Map.Entry<String, Object>> entriesIterator() {
         return new EntrySetIterator();
     }
 
@@ -395,45 +386,11 @@ public class ContextBase extends HashMap implements Context {
      *
      * @param key Attribute key or property name
      */
-    private Map.Entry entry(Object key) {
+    private Map.Entry<String, Object> entry(Object key) {
         if (containsKey(key)) {
-            return new MapEntryImpl(key, get(key));
+            return new MapEntryImpl(key.toString(), get(key));
         } else {
             return null;
-        }
-    }
-
-    /**
-     * Customize the contents of our underlying {@code>Map} so that
-     * it contains keys corresponding to all of the JavaBeans properties of
-     * the {@link Context} implementation class.
-     *
-     * @throws IllegalArgumentException if an exception is thrown
-     *         writing this local property value
-     * @throws UnsupportedOperationException if this local property does not
-     *         have a write method.
-     */
-    private void initialize() {
-        // Retrieve the set of property descriptors for this Context class
-        try {
-            pd = Introspector.getBeanInfo(getClass())
-                    .getPropertyDescriptors();
-        } catch (IntrospectionException e) {
-            pd = new PropertyDescriptor[0]; // Should never happen
-        }
-
-        // Initialize the underlying Map contents
-        for (int i = 0; i < pd.length; i++) {
-            String name = pd[i].getName();
-
-            // Add descriptor (ignoring getClass() and isEmpty())
-            if (!("class".equals(name) || "empty".equals(name))) {
-                if (descriptors == null) {
-                    descriptors = new HashMap(pd.length - 2);
-                }
-                descriptors.put(name, pd[i]);
-                super.put(name, singleton);
-            }
         }
     }
 
@@ -458,7 +415,7 @@ public class ContextBase extends HashMap implements Context {
                     ("Property '" + descriptor.getName()
                      + "' is not readable");
             }
-            return method.invoke(this, zeroParams);
+            return method.invoke(this);
         } catch (Exception e) {
             throw new UnsupportedOperationException
                 ("Exception reading property '" + descriptor.getName()
@@ -475,15 +432,15 @@ public class ContextBase extends HashMap implements Context {
      * @throws UnsupportedOperationException if the specified key
      *         identifies a property instead of an attribute.
      */
-    private boolean remove(Map.Entry entry) {
-        Map.Entry actual = entry(entry.getKey());
+    private boolean remove(Map.Entry<?, ?> entry) {
+        Map.Entry<String, Object> actual = entry(entry.getKey());
         if (actual == null) {
             return false;
-        } else if (!entry.equals(actual)) {
-            return false;
-        } else {
+        } else if (entry.equals(actual)) {
             remove(entry.getKey());
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -491,7 +448,7 @@ public class ContextBase extends HashMap implements Context {
      * Return an {@code Iterator} over the set of values in this
      * {@code Map}.
      */
-    private Iterator valuesIterator() {
+    private Iterator<Object> valuesIterator() {
         return new ValuesIterator();
     }
 
@@ -516,12 +473,58 @@ public class ContextBase extends HashMap implements Context {
                     ("Property '" + descriptor.getName()
                      + "' is not writeable");
             }
-            method.invoke(this, new Object[] {value});
+            method.invoke(this, value);
         } catch (Exception e) {
             throw new UnsupportedOperationException
                 ("Exception writing property '" + descriptor.getName()
                  + "': " + e.getMessage());
         }
+    }
+
+    /**
+     * Returns descriptors for all properties of the bean.
+     *
+     * @return descriptors for all properties of the bean
+     *         or an empty array if an problem occurs
+     */
+    private PropertyDescriptor[] getPropertyDescriptors() {
+        // Retrieve the set of property descriptors for this Context class
+        try {
+            return Introspector.getBeanInfo
+                (getClass()).getPropertyDescriptors();
+        } catch (IntrospectionException e) {
+            return new PropertyDescriptor[0]; // Should never happen
+        }
+    }
+
+    /**
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
+     * of this {@link Context} implementation class, keyed by property
+     * name. This collection is allocated only if there are any JavaBeans
+     * properties.
+     *
+     * @return {@code PropertyDescriptor}s for all JavaBeans properties
+     *         as an collection or {@code null} if there are no JavaBeans
+     *         properties
+     */
+    private Map<String, PropertyDescriptor> getMapDescriptors() {
+        Map<String, PropertyDescriptor> ret = new HashMap<>();
+
+        // Initialize the underlying Map contents
+        for (PropertyDescriptor pd : pds) {
+            String name = pd.getName();
+
+            // Add descriptor (ignoring getClass() and isEmpty())
+            if (!("class".equals(name) || "empty".equals(name))) {
+                if (ret == null) {
+                    ret = new HashMap<>(pds.length < 2 ? 0 : pds.length - 2);
+                }
+                ret.put(name, pd);
+                super.put(name, SINGLETON);
+            }
+        }
+
+        return ret;
     }
 
     // --------------------------------------------------------- Private Classes
@@ -530,7 +533,7 @@ public class ContextBase extends HashMap implements Context {
      * Private implementation of {@code Set} that implements the
      * semantics required for the value returned by {@code entrySet()}.
      */
-    private class EntrySetImpl extends AbstractSet {
+    private class EntrySetImpl extends AbstractSet<Map.Entry<String, Object>> {
 
         @Override
         public void clear() {
@@ -542,8 +545,8 @@ public class ContextBase extends HashMap implements Context {
             if (!(obj instanceof Map.Entry)) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry) obj;
-            Entry actual = ContextBase.this.entry(entry.getKey());
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            Map.Entry<String, Object> actual = ContextBase.this.entry(entry.getKey());
             if (actual != null) {
                 return actual.equals(entry);
             } else {
@@ -557,14 +560,14 @@ public class ContextBase extends HashMap implements Context {
         }
 
         @Override
-        public Iterator iterator() {
+        public Iterator<Map.Entry<String, Object>> iterator() {
             return ContextBase.this.entriesIterator();
         }
 
         @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry) {
-                return ContextBase.this.remove((Map.Entry) obj);
+                return ContextBase.this.remove((Map.Entry<?, ?>) obj);
             } else {
                 return false;
             }
@@ -580,10 +583,10 @@ public class ContextBase extends HashMap implements Context {
      * Private implementation of {@code Iterator} for the
      * {@code Set} returned by {@code entrySet()}.
      */
-    private class EntrySetIterator implements Iterator {
+    private class EntrySetIterator implements Iterator<Map.Entry<String, Object>> {
 
-        private Map.Entry entry = null;
-        private Iterator keys = ContextBase.this.keySet().iterator();
+        private Map.Entry<String, Object> entry = null;
+        private Iterator<String> keys = ContextBase.this.keySet().iterator();
 
         @Override
         public boolean hasNext() {
@@ -591,7 +594,7 @@ public class ContextBase extends HashMap implements Context {
         }
 
         @Override
-        public Map.Entry next() {
+        public Map.Entry<String, Object> next() {
             entry = ContextBase.this.entry(keys.next());
             return entry;
         }
@@ -606,40 +609,36 @@ public class ContextBase extends HashMap implements Context {
      * Private implementation of {@code Map.Entry} for each item in
      * {@code EntrySetImpl}.
      */
-    private class MapEntryImpl implements Map.Entry {
+    private class MapEntryImpl implements Map.Entry<String, Object> {
 
-        MapEntryImpl(Object key, Object value) {
+        private String key;
+        private Object value;
+
+        MapEntryImpl(String key, Object value) {
             this.key = key;
             this.value = value;
         }
 
-        private Object key;
-        private Object value;
-
         @Override
         public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
             if (obj == null) {
                 return false;
-            } else if (!(obj instanceof Map.Entry)) {
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry) obj;
-            if (key == null) {
-                return entry.getKey() == null;
-            }
-            if (key.equals(entry.getKey())) {
-                if (value == null) {
-                    return entry.getValue() == null;
-                } else {
-                    return value.equals(entry.getValue());
-                }
-            } else {
+            MapEntryImpl other = (MapEntryImpl) obj;
+            if (!getEnclosingInstance().equals(other.getEnclosingInstance())) {
                 return false;
             }
+            return Objects.equals(key, other.key) && Objects.equals(value, other.value);
         }
 
         @Override
-        public Object getKey() {
+        public String getKey() {
             return this.key;
         }
 
@@ -650,8 +649,7 @@ public class ContextBase extends HashMap implements Context {
 
         @Override
         public int hashCode() {
-            return ((key == null ? 0 : key.hashCode())
-                   ^ (value == null ? 0 : value.hashCode()));
+            return Objects.hashCode(key) ^ Objects.hashCode(value);
         }
 
         @Override
@@ -666,13 +664,17 @@ public class ContextBase extends HashMap implements Context {
         public String toString() {
             return getKey() + "=" + getValue();
         }
+
+        private ContextBase getEnclosingInstance() {
+            return ContextBase.this;
+        }
     }
 
     /**
      * Private implementation of {@code Collection} that implements the
      * semantics required for the value returned by {@code values()}.
      */
-    private class ValuesImpl extends AbstractCollection {
+    private class ValuesImpl extends AbstractCollection<Object> {
 
         @Override
         public void clear() {
@@ -684,7 +686,7 @@ public class ContextBase extends HashMap implements Context {
             if (!(obj instanceof Map.Entry)) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry) obj;
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             return ContextBase.this.containsValue(entry.getValue());
         }
 
@@ -694,14 +696,14 @@ public class ContextBase extends HashMap implements Context {
         }
 
         @Override
-        public Iterator iterator() {
+        public Iterator<Object> iterator() {
             return ContextBase.this.valuesIterator();
         }
 
         @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry) {
-                return ContextBase.this.remove((Map.Entry) obj);
+                return ContextBase.this.remove((Map.Entry<?, ?>) obj);
             } else {
                 return false;
             }
@@ -716,10 +718,10 @@ public class ContextBase extends HashMap implements Context {
      * Private implementation of {@code Iterator} for the
      * {@code Collection} returned by {@code values()}.
      */
-    private class ValuesIterator implements Iterator {
+    private class ValuesIterator implements Iterator<Object> {
 
-        private Map.Entry entry = null;
-        private Iterator keys = ContextBase.this.keySet().iterator();
+        private Map.Entry<String, Object> entry = null;
+        private Iterator<String> keys = ContextBase.this.keySet().iterator();
 
         @Override
         public boolean hasNext() {

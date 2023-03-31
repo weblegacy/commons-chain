@@ -16,14 +16,15 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.chain.web.MapEntry;
 
 /**
@@ -32,13 +33,13 @@ import org.apache.commons.chain.web.MapEntry;
  * @version $Revision$ $Date$
  * @since Chain 1.1
  */
-final class ServletCookieMap implements Map {
+final class ServletCookieMap implements Map<String, Cookie> {
+
+    private final HttpServletRequest request;
 
     public ServletCookieMap(HttpServletRequest request) {
         this.request = request;
     }
-
-    private HttpServletRequest request = null;
 
     @Override
     public void clear() {
@@ -54,8 +55,8 @@ final class ServletCookieMap implements Map {
     public boolean containsValue(Object value) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                if (cookies[i].equals(value)) {
+            for (Cookie cookie : cookies) {
+                if (cookie.equals(value)) {
                     return true;
                 }
             }
@@ -64,12 +65,12 @@ final class ServletCookieMap implements Map {
     }
 
     @Override
-    public Set entrySet() {
-        Set set = new HashSet();
+    public Set<Map.Entry<String, Cookie>> entrySet() {
+        Set<Map.Entry<String, Cookie>> set = new HashSet<>();
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                set.add(new MapEntry(cookies[i].getName(), cookies[i], false));
+            for (Cookie cookie : cookies) {
+                set.add(new MapEntry<Cookie>(cookie.getName(), cookie, false));
             }
         }
         return set;
@@ -81,12 +82,13 @@ final class ServletCookieMap implements Map {
     }
 
     @Override
-    public Object get(Object key) {
+    public Cookie get(Object key) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                if (cookies[i].getName().equals(key(key))) {
-                    return cookies[i];
+            String skey = key(key);
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(skey)) {
+                    return cookie;
                 }
             }
         }
@@ -104,29 +106,28 @@ final class ServletCookieMap implements Map {
     }
 
     @Override
-    public Set keySet() {
-        Set set = new HashSet();
+    public Set<String> keySet() {
+        Set<String> set = new HashSet<>();
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                set.add(cookies[i].getName());
+            for (Cookie cookie : cookies) {
+                set.add(cookie.getName());
             }
         }
         return set;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public Cookie put(String key, Cookie value) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void putAll(Map<? extends String, ? extends Cookie> map) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(Map map) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object remove(Object key) {
+    public Cookie remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
@@ -137,14 +138,9 @@ final class ServletCookieMap implements Map {
     }
 
     @Override
-    public Collection values() {
+    public Collection<Cookie> values() {
         Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                list.add(cookies[i]);
-            }
-        }
-        return list;
+        return Arrays.asList(cookies);
     }
 
     private String key(Object key) {

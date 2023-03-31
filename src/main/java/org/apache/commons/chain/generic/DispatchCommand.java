@@ -16,13 +16,13 @@
  */
 package org.apache.commons.chain.generic;
 
-import org.apache.commons.chain.Command;
-import org.apache.commons.chain.Context;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
 
 /**
  * An abstract base command which uses introspection to look up a
@@ -35,7 +35,7 @@ import java.util.WeakHashMap;
 public abstract class DispatchCommand implements Command {
 
     /** Cache of methods */
-    private Map methods = new WeakHashMap();
+    private Map<String, Method> methods = new WeakHashMap<>();
 
     /** Method name */
     private String method = null;
@@ -47,7 +47,7 @@ public abstract class DispatchCommand implements Command {
      * The base implementation expects dispatch methods to take a
      * {@code Context} as their only argument.
      */
-    protected static final Class[] DEFAULT_SIGNATURE = new Class[] {Context.class};
+    protected static final Class<?>[] DEFAULT_SIGNATURE = new Class[] {Context.class};
 
     /**
      * Look up the method specified by either "method" or "methodKey"
@@ -133,8 +133,7 @@ public abstract class DispatchCommand implements Command {
      * @return The evaluated result/
      */
     protected boolean evaluateResult(Object o) {
-        Boolean result = (Boolean) o;
-        return result != null && result.booleanValue();
+        return o != null && o instanceof Boolean && ((Boolean) o).booleanValue();
     }
 
     /**
@@ -142,7 +141,7 @@ public abstract class DispatchCommand implements Command {
      *
      * @return The method signature.
      */
-    protected Class[] getSignature() {
+    protected Class<?>[] getSignature() {
         return DEFAULT_SIGNATURE;
     }
 

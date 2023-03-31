@@ -16,11 +16,10 @@
  */
 package org.apache.commons.chain;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import org.apache.commons.chain.impl.CatalogFactoryBase;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.chain.impl.CatalogFactoryBase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,12 +38,20 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class CatalogFactory {
 
+    // ------------------------------------------------------- Static Variables
+
     /**
      * Values passed to the {@code getCommand(String)} method should
      * use this as the delimiter between the "catalog" name and the "command"
      * name.
      */
     public final static String DELIMITER = ":";
+
+    /**
+     * The set of registered {@link CatalogFactory} instances,
+     * keyed by the relevant class loader.
+     */
+    private final static ConcurrentHashMap<ClassLoader, CatalogFactory> FACTORIES = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
@@ -89,7 +96,7 @@ public abstract class CatalogFactory {
      *
      * @return An Iterator of the names of the Catalogs known by this factory.
      */
-    public abstract Iterator getNames();
+    public abstract Iterator<String> getNames();
 
     /**
      * Return a {@code Command} based on the given commandID.
@@ -155,14 +162,6 @@ public abstract class CatalogFactory {
         return catalog.getCommand(commandName);
     }
 
-    // ------------------------------------------------------- Static Variables
-
-    /**
-     * The set of registered {@link CatalogFactory} instances,
-     * keyed by the relevant class loader.
-     */
-    private static Map factories = new HashMap();
-
     // -------------------------------------------------------- Static Methods
 
     /**
@@ -176,16 +175,8 @@ public abstract class CatalogFactory {
      * @return the per-application singleton instance of {@link CatalogFactory}
      */
     public static CatalogFactory getInstance() {
-        CatalogFactory factory = null;
         ClassLoader cl = getClassLoader();
-        synchronized (factories) {
-            factory = (CatalogFactory) factories.get(cl);
-            if (factory == null) {
-                factory = new CatalogFactoryBase();
-                factories.put(cl, factory);
-            }
-        }
-        return factory;
+        return FACTORIES.computeIfAbsent(cl, (k) -> new CatalogFactoryBase());
     }
 
     /**
@@ -195,9 +186,7 @@ public abstract class CatalogFactory {
      * service, to allow for garbage collection.
      */
     public static void clear() {
-        synchronized (factories) {
-            factories.remove(getClassLoader());
-        }
+        FACTORIES.remove(getClassLoader());
     }
 
     // ------------------------------------------------------- Private Methods

@@ -26,26 +26,21 @@ import org.apache.commons.chain.impl.CatalogBase;
 import java.util.Iterator;
 
 /**
- * <p>Test case for the <code>CatalogFactoryBase</code> class.</p>
+ * Test case for the {@code CatalogFactoryBase} class.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class CatalogFactoryBaseTestCase extends TestCase {
-
 
     // ---------------------------------------------------- Instance Variables
 
-
     /**
-     * <p>The {@link CatalogFactory} instance under test.</p>
+     * The {@link CatalogFactory} instance under test.
      */
     protected CatalogFactory factory = null;
 
-
     // ---------------------------------------------------------- Constructors
-
 
     /**
      * Construct a new instance of this test case.
@@ -56,68 +51,56 @@ public class CatalogFactoryBaseTestCase extends TestCase {
         super(name);
     }
 
-
     // -------------------------------------------------- Overall Test Methods
 
-
     /**
-     * <p>Set up instance variables required by this test case.</p>
+     * Set up instance variables required by this test case.
      */
     public void setUp() {
         CatalogFactory.clear();
         factory = CatalogFactory.getInstance();
     }
 
-
     /**
-     * <p>Return the tests included in this test suite.</p>
+     * Return the tests included in this test suite.
      */
     public static Test suite() {
-        return (new TestSuite(CatalogFactoryBaseTestCase.class));
+        return new TestSuite(CatalogFactoryBaseTestCase.class);
     }
 
     /**
-     * <p>Tear down instance variables required by this test case.</p>
+     * Tear down instance variables required by this test case.
      */
     public void tearDown() {
         factory = null;
     }
 
-
     // ------------------------------------------------ Individual Test Methods
 
-
     /**
-     * <p>Test a pristine instance of {@link CatalogFactory}.</p>
+     * Test a pristine instance of {@link CatalogFactory}.
      */
     public void testPristine() {
-
         assertNotNull(factory);
         assertNull(factory.getCatalog());
         assertNull(factory.getCatalog("foo"));
         assertEquals(0, getCatalogCount());
-
     }
 
-
     /**
-     * <p>Test the default {@link Catalog} instance.</p>
+     * Test the default {@link Catalog} instance.
      */
     public void testDefaultCatalog() {
-
         Catalog catalog = new CatalogBase();
         factory.setCatalog(catalog);
         assertTrue(catalog == factory.getCatalog());
         assertEquals(0, getCatalogCount());
-
     }
 
-
     /**
-     * <p>Test adding a specifically named {@link Catalog} instance.</p>
+     * Test adding a specifically named {@link Catalog} instance.
      */
     public void testSpecificCatalog() {
-
         Catalog catalog = new CatalogBase();
         factory.setCatalog(catalog);
         catalog = new CatalogBase();
@@ -130,15 +113,12 @@ public class CatalogFactoryBaseTestCase extends TestCase {
         CatalogFactory.clear();
         factory = CatalogFactory.getInstance();
         assertEquals(0, getCatalogCount());
-
     }
 
-
     /**
-     * <p>Test <code>getCatalog()</code> method.</p>
+     * Test {@code getCatalog()} method.
      */
     public void testCatalogIdentifier() {
-
         Catalog defaultCatalog = new CatalogBase();
         Command defaultFoo = new NonDelegatingCommand();
         defaultCatalog.addCommand("foo", defaultFoo);
@@ -177,19 +157,17 @@ public class CatalogFactoryBaseTestCase extends TestCase {
         catch (IllegalArgumentException ex) {
             // expected behavior
         }
-
     }
-
 
     // ------------------------------------------------------- Support Methods
 
-
     /**
-     * <p>Return the number of {@link Catalog}s defined in our
-     * {@link CatalogFactory}.</p>
+     * Return the number of {@link Catalog}s defined in our
+     * {@link CatalogFactory}.
+     *
+     * @return the number of {@link Catalog}s
      */
     private int getCatalogCount() {
-
         Iterator names = factory.getNames();
         assertNotNull(names);
         int n = 0;
@@ -198,8 +176,5 @@ public class CatalogFactoryBaseTestCase extends TestCase {
             n++;
         }
         return n;
-
     }
-
-
 }

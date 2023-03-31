@@ -14,26 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain.config;
+package org.apache.commons.chain;
 
+import java.util.List;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.impl.ChainBase;
 
-
 /**
- * <p>Test implementation of <code>Chain</code> that exposes the
- * <code>getCommands()</code> method publicy.</p>
+ * Test implementation of {@code Chain} that exposes the
+ * {@code getCommands()} method public.
  */
-
 public class TestChain extends ChainBase {
-
-
-    public Command[] getCommands() {
-
-    return (commands);
-
+    public List<Command> getCommands() {
+        return commands;
     }
-
-
 }

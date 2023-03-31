@@ -35,6 +35,14 @@ import org.xml.sax.Attributes;
  */
 class ConfigRegisterRule extends Rule {
 
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The name of the attribute under which we can retrieve the name
+     * this command should be registered with.
+     */
+    private final String nameAttribute;
+
     // ----------------------------------------------------------- Constructors
 
     /**
@@ -48,14 +56,6 @@ class ConfigRegisterRule extends Rule {
         super();
         this.nameAttribute = nameAttribute;
     }
-
-    // ----------------------------------------------------- Instance Variables
-
-    /**
-     * The name of the attribute under which we can retrieve the name
-     * this command should be registered with.
-     */
-    private String nameAttribute = null;
 
     // --------------------------------------------------------- Public Methods
 
@@ -74,8 +74,7 @@ class ConfigRegisterRule extends Rule {
 
         // Is the top object a Command?
         Object top = digester.peek(0);
-        if ((top == null)
-            || !(top instanceof Command)) {
+        if (top == null || !(top instanceof Command)) {
             return;
         }
         Command command = (Command) top;

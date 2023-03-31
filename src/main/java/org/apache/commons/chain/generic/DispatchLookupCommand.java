@@ -16,12 +16,13 @@
  */
 package org.apache.commons.chain.generic;
 
+import java.lang.reflect.Method;
+import java.util.WeakHashMap;
+
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
-import java.lang.reflect.Method;
-import java.util.WeakHashMap;
 
 /**
  * This command combines elements of the {@link LookupCommand} with the
@@ -80,12 +81,12 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
      * The base implementation expects dispatch methods to take a
      * {@code Context} as their only argument.
      */
-    private static final Class[] DEFAULT_SIGNATURE =
+    private static final Class<?>[] DEFAULT_SIGNATURE =
         new Class[] {Context.class};
 
     // ----------------------------------------------------- Instance Variables
 
-    private WeakHashMap methods = new WeakHashMap();
+    private WeakHashMap<String, Method> methods = new WeakHashMap<>();
 
     // ------------------------------------------------------------- Properties
 
@@ -153,9 +154,8 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
         if (command != null) {
             Method methodObject = extractMethod(command, context);
             Object obj = methodObject.invoke(command, getArguments(context));
-            Boolean result = (Boolean)obj;
 
-            return result != null && result.booleanValue();
+            return obj != null && obj instanceof Boolean && ((Boolean) obj).booleanValue();
         } else {
             return false;
         }
@@ -171,7 +171,7 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
      *
      * @return the expected method signature
      */
-    protected Class[] getSignature() {
+    protected Class<?>[] getSignature() {
         return DEFAULT_SIGNATURE;
     }
 
@@ -226,7 +226,7 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
         Method theMethod = null;
 
         synchronized (methods) {
-            theMethod = (Method) methods.get(methodName);
+            theMethod = methods.get(methodName);
 
             if (theMethod == null) {
                 theMethod = command.getClass().getMethod(methodName,

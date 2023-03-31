@@ -18,9 +18,12 @@ package org.apache.commons.chain.web.portlet;
 
 import java.util.Collections;
 import java.util.Map;
+
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.chain.web.WebContext;
 
 /**
@@ -33,6 +36,7 @@ import org.apache.commons.chain.web.WebContext;
  * @version $Revision$ $Date$
  */
 public class PortletWebContext extends WebContext {
+    private static final long serialVersionUID = 7590757017994210786L;
 
     // ------------------------------------------------------------ Constructors
 
@@ -63,7 +67,7 @@ public class PortletWebContext extends WebContext {
      * The lazily instantiated {@code Map} of application scope
      * attributes.
      */
-    private Map applicationScope = null;
+    private Map<String, Object> applicationScope = null;
 
     /**
      * The {@code PortletContext} for this web application.
@@ -74,31 +78,31 @@ public class PortletWebContext extends WebContext {
      * The lazily instantiated {@code Map} of header name-value
      * combinations (immutable).
      */
-    private Map header = null;
+    private Map<String, String> header = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-values
      * combinations (immutable).
      */
-    private Map headerValues = null;
+    private Map<String, String[]> headerValues = null;
 
     /**
      * The lazily instantiated {@code Map} of context initialization
      * parameters.
      */
-    private Map initParam = null;
+    private Map<String, String> initParam = null;
 
     /**
      * The lazily instantiated {@code Map} of request
      * parameter name-value.
      */
-    private Map param = null;
+    private Map<String, String> param = null;
 
     /**
      * The lazily instantiated {@code Map} of request
      * parameter name-values.
      */
-    private Map paramValues = null;
+    private Map<String, String[]> paramValues = null;
 
     /**
      * The {@code PortletRequest} for this request.
@@ -109,7 +113,7 @@ public class PortletWebContext extends WebContext {
      * The lazily instantiated {@code Map} of request scope
      * attributes.
      */
-    private Map requestScope = null;
+    private Map<String, Object> requestScope = null;
 
     /**
      * The {@code PortletResponse} for this request.
@@ -120,7 +124,7 @@ public class PortletWebContext extends WebContext {
      * The lazily instantiated {@code Map} of session scope
      * attributes.
      */
-    private Map sessionScope = null;
+    private Map<String, Object> sessionScope = null;
 
     // ---------------------------------------------------------- Public Methods
 
@@ -201,7 +205,7 @@ public class PortletWebContext extends WebContext {
      *
      * @return Application scope Map.
      */
-    public Map getApplicationScope() {
+    public Map<String, Object> getApplicationScope() {
         if (applicationScope == null && context != null) {
             applicationScope = new PortletApplicationScopeMap(context);
         }
@@ -213,10 +217,10 @@ public class PortletWebContext extends WebContext {
      *
      * @return Header values Map.
      */
-    public Map getHeader() {
+    public Map<String, String> getHeader() {
         if (header == null && request != null) {
             // header = new PortletHeaderMap(request);
-            header = Collections.EMPTY_MAP;
+            header = Collections.emptyMap();
         }
         return header;
     }
@@ -226,10 +230,10 @@ public class PortletWebContext extends WebContext {
      *
      * @return Header values Map.
      */
-    public Map getHeaderValues() {
+    public Map<String, String[]> getHeaderValues() {
         if (headerValues == null && request != null) {
             // headerValues = new PortletHeaderValuesMap(request);
-            headerValues = Collections.EMPTY_MAP;
+            headerValues = Collections.emptyMap();
         }
         return headerValues;
     }
@@ -239,7 +243,7 @@ public class PortletWebContext extends WebContext {
      *
      * @return Initialization parameter Map.
      */
-    public Map getInitParam() {
+    public Map<String, String> getInitParam() {
         if (initParam == null && context != null) {
             initParam = new PortletInitParamMap(context);
         }
@@ -251,7 +255,7 @@ public class PortletWebContext extends WebContext {
      *
      * @return Request parameter Map.
      */
-    public Map getParam() {
+    public Map<String, String> getParam() {
         if (param == null && request != null) {
             param = new PortletParamMap(request);
         }
@@ -263,7 +267,7 @@ public class PortletWebContext extends WebContext {
      *
      * @return Request parameter Map.
      */
-    public Map getParamValues() {
+    public Map<String, String[]> getParamValues() {
         if (paramValues == null && request != null) {
             paramValues = new PortletParamValuesMap(request);
         }
@@ -277,8 +281,8 @@ public class PortletWebContext extends WebContext {
      *
      * @since Chain 1.1
      */
-    public Map getCookies() {
-        return Collections.EMPTY_MAP;
+    public Map<String, Cookie> getCookies() {
+        return Collections.emptyMap();
     }
 
     /**
@@ -286,7 +290,7 @@ public class PortletWebContext extends WebContext {
      *
      * @return Request scope Map.
      */
-    public Map getRequestScope() {
+    public Map<String, Object> getRequestScope() {
         if (requestScope == null && request != null) {
             requestScope = new PortletRequestScopeMap(request);
         }
@@ -298,10 +302,9 @@ public class PortletWebContext extends WebContext {
      *
      * @return Session scope Map.
      */
-    public Map getSessionScope() {
+    public Map<String, Object> getSessionScope() {
         if (sessionScope == null && request != null) {
-            sessionScope =
-                    new PortletSessionScopeMap(request);
+            sessionScope = new PortletSessionScopeMap(request);
         }
         return sessionScope;
     }

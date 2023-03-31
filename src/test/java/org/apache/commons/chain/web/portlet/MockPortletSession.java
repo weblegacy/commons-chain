@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-
 import org.apache.commons.chain.web.MockEnumeration;
 
 import javax.portlet.PortletContext;
@@ -27,12 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
 
-
-
-// Mock Object for PortletSession
+/**
+ * Mock Object for {@code PortletSession}
+ */
 public class MockPortletSession implements PortletSession {
-
-
     private Date creationTime     = new Date();
     private Date lastAccessedTime = creationTime;
 
@@ -43,19 +40,15 @@ public class MockPortletSession implements PortletSession {
     private Map portletScope = new HashMap();
     private Map applicationScope = new HashMap();
 
-
     public MockPortletSession() {
         this(null);
     }
 
-
     public MockPortletSession(PortletContext context) {
-        this.context = (context == null ? new MockPortletContext() : context);
+        this.context = context == null ? new MockPortletContext() : context;
     }
 
-
     // --------------------------------------------------------- Public Methods
-
 
     public void setPortletContext(PortletContext context) {
         this.context = context;
@@ -69,10 +62,7 @@ public class MockPortletSession implements PortletSession {
         this.id = id;
     }
 
-
-
     // ---------------------------------------------------- PortletSession Methods
-
 
     public Object getAttribute(String name) {
         accessed();
@@ -84,7 +74,6 @@ public class MockPortletSession implements PortletSession {
         return getScope(scope).get(name);
     }
 
-
     public Enumeration getAttributeNames() {
         accessed();
         return getAttributeNames(PortletSession.PORTLET_SCOPE);
@@ -95,29 +84,24 @@ public class MockPortletSession implements PortletSession {
         return new MockEnumeration(getScope(scope).keySet().iterator());
     }
 
-
     public long getCreationTime() {
         accessed();
         return creationTime.getTime();
     }
-
 
     public String getId() {
         accessed();
         return id;
     }
 
-
     public long getLastAccessedTime() {
         return lastAccessedTime.getTime();
     }
-
 
     public int getMaxInactiveInterval() {
         accessed();
         return maxInactiveInterval;
     }
-
 
     public PortletContext getPortletContext() {
         accessed();
@@ -171,5 +155,4 @@ public class MockPortletSession implements PortletSession {
            throw new IllegalArgumentException("Invalid scope: " + scope);
         }
     }
-
 }

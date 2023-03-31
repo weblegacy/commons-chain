@@ -16,10 +16,10 @@
  */
 package org.apache.commons.chain.impl;
 
-import java.util.HashMap;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.Command;
 
@@ -40,7 +40,7 @@ public class CatalogBase implements Catalog {
     /**
      * The map of named {@link Command}s, keyed by name.
      */
-    protected Map commands = Collections.synchronizedMap(new HashMap());
+    protected final Map<String, Command> commands;
 
     // --------------------------------------------------------- Constructors
 
@@ -48,6 +48,7 @@ public class CatalogBase implements Catalog {
      * Create an empty catalog.
      */
     public CatalogBase() {
+        commands = new ConcurrentHashMap<>();
     }
 
     /**
@@ -58,8 +59,12 @@ public class CatalogBase implements Catalog {
      *
      * @since Chain 1.1
      */
-    public CatalogBase( Map commands ) {
-        this.commands = Collections.synchronizedMap(commands);
+    public CatalogBase(Map<String, Command> commands) {
+        if (commands instanceof ConcurrentHashMap) {
+            this.commands = commands;
+        } else {
+            this.commands = new ConcurrentHashMap<>(commands);
+        }
     }
 
     // --------------------------------------------------------- Public Methods
@@ -87,7 +92,7 @@ public class CatalogBase implements Catalog {
      * @return The Command associated with the specified name.
      */
     public Command getCommand(String name) {
-        return (Command) commands.get(name);
+        return commands.get(name);
     }
 
     /**
@@ -97,7 +102,7 @@ public class CatalogBase implements Catalog {
      *
      * @return An iterator of the names in this Catalog.
      */
-    public Iterator getNames() {
+    public Iterator<String> getNames() {
         return commands.keySet().iterator();
     }
 
@@ -107,9 +112,12 @@ public class CatalogBase implements Catalog {
      * @return a representation of this catalog as a String
      */
     public String toString() {
-        Iterator names = getNames();
-        StringBuffer str =
-            new StringBuffer("[" + this.getClass().getName() + ": ");
+        Iterator<String> names = getNames();
+        StringBuilder str = new StringBuilder();
+        str
+            .append('[')
+            .append(this.getClass().getName())
+            .append(": ");
 
         while (names.hasNext()) {
             str.append(names.next());
@@ -117,7 +125,7 @@ public class CatalogBase implements Catalog {
                 str.append(", ");
             }
         }
-        str.append("]");
+        str.append(']');
 
         return str.toString();
     }

@@ -14,36 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.chain.config;
+
+import java.util.Iterator;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.impl.AddingCommand;
+import org.apache.commons.chain.impl.CatalogBase;
+import org.apache.commons.chain.impl.CatalogFactoryBase;
+import org.apache.commons.chain.impl.ChainBase;
+import org.apache.commons.chain.impl.ContextBase;
+import org.apache.commons.chain.impl.DelegatingCommand;
+import org.apache.commons.chain.impl.DelegatingFilter;
+import org.apache.commons.chain.impl.ExceptionCommand;
+import org.apache.commons.chain.impl.ExceptionFilter;
+import org.apache.commons.chain.impl.NonDelegatingCommand;
+import org.apache.commons.chain.impl.NonDelegatingFilter;
+import org.apache.commons.chain.impl.TestChain;
+import org.apache.commons.digester.Digester;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.commons.chain.Catalog;
-import org.apache.commons.chain.Command;
-import org.apache.commons.chain.Context;
-import org.apache.commons.chain.impl.*;
-import org.apache.commons.digester.Digester;
-
-import java.util.Iterator;
-
 
 /**
- * <p>Test case identical to {@link ConfigParserTestCase} except
- * that it uses the <code>define</code> rule to define aliases
- * for the commands and chains used in the test.</p>
+ * Test case identical to {@link ConfigParserTestCase} except
+ * that it uses the {@code define} rule to define aliases
+ * for the commands and chains used in the test.
  */
-
 public class ConfigParser2TestCase extends TestCase {
-
-
     private static final String DEFAULT_XML =
         "/org/apache/commons/chain/config/test-config-2.xml";
 
-
     // ------------------------------------------------------------ Constructors
-
 
     /**
      * Construct a new instance of this test case.
@@ -54,30 +59,24 @@ public class ConfigParser2TestCase extends TestCase {
         super(name);
     }
 
-
     // ------------------------------------------------------ Instance Variables
 
-
     /**
-     * <p>The <code>Catalog</code> to contain our configured commands.</p>
+     * The {@code Catalog} to contain our configured commands.
      */
     protected Catalog catalog = null;
 
-
     /**
-     * <p>The <code>Context</code> to use for execution tests.</p>
+     * The {@code Context} to use for execution tests.
      */
     protected Context context = null;
 
-
     /**
-     * <p>The <code>ConfigParser</code> instance under test.</p>
+     * The {@code ConfigParser} instance under test.
      */
     protected ConfigParser parser = null;
 
-
     // ---------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
@@ -88,14 +87,12 @@ public class ConfigParser2TestCase extends TestCase {
         parser = new ConfigParser();
     }
 
-
     /**
      * Return the tests included in this test suite.
      */
     public static Test suite() {
-        return (new TestSuite(ConfigParser2TestCase.class));
+        return new TestSuite(ConfigParser2TestCase.class);
     }
-
 
     /**
      * Tear down instance variables required by this test case.
@@ -106,13 +103,14 @@ public class ConfigParser2TestCase extends TestCase {
         catalog = null;
     }
 
-
     // ------------------------------------------------ Individual Test Methods
 
-
-    // Load the default test-config.xml file and examine the results
+    /**
+     * Load the default test-config.xml file and examine the results
+     *
+     * @throws Exception any error
+     */
     public void testDefaut() throws Exception {
-
         // Check overall command count
         load(DEFAULT_XML);
         checkCommandCount(17);
@@ -158,35 +156,38 @@ public class ConfigParser2TestCase extends TestCase {
         assertNotNull(tcommand);
         assertEquals("Foo Value", tcommand.getFoo());
         assertEquals("Bar Value", tcommand.getBar());
-
     }
 
-
-    // Test execution of chain "Execute2a"
+    /**
+     * Test execution of chain "Execute2a"
+     *
+     * @throws Exception any error
+     */
     public void testExecute2a() throws Exception {
-
         load(DEFAULT_XML);
         assertTrue("Chain returned true",
                    catalog.getCommand("Execute2a").execute(context));
         checkExecuteLog("1/2/3");
-
     }
 
-
-    // Test execution of chain "Execute2b"
+    /**
+     * Test execution of chain "Execute2b"
+     *
+     * @throws Exception any error
+     */
     public void testExecute2b() throws Exception {
-
         load(DEFAULT_XML);
         assertTrue("Chain returned false",
                    !catalog.getCommand("Execute2b").execute(context));
         checkExecuteLog("1/2/3");
-
     }
 
-
-    // Test execution of chain "Execute2c"
+    /**
+     * Test execution of chain "Execute2c"
+     *
+     * @throws Exception any error
+     */
     public void testExecute2c() throws Exception {
-
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute2c").execute(context);
@@ -195,13 +196,14 @@ public class ConfigParser2TestCase extends TestCase {
                          "3", e.getMessage());
         }
         checkExecuteLog("1/2/3");
-
     }
 
-
-    // Test execution of chain "Execute2d"
+    /**
+     * Test execution of chain "Execute2d"
+     *
+     * @throws Exception any error
+     */
     public void testExecute2d() throws Exception {
-
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute2d").execute(context);
@@ -210,35 +212,38 @@ public class ConfigParser2TestCase extends TestCase {
                          "2", e.getMessage());
         }
         checkExecuteLog("1/2");
-
     }
 
-
-    // Test execution of chain "Execute4a"
+    /**
+     * Test execution of chain "Execute4a"
+     *
+     * @throws Exception any error
+     */
     public void testExecute4a() throws Exception {
-
         load(DEFAULT_XML);
         assertTrue("Chain returned true",
                    catalog.getCommand("Execute4a").execute(context));
         checkExecuteLog("1/2/3/c/a");
-
     }
 
-
-    // Test execution of chain "Execute2b"
+    /**
+     * Test execution of chain "Execute2b"
+     *
+     * @throws Exception any error
+     */
     public void testExecute4b() throws Exception {
-
         load(DEFAULT_XML);
         assertTrue("Chain returned false",
                    !catalog.getCommand("Execute4b").execute(context));
         checkExecuteLog("1/2/3/b");
-
     }
 
-
-    // Test execution of chain "Execute4c"
+    /**
+     * Test execution of chain "Execute4c"
+     *
+     * @throws Exception any error
+     */
     public void testExecute4c() throws Exception {
-
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute4c").execute(context);
@@ -247,13 +252,14 @@ public class ConfigParser2TestCase extends TestCase {
                          "3", e.getMessage());
         }
         checkExecuteLog("1/2/3/c/b/a");
-
     }
 
-
-    // Test execution of chain "Execute4d"
+    /**
+     * Test execution of chain "Execute4d"
+     *
+     * @throws Exception any error
+     */
     public void testExecute4d() throws Exception {
-
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute4d").execute(context);
@@ -262,13 +268,12 @@ public class ConfigParser2TestCase extends TestCase {
                          "2", e.getMessage());
         }
         checkExecuteLog("1/2/b/a");
-
     }
 
-
-    // Test a pristine ConfigParser instance
+    /**
+     * Test a pristine ConfigParser instance
+     */
     public void testPristine() {
-
         // Validate the "digester" property
         Digester digester = parser.getDigester();
         assertNotNull("Returned a Digester instance", digester);
@@ -299,14 +304,15 @@ public class ConfigParser2TestCase extends TestCase {
 
         // Ensure that there are no preconfigured commands in the catalog
         checkCommandCount(0);
-
     }
-
 
     // --------------------------------------------------------- Private Methods
 
-
-    // Verify the number of configured commands
+    /**
+     * Verify the number of configured commands
+     *
+     * @param expected the expected value
+     */
     protected void checkCommandCount(int expected) {
         int n = 0;
         Iterator names = catalog.getNames();
@@ -318,8 +324,11 @@ public class ConfigParser2TestCase extends TestCase {
         assertEquals("Correct command count", expected, n);
     }
 
-
-    // Verify the contents of the execution log
+    /**
+     * Verify the contents of the execution log
+     *
+     * @param expected the expected value
+     */
     protected void checkExecuteLog(String expected) {
         StringBuffer log = (StringBuffer) context.get("log");
         assertNotNull("Context returned log");
@@ -327,12 +336,15 @@ public class ConfigParser2TestCase extends TestCase {
                      expected, log.toString());
     }
 
-
-    // Load the specified catalog from the specified resource path
+    /**
+     * Load the specified catalog from the specified resource path
+     *
+     * @param path resource path to load specified catalog
+     *
+     * @throws Exception any error
+     */
     protected void load(String path) throws Exception {
         parser.parse(catalog, this.getClass().getResource(path));
         catalog = CatalogFactoryBase.getInstance().getCatalog("foo");
     }
-
-
 }

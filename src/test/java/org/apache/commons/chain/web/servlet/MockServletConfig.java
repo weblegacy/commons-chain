@@ -106,5 +106,4 @@ public class MockServletConfig implements ServletConfig {
     public void setInitParameter(String name, String value) {
         parameters.put(name, value);
     }
-
 }

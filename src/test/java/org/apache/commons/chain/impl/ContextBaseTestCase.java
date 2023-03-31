@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.impl;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -34,27 +33,20 @@ import junit.framework.TestSuite;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.WebContext;
 
-
-
 /**
- * <p>Test case for the <code>ContextBase</code> class.</p>
+ * Test case for the {@code ContextBase} class.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-
 public class ContextBaseTestCase extends TestCase {
 
-
     // ---------------------------------------------------- Instance Variables
-
 
     /**
      * The {@link Context} instance under test.
      */
     protected Context context = null;
-
-
 
     // ---------------------------------------------------------- Constructors
 
@@ -67,9 +59,7 @@ public class ContextBaseTestCase extends TestCase {
         super(name);
     }
 
-
     // -------------------------------------------------- Overall Test Methods
-
 
     /**
      * Set up instance variables required by this test case.
@@ -78,12 +68,11 @@ public class ContextBaseTestCase extends TestCase {
         context = createContext();
     }
 
-
     /**
      * Return the tests included in this test suite.
      */
     public static Test suite() {
-        return (new TestSuite(ContextBaseTestCase.class));
+        return new TestSuite(ContextBaseTestCase.class);
     }
 
     /**
@@ -93,13 +82,12 @@ public class ContextBaseTestCase extends TestCase {
         context = null;
     }
 
-
     // ------------------------------------------------ Individual Test Methods
 
-
-    // Test ability to get, put, and remove attributes
+    /**
+     * Test ability to get, put, and remove attributes
+     */
     public void testAttributes() {
-
         Object value = null;
         checkAttributeCount(0);
 
@@ -152,13 +140,12 @@ public class ContextBaseTestCase extends TestCase {
                    context.get("bar"));
         assertNull("Did not return baz",
                    context.get("baz"));
-
     }
 
-
-    // Test containsKey() and containsValue()
+    /**
+     * Test {@code containsKey()} and {@code containsValue()}
+     */
     public void testContains() {
-
         assertTrue(!context.containsKey("bop"));
         assertTrue(!context.containsValue("bop value"));
         context.put("bop", "bop value");
@@ -167,13 +154,12 @@ public class ContextBaseTestCase extends TestCase {
         context.remove("bop");
         assertTrue(!context.containsKey("bop"));
         assertTrue(!context.containsValue("bop value"));
-
     }
 
-
-    // Test equals() and hashCode()
+    /**
+     * Test {@code equals()} and {@code hashCode()}
+     */
     public void testEquals() {
-
         // Compare to self
         assertTrue(context.equals(context));
         assertTrue(context.hashCode() == context.hashCode());
@@ -193,13 +179,12 @@ public class ContextBaseTestCase extends TestCase {
         context.put("bop", "bop value");
         assertTrue(!context.equals(other));
         assertTrue(context.hashCode() != other.hashCode());
-
     }
 
-
-    // Test keySet()
+    /**
+     * Test {@code keySet()}
+     */
     public void testKeySet() {
-
         Set keySet = null;
         Collection all = new ArrayList();
 
@@ -293,23 +278,21 @@ public class ContextBaseTestCase extends TestCase {
         assertTrue(keySet.contains("baz"));
         assertTrue(!keySet.contains("bop"));
         assertTrue(keySet.containsAll(all));
-
     }
 
-
-    // Test state of newly created instance
+    /**
+     * Test state of newly created instance
+     */
     public void testPristine() {
-
         checkAttributeCount(0);
         assertNull("No 'foo' attribute",
                    context.get("foo"));
-
     }
 
-
-    // Test putAll()
+    /**
+     * Test {@code putAll()}
+     */
     public void testPutAll() {
-
         // Check preconditions
         checkAttributeCount(0);
         assertNull(context.get("foo"));
@@ -340,15 +323,16 @@ public class ContextBaseTestCase extends TestCase {
         assertTrue(context.containsValue("foo value"));
         assertTrue(context.containsValue("bar value"));
         assertTrue(context.containsValue("baz value"));
-
     }
 
-
-    // Test serialization
-    public void testSeriaization() throws Exception {
-
+    /**
+     * Test serialization
+     *
+     * @throws Exception any error
+     */
+    public void testSerialization() throws Exception {
         // ContextBase is implicitly declared Serializable because it
-        // extends HashMap.  However, it is not possible to make
+        // extends HashMap. However, it is not possible to make
         // the concrete subclasses of WebContext Serializable, because
         // the underlying container objects that they wrap will not be.
         // Therefore, skip testing serializability of these implementations
@@ -380,15 +364,15 @@ public class ContextBaseTestCase extends TestCase {
         assertTrue(context.containsKey("bar"));
         assertTrue(context.containsKey("baz"));
         checkAttributeCount(3);
-
     }
-
-
 
     // -------------------------------------------------------- Support Methods
 
-
-    // Verify the number of defined attributes
+    /**
+     * Verify the number of defined attributes
+     *
+     * @param expected the expected value
+     */
     protected void checkAttributeCount(int expected) {
         int actual = 0;
         Iterator keys = context.keySet().iterator();
@@ -405,17 +389,21 @@ public class ContextBaseTestCase extends TestCase {
         }
     }
 
-
-    // Create a new instance of the appropriate Context type for this test case
+    /**
+     * Create a new instance of the appropriate Context type for this test case
+     *
+     * @return the new instance of the appropriate Context type
+     */
     protected Context createContext() {
-        return (new ContextBase());
+        return new ContextBase();
     }
 
-
-    // Return the expected size() for a Context for this test case
+    /**
+     * Return the expected {@code size()} for a Context for this test case
+     *
+     * @return the expected {@code size()} for a Context
+     */
     protected int expectedAttributeCount() {
-        return (createContext().size());
+        return createContext().size();
     }
-
-
 }
