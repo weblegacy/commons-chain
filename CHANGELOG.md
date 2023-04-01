@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Rewrite all `package.html` to `package-info.java`
 * Suppress warnings
 * Optimize clear-methode
 * Add generics to JUnit-Tests
