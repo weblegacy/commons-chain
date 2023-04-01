@@ -148,6 +148,7 @@ public class ChainServlet extends HttpServlet {
      *
      * @throws ServletException if the servlet could not be initialized
      */
+    @SuppressWarnings("deprecation")
     public void init() throws ServletException {
         Log log = LogFactory.getLog(ChainServlet.class);
         ServletConfig config = getServletConfig();

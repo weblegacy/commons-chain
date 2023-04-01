@@ -153,6 +153,7 @@ public class ChainListener implements ServletContextListener {
      *
      * @param event {@code ServletContextEvent} to be processed
      */
+    @SuppressWarnings("deprecation")
     public void contextInitialized(ServletContextEvent event) {
         Log log = LogFactory.getLog(ChainListener.class);
         if (log.isInfoEnabled()) {
@@ -247,9 +248,6 @@ public class ChainListener implements ServletContextListener {
                 resourceURL = new URL("jar:"
                                       + translate(jarURL.toExternalForm())
                                       + "!/META-INF/chain-config.xml");
-                if (resourceURL == null) {
-                    continue;
-                }
                 InputStream is = null;
                 try {
                     is = resourceURL.openStream();
@@ -310,9 +308,6 @@ public class ChainListener implements ServletContextListener {
                 resourceURL = new URL("jar:"
                                       + translate(jarURL.toExternalForm())
                                       + "!/META-INF/chain-config.xml");
-                if (resourceURL == null) {
-                    continue;
-                }
                 InputStream is = null;
                 try {
                     is = resourceURL.openStream();

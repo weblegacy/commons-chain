@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Suppress warnings
 * Optimize clear-methode
 * Add generics to JUnit-Tests
 * Correct JUnit-Test `ServletSetLocaleCommandTestCase`
