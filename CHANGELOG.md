@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correct JUnit-Test `ServletSetLocaleCommandTestCase`
 * Upgrade to JUnit5
 * Reformats JavaDocs from Test-Classes
 * Reformating: JavaDoc-Code, remove HTML-P-Tag, delete empty lines, add deprecated- and

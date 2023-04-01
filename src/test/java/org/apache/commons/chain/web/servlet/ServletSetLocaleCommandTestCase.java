@@ -70,7 +70,7 @@ public class ServletSetLocaleCommandTestCase {
     /**
      * Chain API Objects - command
      */
-    protected ServletGetLocaleCommand command = null;
+    protected ServletSetLocaleCommand command = null;
 
     // -------------------------------------------------- Overall Test Methods
 
@@ -91,7 +91,7 @@ public class ServletSetLocaleCommandTestCase {
 
         // Set up Chain API Objects
         context = new ServletWebContext(scontext, request, response);
-        command = new ServletGetLocaleCommand();
+        command = new ServletSetLocaleCommand();
     }
 
     /**
@@ -135,7 +135,7 @@ public class ServletSetLocaleCommandTestCase {
 
     // --------------------------------------------------------- Support Methods
 
-    protected void check(Context context, ServletGetLocaleCommand command)
+    protected void check(Context context, ServletSetLocaleCommand command)
             throws Exception {
 
         String localeKey = command.getLocaleKey();
