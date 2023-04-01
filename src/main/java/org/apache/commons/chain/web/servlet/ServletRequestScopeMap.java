@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,9 +44,8 @@ final class ServletRequestScopeMap implements Map<String, Object> {
     }
 
     public void clear() {
-        Iterator<String> keys = keySet().iterator();
-        while (keys.hasNext()) {
-            request.removeAttribute(keys.next());
+        for (String key : keySet()) {
+            request.removeAttribute(key);
         }
     }
 
