@@ -16,21 +16,22 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-import org.apache.commons.chain.web.MockEnumeration;
-import org.apache.commons.chain.web.MockPrincipal;
+import java.security.Principal;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortalContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
-import java.security.Principal;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Enumeration;
-import java.util.Locale;
+
+import org.apache.commons.chain.web.MockEnumeration;
+import org.apache.commons.chain.web.MockPrincipal;
 
 /**
  * Mock Object for {@code PortletRequest}

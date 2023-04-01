@@ -21,6 +21,8 @@ package org.apache.commons.chain.impl;
  * delegation to properties of the {@code Context} class.
  */
 public class TestContext extends ContextBase {
+    private static final long serialVersionUID = -582126541014253603L;
+
     /**
      * Read-only property
      */

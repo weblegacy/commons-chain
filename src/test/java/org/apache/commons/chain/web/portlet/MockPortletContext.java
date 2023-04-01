@@ -16,15 +16,15 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-import javax.portlet.Portlet;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequestDispatcher;
 
 /**
  * Mock Object for {@code PortletContext}

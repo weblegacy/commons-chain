@@ -16,39 +16,39 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.apache.commons.chain.Context;
-import org.apache.commons.chain.impl.ContextBaseTestCase;
-import org.apache.commons.chain.web.WebContext;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Cookie;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Collection;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.impl.ContextBaseTestCase;
+import org.apache.commons.chain.web.WebContext;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@code ContextBaseTestCase} to validate the
  * extra functionality of this implementation.
  */
 public class ServletWebContextTestCase extends ContextBaseTestCase {
-
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ServletWebContextTestCase(String name) {
-        super(name);
-    }
 
     // ----------------------------------------------------- Instance Variables
 
@@ -77,7 +77,8 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         scontext = new MockServletContext();
         scontext.setAttribute("akey1", "avalue1");
         scontext.setAttribute("akey2", "avalue2");
@@ -108,15 +109,9 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     }
 
     /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ServletWebContextTestCase.class);
-    }
-
-    /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         scontext = null;
         session = null;
@@ -130,6 +125,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getApplicationScope()}
      */
+    @Test
     public void testApplicationScope() {
         Map map = ((WebContext) context).getApplicationScope();
         assertNotNull(map);
@@ -183,8 +179,8 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         values.put(new Integer(1), "One");
         values.put("2", "Two");
         map.putAll(values);
-        assertEquals("putAll(1)", "One", map.get("1"));
-        assertEquals("putAll(2)", "Two", map.get("2"));
+        assertEquals("One", map.get("1"), "putAll(1)");
+        assertEquals("Two", map.get("2"), "putAll(2)");
         checkMapSize(map, 2);
     }
 
@@ -192,33 +188,35 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      * Test {@code equals()} and {@code hashCode()}
      * Copied from ContextBaseTestCase with customized creation of "other"
      */
+    @Test
     public void testEquals() {
         // FIXME - ServletWebContext needs a better equals()
 
         // Compare to self
         assertTrue(context.equals(context));
-        assertTrue(context.hashCode() == context.hashCode());
+        assertEquals(context.hashCode(), context.hashCode());
 
         // Compare to equivalent instance
         Context other = new ServletWebContext(scontext, request, response);
         // assertTrue(context.equals(other));
-        assertTrue(context.hashCode() == other.hashCode());
+        assertEquals(context.hashCode(), other.hashCode());
 
         // Compare to non-equivalent instance - other modified
         other.put("bop", "bop value");
-        // assertTrue(!context.equals(other));
-        assertTrue(context.hashCode() != other.hashCode());
+        // assertFalse(context.equals(other));
+        assertNotEquals(context.hashCode(), other.hashCode());
 
         // Compare to non-equivalent instance - self modified
         other = new ServletWebContext(scontext, request, response);
         context.put("bop", "bop value");
-        // assertTrue(!context.equals(other));
-        assertTrue(context.hashCode() != other.hashCode());
+        // assertFalse(context.equals(other));
+        assertNotEquals(context.hashCode(), other.hashCode());
     }
 
     /**
      * Test {@code getHeader()}
      */
+    @Test
     public void testHeader() {
         Map map = ((WebContext) context).getHeader();
         assertNotNull(map);
@@ -265,6 +263,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getHeaderValues()}
      */
+    @Test
     public void testHeaderValues() {
         Map map = ((WebContext) context).getHeaderValues();
         assertNotNull(map);
@@ -273,13 +272,13 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         checkMapSize(map, 2);
         Object value1 = map.get("hkey1");
         assertNotNull(value1);
-        assertTrue(value1 instanceof String[]);
+        assertInstanceOf(String[].class, value1);
         String values1[] = (String[]) value1;
         assertEquals(1, values1.length);
         assertEquals("hvalue1", values1[0]);
         Object value2 = map.get("hkey2");
         assertNotNull(value2);
-        assertTrue(value2 instanceof String[]);
+        assertInstanceOf(String[].class, value2);
         String values2[] = (String[]) value2;
         assertEquals(2, values2.length);
         assertEquals("hvalue2a", values2[0]);
@@ -322,6 +321,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getInitParam()}
      */
+    @Test
     public void testInitParam() {
         Map map = ((WebContext) context).getInitParam();
         assertNotNull(map);
@@ -371,6 +371,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getParam()}
      */
+    @Test
     public void testParam() {
         Map map = ((WebContext) context).getParam();
         assertNotNull(map);
@@ -416,6 +417,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getParamValues()}
      */
+    @Test
     public void testParamValues() {
         Map map = ((WebContext) context).getParamValues();
         assertNotNull(map);
@@ -424,13 +426,13 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         checkMapSize(map, 2);
         Object value1 = map.get("pkey1");
         assertNotNull(value1);
-        assertTrue(value1 instanceof String[]);
+        assertInstanceOf(String[].class, value1);
         String values1[] = (String[]) value1;
         assertEquals(1, values1.length);
         assertEquals("pvalue1", values1[0]);
         Object value2 = map.get("pkey2");
         assertNotNull(value2);
-        assertTrue(value2 instanceof String[]);
+        assertInstanceOf(String[].class, value2);
         String values2[] = (String[]) value2;
         assertEquals(2, values2.length);
         assertEquals("pvalue2a", values2[0]);
@@ -470,6 +472,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getCookies()}
      */
+    @Test
     public void testCookies() {
         Map map = ((WebContext) context).getCookies();
         assertNotNull(map);
@@ -517,6 +520,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test state of newly created instance
      */
+    @Test
     public void testPristine() {
         super.testPristine();
         ServletWebContext swcontext = (ServletWebContext) context;
@@ -556,6 +560,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code release()}
      */
+    @Test
     public void testRelease() {
         ServletWebContext swcontext = (ServletWebContext) context;
         swcontext.release();
@@ -586,6 +591,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     /**
      * Test {@code getRequestScope()}
      */
+    @Test
     public void testRequestScope() {
         Map map = ((WebContext) context).getRequestScope();
         assertNotNull(map);
@@ -637,14 +643,15 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         values.put(new Integer(1), "One");
         values.put("2", "Two");
         map.putAll(values);
-        assertEquals("putAll(1)", "One", map.get("1"));
-        assertEquals("putAll(2)", "Two", map.get("2"));
+        assertEquals("One", map.get("1"), "putAll(1)");
+        assertEquals("Two", map.get("2"), "putAll(2)");
         checkMapSize(map, 2);
     }
 
     /**
      * Test {@code getSessionScope()}
      */
+    @Test
     public void testSessionScope() {
         Map map = ((WebContext) context).getSessionScope();
         assertNotNull(map);
@@ -697,87 +704,88 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
         values.put(new Integer(1), "One");
         values.put("2", "Two");
         map.putAll(values);
-        assertEquals("putAll(1)", "One", map.get("1"));
-        assertEquals("putAll(2)", "Two", map.get("2"));
+        assertEquals("One", map.get("1"), "putAll(1)");
+        assertEquals("Two", map.get("2"), "putAll(2)");
         checkMapSize(map, 2);
     }
 
     /**
      * Test {@code getSessionScope()} without Session
      */
+    @Test
     public void testSessionScopeWithoutSession() {
         // Create a Context without a session
         ServletWebContext ctx = new ServletWebContext(scontext, 
            new MockHttpServletRequest(), response);
-        assertNull("Session(A)", ctx.getRequest().getSession(false));
+        assertNull(ctx.getRequest().getSession(false), "Session(A)");
 
         // Get the session Map & check session doesn't exist
         Map sessionMap = ctx.getSessionScope();
-        assertNull("Session(B)", ctx.getRequest().getSession(false));
-        assertNotNull("Session Map(A)", sessionMap);
+        assertNull(ctx.getRequest().getSession(false), "Session(B)");
+        assertNotNull(sessionMap, "Session Map(A)");
 
         // test clear()
         sessionMap.clear();
-        assertNull("Session(C)", ctx.getRequest().getSession(false));
+        assertNull(ctx.getRequest().getSession(false), "Session(C)");
 
         // test containsKey()
-        assertFalse("containsKey()", sessionMap.containsKey("ABC"));
-        assertNull("Session(D)", ctx.getRequest().getSession(false));
+        assertFalse(sessionMap.containsKey("ABC"), "containsKey()");
+        assertNull(ctx.getRequest().getSession(false), "Session(D)");
 
         // test containsValue()
-        assertFalse("containsValue()", sessionMap.containsValue("ABC"));
-        assertNull("Session(E)", ctx.getRequest().getSession(false));
+        assertFalse(sessionMap.containsValue("ABC"), "containsValue()");
+        assertNull(ctx.getRequest().getSession(false), "Session(E)");
 
         // test entrySet()
         Set entrySet = sessionMap.entrySet();
-        assertNotNull("entrySet", entrySet);
-        assertEquals("entrySet Size", 0, entrySet.size());
-        assertNull("Session(F)", ctx.getRequest().getSession(false));
+        assertNotNull(entrySet, "entrySet");
+        assertEquals(0, entrySet.size(), "entrySet Size");
+        assertNull(ctx.getRequest().getSession(false), "Session(F)");
 
         // test equals()
-        assertFalse("equals()", sessionMap.equals("ABC"));
-        assertNull("Session(G)", ctx.getRequest().getSession(false));
+        assertFalse(sessionMap.equals("ABC"), "equals()");
+        assertNull(ctx.getRequest().getSession(false), "Session(G)");
 
         // test get()
-        assertNull("get()", sessionMap.get("ABC"));
-        assertNull("Session(H)", ctx.getRequest().getSession(false));
+        assertNull(sessionMap.get("ABC"), "get()");
+        assertNull(ctx.getRequest().getSession(false), "Session(H)");
 
         // test hashCode()
         sessionMap.hashCode();
-        assertNull("Session(I)", ctx.getRequest().getSession(false));
+        assertNull(ctx.getRequest().getSession(false), "Session(I)");
 
         // test isEmpty()
-        assertTrue("isEmpty()", sessionMap.isEmpty());
-        assertNull("Session(J)", ctx.getRequest().getSession(false));
+        assertTrue(sessionMap.isEmpty(), "isEmpty()");
+        assertNull(ctx.getRequest().getSession(false), "Session(J)");
 
         // test keySet()
         Set keySet = sessionMap.keySet();
-        assertNotNull("keySet", keySet);
-        assertEquals("keySet Size", 0, keySet.size());
-        assertNull("Session(K)", ctx.getRequest().getSession(false));
+        assertNotNull(keySet, "keySet");
+        assertEquals(0, keySet.size(), "keySet Size");
+        assertNull(ctx.getRequest().getSession(false), "Session(K)");
 
         // test putAll() with an empty Map
         sessionMap.putAll(new HashMap());
-        assertNull("Session(L)", ctx.getRequest().getSession(false));
+        assertNull(ctx.getRequest().getSession(false), "Session(L)");
 
         // test remove()
-        assertNull("remove()", sessionMap.remove("ABC"));
-        assertNull("Session(M)", ctx.getRequest().getSession(false));
+        assertNull(sessionMap.remove("ABC"), "remove()");
+        assertNull(ctx.getRequest().getSession(false), "Session(M)");
 
         // test size()
-        assertEquals("size() Size", 0, sessionMap.size());
-        assertNull("Session(N)", ctx.getRequest().getSession(false));
+        assertEquals(0, sessionMap.size(), "size() Size");
+        assertNull(ctx.getRequest().getSession(false), "Session(N)");
 
         // test values()
         Collection values = sessionMap.values();
-        assertNotNull("values", values);
-        assertEquals("values Size", 0, values.size());
-        assertNull("Session(O)", ctx.getRequest().getSession(false));
+        assertNotNull(values, "values");
+        assertEquals(0, values.size(), "values Size");
+        assertNull(ctx.getRequest().getSession(false), "Session(O)");
 
         // test put()
         try {
-            assertNull("put()", sessionMap.put("ABC", "XYZ"));
-            assertNotNull("Session(P)", ctx.getRequest().getSession(false));
+            assertNull(sessionMap.put("ABC", "XYZ"), "put()");
+            assertNotNull(ctx.getRequest().getSession(false), "Session(P)");
         } catch(UnsupportedOperationException ex) {
             // expected: currently MockHttpServletRequest throws this
             //           when trying to create a HttpSession
@@ -818,10 +826,10 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     protected void checkEntrySet(Map map, boolean modifiable) {
         assertTrue(map.size() > 1);
         Set entries = map.entrySet();
-        assertTrue(map.size() == entries.size());
+        assertEquals(map.size(), entries.size());
         Object o = entries.iterator().next();
 
-        assertTrue(o instanceof Map.Entry);
+        assertInstanceOf(Map.Entry.class, o);
 
         if (!modifiable) {
             try {

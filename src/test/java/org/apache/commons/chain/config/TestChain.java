@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain;
+package org.apache.commons.chain.config;
 
 import java.util.List;
 

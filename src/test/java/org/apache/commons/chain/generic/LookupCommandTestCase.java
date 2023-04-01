@@ -16,17 +16,23 @@
  */
 package org.apache.commons.chain.generic;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.commons.chain.Context;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.CatalogBase;
-import org.apache.commons.chain.impl.ContextBase;
-import org.apache.commons.chain.impl.ChainBase;
 import org.apache.commons.chain.impl.CatalogFactoryBase;
+import org.apache.commons.chain.impl.ChainBase;
+import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.impl.DelegatingCommand;
 import org.apache.commons.chain.impl.NonDelegatingCommand;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code LookupCommand} class.
@@ -34,7 +40,7 @@ import org.apache.commons.chain.impl.NonDelegatingCommand;
  * @author Sean Schofield
  * @version $Revision$
  */
-public class LookupCommandTestCase extends TestCase {
+public class LookupCommandTestCase {
 
     // ---------------------------------------------------- Instance Variables
 
@@ -53,42 +59,26 @@ public class LookupCommandTestCase extends TestCase {
      */
     protected Context context = null;
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public LookupCommandTestCase(String name) {
-        super(name);
-    }
-
     // -------------------------------------------------- Overall Test Methods
 
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         catalog = new CatalogBase();
         CatalogFactoryBase.getInstance().setCatalog(catalog);
-        command = new LookupCommand();        
+        command = new LookupCommand();
         context = new ContextBase();
-    }
-
-    /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return (new TestSuite(LookupCommandTestCase.class));
     }
 
     /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         catalog = null;
-        CatalogFactoryBase.getInstance().clear();
+        CatalogFactoryBase.clear();
         command = null;
         context = null;
     }
@@ -98,14 +88,15 @@ public class LookupCommandTestCase extends TestCase {
     /**
      * Test ability to lookup and execute single non-delegating command
      */
+    @Test
     public void testExecuteMethodLookup_1a() {
         // use default catalog
         catalog.addCommand("foo", new NonDelegatingCommand("1a"));
         command.setName("foo");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -115,6 +106,7 @@ public class LookupCommandTestCase extends TestCase {
     /**
      * Test ability to lookup and execute a chain
      */
+    @Test
     public void testExecuteMethodLookup_1b() {
         ChainBase chain = new ChainBase();
         chain.addCommand(new DelegatingCommand("1b1"));
@@ -126,8 +118,8 @@ public class LookupCommandTestCase extends TestCase {
         command.setName("foo");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -138,6 +130,7 @@ public class LookupCommandTestCase extends TestCase {
      * Test ability to lookup and execute single non-delegating command
      * using the context
      */
+    @Test
     public void testExecuteMethodLookup_2a() {
         // use default catalog
         catalog.addCommand("foo", new NonDelegatingCommand("2a"));
@@ -145,8 +138,8 @@ public class LookupCommandTestCase extends TestCase {
         context.put("nameKey", "foo");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -156,6 +149,7 @@ public class LookupCommandTestCase extends TestCase {
     /**
      * Test ability to lookup and execute a chain using the context 
      */
+    @Test
     public void testExecuteMethodLookup_2b() {
         ChainBase chain = new ChainBase();
         chain.addCommand(new DelegatingCommand("2b1"));
@@ -168,8 +162,8 @@ public class LookupCommandTestCase extends TestCase {
         context.put("nameKey", "foo");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -179,6 +173,7 @@ public class LookupCommandTestCase extends TestCase {
     /**
      * Test ability to lookup and execute single non-delegating command, ignoring its result
      */
+    @Test
     public void testExecuteMethodLookup_3a() {
         // use default catalog
         catalog.addCommand("foo", new NonDelegatingCommand("3a"));
@@ -186,8 +181,8 @@ public class LookupCommandTestCase extends TestCase {
         command.setName("foo");
 
         try {
-            assertFalse("Command should return false",
-                       command.execute(context));
+            assertFalse(command.execute(context),
+                        "Command should return false");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -203,8 +198,8 @@ public class LookupCommandTestCase extends TestCase {
      */
     protected void checkExecuteLog(String expected) {
         StringBuffer log = (StringBuffer) context.get("log");
-        assertNotNull("Context failed to return log", log);
-        assertEquals("Context returned correct log",
-                     expected, log.toString());
+        assertNotNull(log, "Context failed to return log");
+        assertEquals(expected, log.toString(),
+                     "Context returned correct log");
     }
 }

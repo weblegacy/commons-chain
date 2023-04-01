@@ -32,7 +32,7 @@
   <define    name="non-delegating-filter"
         className="org.apache.commons.chain.impl.NonDelegatingFilter"/>
   <define    name="test-chain"
-        className="org.apache.commons.chain.impl.TestChain"/>
+        className="org.apache.commons.chain.config.TestChain"/>
   <define    name="test-command"
         className="org.apache.commons.chain.config.TestCommand"/>
 

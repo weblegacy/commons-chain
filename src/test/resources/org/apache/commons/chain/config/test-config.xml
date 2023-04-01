@@ -32,7 +32,7 @@
   <command   name="NonDelegatingFilter"
         className="org.apache.commons.chain.impl.NonDelegatingFilter"/>
   <chain     name="ChainBase"
-        className="org.apache.commons.chain.impl.TestChain"/>
+        className="org.apache.commons.chain.config.TestChain"/>
 
   <!-- Configurable command with settable properties -->
   <command   name="Configurable"

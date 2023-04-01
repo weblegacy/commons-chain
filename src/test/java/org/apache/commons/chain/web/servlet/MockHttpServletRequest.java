@@ -16,17 +16,23 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-import org.apache.commons.chain.web.MockEnumeration;
-import org.apache.commons.chain.web.MockPrincipal;
+import java.io.BufferedReader;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.security.Principal;
-import java.util.*;
+
+import org.apache.commons.chain.web.MockEnumeration;
+import org.apache.commons.chain.web.MockPrincipal;
 
 /**
  * Mock Object for {@code HttpServletRequest} (Version 2.3)

@@ -2,6 +2,8 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Upgrade to JUnit5
+* Reformats JavaDocs from Test-Classes
 * Reformating: JavaDoc-Code, remove HTML-P-Tag, delete empty lines, add deprecated- and
   override-annotations, change JavaDoc exception to throws, typos, remove unnecessary parentheses
 * Move TestChain-Class from config to impl

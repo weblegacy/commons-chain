@@ -16,15 +16,21 @@
  */
 package org.apache.commons.chain.generic;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.commons.chain.Context;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.CatalogBase;
-import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.impl.CatalogFactoryBase;
+import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.impl.NonDelegatingCommand;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code DispatchLookupCommand} class.
@@ -32,7 +38,7 @@ import org.apache.commons.chain.impl.NonDelegatingCommand;
  * @author Sean Schofield
  * @version $Revision$
  */
-public class DispatchLookupCommandTestCase extends TestCase {
+public class DispatchLookupCommandTestCase {
 
     // ---------------------------------------------------- Instance Variables
 
@@ -51,44 +57,26 @@ public class DispatchLookupCommandTestCase extends TestCase {
      */
     protected Context context = null;
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public DispatchLookupCommandTestCase(String name) {
-        super(name);
-    }
-
     // -------------------------------------------------- Overall Test Methods
 
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         catalog = new CatalogBase();
         CatalogFactoryBase.getInstance().setCatalog(catalog);
-        command = new DispatchLookupCommand();        
+        command = new DispatchLookupCommand();
         context = new ContextBase();
-    }
-
-    /**
-     * Return the tests included in this test suite.
-     * 
-     * @return The suite of tests to run
-     */
-    public static Test suite() {
-        return new TestSuite(DispatchLookupCommandTestCase.class);
     }
 
     /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         catalog = null;
-        CatalogFactoryBase.getInstance().clear();
+        CatalogFactoryBase.clear();
         command = null;
         context = null;
     }
@@ -99,6 +87,7 @@ public class DispatchLookupCommandTestCase extends TestCase {
      * Test ability to lookup and execute a dispatch method on a single
      * non-delegating command
      */
+    @Test
     public void testExecuteDispatchLookup_1a() {
         // use default catalog
         catalog.addCommand("fooCommand", new TestCommand("1"));
@@ -108,8 +97,8 @@ public class DispatchLookupCommandTestCase extends TestCase {
         command.setMethod("fooMethod");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -118,8 +107,8 @@ public class DispatchLookupCommandTestCase extends TestCase {
         command.setMethod("barMethod");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -130,6 +119,7 @@ public class DispatchLookupCommandTestCase extends TestCase {
     /**
      * Test IllegalArgumentException when incorrect command name specified
      */
+    @Test
     public void testExecuteDispatchLookup_2() {
         // use default catalog
         catalog.addCommand("barCommand", new TestCommand("2"));
@@ -138,22 +128,16 @@ public class DispatchLookupCommandTestCase extends TestCase {
         command.setName("fooCommand");
         command.setMethod("fooMethod");
 
-        try {
-            command.execute(context);
-        } catch (IllegalArgumentException e) {
-            // test passed
-            return;
-        } catch (Exception e) {
-            // this is a failure
-        }
-
-        fail("Expected IllegalArgumentException");
+        assertThrows(IllegalArgumentException.class,
+                     () ->command.execute(context),
+                     "Expected IllegalArgumentException");
     }
 
     /**
      * Test ability to lookup and execute a dispatch method on a single
      * non-delegating command (using context to specify method name)
      */
+    @Test
     public void testExecuteDispatchLookup_3() {
         // use default catalog
         catalog.addCommand("fooCommand", new TestCommand("3"));
@@ -164,8 +148,8 @@ public class DispatchLookupCommandTestCase extends TestCase {
         context.put("methodKey", "fooMethod");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -175,8 +159,8 @@ public class DispatchLookupCommandTestCase extends TestCase {
         context.put("methodKey", "barMethod");
 
         try {
-            assertTrue("Command should return true",
-                       command.execute(context));
+            assertTrue(command.execute(context),
+                       "Command should return true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -193,9 +177,9 @@ public class DispatchLookupCommandTestCase extends TestCase {
      */
     protected void checkExecuteLog(String expected) {
         StringBuffer log = (StringBuffer) context.get("log");
-        assertNotNull("Context failed to return log", log);
-        assertEquals("Context returned correct log",
-                     expected, log.toString());
+        assertNotNull(log, "Context failed to return log");
+        assertEquals(expected, log.toString(),
+                     "Context returned correct log");
     }
 
     // ---------------------------------------------------------- Inner Classes

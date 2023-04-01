@@ -16,15 +16,15 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-import org.apache.commons.chain.web.MockEnumeration;
-
-import javax.portlet.PortletContext;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletContext;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletSession;
+
+import org.apache.commons.chain.web.MockEnumeration;
 
 /**
  * Mock Object for {@code PortletSession}

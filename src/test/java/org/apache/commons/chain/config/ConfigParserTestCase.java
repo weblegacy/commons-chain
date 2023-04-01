@@ -16,34 +16,40 @@
  */
 package org.apache.commons.chain.config;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Iterator;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.chain.impl.*;
+import org.apache.commons.chain.impl.AddingCommand;
+import org.apache.commons.chain.impl.CatalogBase;
+import org.apache.commons.chain.impl.CatalogFactoryBase;
+import org.apache.commons.chain.impl.ChainBase;
+import org.apache.commons.chain.impl.ContextBase;
+import org.apache.commons.chain.impl.DelegatingCommand;
+import org.apache.commons.chain.impl.DelegatingFilter;
+import org.apache.commons.chain.impl.ExceptionCommand;
+import org.apache.commons.chain.impl.ExceptionFilter;
+import org.apache.commons.chain.impl.NonDelegatingCommand;
+import org.apache.commons.chain.impl.NonDelegatingFilter;
 import org.apache.commons.digester.Digester;
-
-import java.util.Iterator;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@code org.apache.commons.chain.config.ConfigParser}.
  */
-public class ConfigParserTestCase extends TestCase {
+public class ConfigParserTestCase {
     private static final String DEFAULT_XML =
         "/org/apache/commons/chain/config/test-config.xml";
-
-    // ------------------------------------------------------------ Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ConfigParserTestCase(String name) {
-        super(name);
-    }
 
     // ------------------------------------------------------ Instance Variables
 
@@ -67,22 +73,17 @@ public class ConfigParserTestCase extends TestCase {
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         catalog = new CatalogBase();
         context = new ContextBase();
         parser = new ConfigParser();
     }
 
     /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ConfigParserTestCase.class);
-    }
-
-    /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         parser = null;
         context = null;
@@ -96,6 +97,7 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testDefaut() throws Exception {
         // Check overall command count
         load(DEFAULT_XML);
@@ -106,42 +108,42 @@ public class ConfigParserTestCase extends TestCase {
 
         command = catalog.getCommand("AddingCommand");
         assertNotNull(command);
-        assertTrue(command instanceof AddingCommand);
+        assertInstanceOf(AddingCommand.class, command);
 
         command = catalog.getCommand("DelegatingCommand");
         assertNotNull(command);
-        assertTrue(command instanceof DelegatingCommand);
+        assertInstanceOf(DelegatingCommand.class, command);
 
         command = catalog.getCommand("DelegatingFilter");
         assertNotNull(command);
-        assertTrue(command instanceof DelegatingFilter);
+        assertInstanceOf(DelegatingFilter.class, command);
 
         command = catalog.getCommand("ExceptionCommand");
         assertNotNull(command);
-        assertTrue(command instanceof ExceptionCommand);
+        assertInstanceOf(ExceptionCommand.class, command);
 
         command = catalog.getCommand("ExceptionFilter");
         assertNotNull(command);
-        assertTrue(command instanceof ExceptionFilter);
+        assertInstanceOf(ExceptionFilter.class, command);
 
         command = catalog.getCommand("NonDelegatingCommand");
         assertNotNull(command);
-        assertTrue(command instanceof NonDelegatingCommand);
+        assertInstanceOf(NonDelegatingCommand.class, command);
 
         command = catalog.getCommand("NonDelegatingFilter");
         assertNotNull(command);
-        assertTrue(command instanceof NonDelegatingFilter);
+        assertInstanceOf(NonDelegatingFilter.class, command);
 
         command = catalog.getCommand("ChainBase");
         assertNotNull(command);
-        assertTrue(command instanceof ChainBase);
-        assertTrue(command instanceof TestChain);
+        assertInstanceOf(ChainBase.class, command);
+        assertInstanceOf(TestChain.class, command);
 
         // Check configurable properties instance
         TestCommand tcommand = (TestCommand) catalog.getCommand("Configurable");
         assertNotNull(tcommand);
-        assertEquals("Foo Value", tcommand.getFoo());
-        assertEquals("Bar Value", tcommand.getBar());
+        assertEquals(tcommand.getFoo(), "Foo Value");
+        assertEquals(tcommand.getBar(), "Bar Value");
     }
 
     /**
@@ -149,10 +151,11 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute2a() throws Exception {
         load(DEFAULT_XML);
-        assertTrue("Chain returned true",
-                   catalog.getCommand("Execute2a").execute(context));
+        assertTrue(catalog.getCommand("Execute2a").execute(context),
+                   "Chain returned true");
         checkExecuteLog("1/2/3");
     }
 
@@ -161,10 +164,11 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute2b() throws Exception {
         load(DEFAULT_XML);
-        assertTrue("Chain returned false",
-                   !catalog.getCommand("Execute2b").execute(context));
+        assertFalse(catalog.getCommand("Execute2b").execute(context),
+                    "Chain returned false");
         checkExecuteLog("1/2/3");
     }
 
@@ -173,13 +177,14 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute2c() throws Exception {
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute2c").execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id",
-                         "3", e.getMessage());
+            assertEquals("3", e.getMessage(),
+                         "Correct exception id");
         }
         checkExecuteLog("1/2/3");
     }
@@ -189,13 +194,14 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute2d() throws Exception {
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute2d").execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id",
-                         "2", e.getMessage());
+            assertEquals("2", e.getMessage(),
+                         "Correct exception id");
         }
         checkExecuteLog("1/2");
     }
@@ -205,10 +211,11 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute4a() throws Exception {
         load(DEFAULT_XML);
-        assertTrue("Chain returned true",
-                   catalog.getCommand("Execute4a").execute(context));
+        assertTrue(catalog.getCommand("Execute4a").execute(context),
+                   "Chain returned true");
         checkExecuteLog("1/2/3/c/a");
     }
 
@@ -217,10 +224,11 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute4b() throws Exception {
         load(DEFAULT_XML);
-        assertTrue("Chain returned false",
-                   !catalog.getCommand("Execute4b").execute(context));
+        assertFalse(catalog.getCommand("Execute4b").execute(context),
+                    "Chain returned false");
         checkExecuteLog("1/2/3/b");
     }
 
@@ -229,13 +237,14 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute4c() throws Exception {
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute4c").execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id",
-                         "3", e.getMessage());
+            assertEquals("3", e.getMessage(),
+                         "Correct exception id");
         }
         checkExecuteLog("1/2/3/c/b/a");
     }
@@ -245,13 +254,14 @@ public class ConfigParserTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testExecute4d() throws Exception {
         load(DEFAULT_XML);
         try {
             catalog.getCommand("Execute4d").execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id",
-                         "2", e.getMessage());
+            assertEquals("2", e.getMessage(),
+                         "Correct exception id");
         }
         checkExecuteLog("1/2/b/a");
     }
@@ -259,34 +269,35 @@ public class ConfigParserTestCase extends TestCase {
     /**
      * Test a pristine ConfigParser instance
      */
+    @Test
     public void testPristine() {
         // Validate the "digester" property
         Digester digester = parser.getDigester();
-        assertNotNull("Returned a Digester instance", digester);
-        assertTrue("Default namespaceAware",
-                   !digester.getNamespaceAware());
-        assertTrue("Default useContextClassLoader",
-                   digester.getUseContextClassLoader());
-        assertTrue("Default validating",
-                   !digester.getValidating());
+        assertNotNull(digester, "Returned a Digester instance");
+        assertFalse(digester.getNamespaceAware(),
+                    "Default namespaceAware");
+        assertTrue(digester.getUseContextClassLoader(),
+                   "Default useContextClassLoader");
+        assertFalse(digester.getValidating(),
+                    "Default validating");
 
         // Validate the "ruleSet" property
         ConfigRuleSet ruleSet = (ConfigRuleSet) parser.getRuleSet();
-        assertNotNull("Returned a RuleSet instance", ruleSet);
-        assertEquals("Default chainElement",
-                     "chain", ruleSet.getChainElement());
-        assertEquals("Default classAttribute",
-                     "className", ruleSet.getClassAttribute());
-        assertEquals("Default commandElement",
-                     "command", ruleSet.getCommandElement());
-        assertEquals("Default nameAttribute",
-                     "name", ruleSet.getNameAttribute());
-        assertNull("Default namespaceURI",
-                   ruleSet.getNamespaceURI());
+        assertNotNull(ruleSet, "Returned a RuleSet instance");
+        assertEquals("chain", ruleSet.getChainElement(),
+                     "Default chainElement");
+        assertEquals("className", ruleSet.getClassAttribute(),
+                     "Default classAttribute");
+        assertEquals("command", ruleSet.getCommandElement(),
+                     "Default commandElement");
+        assertEquals("name", ruleSet.getNameAttribute(),
+                     "Default nameAttribute");
+        assertNull(ruleSet.getNamespaceURI(),
+                   "Default namespaceURI");
 
         // Validate the "useContextClassLoader" property
-        assertTrue("Defaults to use context class loader",
-                   parser.getUseContextClassLoader());
+        assertTrue(parser.getUseContextClassLoader(),
+                   "Defaults to use context class loader");
 
         // Ensure that there are no preconfigured commands in the catalog
         checkCommandCount(0);
@@ -305,9 +316,9 @@ public class ConfigParserTestCase extends TestCase {
         while (names.hasNext()) {
             String name = (String) names.next();
             n++;
-            assertNotNull(name + " exists", catalog.getCommand(name));
+            assertNotNull(catalog.getCommand(name), name + " exists");
         }
-        assertEquals("Correct command count", expected, n);
+        assertEquals(expected, n, "Correct command count");
     }
 
     /**
@@ -317,9 +328,9 @@ public class ConfigParserTestCase extends TestCase {
      */
     protected void checkExecuteLog(String expected) {
         StringBuffer log = (StringBuffer) context.get("log");
-        assertNotNull("Context returned log");
-        assertEquals("Context returned correct log",
-                     expected, log.toString());
+        assertNotNull(log, "Context returned log");
+        assertEquals(expected, log.toString(),
+                     "Context returned correct log");
     }
 
     /**

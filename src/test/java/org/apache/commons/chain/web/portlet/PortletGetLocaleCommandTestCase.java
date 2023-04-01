@@ -16,32 +16,28 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.commons.chain.Context;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.Locale;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
-import java.util.Locale;
+
+import org.apache.commons.chain.Context;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link org.apache.commons.chain.web.portlet.PortletGetLocaleCommand}
  */
-public class PortletGetLocaleCommandTestCase extends TestCase {
-
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public PortletGetLocaleCommandTestCase(String name) {
-        super(name);
-    }
+public class PortletGetLocaleCommandTestCase {
 
     // ----------------------------------------------------- Instance Variables
 
@@ -83,7 +79,8 @@ public class PortletGetLocaleCommandTestCase extends TestCase {
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         locale = new Locale("en", "US");
 
         // Set up Portlet API Objects
@@ -98,15 +95,9 @@ public class PortletGetLocaleCommandTestCase extends TestCase {
     }
 
     /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PortletGetLocaleCommandTestCase.class);
-    }
-
-    /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         pcontext = null;
         session = null;
@@ -124,6 +115,7 @@ public class PortletGetLocaleCommandTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testConfigured() throws Exception {
         command.setLocaleKey("special");
         assertEquals("special", command.getLocaleKey());
@@ -135,6 +127,7 @@ public class PortletGetLocaleCommandTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testDefaut() throws Exception {
         assertEquals("locale", command.getLocaleKey());
         check(context, command);
@@ -153,7 +146,7 @@ public class PortletGetLocaleCommandTestCase extends TestCase {
         assertFalse(result);
         value = context.get(localeKey);
         assertNotNull(value);
-        assertTrue(value instanceof Locale);
+        assertInstanceOf(Locale.class, value);
         assertEquals(locale, (Locale) value);
     }
 }

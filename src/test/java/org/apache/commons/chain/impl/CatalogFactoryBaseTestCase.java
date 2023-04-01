@@ -16,14 +16,21 @@
  */
 package org.apache.commons.chain.impl;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.Iterator;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
-import org.apache.commons.chain.impl.CatalogBase;
-import java.util.Iterator;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code CatalogFactoryBase} class.
@@ -31,7 +38,7 @@ import java.util.Iterator;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class CatalogFactoryBaseTestCase extends TestCase {
+public class CatalogFactoryBaseTestCase {
 
     // ---------------------------------------------------- Instance Variables
 
@@ -40,37 +47,21 @@ public class CatalogFactoryBaseTestCase extends TestCase {
      */
     protected CatalogFactory factory = null;
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public CatalogFactoryBaseTestCase(String name) {
-        super(name);
-    }
-
     // -------------------------------------------------- Overall Test Methods
 
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         CatalogFactory.clear();
         factory = CatalogFactory.getInstance();
     }
 
     /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CatalogFactoryBaseTestCase.class);
-    }
-
-    /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         factory = null;
     }
@@ -80,6 +71,7 @@ public class CatalogFactoryBaseTestCase extends TestCase {
     /**
      * Test a pristine instance of {@link CatalogFactory}.
      */
+    @Test
     public void testPristine() {
         assertNotNull(factory);
         assertNull(factory.getCatalog());
@@ -90,6 +82,7 @@ public class CatalogFactoryBaseTestCase extends TestCase {
     /**
      * Test the default {@link Catalog} instance.
      */
+    @Test
     public void testDefaultCatalog() {
         Catalog catalog = new CatalogBase();
         factory.setCatalog(catalog);
@@ -100,6 +93,7 @@ public class CatalogFactoryBaseTestCase extends TestCase {
     /**
      * Test adding a specifically named {@link Catalog} instance.
      */
+    @Test
     public void testSpecificCatalog() {
         Catalog catalog = new CatalogBase();
         factory.setCatalog(catalog);
@@ -118,6 +112,7 @@ public class CatalogFactoryBaseTestCase extends TestCase {
     /**
      * Test {@code getCatalog()} method.
      */
+    @Test
     public void testCatalogIdentifier() {
         Catalog defaultCatalog = new CatalogBase();
         Command defaultFoo = new NonDelegatingCommand();

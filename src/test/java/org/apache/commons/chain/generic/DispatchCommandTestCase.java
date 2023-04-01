@@ -16,41 +16,36 @@
  */
 package org.apache.commons.chain.generic;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnitTest case for class: org.apache.commons.chain.generic.DispatchCommand
  * */
-public class DispatchCommandTestCase extends TestCase {
-    public DispatchCommandTestCase(String _name) {
-        super(_name);
-    }
+public class DispatchCommandTestCase {
 
-    /**
-     * setUp method for test case
-     */
-    protected void setUp() {
-    }
+    // -------------------------------------------------- Overall Test Methods
 
     /**
      * tearDown method for test case
      */
+    @AfterEach
     protected void tearDown() {
     }
 
-    /**
-     * Executes the test case
-     */
-    public static void main(String[] argv) {
-        String[] testCaseList = {DispatchCommandTestCase.class.getName()};
-        junit.textui.TestRunner.main(testCaseList);
-    }
+    // ------------------------------------------------ Individual Test Methods
 
+    @Test
     public void testMethodDispatch() throws Exception {
         TestCommand test = new TestCommand();
 
@@ -63,6 +58,7 @@ public class DispatchCommandTestCase extends TestCase {
         assertEquals("foo", context.get("foo"));
     }
 
+    @Test
     public void testMethodKeyDispatch() throws Exception {
         TestCommand test = new TestCommand();
 
@@ -76,6 +72,7 @@ public class DispatchCommandTestCase extends TestCase {
         assertEquals("bar", context.get("bar"));
     }
 
+    @Test
     public void testAlternateContext() throws Exception {
         TestAlternateContextCommand test = new TestAlternateContextCommand();
 

@@ -16,25 +16,15 @@
  */
 package org.apache.commons.chain.web;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link org.apache.commons.chain.web.ChainResources}
  */
-public class ChainResourcesTestCase extends TestCase {
-
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ChainResourcesTestCase(String name) {
-        super(name);
-    }
+public class ChainResourcesTestCase {
 
     // ----------------------------------------------------- Instance Variables
 
@@ -53,6 +43,7 @@ public class ChainResourcesTestCase extends TestCase {
 
     // ------------------------------------------------ Individual Test Methods
 
+    @Test
     public void testGetPaths() throws Exception {
         for (int i = 0; i < data.length; i++) {
             TestData datum = data[i];

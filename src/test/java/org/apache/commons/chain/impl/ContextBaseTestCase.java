@@ -16,6 +16,15 @@
  */
 package org.apache.commons.chain.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -27,11 +36,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.WebContext;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code ContextBase} class.
@@ -39,7 +48,7 @@ import org.apache.commons.chain.web.WebContext;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ContextBaseTestCase extends TestCase {
+public class ContextBaseTestCase {
 
     // ---------------------------------------------------- Instance Variables
 
@@ -48,36 +57,20 @@ public class ContextBaseTestCase extends TestCase {
      */
     protected Context context = null;
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ContextBaseTestCase(String name) {
-        super(name);
-    }
-
     // -------------------------------------------------- Overall Test Methods
 
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         context = createContext();
-    }
-
-    /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ContextBaseTestCase.class);
     }
 
     /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         context = null;
     }
@@ -87,6 +80,7 @@ public class ContextBaseTestCase extends TestCase {
     /**
      * Test ability to get, put, and remove attributes
      */
+    @Test
     public void testAttributes() {
         Object value = null;
         checkAttributeCount(0);
@@ -94,96 +88,99 @@ public class ContextBaseTestCase extends TestCase {
         context.put("foo", "This is foo");
         checkAttributeCount(1);
         value = context.get("foo");
-        assertNotNull("Returned foo", value);
-        assertTrue("Returned foo type", value instanceof String);
-        assertEquals("Returned foo value", "This is foo",
-                     (String) value);
+        assertNotNull(value, "Returned foo");
+        assertInstanceOf(String.class, value, "Returned foo type");
+        assertEquals("This is foo", (String) value,
+                     "Returned foo value");
 
         context.put("bar", "This is bar");
         checkAttributeCount(2);
         value = context.get("bar");
-        assertNotNull("Returned bar", value);
-        assertTrue("Returned bar type", value instanceof String);
-        assertEquals("Returned bar value", "This is bar",
-                     (String) value);
+        assertNotNull(value, "Returned bar");
+        assertInstanceOf(String.class, value, "Returned bar type");
+        assertEquals("This is bar", (String) value,
+                     "Returned bar value");
 
         context.put("baz", "This is baz");
         checkAttributeCount(3);
         value = context.get("baz");
-        assertNotNull("Returned baz", value);
-        assertTrue("Returned baz type", value instanceof String);
-        assertEquals("Returned baz value", "This is baz",
-                     (String) value);
+        assertNotNull(value, "Returned baz");
+        assertInstanceOf(String.class, value, "Returned baz type");
+        assertEquals("This is baz", (String) value,
+                     "Returned baz value");
 
         context.put("baz", "This is new baz");
         checkAttributeCount(3); // Replaced, not added
         value = context.get("baz");
-        assertNotNull("Returned baz", value);
-        assertTrue("Returned baz type", value instanceof String);
-        assertEquals("Returned baz value", "This is new baz",
-                     (String) value);
+        assertNotNull(value, "Returned baz");
+        assertInstanceOf(String.class, value, "Returned baz type");
+        assertEquals("This is new baz", (String) value,
+                     "Returned baz value");
 
         context.remove("bar");
         checkAttributeCount(2);
-        assertNull("Did not return bar",
-                   context.get("bar"));
-        assertNotNull("Still returned foo",
-                      context.get("foo"));
-        assertNotNull("Still returned baz",
-                      context.get("baz"));
+        assertNull(context.get("bar"),
+                   "Did not return bar");
+        assertNotNull(context.get("foo"),
+                      "Still returned foo");
+        assertNotNull(context.get("baz"),
+                      "Still returned baz");
 
         context.clear();
         checkAttributeCount(0);
-        assertNull("Did not return foo",
-                   context.get("foo"));
-        assertNull("Did not return bar",
-                   context.get("bar"));
-        assertNull("Did not return baz",
-                   context.get("baz"));
+        assertNull(context.get("foo"),
+                   "Did not return foo");
+        assertNull(context.get("bar"),
+                   "Did not return bar");
+        assertNull(context.get("baz"),
+                   "Did not return baz");
     }
 
     /**
      * Test {@code containsKey()} and {@code containsValue()}
      */
+    @Test
     public void testContains() {
-        assertTrue(!context.containsKey("bop"));
-        assertTrue(!context.containsValue("bop value"));
+        assertFalse(context.containsKey("bop"));
+        assertFalse(context.containsValue("bop value"));
         context.put("bop", "bop value");
         assertTrue(context.containsKey("bop"));
         assertTrue(context.containsValue("bop value"));
         context.remove("bop");
-        assertTrue(!context.containsKey("bop"));
-        assertTrue(!context.containsValue("bop value"));
+        assertFalse(context.containsKey("bop"));
+        assertFalse(context.containsValue("bop value"));
     }
 
     /**
      * Test {@code equals()} and {@code hashCode()}
      */
+    @Test
     public void testEquals() {
         // Compare to self
         assertTrue(context.equals(context));
-        assertTrue(context.hashCode() == context.hashCode());
+        assertEquals(context.hashCode(), context.hashCode());
 
         // Compare to equivalent instance
         Context other = createContext();
         assertTrue(context.equals(other));
-        assertTrue(context.hashCode() == other.hashCode());
+        assertEquals(context.hashCode(), other.hashCode());
 
         // Compare to non-equivalent instance - other modified
         other.put("bop", "bop value");
-        assertTrue(!context.equals(other));
-        assertTrue(context.hashCode() != other.hashCode());
+        assertFalse(context.equals(other));
+        assertNotEquals(context.hashCode(), other.hashCode());
 
         // Compare to non-equivalent instance - self modified
         other = createContext(); // reset to equivalence
         context.put("bop", "bop value");
-        assertTrue(!context.equals(other));
-        assertTrue(context.hashCode() != other.hashCode());
+        assertFalse(context.equals(other));
+        assertNotEquals(context.hashCode(), other.hashCode());
     }
 
     /**
      * Test {@code keySet()}
      */
+    @Test
     public void testKeySet() {
         Set keySet = null;
         Collection all = new ArrayList();
@@ -208,10 +205,10 @@ public class ContextBaseTestCase extends TestCase {
         // Before-modification checks
         keySet = context.keySet();
         assertEquals(createContext().size(), keySet.size());
-        assertTrue(!keySet.contains("foo"));
-        assertTrue(!keySet.contains("bar"));
-        assertTrue(!keySet.contains("baz"));
-        assertTrue(!keySet.contains("bop"));
+        assertFalse(keySet.contains("foo"));
+        assertFalse(keySet.contains("bar"));
+        assertFalse(keySet.contains("baz"));
+        assertFalse(keySet.contains("bop"));
 
         // Add the new elements
         context.put("foo", "foo value");
@@ -227,7 +224,7 @@ public class ContextBaseTestCase extends TestCase {
         assertTrue(keySet.contains("foo"));
         assertTrue(keySet.contains("bar"));
         assertTrue(keySet.contains("baz"));
-        assertTrue(!keySet.contains("bop"));
+        assertFalse(keySet.contains("bop"));
         assertTrue(keySet.containsAll(all));
 
         // Remove a single element via remove()
@@ -236,9 +233,9 @@ public class ContextBaseTestCase extends TestCase {
         keySet = context.keySet();
         assertEquals(expectedAttributeCount() + 2, keySet.size());
         assertTrue(keySet.contains("foo"));
-        assertTrue(!keySet.contains("bar"));
+        assertFalse(keySet.contains("bar"));
         assertTrue(keySet.contains("baz"));
-        assertTrue(!keySet.contains("bop"));
+        assertFalse(keySet.contains("bop"));
         assertTrue(keySet.containsAll(all));
 
         // Remove a single element via keySet.remove()
@@ -247,19 +244,19 @@ public class ContextBaseTestCase extends TestCase {
         keySet = context.keySet();
         assertEquals(expectedAttributeCount() + 1, keySet.size());
         assertTrue(keySet.contains("foo"));
-        assertTrue(!keySet.contains("bar"));
-        assertTrue(!keySet.contains("baz"));
-        assertTrue(!keySet.contains("bop"));
+        assertFalse(keySet.contains("bar"));
+        assertFalse(keySet.contains("baz"));
+        assertFalse(keySet.contains("bop"));
         assertTrue(keySet.containsAll(all));
 
         // Remove all elements via keySet.clear()
         keySet.clear();
         all.clear();
         assertEquals(expectedAttributeCount(), keySet.size());
-        assertTrue(!keySet.contains("foo"));
-        assertTrue(!keySet.contains("bar"));
-        assertTrue(!keySet.contains("baz"));
-        assertTrue(!keySet.contains("bop"));
+        assertFalse(keySet.contains("foo"));
+        assertFalse(keySet.contains("bar"));
+        assertFalse(keySet.contains("baz"));
+        assertFalse(keySet.contains("bop"));
         assertTrue(keySet.containsAll(all));
 
         // Add the new elements #2
@@ -276,34 +273,36 @@ public class ContextBaseTestCase extends TestCase {
         assertTrue(keySet.contains("foo"));
         assertTrue(keySet.contains("bar"));
         assertTrue(keySet.contains("baz"));
-        assertTrue(!keySet.contains("bop"));
+        assertFalse(keySet.contains("bop"));
         assertTrue(keySet.containsAll(all));
     }
 
     /**
      * Test state of newly created instance
      */
+    @Test
     public void testPristine() {
         checkAttributeCount(0);
-        assertNull("No 'foo' attribute",
-                   context.get("foo"));
+        assertNull(context.get("foo"),
+                   "No 'foo' attribute");
     }
 
     /**
      * Test {@code putAll()}
      */
+    @Test
     public void testPutAll() {
         // Check preconditions
         checkAttributeCount(0);
         assertNull(context.get("foo"));
         assertNull(context.get("bar"));
         assertNull(context.get("baz"));
-        assertTrue(!context.containsKey("foo"));
-        assertTrue(!context.containsKey("bar"));
-        assertTrue(!context.containsKey("baz"));
-        assertTrue(!context.containsValue("foo value"));
-        assertTrue(!context.containsValue("bar value"));
-        assertTrue(!context.containsValue("baz value"));
+        assertFalse(context.containsKey("foo"));
+        assertFalse(context.containsKey("bar"));
+        assertFalse(context.containsKey("baz"));
+        assertFalse(context.containsValue("foo value"));
+        assertFalse(context.containsValue("bar value"));
+        assertFalse(context.containsValue("baz value"));
 
         // Call putAll()
         Map adds = new HashMap();
@@ -330,6 +329,7 @@ public class ContextBaseTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testSerialization() throws Exception {
         // ContextBase is implicitly declared Serializable because it
         // extends HashMap. However, it is not possible to make
@@ -354,7 +354,7 @@ public class ContextBaseTestCase extends TestCase {
 
         // Deserialize back to a new object
         ByteArrayInputStream bais =
-          new ByteArrayInputStream(baos.toByteArray());
+            new ByteArrayInputStream(baos.toByteArray());
         ObjectInputStream ois = new ObjectInputStream(bais);
         context = (Context) ois.readObject();
         ois.close();
@@ -380,12 +380,12 @@ public class ContextBaseTestCase extends TestCase {
             Object key = (Object) keys.next();
             actual++;
         }
-        assertEquals("Correct attribute count",
-                     expectedAttributeCount() + expected, actual);
+        assertEquals(expectedAttributeCount() + expected, actual,
+                     "Correct attribute count");
         if (expected == 0) {
-            assertTrue("Context should be empty", context.isEmpty());
+            assertTrue(context.isEmpty(), "Context should be empty");
         } else {
-            assertTrue("Context should not be empty", !context.isEmpty());
+            assertFalse(context.isEmpty(), "Context should not be empty");
         }
     }
 

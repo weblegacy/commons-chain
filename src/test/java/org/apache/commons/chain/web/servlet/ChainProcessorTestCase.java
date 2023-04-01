@@ -16,58 +16,28 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-import java.io.ByteArrayInputStream;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.servlet.ServletConfig;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.jupiter.api.Test;
 
 /**
  *  Test case for {@link ChainProcessor}.
  */
-public class ChainProcessorTestCase extends TestCase {
+public class ChainProcessorTestCase {
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ChainProcessorTestCase(String name) {
-        super(name);
-    }
-
-    /**
-     * Return the tests included in this test suite.
-     *
-     * @return the test suite
-     */
-    public static Test suite() {
-        return new TestSuite(ChainProcessorTestCase.class);
-    }
-
-    /**
-     * Set up instance variables required by this test case.
-     */
-    public void setUp() {
-    }
-
-    /**
-     * Tear down instance variables required by this test case.
-     */
-    public void tearDown() {
-    }
+    // ------------------------------------------------- Individual Test Methods
 
     /**
      * Test serialization.
      */
+    @Test
     public void testSerialize() {
         // Initialize a ChainProcessor
         ChainProcessor processor = initServlet(new ChainProcessor(), new MockServletConfig("test"));

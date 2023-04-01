@@ -16,32 +16,27 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.commons.chain.Context;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Locale;
+
+import org.apache.commons.chain.Context;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link org.apache.commons.chain.web.servlet.ServletSetLocaleCommand}
  */
-public class ServletSetLocaleCommandTestCase extends TestCase {
-
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ServletSetLocaleCommandTestCase(String name) {
-        super(name);
-    }
+public class ServletSetLocaleCommandTestCase {
 
     // ----------------------------------------------------- Instance Variables
 
@@ -82,7 +77,8 @@ public class ServletSetLocaleCommandTestCase extends TestCase {
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         locale = new Locale("en", "US");
 
         // Set up Servlet API Objects
@@ -99,15 +95,9 @@ public class ServletSetLocaleCommandTestCase extends TestCase {
     }
 
     /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ServletGetLocaleCommandTestCase.class);
-    }
-
-    /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         scontext = null;
         session = null;
@@ -125,6 +115,7 @@ public class ServletSetLocaleCommandTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testConfigured() throws Exception {
         command.setLocaleKey("special");
         assertEquals("special", command.getLocaleKey());
@@ -136,6 +127,7 @@ public class ServletSetLocaleCommandTestCase extends TestCase {
      *
      * @throws Exception any error
      */
+    @Test
     public void testDefaut() throws Exception {
         assertEquals("locale", command.getLocaleKey());
         check(context, command);

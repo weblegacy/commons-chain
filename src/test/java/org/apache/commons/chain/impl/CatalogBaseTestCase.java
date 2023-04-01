@@ -16,13 +16,18 @@
  */
 package org.apache.commons.chain.impl;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.commons.chain.Catalog;
-import org.apache.commons.chain.Command;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Iterator;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.Command;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code CatalogBase} class.
@@ -30,7 +35,7 @@ import java.util.Iterator;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class CatalogBaseTestCase extends TestCase {
+public class CatalogBaseTestCase {
 
     // ---------------------------------------------------- Instance Variables
 
@@ -39,36 +44,20 @@ public class CatalogBaseTestCase extends TestCase {
      */
     protected CatalogBase catalog = null;
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public CatalogBaseTestCase(String name) {
-        super(name);
-    }
-
     // -------------------------------------------------- Overall Test Methods
 
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         catalog = new CatalogBase();
-    }
-
-    /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return (new TestSuite(CatalogBaseTestCase.class));
     }
 
     /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         catalog = null;
     }
@@ -78,6 +67,7 @@ public class CatalogBaseTestCase extends TestCase {
     /**
      * Test adding commands
      */
+    @Test
     public void testAddCommand() {
         addCommands();
         checkCommandCount(8);
@@ -86,41 +76,42 @@ public class CatalogBaseTestCase extends TestCase {
     /**
      * Test getting commands
      */
+    @Test
     public void testGetCommand() {
         addCommands();
         Command command = null;
 
         command = catalog.getCommand("AddingCommand");
         assertNotNull(command);
-        assertTrue(command instanceof AddingCommand);
+        assertInstanceOf(AddingCommand.class, command);
 
         command = catalog.getCommand("DelegatingCommand");
         assertNotNull(command);
-        assertTrue(command instanceof DelegatingCommand);
+        assertInstanceOf(DelegatingCommand.class, command);
 
         command = catalog.getCommand("DelegatingFilter");
         assertNotNull(command);
-        assertTrue(command instanceof DelegatingFilter);
+        assertInstanceOf(DelegatingFilter.class, command);
 
         command = catalog.getCommand("ExceptionCommand");
         assertNotNull(command);
-        assertTrue(command instanceof ExceptionCommand);
+        assertInstanceOf(ExceptionCommand.class, command);
 
         command = catalog.getCommand("ExceptionFilter");
         assertNotNull(command);
-        assertTrue(command instanceof ExceptionFilter);
+        assertInstanceOf(ExceptionFilter.class, command);
 
         command = catalog.getCommand("NonDelegatingCommand");
         assertNotNull(command);
-        assertTrue(command instanceof NonDelegatingCommand);
+        assertInstanceOf(NonDelegatingCommand.class, command);
 
         command = catalog.getCommand("NonDelegatingFilter");
         assertNotNull(command);
-        assertTrue(command instanceof NonDelegatingFilter);
+        assertInstanceOf(NonDelegatingFilter.class, command);
 
         command = catalog.getCommand("ChainBase");
         assertNotNull(command);
-        assertTrue(command instanceof ChainBase);
+        assertInstanceOf(ChainBase.class, command);
     }
 
     // The getNames() method is implicitly tested by checkCommandCount()
@@ -128,6 +119,7 @@ public class CatalogBaseTestCase extends TestCase {
     /**
      * Test pristine instance
      */
+    @Test
     public void testPristine() {
         checkCommandCount(0);
         assertNull(catalog.getCommand("AddingCommand"));
@@ -167,8 +159,8 @@ public class CatalogBaseTestCase extends TestCase {
         while (names.hasNext()) {
             String name = (String) names.next();
             n++;
-            assertNotNull(name + " exists", catalog.getCommand(name));
+            assertNotNull(catalog.getCommand(name), name + " exists");
         }
-        assertEquals("Correct command count", expected, n);
+        assertEquals(expected, n, "Correct command count");
     }
 }

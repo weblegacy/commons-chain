@@ -16,15 +16,20 @@
  */
 package org.apache.commons.chain.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.List;
 
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code ChainBase} class.
@@ -32,7 +37,7 @@ import junit.framework.TestSuite;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ChainBaseTestCase extends TestCase {
+public class ChainBaseTestCase {
 
     // ---------------------------------------------------- Instance Variables
 
@@ -46,37 +51,21 @@ public class ChainBaseTestCase extends TestCase {
      */
     protected Context context = null;
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * Construct a new instance of this test case.
-     *
-     * @param name Name of the test case
-     */
-    public ChainBaseTestCase(String name) {
-        super(name);
-    }
-
     // -------------------------------------------------- Overall Test Methods
 
     /**
      * Set up instance variables required by this test case.
      */
-    public void setUp() {
+    @BeforeEach
+    public void init() {
         chain = new ChainBase();
         context = new ContextBase();
     }
 
     /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return (new TestSuite(ChainBaseTestCase.class));
-    }
-
-    /**
      * Tear down instance variables required by this test case.
      */
+    @AfterEach
     public void tearDown() {
         chain = null;
         context = null;
@@ -87,6 +76,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test the ability to add commands
      */
+    @Test
     public void testCommands() {
         checkCommandCount(0);
 
@@ -106,11 +96,12 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a single non-delegating command
      */
+    @Test
     public void testExecute1a() {
         chain.addCommand(new NonDelegatingCommand("1"));
         try {
-            assertTrue("Chain returned true",
-                       chain.execute(context));
+            assertTrue(chain.execute(context),
+                       "Chain returned true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -120,11 +111,12 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a single delegating command
      */
+    @Test
     public void testExecute1b() {
         chain.addCommand(new DelegatingCommand("1"));
         try {
-            assertTrue("Chain returned false",
-                       !chain.execute(context));
+            assertFalse(chain.execute(context),
+                        "Chain returned false");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -134,12 +126,13 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a single exception-throwing command
      */
+    @Test
     public void testExecute1c() {
         chain.addCommand(new ExceptionCommand("1"));
         try {
             chain.execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id", "1", e.getMessage());
+            assertEquals("1", e.getMessage(), "Correct exception id");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -149,6 +142,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of an attempt to add a new Command while executing
      */
+    @Test
     public void testExecute1d() {
         chain.addCommand(new AddingCommand("1", chain));
         try {
@@ -164,13 +158,14 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should return {@code true}
      */
+    @Test
     public void testExecute2a() {
         chain.addCommand(new DelegatingCommand("1"));
         chain.addCommand(new DelegatingCommand("2"));
         chain.addCommand(new NonDelegatingCommand("3"));
         try {
-            assertTrue("Chain returned true",
-                       chain.execute(context));
+            assertTrue(chain.execute(context),
+                       "Chain returned true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -180,13 +175,14 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should return {@code false}
      */
+    @Test
     public void testExecute2b() {
         chain.addCommand(new DelegatingCommand("1"));
         chain.addCommand(new DelegatingCommand("2"));
         chain.addCommand(new DelegatingCommand("3"));
         try {
-            assertTrue("Chain returned false",
-                       !chain.execute(context));
+            assertFalse(chain.execute(context),
+                        "Chain returned false");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -196,6 +192,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should throw an exception
      */
+    @Test
     public void testExecute2c() {
         chain.addCommand(new DelegatingCommand("1"));
         chain.addCommand(new DelegatingCommand("2"));
@@ -203,7 +200,7 @@ public class ChainBaseTestCase extends TestCase {
         try {
             chain.execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id", "3", e.getMessage());
+            assertEquals("3", e.getMessage(), "Correct exception id");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -213,6 +210,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should throw an exception in the middle
      */
+    @Test
     public void testExecute2d() {
         chain.addCommand(new DelegatingCommand("1"));
         chain.addCommand(new ExceptionCommand("2"));
@@ -220,7 +218,7 @@ public class ChainBaseTestCase extends TestCase {
         try {
             chain.execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id", "2", e.getMessage());
+            assertEquals("2", e.getMessage(), "Correct exception id");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -230,11 +228,12 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a single non-delegating filter
      */
+    @Test
     public void testExecute3a() {
         chain.addCommand(new NonDelegatingFilter("1", "a"));
         try {
-            assertTrue("Chain returned true",
-                       chain.execute(context));
+            assertTrue(chain.execute(context),
+                       "Chain returned true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -244,11 +243,12 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a single delegating filter
      */
+    @Test
     public void testExecute3b() {
         chain.addCommand(new DelegatingFilter("1", "a"));
         try {
-            assertTrue("Chain returned false",
-                       !chain.execute(context));
+            assertFalse(chain.execute(context),
+                        "Chain returned false");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -258,12 +258,13 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a single exception-throwing filter
      */
+    @Test
     public void testExecute3c() {
         chain.addCommand(new ExceptionFilter("1", "a"));
         try {
             chain.execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id", "1", e.getMessage());
+            assertEquals("1", e.getMessage(), "Correct exception id");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -273,13 +274,14 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should return {@code true}
      */
+    @Test
     public void testExecute4a() {
         chain.addCommand(new DelegatingFilter("1", "a"));
         chain.addCommand(new DelegatingCommand("2"));
         chain.addCommand(new NonDelegatingFilter("3", "c"));
         try {
-            assertTrue("Chain returned true",
-                       chain.execute(context));
+            assertTrue(chain.execute(context),
+                       "Chain returned true");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -289,13 +291,14 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should return {@code false}
      */
+    @Test
     public void testExecute4b() {
         chain.addCommand(new DelegatingCommand("1"));
         chain.addCommand(new DelegatingFilter("2", "b"));
         chain.addCommand(new DelegatingCommand("3"));
         try {
-            assertTrue("Chain returned false",
-                       !chain.execute(context));
+            assertFalse(chain.execute(context),
+                        "Chain returned false");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -305,6 +308,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should throw an exception
      */
+    @Test
     public void testExecute4c() {
         chain.addCommand(new DelegatingFilter("1", "a"));
         chain.addCommand(new DelegatingFilter("2", "b"));
@@ -312,7 +316,7 @@ public class ChainBaseTestCase extends TestCase {
         try {
             chain.execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id", "3", e.getMessage());
+            assertEquals("3", e.getMessage(), "Correct exception id");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -322,6 +326,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test execution of a chain that should throw an exception in the middle
      */
+    @Test
     public void testExecute4d() {
         chain.addCommand(new DelegatingFilter("1", "a"));
         chain.addCommand(new ExceptionFilter("2", "b"));
@@ -329,7 +334,7 @@ public class ChainBaseTestCase extends TestCase {
         try {
             chain.execute(context);
         } catch (ArithmeticException e) {
-            assertEquals("Correct exception id", "2", e.getMessage());
+            assertEquals("2", e.getMessage(), "Correct exception id");
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
@@ -339,6 +344,7 @@ public class ChainBaseTestCase extends TestCase {
     /**
      * Test state of newly created instance
      */
+    @Test
     public void testNewInstance() {
         checkCommandCount(0);
     }
@@ -353,9 +359,9 @@ public class ChainBaseTestCase extends TestCase {
     protected void checkCommandCount(int expected) {
         if (chain instanceof ChainBase) {
             List<Command> commands = ((ChainBase) chain).getCommands();
-            assertNotNull("getCommands() returned a non-null list",
-                          commands);
-            assertEquals("Correct command count", expected, commands.size());
+            assertNotNull(commands,
+                          "getCommands() returned a non-null list");
+            assertEquals(expected, commands.size(), "Correct command count");
         }
     }
 
@@ -366,8 +372,8 @@ public class ChainBaseTestCase extends TestCase {
      */
     protected void checkExecuteLog(String expected) {
         StringBuffer log = (StringBuffer) context.get("log");
-        assertNotNull("Context failed to return log", log);
-        assertEquals("Context returned correct log",
-                     expected, log.toString());
+        assertNotNull(log, "Context failed to return log");
+        assertEquals(expected, log.toString(),
+                     "Context returned correct log");
     }
 }
