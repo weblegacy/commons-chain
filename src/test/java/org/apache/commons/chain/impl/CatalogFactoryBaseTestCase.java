@@ -163,7 +163,7 @@ public class CatalogFactoryBaseTestCase {
      * @return the number of {@link Catalog}s
      */
     private int getCatalogCount() {
-        Iterator names = factory.getNames();
+        Iterator<String> names = factory.getNames();
         assertNotNull(names);
         int n = 0;
         while (names.hasNext()) {

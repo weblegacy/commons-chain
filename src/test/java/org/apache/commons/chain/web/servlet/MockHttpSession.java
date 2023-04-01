@@ -18,10 +18,10 @@ package org.apache.commons.chain.web.servlet;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 
 import org.apache.commons.chain.web.MockEnumeration;
 
@@ -38,7 +38,7 @@ public class MockHttpSession implements HttpSession {
         setServletContext(servletContext);
     }
 
-    protected HashMap attributes = new HashMap();
+    protected Map<String, Object> attributes = new HashMap<>();
     protected ServletContext servletContext = null;
 
     // --------------------------------------------------------- Public Methods
@@ -53,8 +53,8 @@ public class MockHttpSession implements HttpSession {
         return attributes.get(name);
     }
 
-    public Enumeration getAttributeNames() {
-        return new MockEnumeration(attributes.keySet().iterator());
+    public Enumeration<String> getAttributeNames() {
+        return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
     public long getCreationTime() {
@@ -77,7 +77,8 @@ public class MockHttpSession implements HttpSession {
         return this.servletContext;
     }
 
-    public HttpSessionContext getSessionContext() {
+    @SuppressWarnings("deprecation")
+    public javax.servlet.http.HttpSessionContext getSessionContext() {
         throw new UnsupportedOperationException();
     }
 

@@ -182,8 +182,8 @@ public class ContextBaseTestCase {
      */
     @Test
     public void testKeySet() {
-        Set keySet = null;
-        Collection all = new ArrayList();
+        Set<String> keySet = null;
+        Collection<String> all = new ArrayList<>();
 
         // Unsupported operations
         keySet = context.keySet();
@@ -194,7 +194,7 @@ public class ContextBaseTestCase {
             ; // Expected result
         }
         try {
-            Collection adds = new ArrayList();
+            Collection<String> adds = new ArrayList<>();
             adds.add("bop");
             keySet.addAll(adds);
             fail("Should have thrown UnsupportedOperationException");
@@ -305,7 +305,7 @@ public class ContextBaseTestCase {
         assertFalse(context.containsValue("baz value"));
 
         // Call putAll()
-        Map adds = new HashMap();
+        Map<String, String> adds = new HashMap<>();
         adds.put("foo", "foo value");
         adds.put("bar", "bar value");
         adds.put("baz", "baz value");
@@ -375,9 +375,9 @@ public class ContextBaseTestCase {
      */
     protected void checkAttributeCount(int expected) {
         int actual = 0;
-        Iterator keys = context.keySet().iterator();
+        Iterator<String> keys = context.keySet().iterator();
         while (keys.hasNext()) {
-            Object key = (Object) keys.next();
+            keys.next();
             actual++;
         }
         assertEquals(expectedAttributeCount() + expected, actual,

@@ -20,11 +20,14 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
+
+import org.apache.commons.chain.web.MockEnumeration;
 
 /**
  * Mock Object for {@code PortletContext}
@@ -34,8 +37,8 @@ public class MockPortletContext implements PortletContext {
     private int minorVersion = 0;
     private String portletContextName = "MockPortletContext";
     private String serverInfo = portletContextName;
-    private Hashtable parameters = new Hashtable();
-    private Hashtable attributes = new Hashtable();
+    private Map<String, String> parameters = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
@@ -57,16 +60,16 @@ public class MockPortletContext implements PortletContext {
         return attributes.get(name);
     }
 
-    public Enumeration getAttributeNames() {
-        return attributes.keys();
+    public Enumeration<String> getAttributeNames() {
+        return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
     public String getInitParameter(String name) {
-        return (String)parameters.get(name);
+        return parameters.get(name);
     }
 
-    public Enumeration getInitParameterNames() {
-        return parameters.keys();
+    public Enumeration<String> getInitParameterNames() {
+        return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
     public int getMajorVersion() {
@@ -105,7 +108,7 @@ public class MockPortletContext implements PortletContext {
         throw new UnsupportedOperationException();
     }
 
-    public Set getResourcePaths(String path) {
+    public Set<String> getResourcePaths(String path) {
         throw new UnsupportedOperationException();
     }
 

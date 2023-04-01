@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add generics to JUnit-Tests
 * Correct JUnit-Test `ServletSetLocaleCommandTestCase`
 * Upgrade to JUnit5
 * Reformats JavaDocs from Test-Classes

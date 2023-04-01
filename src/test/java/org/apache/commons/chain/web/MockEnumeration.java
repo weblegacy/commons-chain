@@ -22,20 +22,22 @@ import java.util.Iterator;
 /**
  * General purpose {@code Enumeration} wrapper around an
  * {@code Iterator} specified to our controller.
+ *
+ * @param <E> the type of the elements
  */
-public class MockEnumeration implements Enumeration {
+public class MockEnumeration<E> implements Enumeration<E> {
 
-    public MockEnumeration(Iterator iterator) {
+    public MockEnumeration(Iterator<E> iterator) {
         this.iterator = iterator;
     }
 
-    protected Iterator iterator;
+    protected Iterator<E> iterator;
 
     public boolean hasMoreElements() {
         return iterator.hasNext();
     }
 
-    public Object nextElement() {
+    public E nextElement() {
         return iterator.next();
     }
 }

@@ -314,7 +314,7 @@ public class ConfigParser2TestCase {
      */
     protected void checkCommandCount(int expected) {
         int n = 0;
-        Iterator names = catalog.getNames();
+        Iterator<String> names = catalog.getNames();
         while (names.hasNext()) {
             String name = (String) names.next();
             n++;
@@ -343,7 +343,7 @@ public class ConfigParser2TestCase {
      * @throws Exception any error
      */
     protected void load(String path) throws Exception {
-        parser.parse(catalog, this.getClass().getResource(path));
+        parser.parse(this.getClass().getResource(path));
         catalog = CatalogFactoryBase.getInstance().getCatalog("foo");
     }
 }

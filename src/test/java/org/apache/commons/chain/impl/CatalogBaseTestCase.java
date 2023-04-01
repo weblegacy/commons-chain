@@ -155,7 +155,7 @@ public class CatalogBaseTestCase {
      */
     protected void checkCommandCount(int expected) {
         int n = 0;
-        Iterator names = catalog.getNames();
+        Iterator<String> names = catalog.getNames();
         while (names.hasNext()) {
             String name = (String) names.next();
             n++;

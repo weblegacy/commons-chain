@@ -18,10 +18,9 @@ package org.apache.commons.chain.web.servlet;
 
 import java.io.BufferedReader;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -61,12 +60,12 @@ public class MockHttpServletRequest implements HttpServletRequest {
         setHttpSession(session);
     }
 
-    protected HashMap attributes = new HashMap();
+    protected Map<String, Object> attributes = new HashMap<>();
     protected String contextPath = null;
-    protected HashMap headers = new HashMap();
+    protected Map<String, String[]> headers = new HashMap<>();
     protected Cookie[] cookies = new Cookie[0];
     protected Locale locale = null;
-    protected HashMap parameters = new HashMap();
+    protected Map<String, String[]> parameters = new HashMap<>();
     protected String pathInfo = null;
     protected Principal principal = null;
     protected String queryString = null;
@@ -76,7 +75,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     // --------------------------------------------------------- Public Methods
 
     public void addHeader(String name, String value) {
-        String values[] = (String[]) headers.get(name);
+        String values[] = headers.get(name);
         if (values == null) {
             String results[] = new String[] { value };
             headers.put(name, results);
@@ -89,7 +88,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public void addParameter(String name, String value) {
-        String values[] = (String[]) parameters.get(name);
+        String values[] = parameters.get(name);
         if (values == null) {
             String results[] = new String[] { value };
             parameters.put(name, results);
@@ -152,7 +151,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String getHeader(String name) {
-        String values[] = (String[]) headers.get(name);
+        String values[] = headers.get(name);
         if (values != null) {
             return values[0];
         } else {
@@ -160,20 +159,16 @@ public class MockHttpServletRequest implements HttpServletRequest {
         }
     }
 
-    public Enumeration getHeaderNames() {
-        return new MockEnumeration(headers.keySet().iterator());
+    public Enumeration<String> getHeaderNames() {
+        return new MockEnumeration<>(headers.keySet().iterator());
     }
 
-    public Enumeration getHeaders(String name) {
-        String headers[] = (String[]) this.headers.get(name);
+    public Enumeration<String> getHeaders(String name) {
+        String headers[] = this.headers.get(name);
         if (headers == null) {
             headers = new String[0];
         }
-        List list = new ArrayList();
-        for (int i = 0; i < headers.length; i++) {
-            list.add(headers[i]);
-        }
-        return new MockEnumeration(list.iterator());
+        return new MockEnumeration<>(Arrays.asList(headers).iterator());
     }
 
     public int getIntHeader(String name) {
@@ -278,8 +273,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return attributes.get(name);
     }
 
-    public Enumeration getAttributeNames() {
-        return new MockEnumeration(attributes.keySet().iterator());
+    public Enumeration<String> getAttributeNames() {
+        return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
     public String getCharacterEncoding() {
@@ -302,7 +297,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return locale;
     }
 
-    public Enumeration getLocales() {
+    public Enumeration<Locale> getLocales() {
         throw new UnsupportedOperationException();
     }
 
@@ -319,7 +314,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String getParameter(String name) {
-        String values[] = (String[]) parameters.get(name);
+        String values[] = parameters.get(name);
         if (values != null) {
             return values[0];
         } else {
@@ -327,16 +322,16 @@ public class MockHttpServletRequest implements HttpServletRequest {
         }
     }
 
-    public Map getParameterMap() {
+    public Map<String, String[]> getParameterMap() {
         return parameters;
     }
 
-    public Enumeration getParameterNames() {
-        return new MockEnumeration(parameters.keySet().iterator());
+    public Enumeration<String> getParameterNames() {
+        return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
     public String[] getParameterValues(String name) {
-        return (String[]) parameters.get(name);
+        return parameters.get(name);
     }
 
     public String getProtocol() {

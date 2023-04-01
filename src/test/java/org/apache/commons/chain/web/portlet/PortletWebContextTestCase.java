@@ -26,15 +26,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
+import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBaseTestCase;
@@ -119,7 +122,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testApplicationScope() {
-        Map map = ((WebContext) context).getApplicationScope();
+        Map<String, Object> map = ((WebContext) context).getApplicationScope();
         assertNotNull(map);
 
         // Initial contents
@@ -167,8 +170,8 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         checkMapSize(map, 0);
 
         // Test putAll()
-        Map values = new HashMap();
-        values.put(new Integer(1), "One");
+        Map<String, String> values = new HashMap<>();
+        values.put("1", "One");
         values.put("2", "Two");
         map.putAll(values);
         assertEquals("One", map.get("1"), "putAll(1)");
@@ -208,7 +211,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testHeader() {
-        Map map = ((WebContext) context).getHeader();
+        Map<String, String> map = ((WebContext) context).getHeader();
         assertNotNull(map, "Header Map Null");
 
         // Initial contents
@@ -227,14 +230,14 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testHeaderValues() {
-        Map map = ((WebContext) context).getHeaderValues();
+        Map<String, String[]> map = ((WebContext) context).getHeaderValues();
         assertNotNull(map, "HeaderValues Map Null");
 
         // Initial contents
         checkMapSize(map, 0);
  
         try {
-            map.put("hkey3", "ABC");
+            map.put("hkey3", new String[] {"ABC"});
             fail("Should have thrown UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             ; // expected result
@@ -246,7 +249,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testInitParam() {
-        Map map = ((WebContext) context).getInitParam();
+        Map<String, String> map = ((WebContext) context).getInitParam();
         assertNotNull(map);
 
         // Initial contents
@@ -278,7 +281,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
             ; // expected result
         }
         try {
-            map.putAll(new HashMap());
+            map.putAll(new HashMap<>());
             fail("Should have thrown UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             ; // expected result
@@ -296,7 +299,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testParam() {
-        Map map = ((WebContext) context).getParam();
+        Map<String, String> map = ((WebContext) context).getParam();
         assertNotNull(map);
 
         // Initial contents
@@ -324,7 +327,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
             ; // expected result
         }
         try {
-            map.putAll(new HashMap());
+            map.putAll(new HashMap<>());
             fail("Should have thrown UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             ; // expected result
@@ -342,7 +345,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testParamValues() {
-        Map map = ((WebContext) context).getParamValues();
+        Map<String, String[]> map = ((WebContext) context).getParamValues();
         assertNotNull(map);
 
         // Initial contents
@@ -379,7 +382,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
             ; // expected result
         }
         try {
-            map.putAll(new HashMap());
+            map.putAll(new HashMap<>());
             fail("Should have thrown UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             ; // expected result
@@ -397,14 +400,14 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testCookies() {
-        Map map = ((WebContext) context).getCookies();
+        Map<String, Cookie> map = ((WebContext) context).getCookies();
         assertNotNull(map);
 
         // Initial contents
         checkMapSize(map, 0);
 
         try {
-            map.put("ckey3", "XXX");
+            map.put("ckey3", new Cookie("XXX", "XXX"));
             fail("map.put() Should have thrown UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             ; // expected result
@@ -485,7 +488,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testRequestScope() {
-        Map map = ((WebContext) context).getRequestScope();
+        Map<String, Object> map = ((WebContext) context).getRequestScope();
         assertNotNull(map);
 
         // Initial contents
@@ -531,8 +534,8 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         checkMapSize(map, 0);
 
         // Test putAll()
-        Map values = new HashMap();
-        values.put(new Integer(1), "One");
+        Map<String, String> values = new HashMap<>();
+        values.put("1", "One");
         values.put("2", "Two");
         map.putAll(values);
         assertEquals("One", map.get("1"), "putAll(1)");
@@ -545,7 +548,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testSessionScope() {
-        Map map = ((WebContext) context).getSessionScope();
+        Map<String, Object> map = ((WebContext) context).getSessionScope();
         assertNotNull(map);
 
         // Initial contents
@@ -592,8 +595,8 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         checkMapSize(map, 0);
 
         // Test putAll()
-        Map values = new HashMap();
-        values.put(new Integer(1), "One");
+        Map<String, String> values = new HashMap<>();
+        values.put("1", "One");
         values.put("2", "Two");
         map.putAll(values);
         assertEquals("One", map.get("1"), "putAll(1)");
@@ -612,7 +615,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         assertNull(ctx.getRequest().getPortletSession(false), "Session(A)");
 
         // Get the session Map & check session doesn't exist
-        Map sessionMap = ctx.getSessionScope();
+        Map<String, Object> sessionMap = ctx.getSessionScope();
         assertNull(ctx.getRequest().getPortletSession(false), "Session(B)");
         assertNotNull(sessionMap, "Session Map(A)");
 
@@ -629,13 +632,13 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         assertNull(ctx.getRequest().getPortletSession(false), "Session(E)");
 
         // test entrySet()
-        Set entrySet = sessionMap.entrySet();
+        Set<Entry<String, Object>> entrySet = sessionMap.entrySet();
         assertNotNull(entrySet, "entrySet");
         assertEquals(0, entrySet.size(), "entrySet Size");
         assertNull(ctx.getRequest().getPortletSession(false), "Session(F)");
 
         // test equals()
-        assertFalse(sessionMap.equals("ABC"), "equals()");
+        assertFalse(sessionMap.equals(Collections.singletonMap("ABC", "ABC")), "equals()");
         assertNull(ctx.getRequest().getPortletSession(false), "Session(G)");
 
         // test get()
@@ -651,13 +654,13 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         assertNull(ctx.getRequest().getPortletSession(false), "Session(J)");
 
         // test keySet()
-        Set keySet = sessionMap.keySet();
+        Set<String> keySet = sessionMap.keySet();
         assertNotNull(keySet, "keySet");
         assertEquals(0, keySet.size(), "keySet Size");
         assertNull(ctx.getRequest().getPortletSession(false), "Session(K)");
 
         // test putAll() with an empty Map
-        sessionMap.putAll(new HashMap());
+        sessionMap.putAll(new HashMap<>());
         assertNull(ctx.getRequest().getPortletSession(false), "Session(L)");
 
         // test remove()
@@ -669,7 +672,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         assertNull(ctx.getRequest().getPortletSession(false), "Session(N)");
 
         // test values()
-        Collection values = sessionMap.values();
+        Collection<Object> values = sessionMap.values();
         assertNotNull(values, "values");
         assertEquals(0, values.size(), "values Size");
         assertNull(ctx.getRequest().getPortletSession(false), "Session(O)");
@@ -686,12 +689,12 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
 
     // ------------------------------------------------------- Protected Methods
 
-    protected void checkMapSize(Map map, int size) {
+    protected void checkMapSize(Map<String, ?> map, int size) {
         // Check reported size of the map
         assertEquals(size, map.size(), "checkMapSize(A)");
         // Iterate over key set
         int nk = 0;
-        Iterator keys = map.keySet().iterator();
+        Iterator<String> keys = map.keySet().iterator();
         while (keys.hasNext()) {
             keys.next();
             nk++;
@@ -699,7 +702,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
         assertEquals(size, nk, "checkMapSize(B)");
         // Iterate over entry set
         int nv = 0;
-        Iterator values = map.entrySet().iterator();
+        Iterator<?> values = map.entrySet().iterator();
         while (values.hasNext()) {
             values.next();
             nv++;
@@ -715,27 +718,28 @@ public class PortletWebContextTestCase extends ContextBaseTestCase {
      * @param map to test
      * @param modifiable {@code true} map is modifiable
      */
-    protected void checkEntrySet(Map map, boolean modifiable) {
+    protected void checkEntrySet(Map<String, ?> map, boolean modifiable) {
         assertTrue(map.size() > 1, "checkEntrySet(A)");
-        Set entries = map.entrySet();
+        Set<?> entries = map.entrySet();
         assertTrue(map.size() == entries.size());
         Object o = entries.iterator().next();
 
         assertInstanceOf(Map.Entry.class, o, "checkEntrySet(B)");
 
+        @SuppressWarnings("unchecked")
+        Map.Entry<?, Object> mapEntry = (Map.Entry<?, Object>)o;
         if (!modifiable) {
             try {
-                ((Map.Entry)o).setValue(new Object());
+                mapEntry.setValue(new Object());
                 fail("Should have thrown UnsupportedOperationException");
             } catch (UnsupportedOperationException e) {
                 ; // expected result
             }
         } else {
             // Should pass and not throw UnsupportedOperationException
-            Map.Entry e = (Map.Entry)o;
-            e.setValue(e.setValue(new Object()));
-        }    
-    }    
+            mapEntry.setValue(mapEntry.setValue(new Object()));
+        }
+    }
 
     /**
      * Create a new instance of the appropriate Context type for this test case

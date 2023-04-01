@@ -16,17 +16,10 @@
  */
 package org.apache.commons.chain.config;
 
-import java.util.List;
-
-import org.apache.commons.chain.Command;
 import org.apache.commons.chain.impl.ChainBase;
 
 /**
- * Test implementation of {@code Chain} that exposes the
- * {@code getCommands()} method public.
+ * Test implementation of {@code Chain}.
  */
 public class TestChain extends ChainBase {
-    public List<Command> getCommands() {
-        return commands;
-    }
 }

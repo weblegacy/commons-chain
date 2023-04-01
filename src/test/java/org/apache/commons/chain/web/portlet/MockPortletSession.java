@@ -37,8 +37,8 @@ public class MockPortletSession implements PortletSession {
     private int maxInactiveInterval = 100;
     private boolean newSession = true;
     private String id = "mockId" + creationTime.getTime();
-    private Map portletScope = new HashMap();
-    private Map applicationScope = new HashMap();
+    private Map<String, Object> portletScope = new HashMap<>();
+    private Map<String, Object> applicationScope = new HashMap<>();
 
     public MockPortletSession() {
         this(null);
@@ -74,14 +74,14 @@ public class MockPortletSession implements PortletSession {
         return getScope(scope).get(name);
     }
 
-    public Enumeration getAttributeNames() {
+    public Enumeration<String> getAttributeNames() {
         accessed();
         return getAttributeNames(PortletSession.PORTLET_SCOPE);
     }
 
-    public Enumeration getAttributeNames(int scope) {
+    public Enumeration<String> getAttributeNames(int scope) {
         accessed();
-        return new MockEnumeration(getScope(scope).keySet().iterator());
+        return new MockEnumeration<>(getScope(scope).keySet().iterator());
     }
 
     public long getCreationTime() {
@@ -146,7 +146,7 @@ public class MockPortletSession implements PortletSession {
         lastAccessedTime = new Date();
     }
 
-    private Map getScope(int scope) {
+    private Map<String, Object> getScope(int scope) {
         if (scope == PortletSession.PORTLET_SCOPE) {
             return portletScope;
         } else if (scope == PortletSession.APPLICATION_SCOPE) {
