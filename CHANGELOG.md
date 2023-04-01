@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Move `overview.html` to maven-standard-path
 * Rewrite all `package.html` to `package-info.java`
 * Suppress warnings
 * Optimize clear-methode
