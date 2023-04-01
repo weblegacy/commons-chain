@@ -343,6 +343,7 @@ public class ConfigParser2TestCase {
      * @throws Exception any error
      */
     protected void load(String path) throws Exception {
+        CatalogFactoryBase.clear();
         parser.parse(this.getClass().getResource(path));
         catalog = CatalogFactoryBase.getInstance().getCatalog("foo");
     }

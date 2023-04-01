@@ -341,6 +341,7 @@ public class ConfigParserTestCase {
      * @throws Exception any error
      */
     protected void load(String path) throws Exception {
+        CatalogFactoryBase.clear();
         parser.parse(this.getClass().getResource(path));
         catalog = CatalogFactoryBase.getInstance().getCatalog();
     }
