@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.chain.Context;
 
@@ -49,7 +50,7 @@ import org.apache.commons.chain.Context;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ContextBase extends HashMap<String, Object> implements Context {
+public class ContextBase extends ConcurrentHashMap<String, Object> implements Context {
     private static final long serialVersionUID = 8739326206700827827L;
 
     // ------------------------------------------------------ Static Variables
@@ -264,7 +265,7 @@ public class ContextBase extends HashMap<String, Object> implements Context {
      * @return The set of keys for objects in this Context.
      */
     @Override
-    public Set<String> keySet() {
+    public KeySetView<String, Object> keySet() {
         return super.keySet();
     }
 
@@ -284,6 +285,18 @@ public class ContextBase extends HashMap<String, Object> implements Context {
      */
     @Override
     public Object put(String key, Object value) {
+        /*
+         * ConcurrentHashMap doesn't accept null values, see
+         * @see ConcurrentHashMap#put(String, Object)
+         */
+        if (value == null) {
+            if (containsKey(key)) {
+                remove(key);
+            }
+
+            return null;
+        }
+
         // Case 1 -- no local properties
         if (descriptors == null) {
             return super.put(key, value);

@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Extend `ContextBase` from `ConcurrentHashMap` instead `HashMap`
 * Clear all catalogs to reset it for JUnit-tests
 * Move `overview.html` to maven-standard-path
 * Rewrite all `package.html` to `package-info.java`
