@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correction: Return null value if there are no JavaBeans properties
 * Adaption to use `ConcurrentHashMap` because it dosen't accept null values
 * Extend `ContextBase` from `ConcurrentHashMap` instead `HashMap`
 * Clear all catalogs to reset it for JUnit-tests

@@ -588,15 +588,12 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
 
             // Add descriptor (ignoring getClass() and isEmpty())
             if (!("class".equals(name) || "empty".equals(name))) {
-                if (ret == null) {
-                    ret = new HashMap<>(pds.length < 2 ? 0 : pds.length - 2);
-                }
                 ret.put(name, pd);
                 super.put(name, SINGLETON);
             }
         }
 
-        return ret;
+        return ret.isEmpty() ? null : ret;
     }
 
     // --------------------------------------------------------- Private Classes
