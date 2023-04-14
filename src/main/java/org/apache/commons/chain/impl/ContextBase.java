@@ -68,6 +68,47 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
         }
     };
 
+    /**
+     * Because {@code ConcurrentHashMap} doesn't accept null values, use
+     * equals-method from {@code AbstractMap}.
+     *
+     * @see java.util.AbstractMap#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Map)) {
+            return false;
+        }
+        Map<?,?> m = (Map<?,?>) o;
+        if (m.size() != size()) {
+            return false;
+        }
+
+        try {
+            for (Entry<String, Object> e : entrySet()) {
+                String key = e.getKey();
+                Object value = e.getValue();
+                if (value == null) {
+                    if (!(m.get(key) == null && m.containsKey(key)))
+                        return false;
+                } else {
+                    if (!value.equals(m.get(key)))
+                        return false;
+                }
+            }
+        } catch (ClassCastException unused) {
+            return false;
+        } catch (NullPointerException unused) {
+            return false;
+        }
+
+        return true;
+    }
+
     // ------------------------------------------------------ Instance Variables
 
     // NOTE - PropertyDescriptor instances are not Serializable, so the
@@ -136,6 +177,24 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
                 }
             }
         }
+    }
+
+    /**
+     * Override the default {@code Map} behavior to return
+     * {@code true} if the specified key is present in either the
+     * underlying {@code Map} or one of the local property keys.
+     *
+     * @param  key the key look for in the context.
+     *
+     * @return {@code true} if found in this context otherwise
+     *         {@code false}.
+     *
+     * @throws IllegalArgumentException if a property getter
+     *         throws an exception
+     */
+    @Override
+    public boolean containsKey(Object key) {
+        return ((descriptors != null && descriptors.containsKey(key)) || super.containsKey(key));
     }
 
     /**
