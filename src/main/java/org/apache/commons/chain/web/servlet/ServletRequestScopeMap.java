@@ -59,7 +59,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
     @Override
     public boolean containsValue(Object value) {
         if (value == null) {
-            return (false);
+            return false;
         }
         Enumeration<?> keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {

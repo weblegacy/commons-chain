@@ -209,7 +209,7 @@ public class PortletWebContext extends WebContext {
         if (applicationScope == null && context != null) {
             applicationScope = new PortletApplicationScopeMap(context);
         }
-        return (applicationScope);
+        return applicationScope;
     }
 
     /**

@@ -69,7 +69,7 @@ final class PortletSessionScopeMap implements Map<String, Object> {
     @Override
     public boolean containsValue(Object value) {
         if (value == null || !sessionExists()) {
-            return (false);
+            return false;
         }
         Enumeration<?> keys =
             session.getAttributeNames(PortletSession.PORTLET_SCOPE);
