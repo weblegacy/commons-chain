@@ -111,6 +111,7 @@ public class CatalogBase implements Catalog {
      *
      * @return a representation of this catalog as a String
      */
+    @Override
     public String toString() {
         Iterator<String> names = getNames();
         StringBuilder str = new StringBuilder();

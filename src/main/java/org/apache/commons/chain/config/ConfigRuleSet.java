@@ -250,6 +250,7 @@ public class ConfigRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *        should be added.
      */
+    @Override
     public void addRuleInstances(Digester digester) {
         // Add rules for a catalog element
         digester.addRule("*/" + getCatalogElement(),

@@ -46,6 +46,7 @@ final class PortletSessionScopeMap implements Map<String, Object> {
         sessionExists();
     }
 
+    @Override
     public void clear() {
         if (sessionExists()) {
             Enumeration<?> keys =

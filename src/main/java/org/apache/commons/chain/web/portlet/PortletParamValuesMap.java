@@ -117,14 +117,17 @@ final class PortletParamValuesMap implements Map<String, String[]> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void putAll(Map<? extends String, ? extends String[]> map) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String[] remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int size() {
         int n = 0;
         Enumeration<?> keys = request.getParameterNames();
@@ -135,6 +138,7 @@ final class PortletParamValuesMap implements Map<String, String[]> {
         return n;
     }
 
+    @Override
     public Collection<String[]> values() {
         List<String[]> list = new ArrayList<>();
         Enumeration<?> keys = request.getParameterNames();

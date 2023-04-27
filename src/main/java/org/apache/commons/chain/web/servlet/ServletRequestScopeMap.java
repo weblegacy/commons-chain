@@ -43,6 +43,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         this.request = request;
     }
 
+    @Override
     public void clear() {
         Enumeration<?> keys = request.getAttributeNames();
         while (keys.hasMoreElements()) {
@@ -70,6 +71,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         return false;
     }
 
+    @Override
     public Set<Map.Entry<String, Object>> entrySet() {
         Set<Map.Entry<String, Object>> set = new HashSet<>();
         Enumeration<?> keys = request.getAttributeNames();
@@ -101,6 +103,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         return !request.getAttributeNames().hasMoreElements();
     }
 
+    @Override
     public Set<String> keySet() {
         Set<String> set = new HashSet<>();
         Enumeration<?> keys = request.getAttributeNames();
@@ -110,6 +113,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         return set;
     }
 
+    @Override
     public Object put(String key, Object value) {
         if (value == null) {
             return remove(key);
@@ -119,6 +123,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         return previous;
     }
 
+    @Override
     public void putAll(Map<? extends String, ? extends Object> map) {
         map.forEach(this::put);
     }
@@ -142,6 +147,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         return n;
     }
 
+    @Override
     public Collection<Object> values() {
         List<Object> list = new ArrayList<>();
         Enumeration<?> keys = request.getAttributeNames();

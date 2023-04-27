@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add missing Override-Annotation
 * Optimize clear, containsValue, isEmpty, key and sessionExists
 * Correction: Return null value if there are no JavaBeans properties
 * Adaption to use `ConcurrentHashMap` because it dosen't accept null values
