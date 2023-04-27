@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,9 +45,9 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
 
     @Override
     public void clear() {
-        Iterator<String> keys = keySet().iterator();
-        while (keys.hasNext()) {
-            context.removeAttribute((String) keys.next());
+        Enumeration<?> keys = context.getAttributeNames();
+        while (keys.hasMoreElements()) {
+            context.removeAttribute(keys.nextElement().toString());
         }
     }
 
@@ -101,7 +100,7 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return !context.getAttributeNames().hasMoreElements();
     }
 
     @Override

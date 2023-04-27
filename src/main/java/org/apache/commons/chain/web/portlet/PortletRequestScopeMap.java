@@ -45,8 +45,9 @@ final class PortletRequestScopeMap implements Map<String, Object> {
 
     @Override
     public void clear() {
-        for (String key : keySet()) {
-            request.removeAttribute(key);
+        Enumeration<?> keys = request.getAttributeNames();
+        while (keys.hasMoreElements()) {
+            request.removeAttribute(keys.nextElement().toString());
         }
     }
 
@@ -99,7 +100,7 @@ final class PortletRequestScopeMap implements Map<String, Object> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return !request.getAttributeNames().hasMoreElements();
     }
 
     @Override
@@ -156,7 +157,7 @@ final class PortletRequestScopeMap implements Map<String, Object> {
         return list;
     }
 
-    private String key(Object key) {
+    private static String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {

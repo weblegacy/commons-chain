@@ -44,8 +44,9 @@ final class ServletRequestScopeMap implements Map<String, Object> {
     }
 
     public void clear() {
-        for (String key : keySet()) {
-            request.removeAttribute(key);
+        Enumeration<?> keys = request.getAttributeNames();
+        while (keys.hasMoreElements()) {
+            request.removeAttribute(keys.nextElement().toString());
         }
     }
 
@@ -97,7 +98,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return !request.getAttributeNames().hasMoreElements();
     }
 
     public Set<String> keySet() {

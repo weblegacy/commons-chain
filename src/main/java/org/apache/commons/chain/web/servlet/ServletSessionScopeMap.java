@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,9 +48,9 @@ final class ServletSessionScopeMap implements Map<String, Object> {
 
     public void clear() {
         if (sessionExists()) {
-            Iterator<String> keys = keySet().iterator();
-            while (keys.hasNext()) {
-                session.removeAttribute(keys.next().toString());
+            Enumeration<?> keys = session.getAttributeNames();
+            while (keys.hasMoreElements()) {
+                session.removeAttribute(keys.nextElement().toString());
             }
         }
     }
@@ -122,12 +121,7 @@ final class ServletSessionScopeMap implements Map<String, Object> {
 
     @Override
     public boolean isEmpty() {
-        if (sessionExists() &&
-            session.getAttributeNames().hasMoreElements()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(sessionExists() && session.getAttributeNames().hasMoreElements());
     }
 
     public Set<String> keySet() {
@@ -198,7 +192,7 @@ final class ServletSessionScopeMap implements Map<String, Object> {
         return list;
     }
 
-    private String key(Object key) {
+    private static String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {
@@ -215,10 +209,6 @@ final class ServletSessionScopeMap implements Map<String, Object> {
                 request = null;
             }
         }
-        if (session != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return session != null;
     }
 }

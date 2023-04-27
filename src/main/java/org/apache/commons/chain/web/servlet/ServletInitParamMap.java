@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,9 +55,10 @@ final class ServletInitParamMap implements Map<String, String> {
 
     @Override
     public boolean containsValue(Object value) {
-        Iterator<String> values = values().iterator();
-        while (values.hasNext()) {
-            if (value.equals(values.next())) {
+        Enumeration<?> keys = context.getInitParameterNames();
+        while (keys.hasMoreElements()) {
+            Object next = context.getInitParameter(keys.nextElement().toString());
+            if (value.equals(next)) {
                 return true;
             }
         }
@@ -94,7 +94,7 @@ final class ServletInitParamMap implements Map<String, String> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return !context.getInitParameterNames().hasMoreElements();
     }
 
     @Override
@@ -143,7 +143,7 @@ final class ServletInitParamMap implements Map<String, String> {
         return list;
     }
 
-    private String key(Object key) {
+    private static String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {

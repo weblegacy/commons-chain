@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,21 +59,12 @@ final class ServletHeaderValuesMap implements Map<String, String[]> {
         if (!(value instanceof String[])) {
             return false;
         }
-        String[] test = (String[]) value;
-        Iterator<String[]> values = values().iterator();
-        while (values.hasNext()) {
-            String[] actual = values.next();
-            if (test.length == actual.length) {
-                boolean matched = true;
-                for (int i = 0; i < test.length; i++) {
-                    if (!test[i].equals(actual[i])) {
-                        matched = false;
-                        break;
-                    }
-                }
-                if (matched) {
-                    return true;
-                }
+
+        Enumeration<?> keys = request.getHeaderNames();
+        while (keys.hasMoreElements()) {
+            Object next = request.getHeaders(keys.nextElement().toString());
+            if (Objects.deepEquals(value, next)) {
+                return true;
             }
         }
         return false;
@@ -108,7 +99,7 @@ final class ServletHeaderValuesMap implements Map<String, String[]> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return !request.getHeaderNames().hasMoreElements();
     }
 
     @Override
@@ -152,8 +143,7 @@ final class ServletHeaderValuesMap implements Map<String, String[]> {
         List<String[]> list = new ArrayList<>();
         Enumeration<?> keys = request.getHeaderNames();
         while (keys.hasMoreElements()) {
-            String key = keys.nextElement().toString();
-            list.add(enum2Array(request.getHeaders(key)));
+            list.add(enum2Array(request.getHeaders(keys.nextElement().toString())));
         }
         return list;
     }

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -57,9 +56,14 @@ final class PortletParamValuesMap implements Map<String, String[]> {
 
     @Override
     public boolean containsValue(Object value) {
-        Iterator<String[]> values = values().iterator();
-        while (values.hasNext()) {
-            if (Objects.deepEquals(value, values.next())) {
+        if (!(value instanceof String[])) {
+            return false;
+        }
+
+        Enumeration<?> keys = request.getParameterNames();
+        while (keys.hasMoreElements()) {
+            Object next = request.getParameterValues(keys.nextElement().toString());
+            if (Objects.deepEquals(value, next)) {
                 return true;
             }
         }
@@ -95,7 +99,7 @@ final class PortletParamValuesMap implements Map<String, String[]> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return !request.getParameterNames().hasMoreElements();
     }
 
     @Override

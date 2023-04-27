@@ -102,7 +102,7 @@ final class ServletCookieMap implements Map<String, Cookie> {
 
     @Override
     public boolean isEmpty() {
-        return size() < 1;
+        return request.getCookies().length == 0;
     }
 
     @Override
@@ -143,7 +143,7 @@ final class ServletCookieMap implements Map<String, Cookie> {
         return Arrays.asList(cookies);
     }
 
-    private String key(Object key) {
+    private static String key(Object key) {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {
