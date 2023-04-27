@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Use contains instead indexOf
 * Remove unnecessary brackets
 * Add missing Override-Annotation
 * Optimize clear, containsValue, isEmpty, key and sessionExists

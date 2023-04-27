@@ -135,7 +135,7 @@ public abstract class CatalogFactory {
             if (splitPos != -1) {
                 catalogName = commandID.substring(0, splitPos);
                 commandName = commandID.substring(splitPos + DELIMITER.length());
-                if (commandName.indexOf(DELIMITER) != -1) {
+                if (commandName.contains(DELIMITER)) {
                     throw new IllegalArgumentException("commandID [" +
                                                        commandID +
                                                        "] has too many delimiters (reserved for future use)");
