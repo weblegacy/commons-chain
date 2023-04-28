@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.CatalogBase;
-import org.apache.commons.chain.impl.CatalogFactoryBase;
 import org.apache.commons.chain.impl.ChainBase;
 import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.impl.DelegatingCommand;
@@ -67,7 +67,7 @@ public class LookupCommandTestCase {
     @BeforeEach
     public void init() {
         catalog = new CatalogBase<>();
-        CatalogFactoryBase.getInstance().setCatalog(catalog);
+        CatalogFactory.getInstance().setCatalog(catalog);
         command = new LookupCommand<>();
         context = new ContextBase();
     }
@@ -78,7 +78,7 @@ public class LookupCommandTestCase {
     @AfterEach
     public void tearDown() {
         catalog = null;
-        CatalogFactoryBase.clear();
+        CatalogFactory.clear();
         command = null;
         context = null;
     }
@@ -147,7 +147,7 @@ public class LookupCommandTestCase {
     }
 
     /**
-     * Test ability to lookup and execute a chain using the context 
+     * Test ability to lookup and execute a chain using the context
      */
     @Test
     public void testExecuteMethodLookup_2b() {

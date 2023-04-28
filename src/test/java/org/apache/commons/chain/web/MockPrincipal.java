@@ -45,24 +45,23 @@ public class MockPrincipal implements Principal {
 
     protected String roles[] = null;
 
+    @Override
     public String getName() {
         return this.name;
     }
 
     public boolean isUserInRole(String role) {
-        for (int i = 0; i < roles.length; i++) {
-            if (role.equals(roles[i])) {
+        for (String role2 : roles) {
+            if (role.equals(role2)) {
                 return true;
             }
         }
         return false;
     }
 
+    @Override
     public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-        if (!(o instanceof Principal)) {
+        if ((o == null) || !(o instanceof Principal)) {
             return false;
         }
         Principal p = (Principal) o;
@@ -73,6 +72,7 @@ public class MockPrincipal implements Principal {
         }
     }
 
+    @Override
     public int hashCode() {
         if (name == null) {
             return "".hashCode();

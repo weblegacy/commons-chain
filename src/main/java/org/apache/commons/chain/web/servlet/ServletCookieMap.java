@@ -70,7 +70,7 @@ final class ServletCookieMap implements Map<String, Cookie> {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                set.add(new MapEntry<Cookie>(cookie.getName(), cookie, false));
+                set.add(new MapEntry<>(cookie.getName(), cookie, false));
             }
         }
         return set;
@@ -122,6 +122,7 @@ final class ServletCookieMap implements Map<String, Cookie> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void putAll(Map<? extends String, ? extends Cookie> map) {
         throw new UnsupportedOperationException();
     }

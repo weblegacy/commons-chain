@@ -26,11 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Iterator;
 
 import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.AddingCommand;
 import org.apache.commons.chain.impl.CatalogBase;
-import org.apache.commons.chain.impl.CatalogFactoryBase;
 import org.apache.commons.chain.impl.ChainBase;
 import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.impl.DelegatingCommand;
@@ -314,7 +314,7 @@ public class ConfigParserTestCase {
         int n = 0;
         Iterator<String> names = catalog.getNames();
         while (names.hasNext()) {
-            String name = (String) names.next();
+            String name = names.next();
             n++;
             assertNotNull(catalog.getCommand(name), name + " exists");
         }
@@ -341,8 +341,8 @@ public class ConfigParserTestCase {
      * @throws Exception any error
      */
     protected void load(String path) throws Exception {
-        CatalogFactoryBase.clear();
+        CatalogFactory.clear();
         parser.parse(this.getClass().getResource(path));
-        catalog = CatalogFactoryBase.getInstance().getCatalog();
+        catalog = CatalogFactory.getInstance().getCatalog();
     }
 }

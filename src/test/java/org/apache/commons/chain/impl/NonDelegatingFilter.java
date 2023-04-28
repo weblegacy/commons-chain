@@ -76,6 +76,7 @@ public class NonDelegatingFilter extends NonDelegatingCommand
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
+    @Override
     public boolean execute(Context context) throws Exception {
         super.execute(context);
         return true;
@@ -97,6 +98,7 @@ public class NonDelegatingFilter extends NonDelegatingCommand
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
+    @Override
     public boolean postprocess(Context context, Exception exception) {
         log(context, id2);
         return false;

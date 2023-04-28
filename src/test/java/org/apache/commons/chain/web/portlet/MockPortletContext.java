@@ -56,78 +56,97 @@ public class MockPortletContext implements PortletContext {
 
     // ------------------------------------------------- PortletContext Methods
 
+    @Override
     public Object getAttribute(String name) {
         return attributes.get(name);
     }
 
+    @Override
     public Enumeration<String> getAttributeNames() {
         return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
+    @Override
     public String getInitParameter(String name) {
         return parameters.get(name);
     }
 
+    @Override
     public Enumeration<String> getInitParameterNames() {
         return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
+    @Override
     public int getMajorVersion() {
         return majorVersion;
     }
 
+    @Override
     public String getMimeType(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getMinorVersion() {
         return minorVersion;
     }
 
+    @Override
     public PortletRequestDispatcher getNamedDispatcher(String name) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getPortletContextName() {
         return portletContextName;
     }
 
+    @Override
     public String getRealPath(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public PortletRequestDispatcher getRequestDispatcher(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public URL getResource(String path) throws MalformedURLException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public InputStream getResourceAsStream(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<String> getResourcePaths(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getServerInfo() {
         return serverInfo;
     }
 
+    @Override
     public void log(String message) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void log(String message, Throwable exception) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void removeAttribute(String name) {
         attributes.remove(name);
     }
 
+    @Override
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
     }

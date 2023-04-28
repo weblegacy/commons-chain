@@ -45,8 +45,7 @@ public class ChainResourcesTestCase {
 
     @Test
     public void testGetPaths() throws Exception {
-        for (int i = 0; i < data.length; i++) {
-            TestData datum = data[i];
+        for (TestData datum : data) {
             String[] expected = datum.getExpected();
             String[] actual = ChainResources.getResourcePaths(datum.getInput());
 

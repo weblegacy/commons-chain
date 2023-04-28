@@ -66,8 +66,8 @@ final class ChainResources {
         String[] paths = getResourcePaths(resources);
         String path = null;
         try {
-            for (int i = 0; i < paths.length; i++) {
-                path = paths[i];
+            for (String path2 : paths) {
+                path = path2;
                 URL url = loader.getResource(path);
                 if (url == null) {
                     throw new IllegalStateException
@@ -111,8 +111,8 @@ final class ChainResources {
         String[] paths = getResourcePaths(resources);
         String path = null;
         try {
-            for (int i = 0; i < paths.length; i++) {
-                path = paths[i];
+            for (String path2 : paths) {
+                path = path2;
                 URL url = loader.getResource(path);
                 if (url == null) {
                     throw new IllegalStateException
@@ -148,8 +148,8 @@ final class ChainResources {
         String[] paths = getResourcePaths(resources);
         String path = null;
         try {
-            for (int i = 0; i < paths.length; i++) {
-                path = paths[i];
+            for (String path2 : paths) {
+                path = path2;
                 URL url = context.getResource(path);
                 if (url == null) {
                     throw new IllegalStateException
@@ -190,8 +190,8 @@ final class ChainResources {
         String[] paths = getResourcePaths(resources);
         String path = null;
         try {
-            for (int i = 0; i < paths.length; i++) {
-                path = paths[i];
+            for (String path2 : paths) {
+                path = path2;
                 URL url = context.getResource(path);
                 if (url == null) {
                     throw new IllegalStateException

@@ -35,6 +35,7 @@ public class TestContextTestCase extends ContextBaseTestCase<TestContext> {
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     @BeforeEach
     public void init() {
         context = createContext();
@@ -45,11 +46,12 @@ public class TestContextTestCase extends ContextBaseTestCase<TestContext> {
     /**
      * Test state of newly created instance
      */
+    @Override
     @Test
     public void testPristine() {
         super.testPristine();
-        assertEquals("readOnly", (String) context.get("readOnly"));
-        assertEquals("readWrite", (String) context.get("readWrite"));
+        assertEquals("readOnly", context.get("readOnly"));
+        assertEquals("readWrite", context.get("readWrite"));
         assertEquals("writeOnly", context.returnWriteOnly());
     }
 
@@ -70,7 +72,7 @@ public class TestContextTestCase extends ContextBaseTestCase<TestContext> {
         } catch (UnsupportedOperationException e) {
             ; // Expected result
         }
-        assertEquals("readOnly", (String) context.get("readOnly"),
+        assertEquals("readOnly", context.get("readOnly"),
                      "readOnly unchanged");
     }
 
@@ -117,6 +119,7 @@ public class TestContextTestCase extends ContextBaseTestCase<TestContext> {
     /**
      * Create a new instance of the appropriate Context type for this test case
      */
+    @Override
     protected TestContext createContext() {
         return new TestContext();
     }

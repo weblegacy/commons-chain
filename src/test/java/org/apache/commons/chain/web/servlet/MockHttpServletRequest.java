@@ -134,22 +134,27 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     // --------------------------------------------- HttpServletRequest Methods
 
+    @Override
     public String getAuthType() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getContextPath() {
         return contextPath;
     }
 
+    @Override
     public Cookie[] getCookies() {
         return cookies;
     }
 
+    @Override
     public long getDateHeader(String name) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getHeader(String name) {
         String values[] = headers.get(name);
         if (values != null) {
@@ -159,10 +164,12 @@ public class MockHttpServletRequest implements HttpServletRequest {
         }
     }
 
+    @Override
     public Enumeration<String> getHeaderNames() {
         return new MockEnumeration<>(headers.keySet().iterator());
     }
 
+    @Override
     public Enumeration<String> getHeaders(String name) {
         String headers[] = this.headers.get(name);
         if (headers == null) {
@@ -171,26 +178,32 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return new MockEnumeration<>(Arrays.asList(headers).iterator());
     }
 
+    @Override
     public int getIntHeader(String name) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getMethod() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getPathInfo() {
         return pathInfo;
     }
 
+    @Override
     public String getPathTranslated() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getQueryString() {
         return queryString;
     }
 
+    @Override
     public String getRemoteUser() {
         if (principal != null) {
             return principal.getName();
@@ -199,10 +212,12 @@ public class MockHttpServletRequest implements HttpServletRequest {
         }
     }
 
+    @Override
     public String getRequestedSessionId() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getRequestURI() {
         StringBuffer sb = new StringBuffer();
         if (contextPath != null) {
@@ -220,18 +235,22 @@ public class MockHttpServletRequest implements HttpServletRequest {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public StringBuffer getRequestURL() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getServletPath() {
         return servletPath;
     }
 
+    @Override
     public HttpSession getSession() {
         return getSession(true);
     }
 
+    @Override
     public HttpSession getSession(boolean create) {
         if (create && (session == null)) {
             throw new UnsupportedOperationException();
@@ -239,26 +258,32 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return session;
     }
 
+    @Override
     public Principal getUserPrincipal() {
         return principal;
     }
 
+    @Override
     public boolean isRequestedSessionIdFromCookie() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isRequestedSessionIdFromUrl() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isRequestedSessionIdFromURL() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isRequestedSessionIdValid() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isUserInRole(String role) {
         if ((principal != null) && (principal instanceof MockPrincipal)) {
             return ((MockPrincipal) principal).isUserInRole(role);
@@ -269,34 +294,42 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     // ------------------------------------------------- ServletRequest Methods
 
+    @Override
     public Object getAttribute(String name) {
         return attributes.get(name);
     }
 
+    @Override
     public Enumeration<String> getAttributeNames() {
         return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
+    @Override
     public String getCharacterEncoding() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getContentLength() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getContentType() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public ServletInputStream getInputStream() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Locale getLocale() {
         return locale;
     }
 
+    @Override
     public Enumeration<Locale> getLocales() {
         throw new UnsupportedOperationException();
     }
@@ -313,6 +346,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getParameter(String name) {
         String values[] = parameters.get(name);
         if (values != null) {
@@ -322,34 +356,42 @@ public class MockHttpServletRequest implements HttpServletRequest {
         }
     }
 
+    @Override
     public Map<String, String[]> getParameterMap() {
         return parameters;
     }
 
+    @Override
     public Enumeration<String> getParameterNames() {
         return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
+    @Override
     public String[] getParameterValues(String name) {
         return parameters.get(name);
     }
 
+    @Override
     public String getProtocol() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public BufferedReader getReader() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getRealPath(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getRemoteAddr() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getRemoteHost() {
         throw new UnsupportedOperationException();
     }
@@ -358,30 +400,37 @@ public class MockHttpServletRequest implements HttpServletRequest {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public RequestDispatcher getRequestDispatcher(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getScheme() {
         return "http";
     }
 
+    @Override
     public String getServerName() {
         return "localhost";
     }
 
+    @Override
     public int getServerPort() {
         return 8080;
     }
 
+    @Override
     public boolean isSecure() {
         return false;
     }
 
+    @Override
     public void removeAttribute(String name) {
         attributes.remove(name);
     }
 
+    @Override
     public void setAttribute(String name, Object value) {
         if (value == null) {
             attributes.remove(name);
@@ -390,6 +439,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         }
     }
 
+    @Override
     public void setCharacterEncoding(String name) {
         throw new UnsupportedOperationException();
     }

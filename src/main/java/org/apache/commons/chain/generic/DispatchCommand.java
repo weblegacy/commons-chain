@@ -68,6 +68,7 @@ public abstract class DispatchCommand<C extends Context> implements Command<C> {
      *         exception itself, unless the cause is an {@code Error} or
      *         other {@code Throwable} which is not an {@code Exception}.
      */
+    @Override
     public boolean execute(C context) throws Exception {
         if (this.getMethod() == null && this.getMethodKey() == null) {
             throw new IllegalStateException("Neither 'method' nor 'methodKey' properties are defined ");

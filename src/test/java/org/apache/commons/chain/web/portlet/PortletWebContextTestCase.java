@@ -79,6 +79,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     @BeforeEach
     public void init() {
         pcontext = new MockPortletContext();
@@ -105,6 +106,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
     /**
      * Tear down instance variables required by this test case.
      */
+    @Override
     @AfterEach
     public void tearDown() {
         pcontext = null;
@@ -126,14 +128,14 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Initial contents
         checkMapSize(map, 4);
-        assertEquals("avalue1", (String) map.get("akey1"));
-        assertEquals("avalue2", (String) map.get("akey2"));
-        assertEquals("avalue3", (String) map.get("akey3"));
-        assertEquals("avalue4", (String) map.get("akey4"));
+        assertEquals("avalue1", map.get("akey1"));
+        assertEquals("avalue2", map.get("akey2"));
+        assertEquals("avalue3", map.get("akey3"));
+        assertEquals("avalue4", map.get("akey4"));
 
         // Transparency - entrySet()
         checkEntrySet(map, true);
- 
+
         // Transparency - removal via web object
         pcontext.removeAttribute("akey1");
         checkMapSize(map, 3);
@@ -147,22 +149,22 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
         // Transparency - addition via web object
         pcontext.setAttribute("akeyA", "avalueA");
         checkMapSize(map, 3);
-        assertEquals("avalueA", (String) map.get("akeyA"));
+        assertEquals("avalueA", map.get("akeyA"));
 
         // Transparency - addition via map
         map.put("akeyB", "avalueB");
         checkMapSize(map, 4);
-        assertEquals("avalueB", (String) pcontext.getAttribute("akeyB"));
+        assertEquals("avalueB", pcontext.getAttribute("akeyB"));
 
         // Transparency - replacement via web object
         pcontext.setAttribute("akeyA", "newvalueA");
         checkMapSize(map, 4);
-        assertEquals("newvalueA", (String) map.get("akeyA"));
+        assertEquals("newvalueA", map.get("akeyA"));
 
         // Transparency - replacement via map
         map.put("akeyB", "newvalueB");
         assertEquals(4, map.size());
-        assertEquals("newvalueB", (String) pcontext.getAttribute("akeyB"));
+        assertEquals("newvalueB", pcontext.getAttribute("akeyB"));
 
         // Clearing the map
         map.clear();
@@ -182,6 +184,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
      * Test {@code equals()} and {@code hashCode()}
      * Copied from ContextBaseTestCase with customized creation of "other"
      */
+    @Override
     @Test
     public void testEquals() {
         // Compare to self
@@ -234,7 +237,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Initial contents
         checkMapSize(map, 0);
- 
+
         try {
             map.put("hkey3", new String[] {"ABC"});
             fail("Should have thrown UnsupportedOperationException");
@@ -253,9 +256,9 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Initial contents
         checkMapSize(map, 3);
-        assertEquals("ivalue1", (String) map.get("ikey1"));
-        assertEquals("ivalue2", (String) map.get("ikey2"));
-        assertEquals("ivalue3", (String) map.get("ikey3"));
+        assertEquals("ivalue1", map.get("ikey1"));
+        assertEquals("ivalue2", map.get("ikey2"));
+        assertEquals("ivalue3", map.get("ikey3"));
         assertTrue(map.containsKey("ikey1"));
         assertTrue(map.containsKey("ikey2"));
         assertTrue(map.containsKey("ikey3"));
@@ -265,7 +268,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Transparency - entrySet()
         checkEntrySet(map, false);
- 
+
         // Unsupported operations on read-only map
         try {
             map.clear();
@@ -303,8 +306,8 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Initial contents
         checkMapSize(map, 2);
-        assertEquals("pvalue1", (String) map.get("pkey1"));
-        assertEquals("pvalue2a", (String) map.get("pkey2"));
+        assertEquals("pvalue1", map.get("pkey1"));
+        assertEquals("pvalue2a", map.get("pkey2"));
         assertTrue(map.containsKey("pkey1"));
         assertTrue(map.containsKey("pkey2"));
         assertTrue(map.containsValue("pvalue1"));
@@ -416,6 +419,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
     /**
      * Test state of newly created instance
      */
+    @Override
     @Test
     public void testPristine() {
         super.testPristine();
@@ -490,12 +494,12 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Initial contents
         checkMapSize(map, 2);
-        assertEquals("rvalue1", (String) map.get("rkey1"));
-        assertEquals("rvalue2", (String) map.get("rkey2"));
+        assertEquals("rvalue1", map.get("rkey1"));
+        assertEquals("rvalue2", map.get("rkey2"));
 
         // Transparency - entrySet()
         checkEntrySet(map, true);
- 
+
         // Transparency - removal via web object
         request.removeAttribute("rkey1");
         checkMapSize(map, 1);
@@ -509,22 +513,22 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
         // Transparency - addition via web object
         request.setAttribute("rkeyA", "rvalueA");
         checkMapSize(map, 1);
-        assertEquals("rvalueA", (String) map.get("rkeyA"));
+        assertEquals("rvalueA", map.get("rkeyA"));
 
         // Transparency - addition via map
         map.put("rkeyB", "rvalueB");
         checkMapSize(map, 2);
-        assertEquals("rvalueB", (String) request.getAttribute("rkeyB"));
+        assertEquals("rvalueB", request.getAttribute("rkeyB"));
 
         // Transparency - replacement via web object
         request.setAttribute("rkeyA", "newvalueA");
         checkMapSize(map, 2);
-        assertEquals("newvalueA", (String) map.get("rkeyA"));
+        assertEquals("newvalueA", map.get("rkeyA"));
 
         // Transparency - replacement via map
         map.put("rkeyB", "newvalueB");
         checkMapSize(map, 2);
-        assertEquals("newvalueB", (String) request.getAttribute("rkeyB"));
+        assertEquals("newvalueB", request.getAttribute("rkeyB"));
 
         // Clearing the map
         map.clear();
@@ -550,13 +554,13 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
 
         // Initial contents
         checkMapSize(map, 3);
-        assertEquals("svalue1", (String) map.get("skey1"));
-        assertEquals("svalue2", (String) map.get("skey2"));
-        assertEquals("svalue3", (String) map.get("skey3"));
+        assertEquals("svalue1", map.get("skey1"));
+        assertEquals("svalue2", map.get("skey2"));
+        assertEquals("svalue3", map.get("skey3"));
 
         // Transparency - entrySet()
         checkEntrySet(map, true);
- 
+
         // Transparency - removal via web object
         session.removeAttribute("skey1");
         checkMapSize(map, 2);
@@ -570,22 +574,22 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
         // Transparency - addition via web object
         session.setAttribute("skeyA", "svalueA");
         checkMapSize(map, 2);
-        assertEquals("svalueA", (String) map.get("skeyA"));
+        assertEquals("svalueA", map.get("skeyA"));
 
         // Transparency - addition via map
         map.put("skeyB", "svalueB");
         checkMapSize(map, 3);
-        assertEquals("svalueB", (String) session.getAttribute("skeyB"));
+        assertEquals("svalueB", session.getAttribute("skeyB"));
 
         // Transparency - replacement via web object
         session.setAttribute("skeyA", "newvalueA");
         checkMapSize(map, 3);
-        assertEquals("newvalueA", (String) map.get("skeyA"));
+        assertEquals("newvalueA", map.get("skeyA"));
 
         // Transparency - replacement via map
         map.put("skeyB", "newvalueB");
         checkMapSize(map, 3);
-        assertEquals("newvalueB", (String) session.getAttribute("skeyB"));
+        assertEquals("newvalueB", session.getAttribute("skeyB"));
 
         // Clearing the map
         map.clear();
@@ -607,7 +611,7 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
     @Test
     public void testSessionScopeWithoutSession() {
         // Create a Context without a session
-        PortletWebContext ctx = new PortletWebContext(pcontext, 
+        PortletWebContext ctx = new PortletWebContext(pcontext,
            new MockPortletRequest(), response);
         assertNull(ctx.getRequest().getPortletSession(false), "Session(A)");
 
@@ -741,8 +745,9 @@ public class PortletWebContextTestCase extends ContextBaseTestCase<PortletWebCon
     /**
      * Create a new instance of the appropriate Context type for this test case
      *
-     * @return new instance of the appropriate Context type 
+     * @return new instance of the appropriate Context type
      */
+    @Override
     protected PortletWebContext createContext() {
         return new PortletWebContext(pcontext, request, response);
     }

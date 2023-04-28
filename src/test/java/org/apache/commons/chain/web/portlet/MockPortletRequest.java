@@ -146,30 +146,37 @@ public class MockPortletRequest implements PortletRequest {
 
     // --------------------------------------------- PortletRequest Methods
 
+    @Override
     public Object getAttribute(String name) {
         return attributes.get(name);
     }
 
+    @Override
     public Enumeration<String> getAttributeNames() {
         return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
+    @Override
     public String getAuthType() {
         return authType;
     }
 
+    @Override
     public String getContextPath() {
         return contextPath;
     }
 
+    @Override
     public Locale getLocale() {
         return locale;
     }
 
+    @Override
     public Enumeration<Locale> getLocales() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getParameter(String name) {
         String values[] = parameters.get(name);
         if (values != null) {
@@ -179,30 +186,37 @@ public class MockPortletRequest implements PortletRequest {
         }
     }
 
+    @Override
     public Map<String, String[]> getParameterMap() {
         return parameters;
     }
 
+    @Override
     public Enumeration<String> getParameterNames() {
         return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
+    @Override
     public String[] getParameterValues(String name) {
         return parameters.get(name);
     }
 
+    @Override
     public PortalContext getPortalContext() {
-        return portalContext; 
+        return portalContext;
     }
 
+    @Override
     public PortletMode getPortletMode() {
-        return portletMode; 
+        return portletMode;
     }
 
+    @Override
     public PortletSession getPortletSession() {
         return getPortletSession(true);
     }
 
+    @Override
     public PortletSession getPortletSession(boolean create) {
         if (create && session == null) {
             session = new MockPortletSession(context);
@@ -210,14 +224,17 @@ public class MockPortletRequest implements PortletRequest {
         return session;
     }
 
+    @Override
     public PortletPreferences getPreferences() {
-        return portletPreferences; 
+        return portletPreferences;
     }
 
+    @Override
     public Enumeration<String> getProperties(String name) {
-        throw new UnsupportedOperationException(); 
+        throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getProperty(String name) {
         String values[] = properties.get(name);
         if (values != null) {
@@ -227,10 +244,12 @@ public class MockPortletRequest implements PortletRequest {
         }
      }
 
+    @Override
     public Enumeration<String> getPropertyNames() {
         return new MockEnumeration<>(properties.keySet().iterator());
     }
 
+    @Override
     public String getRemoteUser() {
         if (principal != null) {
             return principal.getName();
@@ -239,50 +258,62 @@ public class MockPortletRequest implements PortletRequest {
         }
     }
 
+    @Override
     public String getRequestedSessionId() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getResponseContentType() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Enumeration<String> getResponseContentTypes() {
-        throw new UnsupportedOperationException(); 
+        throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getScheme() {
         return scheme;
     }
 
+    @Override
     public String getServerName() {
         return serverName;
     }
 
+    @Override
     public int getServerPort() {
         return serverPort;
     }
 
+    @Override
     public Principal getUserPrincipal() {
         return principal;
     }
 
+    @Override
     public WindowState getWindowState() {
         return windowState;
     }
 
+    @Override
     public boolean isPortletModeAllowed(PortletMode mode) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isRequestedSessionIdValid() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isSecure() {
         return false;
     }
 
+    @Override
     public boolean isUserInRole(String role) {
         if ((principal != null) && (principal instanceof MockPrincipal)) {
             return ((MockPrincipal)principal).isUserInRole(role);
@@ -291,15 +322,18 @@ public class MockPortletRequest implements PortletRequest {
         }
     }
 
+    @Override
     public boolean isWindowStateAllowed(WindowState state) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void removeAttribute(String name) {
         attributes.remove(name);
     }
 
 
+    @Override
     public void setAttribute(String name, Object value) {
         if (value == null) {
             attributes.remove(name);

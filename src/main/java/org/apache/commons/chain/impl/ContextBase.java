@@ -63,6 +63,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
     private final static Object SINGLETON = new Serializable() {
         private static final long serialVersionUID = -6023767081282668587L;
 
+        @Override
         public boolean equals(Object object) {
             return false;
         }
@@ -473,7 +474,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      *        specified property
      *
      * @return the value of the specified property
-     * 
+     *
      * @throws IllegalArgumentException if an exception is thrown
      *         reading this local property value.
      * @throws UnsupportedOperationException if this local property does not
@@ -693,10 +694,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
             if (this == obj) {
                 return true;
             }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
+            if ((obj == null) || (getClass() != obj.getClass())) {
                 return false;
             }
             MapEntryImpl other = (MapEntryImpl) obj;
@@ -778,6 +776,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
             }
         }
 
+        @Override
         public int size() {
             return ContextBase.this.size();
         }

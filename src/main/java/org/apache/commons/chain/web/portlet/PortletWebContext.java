@@ -206,6 +206,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Application scope Map.
      */
+    @Override
     public Map<String, Object> getApplicationScope() {
         if (applicationScope == null && context != null) {
             applicationScope = new PortletApplicationScopeMap(context);
@@ -218,6 +219,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Header values Map.
      */
+    @Override
     public Map<String, String> getHeader() {
         if (header == null && request != null) {
             // header = new PortletHeaderMap(request);
@@ -231,6 +233,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Header values Map.
      */
+    @Override
     public Map<String, String[]> getHeaderValues() {
         if (headerValues == null && request != null) {
             // headerValues = new PortletHeaderValuesMap(request);
@@ -244,6 +247,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Initialization parameter Map.
      */
+    @Override
     public Map<String, String> getInitParam() {
         if (initParam == null && context != null) {
             initParam = new PortletInitParamMap(context);
@@ -256,6 +260,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Request parameter Map.
      */
+    @Override
     public Map<String, String> getParam() {
         if (param == null && request != null) {
             param = new PortletParamMap(request);
@@ -268,6 +273,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Request parameter Map.
      */
+    @Override
     public Map<String, String[]> getParamValues() {
         if (paramValues == null && request != null) {
             paramValues = new PortletParamValuesMap(request);
@@ -282,6 +288,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @since Chain 1.1
      */
+    @Override
     public Map<String, Cookie> getCookies() {
         return Collections.emptyMap();
     }
@@ -291,6 +298,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Request scope Map.
      */
+    @Override
     public Map<String, Object> getRequestScope() {
         if (requestScope == null && request != null) {
             requestScope = new PortletRequestScopeMap(request);
@@ -303,6 +311,7 @@ public class PortletWebContext extends WebContextBase {
      *
      * @return Session scope Map.
      */
+    @Override
     public Map<String, Object> getSessionScope() {
         if (sessionScope == null && request != null) {
             sessionScope = new PortletSessionScopeMap(request);

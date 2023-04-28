@@ -38,6 +38,7 @@ public class ServletSetLocaleCommand extends AbstractSetLocaleCommand<ServletWeb
      *
      * @param locale The Locale for the request.
      */
+    @Override
     protected void setLocale(ServletWebContext context, Locale locale) {
         HttpServletResponse response = context.getResponse();
         response.setLocale(locale);

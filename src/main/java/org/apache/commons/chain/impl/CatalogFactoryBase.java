@@ -64,6 +64,7 @@ public class CatalogFactoryBase<C extends Context> extends CatalogFactory<C> {
      *
      * @return the default Catalog instance
      */
+    @Override
     public Catalog<C> getCatalog() {
         return catalog;
     }
@@ -73,6 +74,7 @@ public class CatalogFactoryBase<C extends Context> extends CatalogFactory<C> {
      *
      * @param catalog the default Catalog instance
      */
+    @Override
     public void setCatalog(Catalog<C> catalog) {
         this.catalog = catalog;
     }
@@ -85,6 +87,7 @@ public class CatalogFactoryBase<C extends Context> extends CatalogFactory<C> {
      *
      * @return the specified Catalog
      */
+    @Override
     public Catalog<C> getCatalog(String name) {
         return catalogs.get(name);
     }
@@ -96,6 +99,7 @@ public class CatalogFactoryBase<C extends Context> extends CatalogFactory<C> {
      * @param name the name of the Catalog to add
      * @param catalog the Catalog to add
      */
+    @Override
     public void addCatalog(String name, Catalog<C> catalog) {
         catalogs.put(name, catalog);
     }
@@ -107,6 +111,7 @@ public class CatalogFactoryBase<C extends Context> extends CatalogFactory<C> {
      *
      * @return An Iterator of the names of the Catalogs known by this factory.
      */
+    @Override
     public Iterator<String> getNames() {
         return catalogs.keySet().iterator();
     }

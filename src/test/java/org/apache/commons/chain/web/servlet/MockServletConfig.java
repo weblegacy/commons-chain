@@ -66,6 +66,7 @@ public class MockServletConfig implements ServletConfig {
      * @param name parameter name
      * @return the parameter value
      */
+    @Override
     public String getInitParameter(String name) {
         return parameters.get(name);
     }
@@ -75,6 +76,7 @@ public class MockServletConfig implements ServletConfig {
      *
      * @return the set of parameter names
      */
+    @Override
     public Enumeration<String> getInitParameterNames() {
         return new MockEnumeration<>(parameters.keySet().iterator());
     }
@@ -84,6 +86,7 @@ public class MockServletConfig implements ServletConfig {
      *
      * @return the servlet context
      */
+    @Override
     public ServletContext getServletContext() {
         return servletContext;
     }
@@ -93,6 +96,7 @@ public class MockServletConfig implements ServletConfig {
      *
      * @return The servlet name
      */
+    @Override
     public String getServletName() {
         return servletName;
     }

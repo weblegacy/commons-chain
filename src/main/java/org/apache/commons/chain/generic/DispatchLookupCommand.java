@@ -65,7 +65,7 @@ public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
      */
     public DispatchLookupCommand() {
         super();
-    };
+    }
 
     /**
      * Create an instance and initialize the {@code catalogFactory} property
@@ -144,6 +144,7 @@ public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
      * @throws Exception if no such {@link Command} can be found and the
      *         {@code optional} property is set to {@code false}
      */
+    @Override
     public boolean execute(C context) throws Exception {
         if (this.getMethod() == null && this.getMethodKey() == null) {
             throw new IllegalStateException(

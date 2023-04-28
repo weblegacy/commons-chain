@@ -72,7 +72,7 @@ final class ServletHeaderMap implements Map<String, String> {
         String key;
         while (keys.hasMoreElements()) {
             key = keys.nextElement().toString();
-            set.add(new MapEntry<String>(key, request.getHeader(key), false));
+            set.add(new MapEntry<>(key, request.getHeader(key), false));
         }
         return set;
     }

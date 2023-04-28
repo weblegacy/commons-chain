@@ -132,6 +132,7 @@ public class ChainServlet extends HttpServlet {
     /**
      * Clean up after ourselves as this application shuts down.
      */
+    @Override
     public void destroy() {
         ServletConfig config = getServletConfig();
         ServletContext context = getServletContext();
@@ -148,6 +149,7 @@ public class ChainServlet extends HttpServlet {
      *
      * @throws ServletException if the servlet could not be initialized
      */
+    @Override
     @SuppressWarnings("deprecation")
     public void init() throws ServletException {
         Log log = LogFactory.getLog(ChainServlet.class);
@@ -222,6 +224,7 @@ public class ChainServlet extends HttpServlet {
      * @throws ServletException this exception is never thrown
      * @throws IOException this exception is never thrown
      */
+    @Override
     public void service(HttpServletRequest request,
                         HttpServletResponse response)
         throws ServletException, IOException {

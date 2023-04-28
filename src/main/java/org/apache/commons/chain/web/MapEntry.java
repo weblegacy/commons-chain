@@ -109,10 +109,7 @@ public class MapEntry<T> implements Map.Entry<String, T> {
         if (this == o) {
             return true;
         }
-        if (o == null) {
-            return false;
-        }
-        if (getClass() != o.getClass()) {
+        if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
         MapEntry<?> other = (MapEntry<?>) o;

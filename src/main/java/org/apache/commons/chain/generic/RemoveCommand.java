@@ -63,6 +63,7 @@ public class RemoveCommand<C extends Context> implements Command<C> {
      *
      * @throws Exception if and error occurs.
      */
+    @Override
     public boolean execute(C context) throws Exception {
         context.remove(getFromKey());
         return false;

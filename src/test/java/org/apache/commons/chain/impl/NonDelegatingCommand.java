@@ -77,6 +77,7 @@ public class NonDelegatingCommand implements Command<Context> {
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
+    @Override
     public boolean execute(Context context) throws Exception {
         if (context == null) {
             throw new IllegalArgumentException();

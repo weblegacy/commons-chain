@@ -280,6 +280,7 @@ public class LookupCommand<C extends Context> implements Filter<C> {
      *         to {@code false}
      * @throws Exception if and error occurs in the looked-up Command.
      */
+    @Override
     public boolean execute(C context) throws Exception {
         Command<C> command = getCommand(context);
         if (command != null) {
@@ -307,6 +308,7 @@ public class LookupCommand<C extends Context> implements Filter<C> {
      *         {@code optional} property is {@code false}, in which case
      *         {@code IllegalArgumentException} will be thrown.
      */
+    @Override
     public boolean postprocess(C context, Exception exception) {
         Command<C> command = getCommand(context);
         if (command != null) {

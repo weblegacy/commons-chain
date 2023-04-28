@@ -37,6 +37,7 @@ public class FacesSetLocaleCommand extends AbstractSetLocaleCommand<FacesWebCont
      * @param context The {@link Context} we are operating on.
      * @param locale The Locale for the request.
      */
+    @Override
     protected void setLocale(FacesWebContext context, Locale locale) {
         FacesContext fcontext = context.getContext();
         fcontext.getViewRoot().setLocale(locale);

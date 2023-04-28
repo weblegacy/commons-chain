@@ -33,10 +33,12 @@ public class MockEnumeration<E> implements Enumeration<E> {
 
     protected Iterator<E> iterator;
 
+    @Override
     public boolean hasMoreElements() {
         return iterator.hasNext();
     }
 
+    @Override
     public E nextElement() {
         return iterator.next();
     }

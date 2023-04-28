@@ -112,5 +112,6 @@ public interface Chain<C extends Context> extends Command<C> {
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
+    @Override
     boolean execute(C context) throws Exception;
 }

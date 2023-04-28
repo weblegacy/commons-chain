@@ -158,7 +158,7 @@ public class CatalogBaseTestCase {
         int n = 0;
         Iterator<String> names = catalog.getNames();
         while (names.hasNext()) {
-            String name = (String) names.next();
+            String name = names.next();
             n++;
             assertNotNull(catalog.getCommand(name), name + " exists");
         }

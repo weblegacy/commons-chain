@@ -179,7 +179,7 @@ public abstract class CatalogFactory<C extends Context> {
      *
      * @return the per-application singleton instance of {@link CatalogFactory}
      */
-	public static <C extends Context> CatalogFactory<C> getInstance() {
+    public static <C extends Context> CatalogFactory<C> getInstance() {
         ClassLoader cl = getClassLoader();
 
         @SuppressWarnings("unchecked")

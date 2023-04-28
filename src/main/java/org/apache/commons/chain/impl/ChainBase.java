@@ -118,6 +118,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      *         is {@code null}
      * @throws IllegalStateException if no further configuration is allowed
      */
+    @Override
     public <CMD extends Command<C>> void addCommand(CMD command) {
         if (command == null) {
             throw new IllegalArgumentException();
@@ -145,6 +146,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
+    @Override
     public boolean execute(C context) throws Exception {
         // Verify our parameters
         if (context == null) {

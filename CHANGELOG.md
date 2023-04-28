@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Eclipse-CleanUp: Add @Override, remove unnecessary casts, optimize ifs, use extended for-loop, organize imports, trim lines,
 * Correct clear and containsValue
 * Rework and improve generics
 * Use contains instead indexOf

@@ -82,6 +82,7 @@ public class ServletPathMapper extends LookupCommand<ServletWebContext> {
      *
      * @since Chain 1.2
      */
+    @Override
     protected String getCommandName(ServletWebContext context) {
         // Look up the servlet path for this request
         HttpServletRequest request = context.getRequest();
@@ -106,6 +107,7 @@ public class ServletPathMapper extends LookupCommand<ServletWebContext> {
      *
      * @since Chain 1.2
      */
+    @Override
     protected Catalog<ServletWebContext> getCatalog(ServletWebContext context) {
         /* If the object returned from the passed context is not a valid catalog
          * then we use the super class's catalog extraction logic to pull it

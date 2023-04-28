@@ -87,7 +87,7 @@ final class ServletSessionScopeMap implements Map<String, Object> {
             String key;
             while (keys.hasMoreElements()) {
                 key = keys.nextElement().toString();
-                set.add(new MapEntry<Object>(key, session.getAttribute(key), true));
+                set.add(new MapEntry<>(key, session.getAttribute(key), true));
             }
         }
         return (set);

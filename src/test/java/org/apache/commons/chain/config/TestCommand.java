@@ -42,6 +42,7 @@ public class TestCommand implements Command<Context> {
         this.foo = foo;
     }
 
+    @Override
     public boolean execute(Context context) throws Exception {
         return false;
     }

@@ -104,10 +104,12 @@ public class DispatchCommandTestCase {
      * @version 0.2-dev
      */
     class TestAlternateContextCommand extends DispatchCommand<Context> {
+        @Override
         protected Class<?>[] getSignature() {
             return new Class[] { TestAlternateContext.class };
         }
 
+        @Override
         protected Object[] getArguments(Context context) {
             return new Object[] { new TestAlternateContext(context) };
         }
@@ -126,10 +128,12 @@ public class DispatchCommandTestCase {
             this.wrappedContext = context;
         }
 
+        @Override
         public Object get(Object o) {
             return this.wrappedContext.get(o);
         }
 
+        @Override
         public Object put(String key, Object value) {
             return this.wrappedContext.put(key, value);
         }

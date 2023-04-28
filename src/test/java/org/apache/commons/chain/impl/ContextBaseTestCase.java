@@ -90,7 +90,7 @@ public class ContextBaseTestCase<C extends Context> {
         value = context.get("foo");
         assertNotNull(value, "Returned foo");
         assertInstanceOf(String.class, value, "Returned foo type");
-        assertEquals("This is foo", (String) value,
+        assertEquals("This is foo", value,
                      "Returned foo value");
 
         context.put("bar", "This is bar");
@@ -98,7 +98,7 @@ public class ContextBaseTestCase<C extends Context> {
         value = context.get("bar");
         assertNotNull(value, "Returned bar");
         assertInstanceOf(String.class, value, "Returned bar type");
-        assertEquals("This is bar", (String) value,
+        assertEquals("This is bar", value,
                      "Returned bar value");
 
         context.put("baz", "This is baz");
@@ -106,7 +106,7 @@ public class ContextBaseTestCase<C extends Context> {
         value = context.get("baz");
         assertNotNull(value, "Returned baz");
         assertInstanceOf(String.class, value, "Returned baz type");
-        assertEquals("This is baz", (String) value,
+        assertEquals("This is baz", value,
                      "Returned baz value");
 
         context.put("baz", "This is new baz");
@@ -114,7 +114,7 @@ public class ContextBaseTestCase<C extends Context> {
         value = context.get("baz");
         assertNotNull(value, "Returned baz");
         assertInstanceOf(String.class, value, "Returned baz type");
-        assertEquals("This is new baz", (String) value,
+        assertEquals("This is new baz", value,
                      "Returned baz value");
 
         context.remove("bar");
@@ -313,9 +313,9 @@ public class ContextBaseTestCase<C extends Context> {
 
         // Check postconditions
         checkAttributeCount(3);
-        assertEquals("foo value", (String) context.get("foo"));
-        assertEquals("bar value", (String) context.get("bar"));
-        assertEquals("baz value", (String) context.get("baz"));
+        assertEquals("foo value", context.get("foo"));
+        assertEquals("bar value", context.get("bar"));
+        assertEquals("baz value", context.get("baz"));
         assertTrue(context.containsKey("foo"));
         assertTrue(context.containsKey("bar"));
         assertTrue(context.containsKey("baz"));

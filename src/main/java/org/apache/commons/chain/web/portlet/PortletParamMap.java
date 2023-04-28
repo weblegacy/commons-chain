@@ -72,7 +72,7 @@ final class PortletParamMap implements Map<String, String> {
         String key;
         while (keys.hasMoreElements()) {
             key = keys.nextElement().toString();
-            set.add(new MapEntry<String>(key, request.getParameter(key), false));
+            set.add(new MapEntry<>(key, request.getParameter(key), false));
         }
         return set;
     }

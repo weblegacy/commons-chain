@@ -37,84 +37,104 @@ public class MockHttpServletResponse implements HttpServletResponse {
 
     // --------------------------------------------- HttpServletResponse Methods
 
+    @Override
     public void addCookie(Cookie cookie) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void addDateHeader(String name, long value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void addHeader(String name, String value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void addIntHeader(String name, int value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean containsHeader(String name) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String encodeRedirectUrl(String url) {
         return encodeRedirectURL(url);
     }
 
+    @Override
     public String encodeRedirectURL(String url) {
         return url;
     }
 
+    @Override
     public String encodeUrl(String url) {
         return encodeURL(url);
     }
 
+    @Override
     public String encodeURL(String url) {
         return url;
     }
 
+    @Override
     public void sendError(int status) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void sendError(int status, String message) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void sendRedirect(String location) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setDateHeader(String name, long value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setHeader(String name, String value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setIntHeader(String name, int value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setStatus(int status) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setStatus(int status, String message) {
         throw new UnsupportedOperationException();
     }
 
     // ------------------------------------------------- ServletResponse Methods
 
+    @Override
     public void flushBuffer() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getBufferSize() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getCharacterEncoding() {
         throw new UnsupportedOperationException();
     }
@@ -123,30 +143,37 @@ public class MockHttpServletResponse implements HttpServletResponse {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Locale getLocale() {
         return this.locale;
     }
 
+    @Override
     public ServletOutputStream getOutputStream() throws IOException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public PrintWriter getWriter() throws IOException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isCommitted() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void reset() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void resetBuffer() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setBufferSize(int size) {
         throw new UnsupportedOperationException();
     }
@@ -155,14 +182,17 @@ public class MockHttpServletResponse implements HttpServletResponse {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setContentLength(int length) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setContentType(String type) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setLocale(Locale locale) {
         this.locale = locale;
     }

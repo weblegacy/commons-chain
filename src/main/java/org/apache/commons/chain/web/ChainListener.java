@@ -137,6 +137,7 @@ public class ChainListener implements ServletContextListener {
      *
      * @param event {@code ServletContextEvent} to be processed
      */
+    @Override
     public void contextDestroyed(ServletContextEvent event) {
         ServletContext context = event.getServletContext();
         String attr = context.getInitParameter(CONFIG_ATTR);
@@ -153,6 +154,7 @@ public class ChainListener implements ServletContextListener {
      *
      * @param event {@code ServletContextEvent} to be processed
      */
+    @Override
     @SuppressWarnings("deprecation")
     public void contextInitialized(ServletContextEvent event) {
         Log log = LogFactory.getLog(ChainListener.class);

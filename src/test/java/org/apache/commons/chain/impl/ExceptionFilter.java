@@ -60,6 +60,7 @@ public class ExceptionFilter extends ExceptionCommand implements Filter<Context>
     /**
      * Postprocess command for this Filter
      */
+    @Override
     public boolean postprocess(Context context, Exception exception) {
         log(context, id2);
         return false;

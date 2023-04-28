@@ -64,79 +64,95 @@ public class MockPortletSession implements PortletSession {
 
     // ---------------------------------------------------- PortletSession Methods
 
+    @Override
     public Object getAttribute(String name) {
         accessed();
         return getAttribute(name, PortletSession.PORTLET_SCOPE);
     }
 
+    @Override
     public Object getAttribute(String name, int scope) {
         accessed();
         return getScope(scope).get(name);
     }
 
+    @Override
     public Enumeration<String> getAttributeNames() {
         accessed();
         return getAttributeNames(PortletSession.PORTLET_SCOPE);
     }
 
+    @Override
     public Enumeration<String> getAttributeNames(int scope) {
         accessed();
         return new MockEnumeration<>(getScope(scope).keySet().iterator());
     }
 
+    @Override
     public long getCreationTime() {
         accessed();
         return creationTime.getTime();
     }
 
+    @Override
     public String getId() {
         accessed();
         return id;
     }
 
+    @Override
     public long getLastAccessedTime() {
         return lastAccessedTime.getTime();
     }
 
+    @Override
     public int getMaxInactiveInterval() {
         accessed();
         return maxInactiveInterval;
     }
 
+    @Override
     public PortletContext getPortletContext() {
         accessed();
         return context;
     }
 
+    @Override
     public void invalidate() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isNew() {
         accessed();
         return newSession;
     }
 
+    @Override
     public void removeAttribute(String name) {
         accessed();
         removeAttribute(name, PortletSession.PORTLET_SCOPE);
     }
 
+    @Override
     public void removeAttribute(String name, int scope) {
         accessed();
         getScope(scope).remove(name);
     }
 
+    @Override
     public void setAttribute(String name, Object value) {
         accessed();
         setAttribute(name, value, PortletSession.PORTLET_SCOPE);
     }
 
+    @Override
     public void setAttribute(String name, Object value, int scope) {
         accessed();
         getScope(scope).put(name, value);
     }
 
+    @Override
     public void setMaxInactiveInterval(int interval) {
         accessed();
         this.maxInactiveInterval = interval;

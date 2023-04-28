@@ -77,7 +77,7 @@ final class PortletRequestScopeMap implements Map<String, Object> {
         String key;
         while (keys.hasMoreElements()) {
             key = keys.nextElement().toString();
-            set.add(new MapEntry<Object>(key, request.getAttribute(key), true));
+            set.add(new MapEntry<>(key, request.getAttribute(key), true));
         }
         return set;
     }

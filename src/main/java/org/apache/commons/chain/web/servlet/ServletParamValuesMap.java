@@ -77,7 +77,7 @@ final class ServletParamValuesMap implements Map<String, String[]> {
         String key;
         while (keys.hasMoreElements()) {
             key = keys.nextElement().toString();
-            set.add(new MapEntry<String[]>(key, request.getParameterValues(key), false));
+            set.add(new MapEntry<>(key, request.getParameterValues(key), false));
         }
         return set;
     }

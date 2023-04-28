@@ -72,6 +72,7 @@ public abstract class AbstractGetLocaleCommand<C extends WebContext> implements 
      *
      * @throws Exception If an error occurs during execution.
      */
+    @Override
     public boolean execute(C context) throws Exception {
         context.put(getLocaleKey(), getLocale(context));
         return false;

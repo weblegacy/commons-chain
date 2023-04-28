@@ -38,6 +38,7 @@ public class FacesGetLocaleCommand extends AbstractGetLocaleCommand<FacesWebCont
      *
      * @return The Locale for the request.
      */
+    @Override
     protected Locale getLocale(FacesWebContext context) {
         FacesContext fcontext = context.getContext();
         return fcontext.getViewRoot().getLocale();

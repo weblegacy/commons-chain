@@ -78,6 +78,7 @@ public class CatalogBase<C extends Context> implements Catalog<C> {
      * @param command {@link Command} to be returned
      *        for later lookups on this name
      */
+    @Override
     public <CMD extends Command<C>> void addCommand(String name, CMD command) {
         commands.put(name, command);
     }
@@ -92,6 +93,7 @@ public class CatalogBase<C extends Context> implements Catalog<C> {
      *
      * @return The Command associated with the specified name.
      */
+    @Override
     public <CMD extends Command<C>> CMD getCommand(String name) {
         @SuppressWarnings("unchecked") // it would throw ClassCastException if users try to cast to a different type
         CMD command = (CMD) commands.get(name);
@@ -105,6 +107,7 @@ public class CatalogBase<C extends Context> implements Catalog<C> {
      *
      * @return An iterator of the names in this Catalog.
      */
+    @Override
     public Iterator<String> getNames() {
         return commands.keySet().iterator();
     }

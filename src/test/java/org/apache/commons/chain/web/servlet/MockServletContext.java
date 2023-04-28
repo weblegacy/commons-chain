@@ -49,98 +49,122 @@ public class MockServletContext implements ServletContext {
 
     // ------------------------------------------------- ServletContext Methods
 
+    @Override
     public Object getAttribute(String name) {
         return attributes.get(name);
     }
 
+    @Override
     public Enumeration<String> getAttributeNames() {
         return new MockEnumeration<>(attributes.keySet().iterator());
     }
 
+    @Override
     public ServletContext getContext(String uripath) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getInitParameter(String name) {
         return parameters.get(name);
     }
 
+    @Override
     public Enumeration<String> getInitParameterNames() {
         return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
+    @Override
     public int getMajorVersion() {
         return 2;
     }
 
+    @Override
     public String getMimeType(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getMinorVersion() {
         return 3;
     }
 
+    @Override
     public RequestDispatcher getNamedDispatcher(String name) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getRealPath(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public RequestDispatcher getRequestDispatcher(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public URL getResource(String path) throws MalformedURLException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public InputStream getResourceAsStream(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<String> getResourcePaths(String path) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Servlet getServlet(String name) throws ServletException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getServletContextName() {
         return "MockServletContext";
     }
 
+    @Override
     public String getServerInfo() {
         return "MockServletContext";
     }
 
+    @Override
     public Enumeration<Servlet> getServlets() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Enumeration<String> getServletNames() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void log(String message) {
         log.info(message);
     }
 
+    @Override
     public void log(Exception exception, String message) {
         log.error(message, exception);
     }
 
+    @Override
     public void log(String message, Throwable exception) {
         log.error(message, exception);
     }
 
+    @Override
     public void removeAttribute(String name) {
         attributes.remove(name);
     }
 
+    @Override
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
     }

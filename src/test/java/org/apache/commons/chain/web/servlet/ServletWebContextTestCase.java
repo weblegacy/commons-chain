@@ -78,6 +78,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     @BeforeEach
     public void init() {
         scontext = new MockServletContext();
@@ -112,6 +113,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
     /**
      * Tear down instance variables required by this test case.
      */
+    @Override
     @AfterEach
     public void tearDown() {
         scontext = null;
@@ -133,14 +135,14 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 4);
-        assertEquals("avalue1", (String) map.get("akey1"));
-        assertEquals("avalue2", (String) map.get("akey2"));
-        assertEquals("avalue3", (String) map.get("akey3"));
-        assertEquals("avalue4", (String) map.get("akey4"));
+        assertEquals("avalue1", map.get("akey1"));
+        assertEquals("avalue2", map.get("akey2"));
+        assertEquals("avalue3", map.get("akey3"));
+        assertEquals("avalue4", map.get("akey4"));
 
         // Transparency - entrySet()
         checkEntrySet(map, true);
- 
+
         // Transparency - removal via web object
         scontext.removeAttribute("akey1");
         checkMapSize(map, 3);
@@ -154,22 +156,22 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
         // Transparency - addition via web object
         scontext.setAttribute("akeyA", "avalueA");
         checkMapSize(map, 3);
-        assertEquals("avalueA", (String) map.get("akeyA"));
+        assertEquals("avalueA", map.get("akeyA"));
 
         // Transparency - addition via map
         map.put("akeyB", "avalueB");
         checkMapSize(map, 4);
-        assertEquals("avalueB", (String) scontext.getAttribute("akeyB"));
+        assertEquals("avalueB", scontext.getAttribute("akeyB"));
 
         // Transparency - replacement via web object
         scontext.setAttribute("akeyA", "newvalueA");
         checkMapSize(map, 4);
-        assertEquals("newvalueA", (String) map.get("akeyA"));
+        assertEquals("newvalueA", map.get("akeyA"));
 
         // Transparency - replacement via map
         map.put("akeyB", "newvalueB");
         assertEquals(4, map.size());
-        assertEquals("newvalueB", (String) scontext.getAttribute("akeyB"));
+        assertEquals("newvalueB", scontext.getAttribute("akeyB"));
 
         // Clearing the map
         map.clear();
@@ -189,6 +191,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
      * Test {@code equals()} and {@code hashCode()}
      * Copied from ContextBaseTestCase with customized creation of "other"
      */
+    @Override
     @Test
     public void testEquals() {
         // FIXME - ServletWebContext needs a better equals()
@@ -224,8 +227,8 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 2);
-        assertEquals("hvalue1", (String) map.get("hkey1"));
-        assertEquals("hvalue2a", (String) map.get("hkey2"));
+        assertEquals("hvalue1", map.get("hkey1"));
+        assertEquals("hvalue2a", map.get("hkey2"));
         assertTrue(map.containsKey("hkey1"));
         assertTrue(map.containsKey("hkey2"));
         assertTrue(map.containsValue("hvalue1"));
@@ -233,7 +236,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Transparency - entrySet()
         checkEntrySet(map, false);
- 
+
         // Unsupported operations on read-only map
         try {
             map.clear();
@@ -291,7 +294,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Transparency - entrySet()
         checkEntrySet(map, false);
- 
+
         // Unsupported operations on read-only map
         try {
             map.clear();
@@ -329,9 +332,9 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 3);
-        assertEquals("ivalue1", (String) map.get("ikey1"));
-        assertEquals("ivalue2", (String) map.get("ikey2"));
-        assertEquals("ivalue3", (String) map.get("ikey3"));
+        assertEquals("ivalue1", map.get("ikey1"));
+        assertEquals("ivalue2", map.get("ikey2"));
+        assertEquals("ivalue3", map.get("ikey3"));
         assertTrue(map.containsKey("ikey1"));
         assertTrue(map.containsKey("ikey2"));
         assertTrue(map.containsKey("ikey3"));
@@ -341,7 +344,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Transparency - entrySet()
         checkEntrySet(map, false);
- 
+
         // Unsupported operations on read-only map
         try {
             map.clear();
@@ -379,8 +382,8 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 2);
-        assertEquals("pvalue1", (String) map.get("pkey1"));
-        assertEquals("pvalue2a", (String) map.get("pkey2"));
+        assertEquals("pvalue1", map.get("pkey1"));
+        assertEquals("pvalue2a", map.get("pkey2"));
         assertTrue(map.containsKey("pkey1"));
         assertTrue(map.containsKey("pkey2"));
         assertTrue(map.containsValue("pvalue1"));
@@ -480,10 +483,10 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 2);
-        Cookie cookie1 = (Cookie)map.get("ckey1");
+        Cookie cookie1 = map.get("ckey1");
         assertNotNull(cookie1);
         assertEquals("cvalue1", cookie1.getValue());
-        Cookie cookie2 = (Cookie)map.get("ckey2");
+        Cookie cookie2 = map.get("ckey2");
         assertNotNull(cookie2);
         assertEquals("cvalue2", cookie2.getValue());
         assertTrue(map.containsKey("ckey1"));
@@ -521,6 +524,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
     /**
      * Test state of newly created instance
      */
+    @Override
     @Test
     public void testPristine() {
         super.testPristine();
@@ -597,12 +601,12 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 2);
-        assertEquals("rvalue1", (String) map.get("rkey1"));
-        assertEquals("rvalue2", (String) map.get("rkey2"));
+        assertEquals("rvalue1", map.get("rkey1"));
+        assertEquals("rvalue2", map.get("rkey2"));
 
         // Transparency - entrySet()
         checkEntrySet(map, true);
- 
+
         // Transparency - removal via web object
         request.removeAttribute("rkey1");
         checkMapSize(map, 1);
@@ -616,22 +620,22 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
         // Transparency - addition via web object
         request.setAttribute("rkeyA", "rvalueA");
         checkMapSize(map, 1);
-        assertEquals("rvalueA", (String) map.get("rkeyA"));
+        assertEquals("rvalueA", map.get("rkeyA"));
 
         // Transparency - addition via map
         map.put("rkeyB", "rvalueB");
         checkMapSize(map, 2);
-        assertEquals("rvalueB", (String) request.getAttribute("rkeyB"));
+        assertEquals("rvalueB", request.getAttribute("rkeyB"));
 
         // Transparency - replacement via web object
         request.setAttribute("rkeyA", "newvalueA");
         checkMapSize(map, 2);
-        assertEquals("newvalueA", (String) map.get("rkeyA"));
+        assertEquals("newvalueA", map.get("rkeyA"));
 
         // Transparency - replacement via map
         map.put("rkeyB", "newvalueB");
         checkMapSize(map, 2);
-        assertEquals("newvalueB", (String) request.getAttribute("rkeyB"));
+        assertEquals("newvalueB", request.getAttribute("rkeyB"));
 
         // Clearing the map
         map.clear();
@@ -657,13 +661,13 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
 
         // Initial contents
         checkMapSize(map, 3);
-        assertEquals("svalue1", (String) map.get("skey1"));
-        assertEquals("svalue2", (String) map.get("skey2"));
-        assertEquals("svalue3", (String) map.get("skey3"));
+        assertEquals("svalue1", map.get("skey1"));
+        assertEquals("svalue2", map.get("skey2"));
+        assertEquals("svalue3", map.get("skey3"));
 
         // Transparency - entrySet()
         checkEntrySet(map, true);
- 
+
         // Transparency - removal via web object
         session.removeAttribute("skey1");
         checkMapSize(map, 2);
@@ -677,22 +681,22 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
         // Transparency - addition via web object
         session.setAttribute("skeyA", "svalueA");
         checkMapSize(map, 2);
-        assertEquals("svalueA", (String) map.get("skeyA"));
+        assertEquals("svalueA", map.get("skeyA"));
 
         // Transparency - addition via map
         map.put("skeyB", "svalueB");
         checkMapSize(map, 3);
-        assertEquals("svalueB", (String) session.getAttribute("skeyB"));
+        assertEquals("svalueB", session.getAttribute("skeyB"));
 
         // Transparency - replacement via web object
         session.setAttribute("skeyA", "newvalueA");
         checkMapSize(map, 3);
-        assertEquals("newvalueA", (String) map.get("skeyA"));
+        assertEquals("newvalueA", map.get("skeyA"));
 
         // Transparency - replacement via map
         map.put("skeyB", "newvalueB");
         checkMapSize(map, 3);
-        assertEquals("newvalueB", (String) session.getAttribute("skeyB"));
+        assertEquals("newvalueB", session.getAttribute("skeyB"));
 
         // Clearing the map
         map.clear();
@@ -714,7 +718,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
     @Test
     public void testSessionScopeWithoutSession() {
         // Create a Context without a session
-        ServletWebContext ctx = new ServletWebContext(scontext, 
+        ServletWebContext ctx = new ServletWebContext(scontext,
            new MockHttpServletRequest(), response);
         assertNull(ctx.getRequest().getSession(false), "Session(A)");
 
@@ -850,6 +854,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebCon
      *
      * @return a new instance of the appropriate Context type
      */
+    @Override
     protected ServletWebContext createContext() {
         return new ServletWebContext(scontext, request, response);
     }

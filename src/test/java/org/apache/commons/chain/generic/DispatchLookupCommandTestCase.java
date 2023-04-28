@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.CatalogBase;
-import org.apache.commons.chain.impl.CatalogFactoryBase;
 import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.impl.NonDelegatingCommand;
 import org.junit.jupiter.api.AfterEach;
@@ -65,7 +65,7 @@ public class DispatchLookupCommandTestCase {
     @BeforeEach
     public void init() {
         catalog = new CatalogBase<>();
-        CatalogFactoryBase.getInstance().setCatalog(catalog);
+        CatalogFactory.getInstance().setCatalog(catalog);
         command = new DispatchLookupCommand<>();
         context = new ContextBase();
     }
@@ -76,7 +76,7 @@ public class DispatchLookupCommandTestCase {
     @AfterEach
     public void tearDown() {
         catalog = null;
-        CatalogFactoryBase.clear();
+        CatalogFactory.clear();
         command = null;
         context = null;
     }
@@ -112,7 +112,7 @@ public class DispatchLookupCommandTestCase {
         } catch (Exception e) {
             fail("Threw exception: " + e);
         }
- 
+
         checkExecuteLog("1/1");
     }
 

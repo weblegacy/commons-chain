@@ -146,6 +146,6 @@ public class PortletGetLocaleCommandTestCase {
         value = context.get(localeKey);
         assertNotNull(value);
         assertInstanceOf(Locale.class, value);
-        assertEquals(locale, (Locale) value);
+        assertEquals(locale, value);
     }
 }
