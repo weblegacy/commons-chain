@@ -85,7 +85,7 @@ public class DispatchCommandTestCase {
         assertEquals("elephant", context.get("elephant"));
     }
 
-    class TestCommand extends DispatchCommand {
+    class TestCommand extends DispatchCommand<Context> {
         public boolean testMethod(Context context) {
             context.put("foo", "foo");
             return true;
@@ -103,7 +103,7 @@ public class DispatchCommandTestCase {
      * @author germuska
      * @version 0.2-dev
      */
-    class TestAlternateContextCommand extends DispatchCommand {
+    class TestAlternateContextCommand extends DispatchCommand<Context> {
         protected Class<?>[] getSignature() {
             return new Class[] { TestAlternateContext.class };
         }

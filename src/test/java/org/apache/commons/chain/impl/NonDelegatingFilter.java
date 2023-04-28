@@ -29,7 +29,7 @@ import org.apache.commons.chain.Filter;
  * @version $Revision$ $Date$
  */
 public class NonDelegatingFilter extends NonDelegatingCommand
-    implements Filter {
+    implements Filter<Context> {
 
     // ------------------------------------------------------------- Constructor
 

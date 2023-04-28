@@ -16,33 +16,31 @@
  */
 package org.apache.commons.chain.web;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
-import org.apache.commons.chain.impl.ContextBase;
+import org.apache.commons.chain.Context;
 
 /**
- * Abstract base implementation of {@link org.apache.commons.chain.Context} that
- * provides web based applications that use it a "generic" view of HTTP related
- * requests and responses, without tying the application to a particular underlying
- * Java API (such as servlets). It is expected that a concrete subclass
- * of {@link WebContext} for each API (such as
- * {@link org.apache.commons.chain.web.servlet.ServletWebContext})
- * will support adapting that particular API's implementation of request
- * and response objects into this generic framework.
+ * Extended {@link Context} that provides web based applications that use
+ * it a "generic" view of HTTP related requests and responses, without
+ * tying the application to a particular underlying Java API (such as
+ * servlets). It is expected that a concrete subclass of {@link WebContext}
+ * for each API (such as
+ * {@link org.apache.commons.chain.web.servlet.ServletWebContext}) will
+ * support adapting that particular API's implementation of request and
+ * response objects into this generic framework.
  *
  * <p>The characteristics of a web request/response are made visible via
  * a series of JavaBeans properties (and mapped to read-only attributes
- * of the same name, as supported by {@link ContextBase}.</p>
+ * of the same name, as supported by {@link Context}.</p>
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public abstract class WebContext extends ContextBase {
-    private static final long serialVersionUID = 6804961872140299027L;
-
-    // ---------------------------------------------------------- Public Methods
+public interface WebContext extends Context, Serializable {
 
     /**
      * Return a mutable {@code Map} that maps application scope
@@ -50,7 +48,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Application scope Map.
      */
-    public abstract Map<String, Object> getApplicationScope();
+    Map<String, Object> getApplicationScope();
 
     /**
      * Return an immutable {@code Map} that maps header names to
@@ -59,7 +57,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Header values Map.
      */
-    public abstract Map<String, String> getHeader();
+    Map<String, String> getHeader();
 
     /**
      * Return an immutable {@code Map} that maps header names to
@@ -68,7 +66,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Header values Map.
      */
-    public abstract Map<String, String[]> getHeaderValues();
+    Map<String, String[]> getHeaderValues();
 
     /**
      * Return an immutable {@code Map} that maps context application
@@ -76,7 +74,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Initialization parameter Map.
      */
-    public abstract Map<String, String> getInitParam();
+    Map<String, String> getInitParam();
 
     /**
      * Return an immutable {@code Map} that maps request parameter
@@ -84,7 +82,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Request parameter Map.
      */
-    public abstract Map<String, String> getParam();
+    Map<String, String> getParam();
 
     /**
      * Return an immutable {@code Map} that maps request parameter
@@ -92,7 +90,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Request parameter Map.
      */
-    public abstract Map<String, String[]> getParamValues();
+    Map<String, String[]> getParamValues();
 
     /**
      * Return an immutable {@code Map} that maps cookie names to
@@ -102,7 +100,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @since Chain 1.1
      */
-    public abstract Map<String, Cookie> getCookies();
+    Map<String, Cookie> getCookies();
 
     /**
      * Return a mutable {@code Map} that maps request scope
@@ -110,7 +108,7 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Request scope Map.
      */
-    public abstract Map<String, Object> getRequestScope();
+    Map<String, Object> getRequestScope();
 
     /**
      * Return a mutable {@code Map} that maps session scope
@@ -118,5 +116,5 @@ public abstract class WebContext extends ContextBase {
      *
      * @return Session scope Map.
      */
-    public abstract Map<String, Object> getSessionScope();
+    Map<String, Object> getSessionScope();
 }

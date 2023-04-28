@@ -46,10 +46,12 @@ package org.apache.commons.chain;
  * the {@code execute()} method of the {@link Chain} is first called.
  * After that, the configuration of the {@link Chain} is frozen.</p>
  *
+ * @param <C> Type of the context associated with this chain
+ *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public interface Chain extends Command {
+public interface Chain<C extends Context> extends Command<C> {
 
     /**
      * Add a {@link Command} to the list of {@link Command}s that will
@@ -58,6 +60,7 @@ public interface Chain extends Command {
      * at least once, it is no longer possible to add additional
      * {@link Command}s; instead, an exception will be thrown.</p>
      *
+     * @param <CMD> the {@link Command} type to be added in the {@link Chain}
      * @param command The {@link Command} to be added
      *
      * @throws IllegalArgumentException if {@code command}
@@ -66,7 +69,7 @@ public interface Chain extends Command {
      *         been executed at least once, so no further configuration
      *         is allowed
      */
-    void addCommand(Command command);
+    <CMD extends Command<C>> void addCommand(CMD command);
 
     /**
      * Execute the processing represented by this {@link Chain} according
@@ -109,5 +112,5 @@ public interface Chain extends Command {
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
-    boolean execute(Context context) throws Exception;
+    boolean execute(C context) throws Exception;
 }

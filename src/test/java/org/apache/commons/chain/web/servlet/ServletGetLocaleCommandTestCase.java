@@ -29,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.chain.Context;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +65,7 @@ public class ServletGetLocaleCommandTestCase {
     /**
      * Chain API Objects - context
      */
-    protected Context context = null;
+    protected ServletWebContext context = null;
 
     /**
      * Chain API Objects - command
@@ -137,7 +136,7 @@ public class ServletGetLocaleCommandTestCase {
 
     // --------------------------------------------------------- Support Methods
 
-    protected void check(Context context, ServletGetLocaleCommand command)
+    protected void check(ServletWebContext context, ServletGetLocaleCommand command)
             throws Exception {
 
         String localeKey = command.getLocaleKey();

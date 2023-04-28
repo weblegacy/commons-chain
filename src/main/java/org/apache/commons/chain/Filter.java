@@ -36,10 +36,12 @@ package org.apache.commons.chain;
  * can reliably release such resources in the {@code postprocess()}
  * method, which is guaranteed to be called by the owning {@link Chain}.</p>
  *
+ * @param <C> Type of the context associated with this command
+ *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public interface Filter extends Command {
+public interface Filter<C extends Context> extends Command<C> {
 
     /**
      * Execute any cleanup activities, such as releasing resources that
@@ -59,5 +61,5 @@ public interface Filter extends Command {
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
-   boolean postprocess(Context context, Exception exception);
+   boolean postprocess(C context, Exception exception);
 }

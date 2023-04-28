@@ -16,10 +16,11 @@
  */
 package org.apache.commons.chain.config;
 
+import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ChainBase;
 
 /**
  * Test implementation of {@code Chain}.
  */
-public class TestChain extends ChainBase {
+public class TestChain extends ChainBase<Context> {
 }

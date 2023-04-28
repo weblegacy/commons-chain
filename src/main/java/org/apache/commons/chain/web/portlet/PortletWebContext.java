@@ -25,6 +25,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.web.WebContext;
+import org.apache.commons.chain.web.WebContextBase;
 
 /**
  * Concrete implementation of {@link WebContext} suitable for use in
@@ -35,7 +36,7 @@ import org.apache.commons.chain.web.WebContext;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class PortletWebContext extends WebContext {
+public class PortletWebContext extends WebContextBase {
     private static final long serialVersionUID = 7590757017994210786L;
 
     // ------------------------------------------------------------ Constructors

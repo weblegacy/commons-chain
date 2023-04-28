@@ -137,7 +137,7 @@ public class ConfigParser {
      *  element(s) embedded
      */
     @Deprecated
-    public void parse(Catalog catalog, URL url) throws Exception {
+    public void parse(Catalog<?> catalog, URL url) throws Exception {
         // Prepare our Digester instance
         Digester digester = getDigester();
         digester.clear();

@@ -27,7 +27,7 @@ import org.apache.commons.chain.web.AbstractGetLocaleCommand;
  * Concrete implementation of {@link AbstractGetLocaleCommand} for
  * the Portlet API.
  */
-public class PortletGetLocaleCommand extends AbstractGetLocaleCommand {
+public class PortletGetLocaleCommand extends AbstractGetLocaleCommand<PortletWebContext> {
 
     // ------------------------------------------------------- Protected Methods
 
@@ -39,9 +39,8 @@ public class PortletGetLocaleCommand extends AbstractGetLocaleCommand {
      * @return The Locale for the request.
      */
     @Override
-    protected Locale getLocale(Context context) {
-        PortletRequest request = (PortletRequest)
-            context.get("request");
+    protected Locale getLocale(PortletWebContext context) {
+        PortletRequest request = context.getRequest();
         return request.getLocale();
     }
 }

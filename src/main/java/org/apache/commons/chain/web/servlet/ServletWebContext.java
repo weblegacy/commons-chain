@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.chain.web.WebContext;
+import org.apache.commons.chain.web.WebContextBase;
 
 /**
  * Concrete implementation of {@link WebContext} suitable for use in
@@ -34,7 +35,7 @@ import org.apache.commons.chain.web.WebContext;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ServletWebContext extends WebContext {
+public class ServletWebContext extends WebContextBase {
     private static final long serialVersionUID = 5302874006663111922L;
 
     // ------------------------------------------------------ Instance Variables

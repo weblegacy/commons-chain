@@ -18,7 +18,7 @@ package org.apache.commons.chain.web;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -169,11 +169,11 @@ public class ChainListener implements ServletContextListener {
         String webResources = context.getInitParameter(CONFIG_WEB_RESOURCE);
 
         // Retrieve or create the Catalog instance we may be updating
-        Catalog catalog = null;
+        Catalog<?> catalog = null;
         if (attr != null) {
-            catalog = (Catalog) context.getAttribute(attr);
+            catalog = (Catalog<?>) context.getAttribute(attr);
             if (catalog == null) {
-                catalog = new CatalogBase();
+                catalog = new CatalogBase<>();
             }
         }
 
@@ -232,7 +232,7 @@ public class ChainListener implements ServletContextListener {
 
         Set<?> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
-            jars = new HashSet<String>();
+            jars = Collections.emptySet();
         }
         String path = null;
         Iterator<?> paths = jars.iterator();
@@ -287,12 +287,12 @@ public class ChainListener implements ServletContextListener {
      *  configuration resource containing "catalog" element(s)
      */
     @Deprecated
-    private void parseJarResources(Catalog catalog, ServletContext context,
+    private void parseJarResources(Catalog<?> catalog, ServletContext context,
                                    ConfigParser parser, Log log) {
 
         Set<?> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
-            jars = new HashSet<String>();
+            jars = Collections.emptySet();
         }
         String path = null;
         Iterator<?> paths = jars.iterator();

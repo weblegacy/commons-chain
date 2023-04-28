@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Rework and improve generics
 * Use contains instead indexOf
 * Remove unnecessary brackets
 * Add missing Override-Annotation

@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.web.WebContext;
+import org.apache.commons.chain.web.WebContextBase;
 
 /**
  * Concrete implementation of {@link WebContext} suitable for use in
@@ -32,7 +33,7 @@ import org.apache.commons.chain.web.WebContext;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class FacesWebContext extends WebContext {
+public class FacesWebContext extends WebContextBase {
     private static final long serialVersionUID = -1429681424077509130L;
 
     // ------------------------------------------------------ Instance Variables

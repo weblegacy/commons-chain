@@ -47,12 +47,12 @@ public class LookupCommandTestCase {
     /**
      * The instance of {@link Catalog} to use when looking up commands
      */
-    protected Catalog catalog;
+    protected Catalog<Context> catalog;
 
     /**
      * The {@link LookupCommand} instance under test.
      */
-    protected LookupCommand command;
+    protected LookupCommand<Context> command;
 
     /**
      * The {@link Context} instance on which to execute the chain.
@@ -66,9 +66,9 @@ public class LookupCommandTestCase {
      */
     @BeforeEach
     public void init() {
-        catalog = new CatalogBase();
+        catalog = new CatalogBase<>();
         CatalogFactoryBase.getInstance().setCatalog(catalog);
-        command = new LookupCommand();
+        command = new LookupCommand<>();
         context = new ContextBase();
     }
 
@@ -108,7 +108,7 @@ public class LookupCommandTestCase {
      */
     @Test
     public void testExecuteMethodLookup_1b() {
-        ChainBase chain = new ChainBase();
+        ChainBase<Context> chain = new ChainBase<>();
         chain.addCommand(new DelegatingCommand("1b1"));
         chain.addCommand(new DelegatingCommand("1b2"));
         chain.addCommand(new NonDelegatingCommand("1b3"));
@@ -151,7 +151,7 @@ public class LookupCommandTestCase {
      */
     @Test
     public void testExecuteMethodLookup_2b() {
-        ChainBase chain = new ChainBase();
+        ChainBase<Context> chain = new ChainBase<>();
         chain.addCommand(new DelegatingCommand("2b1"));
         chain.addCommand(new DelegatingCommand("2b2"));
         chain.addCommand(new NonDelegatingCommand("2b3"));

@@ -27,7 +27,7 @@ import org.apache.commons.chain.web.AbstractGetLocaleCommand;
  * Concrete implementation of {@link AbstractGetLocaleCommand} for
  * the JavaServer Faces API.
  */
-public class FacesGetLocaleCommand extends AbstractGetLocaleCommand {
+public class FacesGetLocaleCommand extends AbstractGetLocaleCommand<FacesWebContext> {
 
     // ------------------------------------------------------- Protected Methods
 
@@ -38,9 +38,8 @@ public class FacesGetLocaleCommand extends AbstractGetLocaleCommand {
      *
      * @return The Locale for the request.
      */
-    protected Locale getLocale(Context context) {
-        FacesContext fcontext = (FacesContext)
-            context.get("context");
+    protected Locale getLocale(FacesWebContext context) {
+        FacesContext fcontext = context.getContext();
         return fcontext.getViewRoot().getLocale();
     }
 }

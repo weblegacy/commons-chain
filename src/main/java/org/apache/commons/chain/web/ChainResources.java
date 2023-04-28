@@ -37,6 +37,12 @@ import org.apache.commons.logging.LogFactory;
  */
 final class ChainResources {
 
+    /**
+     * This class uses a private constructor because it is a utility class.
+     */
+    private ChainResources() {
+    }
+
     // ---------------------------------------------------------- Static Methods
 
     /**
@@ -90,7 +96,7 @@ final class ChainResources {
      *             configuration resource containing "catalog" element(s)
      */
     @Deprecated
-    static void parseClassResources(Catalog catalog, String resources,
+    static void parseClassResources(Catalog<?> catalog, String resources,
                                     ConfigParser parser) {
 
         if (resources == null) {
@@ -173,7 +179,7 @@ final class ChainResources {
      *             configuration resource containing "catalog" element(s)
      */
     @Deprecated
-    static void parseWebResources(Catalog catalog, ServletContext context,
+    static void parseWebResources(Catalog<?> catalog, ServletContext context,
                                   String resources,
                                   ConfigParser parser) {
 

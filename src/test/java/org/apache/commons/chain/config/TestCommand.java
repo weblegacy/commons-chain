@@ -23,7 +23,7 @@ import org.apache.commons.chain.Context;
  * Test implementation of {@code Command} that exposes
  * configurable properties.
  */
-public class TestCommand implements Command {
+public class TestCommand implements Command<Context> {
     private String bar = null;
     public String getBar() {
         return this.bar;

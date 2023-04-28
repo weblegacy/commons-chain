@@ -43,7 +43,7 @@ public class AddingCommand extends NonDelegatingCommand {
      * @param id identifier to log for this Command instance
      * @param parent the parent Chain
      */
-    public AddingCommand(String id, Chain parent) {
+    public AddingCommand(String id, Chain<Context> parent) {
         super(id);
         this.parent = parent;
     }
@@ -51,7 +51,7 @@ public class AddingCommand extends NonDelegatingCommand {
     /**
      * The parent Chain
      */
-    private Chain parent = null;
+    private Chain<Context> parent = null;
 
     // -------------------------------------------------------- Command Methods
 
@@ -72,7 +72,7 @@ public class AddingCommand extends NonDelegatingCommand {
      * @throws IllegalArgumentException if {@code context}
      *         is {@code null}
      */
-    public boolean execute(Context context, Chain chain) throws Exception {
+    public boolean execute(Context context, Chain<Context> chain) throws Exception {
         super.execute(context);
         parent.addCommand(new NonDelegatingCommand("NEW")); // Should cause ISE
         return true;

@@ -27,7 +27,7 @@ import org.apache.commons.chain.Context;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class NonDelegatingCommand implements Command {
+public class NonDelegatingCommand implements Command<Context> {
 
     // ------------------------------------------------------------ Constructor
 

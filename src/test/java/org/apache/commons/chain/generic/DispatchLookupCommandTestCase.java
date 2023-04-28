@@ -45,12 +45,12 @@ public class DispatchLookupCommandTestCase {
     /**
      * The instance of {@link Catalog} to use when looking up commands
      */
-    protected Catalog catalog;
+    protected Catalog<Context> catalog;
 
     /**
      * The {@link DispatchLookupCommand} instance under test.
      */
-    protected DispatchLookupCommand command;
+    protected DispatchLookupCommand<Context> command;
 
     /**
      * The {@link Context} instance on which to execute the chain.
@@ -64,9 +64,9 @@ public class DispatchLookupCommandTestCase {
      */
     @BeforeEach
     public void init() {
-        catalog = new CatalogBase();
+        catalog = new CatalogBase<>();
         CatalogFactoryBase.getInstance().setCatalog(catalog);
-        command = new DispatchLookupCommand();
+        command = new DispatchLookupCommand<>();
         context = new ContextBase();
     }
 

@@ -18,6 +18,7 @@ package org.apache.commons.chain.config;
 
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
+import org.apache.commons.chain.Context;
 import org.apache.commons.digester.Rule;
 import org.xml.sax.Attributes;
 
@@ -84,8 +85,8 @@ class ConfigCatalogRule extends Rule {
         throws Exception {
 
         // Retrieve any current Catalog with the specified name
-        Catalog catalog = null;
-        CatalogFactory factory = CatalogFactory.getInstance();
+        Catalog<Context> catalog;
+        CatalogFactory<Context> factory = CatalogFactory.getInstance();
         String nameValue = attributes.getValue(nameAttribute);
         if (nameValue == null) {
             catalog = factory.getCatalog();
@@ -95,10 +96,15 @@ class ConfigCatalogRule extends Rule {
 
         // Create and register a new Catalog instance if necessary
         if (catalog == null) {
-            Class<? extends Catalog> clazz = digester.getClassLoader()
-                    .loadClass(catalogClass)
-                    .asSubclass(Catalog.class);
-            catalog = clazz.getDeclaredConstructor().newInstance();
+            Class<?> clazz = digester.getClassLoader().loadClass(catalogClass);
+
+            /* Convert catalog pulled from digester to default generic signature
+             * with the assumption that the Catalog returned from digester will
+             * comply with the historic chain contract. */
+            @SuppressWarnings("unchecked")
+            Catalog<Context> digesterCatalog = (Catalog<Context>) clazz.getDeclaredConstructor().newInstance();
+
+            catalog = digesterCatalog;
             if (nameValue == null) {
                 factory.setCatalog(catalog);
             } else {

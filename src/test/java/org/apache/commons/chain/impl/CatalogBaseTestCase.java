@@ -25,6 +25,7 @@ import java.util.Iterator;
 
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ public class CatalogBaseTestCase {
     /**
      * The {@link Catalog} instance under test.
      */
-    protected CatalogBase catalog = null;
+    protected CatalogBase<Context> catalog = null;
 
     // -------------------------------------------------- Overall Test Methods
 
@@ -51,7 +52,7 @@ public class CatalogBaseTestCase {
      */
     @BeforeEach
     public void init() {
-        catalog = new CatalogBase();
+        catalog = new CatalogBase<>();
     }
 
     /**
@@ -79,7 +80,7 @@ public class CatalogBaseTestCase {
     @Test
     public void testGetCommand() {
         addCommands();
-        Command command = null;
+        Command<Context> command = null;
 
         command = catalog.getCommand("AddingCommand");
         assertNotNull(command);
@@ -145,7 +146,7 @@ public class CatalogBaseTestCase {
         catalog.addCommand("ExceptionFilter", new ExceptionFilter("", ""));
         catalog.addCommand("NonDelegatingCommand", new NonDelegatingCommand(""));
         catalog.addCommand("NonDelegatingFilter", new NonDelegatingFilter("", ""));
-        catalog.addCommand("ChainBase", new ChainBase());
+        catalog.addCommand("ChainBase", new ChainBase<>());
     }
 
     /**

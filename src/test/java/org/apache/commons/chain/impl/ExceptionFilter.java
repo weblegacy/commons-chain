@@ -26,7 +26,7 @@ import org.apache.commons.chain.Filter;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ExceptionFilter extends ExceptionCommand implements Filter {
+public class ExceptionFilter extends ExceptionCommand implements Filter<Context> {
 
     // ------------------------------------------------------------- Constructor
 

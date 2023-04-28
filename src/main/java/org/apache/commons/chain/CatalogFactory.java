@@ -33,10 +33,12 @@ import org.apache.commons.logging.LogFactory;
  * a resolution mechanism which allows lookup of a command based on a single
  * String which encodes both the catalog and command names.</p>
  *
+ * @param <C> Type of the context associated with this command
+ *
  * @author Sean Schofield
  * @version $Revision$ $Date$
  */
-public abstract class CatalogFactory {
+public abstract class CatalogFactory<C extends Context> {
 
     // ------------------------------------------------------- Static Variables
 
@@ -51,7 +53,7 @@ public abstract class CatalogFactory {
      * The set of registered {@link CatalogFactory} instances,
      * keyed by the relevant class loader.
      */
-    private final static ConcurrentHashMap<ClassLoader, CatalogFactory> FACTORIES = new ConcurrentHashMap<>();
+    private final static ConcurrentHashMap<ClassLoader, CatalogFactory<?>> FACTORIES = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
@@ -61,14 +63,14 @@ public abstract class CatalogFactory {
      *
      * @return the default Catalog instance
      */
-    public abstract Catalog getCatalog();
+    public abstract Catalog<C> getCatalog();
 
     /**
      * Sets the default instance of Catalog associated with the factory.
      *
      * @param catalog the default Catalog instance
      */
-    public abstract void setCatalog(Catalog catalog);
+    public abstract void setCatalog(Catalog<C> catalog);
 
     /**
      * Retrieves a Catalog instance by name (if any); otherwise
@@ -78,7 +80,7 @@ public abstract class CatalogFactory {
      *
      * @return the specified Catalog
      */
-    public abstract Catalog getCatalog(String name);
+    public abstract Catalog<C> getCatalog(String name);
 
     /**
      * Adds a named instance of Catalog to the factory (for subsequent
@@ -87,7 +89,7 @@ public abstract class CatalogFactory {
      * @param name the name of the Catalog to add
      * @param catalog the Catalog to add
      */
-    public abstract void addCatalog(String name, Catalog catalog);
+    public abstract void addCatalog(String name, Catalog<C> catalog);
 
     /**
      * Return an {@code Iterator} over the set of named
@@ -111,9 +113,10 @@ public abstract class CatalogFactory {
      * <p>To preserve the possibility of future extensions to this lookup
      * mechanism, the DELIMITER string should be considered reserved, and
      * should not be used in command names. commandID values which contain
-     * more than one DELIMITER will cause an
-     * {@code IllegalArgumentException} to be thrown.</p>
+     * more than one DELIMITER will cause an {@code IllegalArgumentException}
+     * to be thrown.</p>
      *
+     * @param <CMD> the expected {@link Command} type to be returned
      * @param commandID the identifier of the command to return
      *
      * @return the command located with commandID, or {@code null}
@@ -125,10 +128,10 @@ public abstract class CatalogFactory {
      *
      * @since Chain 1.1
      */
-    public Command getCommand(String commandID) {
+    public <CMD extends Command<C>> CMD getCommand(String commandID) {
         String commandName = commandID;
         String catalogName = null;
-        Catalog catalog = null;
+        Catalog<C> catalog = null;
 
         if (commandID != null) {
             int splitPos = commandID.indexOf(DELIMITER);
@@ -172,11 +175,16 @@ public abstract class CatalogFactory {
      * instance for each application, even if this class is loaded from
      * a shared parent class loader.
      *
+     * @param <C> Type of the context associated with this command
+     *
      * @return the per-application singleton instance of {@link CatalogFactory}
      */
-    public static CatalogFactory getInstance() {
+	public static <C extends Context> CatalogFactory<C> getInstance() {
         ClassLoader cl = getClassLoader();
-        return FACTORIES.computeIfAbsent(cl, (k) -> new CatalogFactoryBase());
+
+        @SuppressWarnings("unchecked")
+        CatalogFactory<C> ret = (CatalogFactory<C>) FACTORIES.computeIfAbsent(cl, k -> new CatalogFactoryBase<>());
+        return ret;
     }
 
     /**

@@ -34,7 +34,7 @@ import org.apache.commons.chain.generic.LookupCommand;
  *
  * @author Craig R. McClanahan
  */
-public class PathInfoMapper extends LookupCommand implements Command {
+public class PathInfoMapper extends LookupCommand<ServletWebContext> {
 
     // ------------------------------------------------------ Instance Variables
 
@@ -83,12 +83,11 @@ public class PathInfoMapper extends LookupCommand implements Command {
      * @since Chain 1.2
      */
     @Override
-    protected String getCommandName(Context context) {
+    protected String getCommandName(ServletWebContext context) {
         // Look up the extra path information for this request
-        ServletWebContext swcontext = (ServletWebContext) context;
-        HttpServletRequest request = swcontext.getRequest();
-        String pathInfo = (String)
-            request.getAttribute("javax.servlet.include.path_info");
+        HttpServletRequest request = context.getRequest();
+        String pathInfo =
+            request.getAttribute("javax.servlet.include.path_info").toString();
         if (pathInfo == null) {
             pathInfo = request.getPathInfo();
         }
@@ -109,11 +108,21 @@ public class PathInfoMapper extends LookupCommand implements Command {
      * @since Chain 1.2
      */
     @Override
-    protected Catalog getCatalog(Context context) {
-        Catalog catalog = (Catalog) context.get(getCatalogKey());
-        if (catalog == null) {
-            catalog = super.getCatalog(context);
-        }
+    protected Catalog<ServletWebContext> getCatalog(ServletWebContext context) {
+        /* If the object returned from the passed context is not a valid catalog
+         * then we use the super class's catalog extraction logic to pull it
+         * or to error gracefully.
+         */
+        Object testCatalog = context.get(getCatalogKey());
+
+        /* Assume that the underlying implementation is following convention and
+         * returning a catalog with the current context.
+         */
+        @SuppressWarnings("unchecked")
+        Catalog<ServletWebContext> catalog = testCatalog instanceof Catalog ?
+                    (Catalog<ServletWebContext>) testCatalog :
+                    super.getCatalog(context);
+
         return catalog;
     }
 }

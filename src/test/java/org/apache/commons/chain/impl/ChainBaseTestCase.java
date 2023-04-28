@@ -44,7 +44,7 @@ public class ChainBaseTestCase {
     /**
      * The {@link Chain} instance under test.
      */
-    protected Chain chain = null;
+    protected Chain<Context> chain = null;
 
     /**
      * The {@link Context} instance on which to execute the chain.
@@ -58,7 +58,7 @@ public class ChainBaseTestCase {
      */
     @BeforeEach
     public void init() {
-        chain = new ChainBase();
+        chain = new ChainBase<>();
         context = new ContextBase();
     }
 
@@ -80,15 +80,15 @@ public class ChainBaseTestCase {
     public void testCommands() {
         checkCommandCount(0);
 
-        Command command1 = new NonDelegatingCommand("1");
+        Command<Context> command1 = new NonDelegatingCommand("1");
         chain.addCommand(command1);
         checkCommandCount(1);
 
-        Command command2 = new DelegatingCommand("2");
+        Command<Context> command2 = new DelegatingCommand("2");
         chain.addCommand(command2);
         checkCommandCount(2);
 
-        Command command3 = new ExceptionCommand("3");
+        Command<Context> command3 = new ExceptionCommand("3");
         chain.addCommand(command3);
         checkCommandCount(3);
     }
@@ -358,7 +358,7 @@ public class ChainBaseTestCase {
      */
     protected void checkCommandCount(int expected) {
         if (chain instanceof ChainBase) {
-            List<Command> commands = ((ChainBase) chain).getCommands();
+            List<Command<Context>> commands = ((ChainBase<Context>) chain).getCommands();
             assertNotNull(commands,
                           "getCommands() returned a non-null list");
             assertEquals(expected, commands.size(), "Correct command count");

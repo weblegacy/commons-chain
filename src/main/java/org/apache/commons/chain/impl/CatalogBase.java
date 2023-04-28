@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
 
 /**
  * Simple in-memory implementation of {@link Catalog}. This class can
@@ -29,18 +30,20 @@ import org.apache.commons.chain.Command;
  *
  * <p>This implementation is thread-safe.</p>
  *
+ * @param <C> Type of the context associated with this catalog
+ *
  * @author Craig R. McClanahan
  * @author Matthew J. Sgarlata
  * @version $Revision$ $Date$
  */
-public class CatalogBase implements Catalog {
+public class CatalogBase<C extends Context> implements Catalog<C> {
 
     // ----------------------------------------------------- Instance Variables
 
     /**
      * The map of named {@link Command}s, keyed by name.
      */
-    protected final Map<String, Command> commands;
+    protected final Map<String, Command<C>> commands;
 
     // --------------------------------------------------------- Constructors
 
@@ -59,12 +62,8 @@ public class CatalogBase implements Catalog {
      *
      * @since Chain 1.1
      */
-    public CatalogBase(Map<String, Command> commands) {
-        if (commands instanceof ConcurrentHashMap) {
-            this.commands = commands;
-        } else {
-            this.commands = new ConcurrentHashMap<>(commands);
-        }
+    public CatalogBase(Map<String, Command<C>> commands) {
+        this.commands = new ConcurrentHashMap<>(commands);
     }
 
     // --------------------------------------------------------- Public Methods
@@ -74,11 +73,12 @@ public class CatalogBase implements Catalog {
      * to the set of named commands known to this {@link Catalog},
      * replacing any previous command for that name.
      *
+     * @param <CMD> the {@link Command} type to be added in the {@link Catalog}
      * @param name Name of the new command
      * @param command {@link Command} to be returned
      *        for later lookups on this name
      */
-    public void addCommand(String name, Command command) {
+    public <CMD extends Command<C>> void addCommand(String name, CMD command) {
         commands.put(name, command);
     }
 
@@ -86,13 +86,16 @@ public class CatalogBase implements Catalog {
      * Return the {@link Command} associated with the
      * specified name, if any; otherwise, return {@code null}.
      *
+     * @param <CMD> the expected {@link Command} type to be returned
      * @param name Name for which a {@link Command}
      *        should be retrieved
      *
      * @return The Command associated with the specified name.
      */
-    public Command getCommand(String name) {
-        return commands.get(name);
+    public <CMD extends Command<C>> CMD getCommand(String name) {
+        @SuppressWarnings("unchecked") // it would throw ClassCastException if users try to cast to a different type
+        CMD command = (CMD) commands.get(name);
+        return command;
     }
 
     /**

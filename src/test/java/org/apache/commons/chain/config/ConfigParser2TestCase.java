@@ -58,7 +58,7 @@ public class ConfigParser2TestCase {
     /**
      * The {@code Catalog} to contain our configured commands.
      */
-    protected Catalog catalog = null;
+    protected Catalog<Context> catalog = null;
 
     /**
      * The {@code Context} to use for execution tests.
@@ -77,7 +77,7 @@ public class ConfigParser2TestCase {
      */
     @BeforeEach
     public void init() {
-        catalog = new CatalogBase();
+        catalog = new CatalogBase<>();
         context = new ContextBase();
         parser = new ConfigParser();
     }
@@ -106,7 +106,7 @@ public class ConfigParser2TestCase {
         checkCommandCount(17);
 
         // Check individual single command instances
-        Command command = null;
+        Command<Context> command = null;
 
         command = catalog.getCommand("AddingCommand");
         assertNotNull(command);

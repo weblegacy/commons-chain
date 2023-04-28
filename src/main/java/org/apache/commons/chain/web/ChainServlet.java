@@ -166,11 +166,11 @@ public class ChainServlet extends HttpServlet {
         String webResources = context.getInitParameter(CONFIG_WEB_RESOURCE);
 
         // Retrieve or create the Catalog instance we may be updating
-        Catalog catalog = null;
+        Catalog<?> catalog = null;
         if (attr != null) {
-            catalog = (Catalog) context.getAttribute(attr);
+            catalog = (Catalog<?>) context.getAttribute(attr);
             if (catalog == null) {
-                catalog = new CatalogBase();
+                catalog = new CatalogBase<>();
             }
         }
 

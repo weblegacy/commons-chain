@@ -48,14 +48,14 @@ import org.junit.jupiter.api.Test;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ContextBaseTestCase {
+public class ContextBaseTestCase<C extends Context> {
 
     // ---------------------------------------------------- Instance Variables
 
     /**
      * The {@link Context} instance under test.
      */
-    protected Context context = null;
+    protected C context = null;
 
     // -------------------------------------------------- Overall Test Methods
 
@@ -356,7 +356,9 @@ public class ContextBaseTestCase {
         ByteArrayInputStream bais =
             new ByteArrayInputStream(baos.toByteArray());
         ObjectInputStream ois = new ObjectInputStream(bais);
-        context = (Context) ois.readObject();
+        @SuppressWarnings("unchecked")
+        C newContext = (C) ois.readObject();
+        context = newContext;
         ois.close();
 
         // Do some rudimentary checks to make sure we have the same contents
@@ -394,8 +396,10 @@ public class ContextBaseTestCase {
      *
      * @return the new instance of the appropriate Context type
      */
-    protected Context createContext() {
-        return new ContextBase();
+    protected C createContext() {
+        @SuppressWarnings("unchecked")
+        C ret = (C) new ContextBase();
+        return ret;
     }
 
     /**

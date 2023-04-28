@@ -30,9 +30,11 @@ import org.apache.commons.chain.Context;
  * related functionality into a single class rather than an
  * inheritance family.
  *
+ * @param <C> Type of the context associated with this command
+ *
  * @since Chain 1.1
  */
-public abstract class DispatchCommand implements Command {
+public abstract class DispatchCommand<C extends Context> implements Command<C> {
 
     /** Cache of methods */
     private Map<String, Method> methods = new WeakHashMap<>();
@@ -66,7 +68,7 @@ public abstract class DispatchCommand implements Command {
      *         exception itself, unless the cause is an {@code Error} or
      *         other {@code Throwable} which is not an {@code Exception}.
      */
-    public boolean execute(Context context) throws Exception {
+    public boolean execute(C context) throws Exception {
         if (this.getMethod() == null && this.getMethodKey() == null) {
             throw new IllegalStateException("Neither 'method' nor 'methodKey' properties are defined ");
         }
@@ -98,7 +100,7 @@ public abstract class DispatchCommand implements Command {
      *         specified name.
      * @throws NullPointerException if no methodName cannot be determined
      */
-    protected Method extractMethod(Context context) throws NoSuchMethodException {
+    protected Method extractMethod(C context) throws NoSuchMethodException {
         String methodName = this.getMethod();
 
         if (methodName == null) {
@@ -157,7 +159,7 @@ public abstract class DispatchCommand implements Command {
      *
      * @return The method arguments.
      */
-    protected Object[] getArguments(Context context) {
+    protected Object[] getArguments(C context) {
         return new Object[] {context};
     }
 

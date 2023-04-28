@@ -41,7 +41,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBaseTestCase;
-import org.apache.commons.chain.web.WebContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +49,7 @@ import org.junit.jupiter.api.Test;
  * Extension of {@code ContextBaseTestCase} to validate the
  * extra functionality of this implementation.
  */
-public class ServletWebContextTestCase extends ContextBaseTestCase {
+public class ServletWebContextTestCase extends ContextBaseTestCase<ServletWebContext> {
 
     // ----------------------------------------------------- Instance Variables
 
@@ -129,7 +128,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testApplicationScope() {
-        Map<String, Object> map = ((WebContext) context).getApplicationScope();
+        Map<String, Object> map = context.getApplicationScope();
         assertNotNull(map);
 
         // Initial contents
@@ -220,7 +219,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testHeader() {
-        Map<String, String> map = ((WebContext) context).getHeader();
+        Map<String, String> map = context.getHeader();
         assertNotNull(map);
 
         // Initial contents
@@ -267,7 +266,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testHeaderValues() {
-        Map<String, String[]> map = ((WebContext) context).getHeaderValues();
+        Map<String, String[]> map = context.getHeaderValues();
         assertNotNull(map);
 
         // Initial contents
@@ -325,7 +324,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testInitParam() {
-        Map<String, String> map = ((WebContext) context).getInitParam();
+        Map<String, String> map = context.getInitParam();
         assertNotNull(map);
 
         // Initial contents
@@ -375,7 +374,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testParam() {
-        Map<String, String> map = ((WebContext) context).getParam();
+        Map<String, String> map = context.getParam();
         assertNotNull(map);
 
         // Initial contents
@@ -421,7 +420,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testParamValues() {
-        Map<String, String[]> map = ((WebContext) context).getParamValues();
+        Map<String, String[]> map = context.getParamValues();
         assertNotNull(map);
 
         // Initial contents
@@ -476,7 +475,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testCookies() {
-        Map<String, Cookie> map = ((WebContext) context).getCookies();
+        Map<String, Cookie> map = context.getCookies();
         assertNotNull(map);
 
         // Initial contents
@@ -525,38 +524,37 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
     @Test
     public void testPristine() {
         super.testPristine();
-        ServletWebContext swcontext = (ServletWebContext) context;
 
         // Properties should all be non-null
-        assertNotNull(swcontext.getApplicationScope());
-        assertNotNull(swcontext.getHeader());
-        assertNotNull(swcontext.getHeaderValues());
-        assertNotNull(swcontext.getInitParam());
-        assertNotNull(swcontext.getParam());
-        assertNotNull(swcontext.getParamValues());
-        assertNotNull(swcontext.getCookies());
-        assertNotNull(swcontext.getRequestScope());
-        assertNotNull(swcontext.getSessionScope());
+        assertNotNull(context.getApplicationScope());
+        assertNotNull(context.getHeader());
+        assertNotNull(context.getHeaderValues());
+        assertNotNull(context.getInitParam());
+        assertNotNull(context.getParam());
+        assertNotNull(context.getParamValues());
+        assertNotNull(context.getCookies());
+        assertNotNull(context.getRequestScope());
+        assertNotNull(context.getSessionScope());
 
         // Attribute-property transparency
-        assertTrue(swcontext.getApplicationScope() ==
-                     swcontext.get("applicationScope"));
-        assertTrue(swcontext.getHeader() ==
-                     swcontext.get("header"));
-        assertTrue(swcontext.getHeaderValues() ==
-                     swcontext.get("headerValues"));
-        assertTrue(swcontext.getInitParam() ==
-                     swcontext.get("initParam"));
-        assertTrue(swcontext.getParam() ==
-                     swcontext.get("param"));
-        assertTrue(swcontext.getParamValues() ==
-                     swcontext.get("paramValues"));
-        assertTrue(swcontext.getCookies() ==
-                     swcontext.get("cookies"));
-        assertTrue(swcontext.getRequestScope() ==
-                     swcontext.get("requestScope"));
-        assertTrue(swcontext.getSessionScope() ==
-                     swcontext.get("sessionScope"));
+        assertTrue(context.getApplicationScope() ==
+                     context.get("applicationScope"));
+        assertTrue(context.getHeader() ==
+                     context.get("header"));
+        assertTrue(context.getHeaderValues() ==
+                     context.get("headerValues"));
+        assertTrue(context.getInitParam() ==
+                     context.get("initParam"));
+        assertTrue(context.getParam() ==
+                     context.get("param"));
+        assertTrue(context.getParamValues() ==
+                     context.get("paramValues"));
+        assertTrue(context.getCookies() ==
+                     context.get("cookies"));
+        assertTrue(context.getRequestScope() ==
+                     context.get("requestScope"));
+        assertTrue(context.getSessionScope() ==
+                     context.get("sessionScope"));
     }
 
     /**
@@ -564,30 +562,29 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testRelease() {
-        ServletWebContext swcontext = (ServletWebContext) context;
-        swcontext.release();
+        context.release();
 
         // Properties should all be null
-        assertNull(swcontext.getApplicationScope());
-        assertNull(swcontext.getHeader());
-        assertNull(swcontext.getHeaderValues());
-        assertNull(swcontext.getInitParam());
-        assertNull(swcontext.getParam());
-        assertNull(swcontext.getParamValues());
-        assertNull(swcontext.getCookies());
-        assertNull(swcontext.getRequestScope());
-        assertNull(swcontext.getSessionScope());
+        assertNull(context.getApplicationScope());
+        assertNull(context.getHeader());
+        assertNull(context.getHeaderValues());
+        assertNull(context.getInitParam());
+        assertNull(context.getParam());
+        assertNull(context.getParamValues());
+        assertNull(context.getCookies());
+        assertNull(context.getRequestScope());
+        assertNull(context.getSessionScope());
 
         // Attributes should all be null
-        assertNull(swcontext.get("applicationScope"));
-        assertNull(swcontext.get("header"));
-        assertNull(swcontext.get("headerValues"));
-        assertNull(swcontext.get("initParam"));
-        assertNull(swcontext.get("param"));
-        assertNull(swcontext.get("paramValues"));
-        assertNull(swcontext.get("cookies"));
-        assertNull(swcontext.get("requestScope"));
-        assertNull(swcontext.get("sessionScope"));
+        assertNull(context.get("applicationScope"));
+        assertNull(context.get("header"));
+        assertNull(context.get("headerValues"));
+        assertNull(context.get("initParam"));
+        assertNull(context.get("param"));
+        assertNull(context.get("paramValues"));
+        assertNull(context.get("cookies"));
+        assertNull(context.get("requestScope"));
+        assertNull(context.get("sessionScope"));
     }
 
     /**
@@ -595,7 +592,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testRequestScope() {
-        Map<String, Object> map = ((WebContext) context).getRequestScope();
+        Map<String, Object> map = context.getRequestScope();
         assertNotNull(map);
 
         // Initial contents
@@ -655,7 +652,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testSessionScope() {
-        Map<String, Object> map = ((WebContext) context).getSessionScope();
+        Map<String, Object> map = context.getSessionScope();
         assertNotNull(map);
 
         // Initial contents
@@ -853,7 +850,7 @@ public class ServletWebContextTestCase extends ContextBaseTestCase {
      *
      * @return a new instance of the appropriate Context type
      */
-    protected Context createContext() {
+    protected ServletWebContext createContext() {
         return new ServletWebContext(scontext, request, response);
     }
 }

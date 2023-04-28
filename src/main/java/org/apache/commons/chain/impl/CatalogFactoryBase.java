@@ -23,14 +23,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
+import org.apache.commons.chain.Context;
 
 /**
  * A simple implementation of {@link CatalogFactory}.
  *
+ * @param <C> Type of the context associated with this command
+ *
  * @author Sean Schofield
  * @version $Revision$ $Date$
  */
-public class CatalogFactoryBase extends CatalogFactory {
+public class CatalogFactoryBase<C extends Context> extends CatalogFactory<C> {
 
     // ----------------------------------------------------------- Constructors
 
@@ -46,12 +49,12 @@ public class CatalogFactoryBase extends CatalogFactory {
     /**
      * The default {@link Catalog} for this {@link CatalogFactory}.
      */
-    private Catalog catalog = null;
+    private Catalog<C> catalog = null;
 
     /**
      * Map of named {@link Catalog}s, keyed by catalog name.
      */
-    private final Map<String, Catalog> catalogs = new ConcurrentHashMap<>();
+    private final Map<String, Catalog<C>> catalogs = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
@@ -61,7 +64,7 @@ public class CatalogFactoryBase extends CatalogFactory {
      *
      * @return the default Catalog instance
      */
-    public Catalog getCatalog() {
+    public Catalog<C> getCatalog() {
         return catalog;
     }
 
@@ -70,7 +73,7 @@ public class CatalogFactoryBase extends CatalogFactory {
      *
      * @param catalog the default Catalog instance
      */
-    public void setCatalog(Catalog catalog) {
+    public void setCatalog(Catalog<C> catalog) {
         this.catalog = catalog;
     }
 
@@ -82,7 +85,7 @@ public class CatalogFactoryBase extends CatalogFactory {
      *
      * @return the specified Catalog
      */
-    public Catalog getCatalog(String name) {
+    public Catalog<C> getCatalog(String name) {
         return catalogs.get(name);
     }
 
@@ -93,7 +96,7 @@ public class CatalogFactoryBase extends CatalogFactory {
      * @param name the name of the Catalog to add
      * @param catalog the Catalog to add
      */
-    public void addCatalog(String name, Catalog catalog) {
+    public void addCatalog(String name, Catalog<C> catalog) {
         catalogs.put(name, catalog);
     }
 

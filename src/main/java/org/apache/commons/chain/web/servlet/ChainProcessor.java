@@ -157,19 +157,21 @@ public class ChainProcessor extends ChainServlet {
 
         ServletWebContext context =
             new ServletWebContext(getServletContext(), request, response);
-        Catalog theCatalog = null;
+        Catalog<ServletWebContext> theCatalog = null;
         if (attribute != null) {
-            theCatalog = (Catalog) getServletContext().getAttribute
-                (this.attribute);
+            @SuppressWarnings("unchecked")
+            Catalog<ServletWebContext> catalog = (Catalog<ServletWebContext>)
+                    getServletContext().getAttribute(this.attribute);
+            theCatalog = catalog;
         } else if (catalog != null) {
-            theCatalog = CatalogFactory.getInstance().getCatalog(catalog);
+            theCatalog = CatalogFactory.<ServletWebContext>getInstance().getCatalog(catalog);
         } else {
-            theCatalog = CatalogFactory.getInstance().getCatalog();
+            theCatalog = CatalogFactory.<ServletWebContext>getInstance().getCatalog();
         }
         if (attribute == null) {
             request.setAttribute(CATALOG_DEFAULT, theCatalog);
         }
-        Command command = theCatalog.getCommand(this.command);
+        Command<ServletWebContext> command = theCatalog.getCommand(this.command);
         try {
             command.execute(context);
         } catch (Exception e) {

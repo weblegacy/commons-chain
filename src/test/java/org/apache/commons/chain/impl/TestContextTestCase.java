@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.apache.commons.chain.Context;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +28,7 @@ import org.junit.jupiter.api.Test;
  * Extension of {@code ContextBaseTestCase} to validate property
  * delegation.
  */
-public class TestContextTestCase extends ContextBaseTestCase {
+public class TestContextTestCase extends ContextBaseTestCase<TestContext> {
 
     // ---------------------------------------------------- Overall Test Methods
 
@@ -51,7 +50,7 @@ public class TestContextTestCase extends ContextBaseTestCase {
         super.testPristine();
         assertEquals("readOnly", (String) context.get("readOnly"));
         assertEquals("readWrite", (String) context.get("readWrite"));
-        assertEquals("writeOnly", ((TestContext) context).returnWriteOnly());
+        assertEquals("writeOnly", context.returnWriteOnly());
     }
 
     /**
@@ -99,14 +98,14 @@ public class TestContextTestCase extends ContextBaseTestCase {
      */
     @Test
     public void testWriteOnly() {
-        Object writeOnly = ((TestContext) context).returnWriteOnly();
+        Object writeOnly = context.returnWriteOnly();
         assertNotNull(writeOnly, "writeOnly found");
         assertInstanceOf(String.class, writeOnly,
                          "writeOnly String");
         assertEquals("writeOnly", writeOnly, "writeOnly value");
 
         context.put("writeOnly", "new writeOnly");
-        writeOnly = ((TestContext) context).returnWriteOnly();
+        writeOnly = context.returnWriteOnly();
         assertNotNull(writeOnly, "writeOnly found");
         assertInstanceOf(String.class, writeOnly,
                          "writeOnly String");
@@ -118,7 +117,7 @@ public class TestContextTestCase extends ContextBaseTestCase {
     /**
      * Create a new instance of the appropriate Context type for this test case
      */
-    protected Context createContext() {
+    protected TestContext createContext() {
         return new TestContext();
     }
 }

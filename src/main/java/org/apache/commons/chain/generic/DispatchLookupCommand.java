@@ -47,11 +47,13 @@ import org.apache.commons.chain.Filter;
  * silently ignored. Otherwise, a lookup failure will trigger an
  * {@code IllegalArgumentException}.</p>
  *
+ * @param <C> Type of the context associated with this command
+ *
  * @author Sean Schofield
  * @version $Revision$
  * @since Chain 1.1
  */
-public class DispatchLookupCommand extends LookupCommand implements Filter {
+public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
 
     // -------------------------------------------------------------- Constructors
 
@@ -71,7 +73,7 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
      *
      * @param factory The Catalog Factory.
      */
-    public DispatchLookupCommand(CatalogFactory factory) {
+    public DispatchLookupCommand(CatalogFactory<C> factory) {
         super(factory);
     }
 
@@ -142,14 +144,14 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
      * @throws Exception if no such {@link Command} can be found and the
      *         {@code optional} property is set to {@code false}
      */
-    public boolean execute(Context context) throws Exception {
+    public boolean execute(C context) throws Exception {
         if (this.getMethod() == null && this.getMethodKey() == null) {
             throw new IllegalStateException(
                 "Neither 'method' nor 'methodKey' properties are defined "
             );
         }
 
-        Command command = getCommand(context);
+        Command<C> command = getCommand(context);
 
         if (command != null) {
             Method methodObject = extractMethod(command, context);
@@ -187,7 +189,7 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
      *
      * @return the method arguments to be used
      */
-    protected Object[] getArguments(Context context) {
+    protected Object[] getArguments(C context) {
         return new Object[] {context};
     }
 
@@ -209,7 +211,7 @@ public class DispatchLookupCommand extends LookupCommand implements Filter {
      *         specified name.
      * @throws NullPointerException if no methodName can be determined
      */
-    private Method extractMethod(Command command, Context context)
+    private Method extractMethod(Command<C> command, C context)
         throws NoSuchMethodException {
 
         String methodName = this.getMethod();
