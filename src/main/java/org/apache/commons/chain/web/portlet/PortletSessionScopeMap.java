@@ -49,10 +49,8 @@ final class PortletSessionScopeMap implements Map<String, Object> {
     @Override
     public void clear() {
         if (sessionExists()) {
-            Enumeration<?> keys =
-                    session.getAttributeNames(PortletSession.PORTLET_SCOPE);
-            while (keys.hasMoreElements()) {
-                session.removeAttribute(keys.nextElement().toString());
+            for (String key : keySet()) {
+                session.removeAttribute(key);
             }
         }
     }

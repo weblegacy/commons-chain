@@ -62,8 +62,9 @@ final class ServletHeaderValuesMap implements Map<String, String[]> {
 
         Enumeration<?> keys = request.getHeaderNames();
         while (keys.hasMoreElements()) {
-            Object next = request.getHeaders(keys.nextElement().toString());
-            if (Objects.deepEquals(value, next)) {
+            String key = keys.nextElement().toString();
+            Enumeration<?> next = request.getHeaders(key);
+            if (Objects.deepEquals(value, enum2Array(next))) {
                 return true;
             }
         }

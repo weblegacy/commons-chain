@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correct clear and containsValue
 * Rework and improve generics
 * Use contains instead indexOf
 * Remove unnecessary brackets

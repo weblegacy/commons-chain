@@ -45,9 +45,8 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
 
     @Override
     public void clear() {
-        Enumeration<?> keys = context.getAttributeNames();
-        while (keys.hasMoreElements()) {
-            context.removeAttribute(keys.nextElement().toString());
+        for (String key : keySet()) {
+            context.removeAttribute(key);
         }
     }
 

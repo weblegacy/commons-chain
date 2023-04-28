@@ -45,9 +45,8 @@ final class ServletRequestScopeMap implements Map<String, Object> {
 
     @Override
     public void clear() {
-        Enumeration<?> keys = request.getAttributeNames();
-        while (keys.hasMoreElements()) {
-            request.removeAttribute(keys.nextElement().toString());
+        for (String key : keySet()) {
+            request.removeAttribute(key);
         }
     }
 

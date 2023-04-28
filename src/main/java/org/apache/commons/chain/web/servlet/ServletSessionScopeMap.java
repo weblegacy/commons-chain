@@ -49,9 +49,8 @@ final class ServletSessionScopeMap implements Map<String, Object> {
     @Override
     public void clear() {
         if (sessionExists()) {
-            Enumeration<?> keys = session.getAttributeNames();
-            while (keys.hasMoreElements()) {
-                session.removeAttribute(keys.nextElement().toString());
+            for (String key : keySet()) {
+                session.removeAttribute(key);
             }
         }
     }
