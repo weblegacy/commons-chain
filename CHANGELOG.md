@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Replace `findbugs-maven-plugin` with `spotbugs-maven-plugin`
 * Replace `cobertura-maven-plugin` with `jacoco-maven-plugin`
 * Resolve compiler-warnings
 * Upgrade `site.xml`
