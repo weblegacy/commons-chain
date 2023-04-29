@@ -119,6 +119,7 @@ public class MockServletContext implements ServletContext {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public Servlet getServlet(String name) throws ServletException {
         throw new UnsupportedOperationException();
@@ -134,11 +135,13 @@ public class MockServletContext implements ServletContext {
         return "MockServletContext";
     }
 
+    @Deprecated
     @Override
     public Enumeration<Servlet> getServlets() {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public Enumeration<String> getServletNames() {
         throw new UnsupportedOperationException();
@@ -149,6 +152,7 @@ public class MockServletContext implements ServletContext {
         log.info(message);
     }
 
+    @Deprecated
     @Override
     public void log(Exception exception, String message) {
         log.error(message, exception);

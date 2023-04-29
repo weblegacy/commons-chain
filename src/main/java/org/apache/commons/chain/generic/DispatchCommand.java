@@ -49,7 +49,7 @@ public abstract class DispatchCommand<C extends Context> implements Command<C> {
      * The base implementation expects dispatch methods to take a
      * {@code Context} as their only argument.
      */
-    protected static final Class<?>[] DEFAULT_SIGNATURE = new Class[] {Context.class};
+    protected static final Class<?>[] DEFAULT_SIGNATURE = new Class<?>[] {Context.class};
 
     /**
      * Look up the method specified by either "method" or "methodKey"

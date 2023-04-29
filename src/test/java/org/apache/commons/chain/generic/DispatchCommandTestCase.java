@@ -106,7 +106,7 @@ public class DispatchCommandTestCase {
     class TestAlternateContextCommand extends DispatchCommand<Context> {
         @Override
         protected Class<?>[] getSignature() {
-            return new Class[] { TestAlternateContext.class };
+            return new Class<?>[] { TestAlternateContext.class };
         }
 
         @Override
@@ -123,7 +123,7 @@ public class DispatchCommandTestCase {
     class TestAlternateContext extends HashMap<String, Object> implements Context {
         private static final long serialVersionUID = -367573884920704101L;
 
-        Context wrappedContext = null;
+        transient Context wrappedContext = null;
         TestAlternateContext(Context context) {
             this.wrappedContext = context;
         }

@@ -44,69 +44,69 @@ public class ServletWebContext extends WebContextBase {
      * The lazily instantiated {@code Map} of application scope
      * attributes.
      */
-    private Map<String, Object> applicationScope = null;
+    private transient Map<String, Object> applicationScope = null;
 
     /**
      * The {@code ServletContext} for this web application.
      */
-    protected ServletContext context = null;
+    protected transient ServletContext context = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-value
      * combinations (immutable).
      */
-    private Map<String, String> header = null;
+    private transient Map<String, String> header = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-values
      * combinations (immutable).
      */
-    private Map<String, String[]> headerValues = null;
+    private transient Map<String, String[]> headerValues = null;
 
     /**
      * The lazily instantiated {@code Map} of context initialization
      * parameters.
      */
-    private Map<String, String> initParam = null;
+    private transient Map<String, String> initParam = null;
 
     /**
      * The lazily instantiated {@code Map} of cookies.
      */
-    private Map<String, Cookie> cookieValues = null;
+    private transient Map<String, Cookie> cookieValues = null;
 
     /**
      * The lazily instantiated {@code Map} of request
      * parameter name-value.
      */
-    private Map<String, String> param = null;
+    private transient Map<String, String> param = null;
 
     /**
      * The lazily instantiated {@code Map} of request
      * parameter name-values.
      */
-    private Map<String, String[]> paramValues = null;
+    private transient Map<String, String[]> paramValues = null;
 
     /**
      * The {@code HttpServletRequest} for this request.
      */
-    protected HttpServletRequest request = null;
+    protected transient HttpServletRequest request = null;
 
     /**
      * The lazily instantiated {@code Map} of request scope
      * attributes.
      */
-    private Map<String, Object> requestScope = null;
+    private transient Map<String, Object> requestScope = null;
 
     /**
      * The {@code HttpServletResponse} for this request.
      */
-    protected HttpServletResponse response = null;
+    protected transient HttpServletResponse response = null;
 
     /**
      * The lazily instantiated {@code Map} of session scope
      * attributes.
      */
-    private Map<String, Object> sessionScope = null;
+    private transient Map<String, Object> sessionScope = null;
 
     // ------------------------------------------------------------ Constructors
 

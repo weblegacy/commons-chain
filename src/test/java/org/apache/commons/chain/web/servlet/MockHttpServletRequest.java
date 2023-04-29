@@ -268,6 +268,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public boolean isRequestedSessionIdFromUrl() {
         throw new UnsupportedOperationException();
@@ -381,6 +382,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public String getRealPath(String path) {
         throw new UnsupportedOperationException();

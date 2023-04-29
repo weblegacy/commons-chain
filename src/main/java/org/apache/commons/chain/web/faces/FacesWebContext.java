@@ -42,7 +42,7 @@ public class FacesWebContext extends WebContextBase {
      * The {@code FacesContext} instance for the request represented
      * by this {@link WebContext}.
      */
-    private FacesContext context = null;
+    private transient FacesContext context = null;
 
     // ------------------------------------------------------------ Constructors
 

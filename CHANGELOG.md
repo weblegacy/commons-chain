@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Resolve compiler-warnings
 * Upgrade `site.xml`
 * Correct JavaDoc-Errors
 * Eclipse-CleanUp: Add @Override, remove unnecessary casts, optimize ifs, use extended for-loop, organize imports, trim lines,

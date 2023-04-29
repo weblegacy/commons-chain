@@ -84,7 +84,7 @@ public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
      * {@code Context} as their only argument.
      */
     private static final Class<?>[] DEFAULT_SIGNATURE =
-        new Class[] {Context.class};
+        new Class<?>[] {Context.class};
 
     // ----------------------------------------------------- Instance Variables
 

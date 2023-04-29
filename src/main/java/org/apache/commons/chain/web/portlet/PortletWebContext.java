@@ -68,64 +68,64 @@ public class PortletWebContext extends WebContextBase {
      * The lazily instantiated {@code Map} of application scope
      * attributes.
      */
-    private Map<String, Object> applicationScope = null;
+    private transient Map<String, Object> applicationScope = null;
 
     /**
      * The {@code PortletContext} for this web application.
      */
-    protected PortletContext context = null;
+    protected transient PortletContext context = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-value
      * combinations (immutable).
      */
-    private Map<String, String> header = null;
+    private transient Map<String, String> header = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-values
      * combinations (immutable).
      */
-    private Map<String, String[]> headerValues = null;
+    private transient Map<String, String[]> headerValues = null;
 
     /**
      * The lazily instantiated {@code Map} of context initialization
      * parameters.
      */
-    private Map<String, String> initParam = null;
+    private transient Map<String, String> initParam = null;
 
     /**
      * The lazily instantiated {@code Map} of request
      * parameter name-value.
      */
-    private Map<String, String> param = null;
+    private transient Map<String, String> param = null;
 
     /**
      * The lazily instantiated {@code Map} of request
      * parameter name-values.
      */
-    private Map<String, String[]> paramValues = null;
+    private transient Map<String, String[]> paramValues = null;
 
     /**
      * The {@code PortletRequest} for this request.
      */
-    protected PortletRequest request = null;
+    protected transient PortletRequest request = null;
 
     /**
      * The lazily instantiated {@code Map} of request scope
      * attributes.
      */
-    private Map<String, Object> requestScope = null;
+    private transient Map<String, Object> requestScope = null;
 
     /**
      * The {@code PortletResponse} for this request.
      */
-    protected PortletResponse response = null;
+    protected transient PortletResponse response = null;
 
     /**
      * The lazily instantiated {@code Map} of session scope
      * attributes.
      */
-    private Map<String, Object> sessionScope = null;
+    private transient Map<String, Object> sessionScope = null;
 
     // ---------------------------------------------------------- Public Methods
 

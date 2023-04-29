@@ -90,11 +90,13 @@ public class MockHttpSession implements HttpSession {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public Object getValue(String name) {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public String[] getValueNames() {
         throw new UnsupportedOperationException();
@@ -110,6 +112,7 @@ public class MockHttpSession implements HttpSession {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public void putValue(String name, Object value) {
         throw new UnsupportedOperationException();
@@ -120,6 +123,7 @@ public class MockHttpSession implements HttpSession {
         attributes.remove(name);
     }
 
+    @Deprecated
     @Override
     public void removeValue(String name) {
         throw new UnsupportedOperationException();

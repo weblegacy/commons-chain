@@ -62,6 +62,7 @@ public class MockHttpServletResponse implements HttpServletResponse {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public String encodeRedirectUrl(String url) {
         return encodeRedirectURL(url);
@@ -72,6 +73,7 @@ public class MockHttpServletResponse implements HttpServletResponse {
         return url;
     }
 
+    @Deprecated
     @Override
     public String encodeUrl(String url) {
         return encodeURL(url);
@@ -117,6 +119,7 @@ public class MockHttpServletResponse implements HttpServletResponse {
         throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     @Override
     public void setStatus(int status, String message) {
         throw new UnsupportedOperationException();
