@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Replace `cobertura-maven-plugin` with `jacoco-maven-plugin`
 * Resolve compiler-warnings
 * Upgrade `site.xml`
 * Correct JavaDoc-Errors
