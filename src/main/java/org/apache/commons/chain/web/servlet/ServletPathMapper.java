@@ -30,7 +30,7 @@ import org.apache.commons.chain.generic.LookupCommand;
  * of {@link ChainProcessor} to an extension pattern like "*.execute" and
  * then arrange that this is the default command to be executed. In such
  * an environment, a request for a context relative URI of "/foo.execute"
- * would cause the "/foo.execute" command to be loaded and executed.</p>
+ * would cause the "/foo.execute" command to be loaded and executed.
  *
  * @author Craig R. McClanahan
  */

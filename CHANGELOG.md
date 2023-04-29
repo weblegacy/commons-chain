@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correct JavaDoc-Errors
 * Eclipse-CleanUp: Add @Override, remove unnecessary casts, optimize ifs, use extended for-loop, organize imports, trim lines,
 * Correct clear and containsValue
 * Rework and improve generics

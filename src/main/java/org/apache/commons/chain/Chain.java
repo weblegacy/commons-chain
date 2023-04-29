@@ -58,7 +58,7 @@ public interface Chain<C extends Context> extends Command<C> {
      * be called in turn when this {@link Chain}'s {@code execute()}
      * method is called. Once {@code execute()} has been called
      * at least once, it is no longer possible to add additional
-     * {@link Command}s; instead, an exception will be thrown.</p>
+     * {@link Command}s; instead, an exception will be thrown.
      *
      * @param <CMD> the {@link Command} type to be added in the {@link Chain}
      * @param command The {@link Command} to be added
