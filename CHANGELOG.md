@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add `maven-jxr-plugin`
 * Update dependencies because dependencies-analysis
 * Add `maven-dependency-plugin`
 * Add missing `maven-project-info-reports-plugin`

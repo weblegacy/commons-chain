@@ -221,6 +221,10 @@
                     <version>3.4.0</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.2.0</version>
                     <configuration>
@@ -445,6 +449,19 @@
                             <report>changes-report</report>
                         </reports>
                     </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <reportSets>
+                  <reportSet>
+                    <id>default</id>
+                    <reports>
+                      <report>jxr</report>
+                      <report>test-jxr</report>
+                    </reports>
+                  </reportSet>
                 </reportSets>
             </plugin>
 
