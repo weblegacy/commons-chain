@@ -225,16 +225,20 @@
                     <version>3.2.0</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.17.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.4.3</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.2.0</version>
                     <configuration>
                         <encoding>${encoding}</encoding>
                         <propertiesEncoding>${propertiesEncoding}</propertiesEncoding>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.4.3</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
@@ -463,6 +467,10 @@
                     </reports>
                   </reportSet>
                 </reportSets>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
             </plugin>
 
             <plugin>
