@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-assembly-plugin` from 3.4.1 to 3.5.0
 * Update `spotbugs-maven-plugin` from 4.7.2.1 to 4.7.3.4
 * Change `maven-default-skin` to `maven-fluido-skin`
 * Make better config for `maven-javadoc-plugin`
