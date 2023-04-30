@@ -225,6 +225,10 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.4.3</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>4.0.0-M2</version>
                 </plugin>
@@ -422,6 +426,10 @@
 
     <reporting>
         <plugins>
+
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <artifactId>maven-changes-plugin</artifactId>
