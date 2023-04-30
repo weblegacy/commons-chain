@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Change `maven-default-skin` to `maven-fluido-skin`
 * Make better config for `maven-javadoc-plugin`
 * Replace `clirr-maven-plugin` with `japicmp-maven-plugin`
 * Add `maven-pmd-plugin`
