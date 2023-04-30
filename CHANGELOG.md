@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-enforcer-plugin` from 3.1.0 to 3.3.0
 * Update `maven-deploy-plugin` from 3.0.0-M2 to 3.1.1
 * Update `maven-dependency-plugin` from 3.3.0 to 3.5.0
 * Update `maven-compiler-plugin` from 3.10.1 to 3.11.0
