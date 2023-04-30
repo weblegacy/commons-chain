@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add `maven-dependency-plugin`
 * Add missing `maven-project-info-reports-plugin`
 * Upgrade `checkstyle.xml` for current checkstyle-version 10.10.0
 * Replace `findbugs-maven-plugin` with `spotbugs-maven-plugin`
