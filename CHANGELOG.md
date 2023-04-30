@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Replace `clirr-maven-plugin` with `japicmp-maven-plugin`
 * Add `maven-pmd-plugin`
 * Add `maven-jxr-plugin`
 * Update dependencies because dependencies-analysis
