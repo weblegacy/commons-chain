@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-pmd-plugin` from 3.17.0 to 3.20.0
 * Update `maven-jxr-plugin` from 3.2.0 to 3.3.0
 * Update `maven-jar-plugin` from 3.2.2 to 3.3.0
 * Update `maven-install-plugin` from 3.0.0-M1 to 3.1.1
