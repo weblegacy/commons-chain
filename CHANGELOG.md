@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-surefire-plugin` from 3.0.0-M7 to 3.0.0
 * Update `maven-resources-plugin` from 3.2.0 to 3.3.1
 * Update `maven-pmd-plugin` from 3.17.0 to 3.20.0
 * Update `maven-jxr-plugin` from 3.2.0 to 3.3.0
