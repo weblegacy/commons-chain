@@ -18,6 +18,7 @@ package org.apache.commons.chain.web.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.servlet.ServletOutputStream;
@@ -198,5 +199,30 @@ public class MockHttpServletResponse implements HttpServletResponse {
     @Override
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public void setContentLengthLong(long len) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getStatus() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getHeader(String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Collection<String> getHeaders(String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Collection<String> getHeaderNames() {
+        throw new UnsupportedOperationException();
     }
 }

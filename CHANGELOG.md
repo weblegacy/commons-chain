@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `servlet-api` from 2.3 to 4.0.1
 * Update `portlet-api` from 1.0 to 3.0.1
 * Update `commons-digester` from 1.8 to 2.1
 * Correct removed surefire-parameter `forkMode`
