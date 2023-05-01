@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `commons-digester` from 1.8 to 2.1
 * Correct removed surefire-parameter `forkMode`
 * Update `junit-jupiter-api` from 5.9.2 to 5.9.3
 * Update `maven-surefire-plugin` from 3.0.0-M7 to 3.0.0
