@@ -152,6 +152,7 @@
         <oldversion>1.2</oldversion>
         <javaxServletVersion>4.0.1</javaxServletVersion>
         <javaxPortletVersion>3.0.1</javaxPortletVersion>
+        <javaxFacesVersion>2.3</javaxFacesVersion>
         <commons.componentid>chain</commons.componentid>
         <commons.release.version>1.2</commons.release.version>
         <commons.jira.id>CHAIN</commons.jira.id>
@@ -358,40 +359,10 @@
         </dependency>
 
         <dependency>
-            <groupId>myfaces</groupId>
-            <artifactId>myfaces-api</artifactId>
-            <version>1.1.0</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>oro</groupId>
-                    <artifactId>oro</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-validator</groupId>
-                    <artifactId>commons-validator</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-fileupload</groupId>
-                    <artifactId>commons-fileupload</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-lang</groupId>
-                    <artifactId>commons-lang</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-el</groupId>
-                    <artifactId>commons-el</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>${javaxFacesVersion}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -526,6 +497,11 @@
                             <groupId>javax.servlet</groupId>
                             <artifactId>javax.servlet-api</artifactId>
                             <url>https://javadoc.io/doc/javax.servlet/javax.servlet-api/${javaxServletVersion}</url>
+                        </dependencyLink>
+                        <dependencyLink>
+                            <groupId>javax.faces</groupId>
+                            <artifactId>javax.faces-api</artifactId>
+                            <url>https://javadoc.io/static/javax.faces/javax.faces-api/${javaxFacesVersion}/javadocs</url>
                         </dependencyLink>
                     </dependencyLinks>
                     <linksource>true</linksource>

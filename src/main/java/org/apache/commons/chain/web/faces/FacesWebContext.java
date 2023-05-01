@@ -16,6 +16,8 @@
  */
 package org.apache.commons.chain.web.faces;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -100,7 +102,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Application scope Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> getApplicationScope() {
         return context.getExternalContext().getApplicationMap();
@@ -111,7 +112,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Header values Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, String> getHeader() {
         return context.getExternalContext().getRequestHeaderMap();
@@ -122,7 +122,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Header values Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, String[]> getHeaderValues() {
         return context.getExternalContext().getRequestHeaderValuesMap();
@@ -133,7 +132,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Initialization parameter Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, String> getInitParam() {
         return context.getExternalContext().getInitParameterMap();
@@ -144,7 +142,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Request parameter Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, String> getParam() {
         return context.getExternalContext().getRequestParameterMap();
@@ -155,7 +152,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Request parameter Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, String[]> getParamValues() {
         return context.getExternalContext().getRequestParameterValuesMap();
@@ -167,10 +163,14 @@ public class FacesWebContext extends WebContextBase {
      * @return Map of Cookies.
      * @since Chain 1.1
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, Cookie> getCookies() {
-        return context.getExternalContext().getRequestCookieMap();
+        final Map<String, Object> cookies = context.getExternalContext().getRequestCookieMap();
+        final HashMap<String, Cookie> ret = new HashMap<>(cookies.size());
+
+        cookies.forEach((k, v) -> ret.put(k, (Cookie)v));
+
+        return Collections.unmodifiableMap(ret);
     }
 
     /**
@@ -178,7 +178,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Request scope Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> getRequestScope() {
         return context.getExternalContext().getRequestMap();
@@ -189,7 +188,6 @@ public class FacesWebContext extends WebContextBase {
      *
      * @return Session scope Map.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> getSessionScope() {
         return context.getExternalContext().getSessionMap();
