@@ -28,7 +28,9 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
+import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.web.MockEnumeration;
 import org.apache.commons.chain.web.MockPrincipal;
@@ -177,6 +179,7 @@ public class MockPortletRequest implements PortletRequest {
     }
 
     @Override
+    @Deprecated
     public String getParameter(String name) {
         String values[] = parameters.get(name);
         if (values != null) {
@@ -187,16 +190,19 @@ public class MockPortletRequest implements PortletRequest {
     }
 
     @Override
+    @Deprecated
     public Map<String, String[]> getParameterMap() {
         return parameters;
     }
 
     @Override
+    @Deprecated
     public Enumeration<String> getParameterNames() {
         return new MockEnumeration<>(parameters.keySet().iterator());
     }
 
     @Override
+    @Deprecated
     public String[] getParameterValues(String name) {
         return parameters.get(name);
     }
@@ -340,5 +346,42 @@ public class MockPortletRequest implements PortletRequest {
         } else {
             attributes.put(name, value);
         }
+    }
+
+    @Override
+    public RenderParameters getRenderParameters() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PortletContext getPortletContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getWindowID() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Cookie[] getCookies() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public Map<String, String[]> getPrivateParameterMap() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public Map<String, String[]> getPublicParameterMap() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getUserAgent() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -16,6 +16,7 @@
  */
 package org.apache.commons.chain.web.portlet;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -170,5 +171,17 @@ public class MockPortletSession implements PortletSession {
         } else {
            throw new IllegalArgumentException("Invalid scope: " + scope);
         }
+    }
+
+    @Override
+    public Map<String, Object> getAttributeMap() {
+        accessed();
+        return Collections.unmodifiableMap(getScope(PortletSession.PORTLET_SCOPE));
+    }
+
+    @Override
+    public Map<String, Object> getAttributeMap(int scope) {
+        accessed();
+        return Collections.unmodifiableMap(getScope(scope));
     }
 }

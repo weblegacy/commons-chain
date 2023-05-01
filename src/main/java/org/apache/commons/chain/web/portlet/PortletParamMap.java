@@ -49,11 +49,13 @@ final class PortletParamMap implements Map<String, String> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean containsKey(Object key) {
         return request.getParameter(key(key)) != null;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean containsValue(Object value) {
         Enumeration<?> keys = request.getParameterNames();
         while (keys.hasMoreElements()) {
@@ -66,6 +68,7 @@ final class PortletParamMap implements Map<String, String> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public Set<Map.Entry<String, String>> entrySet() {
         Set<Map.Entry<String, String>> set = new HashSet<>();
         Enumeration<?> keys = request.getParameterNames();
@@ -83,6 +86,7 @@ final class PortletParamMap implements Map<String, String> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public String get(Object key) {
         return request.getParameter(key(key));
     }
@@ -93,11 +97,13 @@ final class PortletParamMap implements Map<String, String> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isEmpty() {
         return !request.getParameterNames().hasMoreElements();
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public Set<String> keySet() {
         Set<String> set = new HashSet<>();
         Enumeration<?> keys = request.getParameterNames();
@@ -123,6 +129,7 @@ final class PortletParamMap implements Map<String, String> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public int size() {
         int n = 0;
         Enumeration<?> keys = request.getParameterNames();
@@ -134,6 +141,7 @@ final class PortletParamMap implements Map<String, String> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public Collection<String> values() {
         List<String> list = new ArrayList<>();
         Enumeration<?> keys = request.getParameterNames();

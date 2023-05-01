@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `portlet-api` from 1.0 to 3.0.1
 * Update `commons-digester` from 1.8 to 2.1
 * Correct removed surefire-parameter `forkMode`
 * Update `junit-jupiter-api` from 5.9.2 to 5.9.3

@@ -33,8 +33,8 @@ import org.apache.commons.chain.web.MockEnumeration;
  * Mock Object for {@code PortletContext}
  */
 public class MockPortletContext implements PortletContext {
-    private int majorVersion = 1;
-    private int minorVersion = 0;
+    private int majorVersion = 3;
+    private int minorVersion = 1;
     private String portletContextName = "MockPortletContext";
     private String serverInfo = portletContextName;
     private Map<String, String> parameters = new HashMap<>();
@@ -149,5 +149,30 @@ public class MockPortletContext implements PortletContext {
     @Override
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
+    }
+
+    @Override
+    public Enumeration<String> getContainerRuntimeOptions() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getEffectiveMajorVersion() {
+        return majorVersion;
+    }
+
+    @Override
+    public int getEffectiveMinorVersion() {
+        return minorVersion;
+    }
+
+    @Override
+    public String getContextPath() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ClassLoader getClassLoader() {
+        return MockPortletContext.class.getClassLoader();
     }
 }
