@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `commons-logging` from 1.1.1 to 1.2
 * Update `servlet-api` from 2.3 to 4.0.1
 * Update `portlet-api` from 1.0 to 3.0.1
 * Update `commons-digester` from 1.8 to 2.1
