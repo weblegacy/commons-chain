@@ -76,7 +76,7 @@ class ConfigRegisterRule extends Rule {
 
         // Is the top object a Command?
         Object top = digester.peek(0);
-        if (top == null || !(top instanceof Command)) {
+        if (!(top instanceof Command)) {
             return;
         }
 

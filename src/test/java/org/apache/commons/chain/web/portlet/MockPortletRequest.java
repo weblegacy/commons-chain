@@ -333,7 +333,7 @@ public class MockPortletRequest implements PortletRequest {
 
     @Override
     public boolean isUserInRole(String role) {
-        if ((principal != null) && (principal instanceof MockPrincipal)) {
+        if (principal instanceof MockPrincipal) {
             return ((MockPrincipal)principal).isUserInRole(role);
         } else {
             return false;

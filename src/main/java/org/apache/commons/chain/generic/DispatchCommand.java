@@ -136,7 +136,7 @@ public abstract class DispatchCommand<C extends Context> implements Command<C> {
      * @return The evaluated result/
      */
     protected boolean evaluateResult(Object o) {
-        return o != null && o instanceof Boolean && ((Boolean) o).booleanValue();
+        return o instanceof Boolean && ((Boolean) o).booleanValue();
     }
 
     /**

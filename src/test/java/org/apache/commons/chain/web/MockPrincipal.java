@@ -61,7 +61,7 @@ public class MockPrincipal implements Principal {
 
     @Override
     public boolean equals(Object o) {
-        if ((o == null) || !(o instanceof Principal)) {
+        if (!(o instanceof Principal)) {
             return false;
         }
         Principal p = (Principal) o;

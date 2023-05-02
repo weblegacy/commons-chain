@@ -158,7 +158,7 @@ public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
             Method methodObject = extractMethod(command, context);
             Object obj = methodObject.invoke(command, getArguments(context));
 
-            return obj != null && obj instanceof Boolean && ((Boolean) obj).booleanValue();
+            return obj instanceof Boolean && ((Boolean) obj).booleanValue();
         } else {
             return false;
         }

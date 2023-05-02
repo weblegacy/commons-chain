@@ -297,7 +297,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     @Override
     public boolean isUserInRole(String role) {
-        if ((principal != null) && (principal instanceof MockPrincipal)) {
+        if (principal instanceof MockPrincipal) {
             return ((MockPrincipal) principal).isUserInRole(role);
         } else {
             return false;
