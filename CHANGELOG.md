@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add portlet-cookie-implementation
 * Update `myfaces-api` 1.1.0 to `javax.faces-api` 2.3
 * Update `commons-logging` from 1.1.1 to 1.2
 * Update `servlet-api` from 2.3 to 4.0.1

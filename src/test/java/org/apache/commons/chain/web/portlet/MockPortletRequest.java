@@ -55,6 +55,7 @@ public class MockPortletRequest implements PortletRequest {
     private Map<String, String[]> parameters = new HashMap<>();
     private Map<String, Object> attributes = new HashMap<>();
     private Map<String, String[]> properties = new HashMap<>();
+    private Cookie[] cookies = new Cookie[0];
 
     public MockPortletRequest() {
         this(null, null, null);
@@ -92,6 +93,17 @@ public class MockPortletRequest implements PortletRequest {
         System.arraycopy(values, 0, results, 0, values.length);
         results[values.length] = value;
         properties.put(name, results);
+    }
+
+    public void addCookie(String name, String value) {
+        addCookie(new Cookie(name, value));
+    }
+
+    public void addCookie(Cookie cookie) {
+        Cookie[] newValues = new Cookie[cookies.length + 1];
+        System.arraycopy(cookies, 0, newValues, 0, cookies.length);
+        cookies = newValues;
+        cookies[cookies.length - 1] = cookie;
     }
 
     public void setAuthType(String authType) {
@@ -355,7 +367,7 @@ public class MockPortletRequest implements PortletRequest {
 
     @Override
     public PortletContext getPortletContext() {
-        throw new UnsupportedOperationException();
+        return context;
     }
 
     @Override
@@ -365,7 +377,7 @@ public class MockPortletRequest implements PortletRequest {
 
     @Override
     public Cookie[] getCookies() {
-        throw new UnsupportedOperationException();
+        return cookies;
     }
 
     @Override

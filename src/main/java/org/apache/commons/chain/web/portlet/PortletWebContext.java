@@ -94,6 +94,11 @@ public class PortletWebContext extends WebContextBase {
     private transient Map<String, String> initParam = null;
 
     /**
+     * The lazily instantiated {@code Map} of cookies.
+     */
+    private transient Map<String, Cookie> cookieValues = null;
+
+    /**
      * The lazily instantiated {@code Map} of request
      * parameter name-value.
      */
@@ -190,6 +195,7 @@ public class PortletWebContext extends WebContextBase {
         initParam = null;
         param = null;
         paramValues = null;
+        cookieValues = null;
         requestScope = null;
         sessionScope = null;
 
@@ -282,15 +288,17 @@ public class PortletWebContext extends WebContextBase {
     }
 
     /**
-     * Returns an empty Map - portlets don't support Cookies.
+     * See the {@link WebContext}'s Javadoc.
      *
-     * @return An empty Map.
-     *
+     * @return Map of Cookies.
      * @since Chain 1.1
      */
     @Override
     public Map<String, Cookie> getCookies() {
-        return Collections.emptyMap();
+        if (cookieValues == null && request != null) {
+            cookieValues = new PortletCookieMap(request);
+        }
+        return cookieValues;
     }
 
     /**
