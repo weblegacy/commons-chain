@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `commons-beanutils` from 1.8.3 to 1.9.4
 * Use lazily instantiated Map of faces-cookies
 * Add portlet-cookie-implementation
 * Update `myfaces-api` 1.1.0 to `javax.faces-api` 2.3
