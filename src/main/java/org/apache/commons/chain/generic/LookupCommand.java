@@ -311,14 +311,9 @@ public class LookupCommand<C extends Context> implements Filter<C> {
     @Override
     public boolean postprocess(C context, Exception exception) {
         Command<C> command = getCommand(context);
-        if (command != null) {
-            if (command instanceof Filter) {
-                boolean result = (((Filter<C>) command).postprocess(context, exception));
-                if (isIgnorePostprocessResult()) {
-                    return false;
-                }
-                return result;
-            }
+        if (command instanceof Filter) {
+            boolean result = ((Filter<C>) command).postprocess(context, exception);
+            return !isIgnorePostprocessResult() && result;
         }
         return false;
     }

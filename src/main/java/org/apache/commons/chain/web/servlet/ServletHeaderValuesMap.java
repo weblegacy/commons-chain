@@ -135,7 +135,7 @@ final class ServletHeaderValuesMap implements Map<String, String[]> {
             keys.nextElement();
             n++;
         }
-        return (n);
+        return n;
     }
 
     @Override

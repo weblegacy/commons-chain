@@ -217,7 +217,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      */
     @Override
     public boolean containsKey(Object key) {
-        return ((descriptors != null && descriptors.containsKey(key)) || super.containsKey(key));
+        return descriptors != null && descriptors.containsKey(key) || super.containsKey(key);
     }
 
     /**
@@ -335,20 +335,6 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
 
         // Case 2 -- compare key count to property count
         return super.size() <= descriptors.size();
-    }
-
-    /**
-     * Override the default {@code Map} behavior to return a
-     * {@code Set} that meets the specified default behavior except
-     * for attempts to remove the key for a property of the {@link Context}
-     * implementation class, which will throw
-     * {@code UnsupportedOperationException}.
-     *
-     * @return The set of keys for objects in this Context.
-     */
-    @Override
-    public KeySetView<String, Object> keySet() {
-        return super.keySet();
     }
 
     /**
@@ -721,7 +707,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
             if (this == obj) {
                 return true;
             }
-            if ((obj == null) || (getClass() != obj.getClass())) {
+            if (obj == null || getClass() != obj.getClass()) {
                 return false;
             }
             MapEntryImpl other = (MapEntryImpl) obj;

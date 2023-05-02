@@ -90,7 +90,7 @@ final class ServletSessionScopeMap implements Map<String, Object> {
                 set.add(new MapEntry<>(key, session.getAttribute(key), true));
             }
         }
-        return (set);
+        return set;
     }
 
     @Override
@@ -168,7 +168,7 @@ final class ServletSessionScopeMap implements Map<String, Object> {
             session.removeAttribute(skey);
             return previous;
         } else {
-            return (null);
+            return null;
         }
     }
 

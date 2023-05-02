@@ -147,9 +147,9 @@ final class ServletParamMap implements Map<String, String> {
         if (key == null) {
             throw new IllegalArgumentException();
         } else if (key instanceof String) {
-            return ((String) key);
+            return (String) key;
         } else {
-            return (key.toString());
+            return key.toString();
         }
     }
 }

@@ -132,7 +132,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
         String skey = key(key);
         Object previous = request.getAttribute(skey);
         request.removeAttribute(skey);
-        return (previous);
+        return previous;
     }
 
     @Override

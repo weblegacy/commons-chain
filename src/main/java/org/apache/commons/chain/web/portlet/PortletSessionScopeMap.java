@@ -116,7 +116,7 @@ final class PortletSessionScopeMap implements Map<String, Object> {
     @Override
     public int hashCode() {
         if (sessionExists()) {
-            return (session.hashCode());
+            return session.hashCode();
         } else {
             return 0;
         }
