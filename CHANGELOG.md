@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Delete old building-files
 * Remove redundant calls to super()
 * Remove useless null-check
 * Resolve pmd messages
