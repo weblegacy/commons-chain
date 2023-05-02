@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Use lazily instantiated Map of faces-cookies
 * Add portlet-cookie-implementation
 * Update `myfaces-api` 1.1.0 to `javax.faces-api` 2.3
 * Update `commons-logging` from 1.1.1 to 1.2

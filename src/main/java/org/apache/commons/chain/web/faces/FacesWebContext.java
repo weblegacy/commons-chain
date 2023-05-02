@@ -46,6 +46,11 @@ public class FacesWebContext extends WebContextBase {
      */
     private transient FacesContext context = null;
 
+    /**
+     * The lazily instantiated {@code Map} of cookies.
+     */
+    private transient Map<String, Cookie> cookieValues = null;
+
     // ------------------------------------------------------------ Constructors
 
     /**
@@ -93,6 +98,7 @@ public class FacesWebContext extends WebContextBase {
      */
     public void release() {
         context = null;
+        cookieValues = null;
     }
 
     // ------------------------------------------------------ WebContext Methods
@@ -165,12 +171,16 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map<String, Cookie> getCookies() {
-        final Map<String, Object> cookies = context.getExternalContext().getRequestCookieMap();
-        final HashMap<String, Cookie> ret = new HashMap<>(cookies.size());
+        if (cookieValues == null) {
+            final Map<String, Object> cookiesSrc = context.getExternalContext().getRequestCookieMap();
+            final Map<String, Cookie> cookiesDest = new HashMap<>(cookiesSrc.size());
 
-        cookies.forEach((k, v) -> ret.put(k, (Cookie)v));
+            cookiesSrc.forEach((k, v) -> cookiesDest.put(k, (Cookie)v));
 
-        return Collections.unmodifiableMap(ret);
+            cookieValues = Collections.unmodifiableMap(cookiesDest);
+        }
+
+        return cookieValues;
     }
 
     /**
