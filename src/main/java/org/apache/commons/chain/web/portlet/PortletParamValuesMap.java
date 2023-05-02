@@ -40,7 +40,7 @@ final class PortletParamValuesMap implements Map<String, String[]> {
 
     private final PortletRequest request;
 
-    public PortletParamValuesMap(PortletRequest request) {
+    PortletParamValuesMap(PortletRequest request) {
         this.request = request;
     }
 

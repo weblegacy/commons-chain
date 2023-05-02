@@ -39,7 +39,7 @@ final class ServletApplicationScopeMap implements Map<String, Object> {
 
     private final ServletContext context;
 
-    public ServletApplicationScopeMap(ServletContext context) {
+    ServletApplicationScopeMap(ServletContext context) {
         this.context = context;
     }
 

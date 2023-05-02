@@ -175,7 +175,7 @@ public class FacesWebContext extends WebContextBase {
             final Map<String, Object> cookiesSrc = context.getExternalContext().getRequestCookieMap();
             final Map<String, Cookie> cookiesDest = new HashMap<>(cookiesSrc.size());
 
-            cookiesSrc.forEach((k, v) -> cookiesDest.put(k, (Cookie)v));
+            cookiesSrc.forEach((k, v) -> cookiesDest.put(k, (Cookie) v));
 
             cookieValues = Collections.unmodifiableMap(cookiesDest);
         }

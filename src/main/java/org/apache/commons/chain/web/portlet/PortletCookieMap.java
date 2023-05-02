@@ -36,7 +36,7 @@ final class PortletCookieMap implements Map<String, Cookie> {
 
     private final PortletRequest request;
 
-    public PortletCookieMap(PortletRequest request) {
+    PortletCookieMap(PortletRequest request) {
         this.request = request;
     }
 

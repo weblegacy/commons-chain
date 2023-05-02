@@ -43,7 +43,7 @@ public class CatalogBase<C extends Context> implements Catalog<C> {
     /**
      * The map of named {@link Command}s, keyed by name.
      */
-    protected final Map<String, Command<C>> commands;
+    private final Map<String, Command<C>> commands;
 
     // --------------------------------------------------------- Constructors
 

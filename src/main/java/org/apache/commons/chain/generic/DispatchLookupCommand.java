@@ -220,8 +220,7 @@ public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
         if (methodName == null) {
             Object methodContextObj = context.get(getMethodKey());
             if (methodContextObj == null) {
-                throw new NullPointerException("No value found in context under " +
-                                               getMethodKey());
+                throw new NullPointerException("No value found in context under " + getMethodKey());
             }
             methodName = methodContextObj.toString();
         }

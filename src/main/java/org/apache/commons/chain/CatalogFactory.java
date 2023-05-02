@@ -47,13 +47,13 @@ public abstract class CatalogFactory<C extends Context> {
      * use this as the delimiter between the "catalog" name and the "command"
      * name.
      */
-    public final static String DELIMITER = ":";
+    public static final String DELIMITER = ":";
 
     /**
      * The set of registered {@link CatalogFactory} instances,
      * keyed by the relevant class loader.
      */
-    private final static ConcurrentHashMap<ClassLoader, CatalogFactory<?>> FACTORIES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<ClassLoader, CatalogFactory<?>> FACTORIES = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
@@ -139,9 +139,8 @@ public abstract class CatalogFactory<C extends Context> {
                 catalogName = commandID.substring(0, splitPos);
                 commandName = commandID.substring(splitPos + DELIMITER.length());
                 if (commandName.contains(DELIMITER)) {
-                    throw new IllegalArgumentException("commandID [" +
-                                                       commandID +
-                                                       "] has too many delimiters (reserved for future use)");
+                    throw new IllegalArgumentException("commandID ["
+                            + commandID + "] has too many delimiters (reserved for future use)");
                 }
             }
         }
@@ -203,6 +202,8 @@ public abstract class CatalogFactory<C extends Context> {
      * Return the relevant {@code ClassLoader} to use as a Map key
      * for this request. If there is a thread context class loader, return
      * that; otherwise, return the class loader that loaded this class.
+     *
+     * @return the relevant {@code ClassLoader} to use as a Map key for this request
      */
     private static ClassLoader getClassLoader() {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();

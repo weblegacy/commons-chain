@@ -37,7 +37,7 @@ final class ServletCookieMap implements Map<String, Cookie> {
 
     private final HttpServletRequest request;
 
-    public ServletCookieMap(HttpServletRequest request) {
+    ServletCookieMap(HttpServletRequest request) {
         this.request = request;
     }
 

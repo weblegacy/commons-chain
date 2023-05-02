@@ -136,9 +136,9 @@ public class RequestParameterMapper extends LookupCommand<ServletWebContext> {
          * returning a catalog with the current context.
          */
         @SuppressWarnings("unchecked")
-        Catalog<ServletWebContext> catalog = testCatalog instanceof Catalog ?
-                    (Catalog<ServletWebContext>) testCatalog :
-                    super.getCatalog(context);
+        Catalog<ServletWebContext> catalog = testCatalog instanceof Catalog
+                    ? (Catalog<ServletWebContext>) testCatalog
+                    : super.getCatalog(context);
 
         return catalog;
     }

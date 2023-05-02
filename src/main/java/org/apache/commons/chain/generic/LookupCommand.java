@@ -59,7 +59,7 @@ public class LookupCommand<C extends Context> implements Filter<C> {
 
     /**
      * Create an instance and initialize the {@code catalogFactory} property
-     * to given {@code factory}/
+     * to given {@code factory}.
      *
      * @param factory The Catalog Factory.
      *
@@ -353,11 +353,9 @@ public class LookupCommand<C extends Context> implements Filter<C> {
         }
         if (catalog == null) {
             if (catalogName == null) {
-                throw new IllegalArgumentException
-                    ("Cannot find default catalog");
+                throw new IllegalArgumentException("Cannot find default catalog");
             } else {
-                throw new IllegalArgumentException
-                    ("Cannot find catalog '" + catalogName + "'");
+                throw new IllegalArgumentException("Cannot find catalog '" + catalogName + "'");
             }
         }
 
@@ -384,12 +382,10 @@ public class LookupCommand<C extends Context> implements Filter<C> {
             command = catalog.getCommand(name);
             if (command == null && !isOptional()) {
                 if (catalogName == null) {
-                    throw new IllegalArgumentException
-                        ("Cannot find command '" + name
+                    throw new IllegalArgumentException("Cannot find command '" + name
                          + "' in default catalog");
                 } else {
-                    throw new IllegalArgumentException
-                        ("Cannot find command '" + name
+                    throw new IllegalArgumentException("Cannot find command '" + name
                          + "' in catalog '" + catalogName + "'");
                 }
             }

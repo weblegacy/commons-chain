@@ -39,7 +39,7 @@ final class ServletInitParamMap implements Map<String, String> {
 
     private final ServletContext context;
 
-    public ServletInitParamMap(ServletContext context) {
+    ServletInitParamMap(ServletContext context) {
         this.context = context;
     }
 

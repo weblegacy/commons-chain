@@ -58,7 +58,7 @@ class ConfigDefineRule extends Rule {
      * @param classAttribute Name of the attribute containing the
      *        implementation class for the new chain or command
      */
-    public ConfigDefineRule(String nameAttribute, String classAttribute) {
+    ConfigDefineRule(String nameAttribute, String classAttribute) {
         super();
         this.nameAttribute = nameAttribute;
         this.classAttribute = classAttribute;

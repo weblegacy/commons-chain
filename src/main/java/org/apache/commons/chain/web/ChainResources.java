@@ -70,8 +70,7 @@ final class ChainResources {
                 path = path2;
                 URL url = loader.getResource(path);
                 if (url == null) {
-                    throw new IllegalStateException
-                        ("Missing chain config resource '" + path + "'");
+                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("Loading chain config resource '" + path + "'");
@@ -79,8 +78,7 @@ final class ChainResources {
                 parser.parse(url);
             }
         } catch (Exception e) {
-            throw new RuntimeException
-                ("Exception parsing chain config resource '" + path + "': "
+            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
     }
@@ -115,8 +113,7 @@ final class ChainResources {
                 path = path2;
                 URL url = loader.getResource(path);
                 if (url == null) {
-                    throw new IllegalStateException
-                        ("Missing chain config resource '" + path + "'");
+                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("Loading chain config resource '" + path + "'");
@@ -124,8 +121,7 @@ final class ChainResources {
                 parser.parse(catalog, url);
             }
         } catch (Exception e) {
-            throw new RuntimeException
-                ("Exception parsing chain config resource '" + path + "': "
+            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
     }
@@ -152,8 +148,7 @@ final class ChainResources {
                 path = path2;
                 URL url = context.getResource(path);
                 if (url == null) {
-                    throw new IllegalStateException
-                        ("Missing chain config resource '" + path + "'");
+                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("Loading chain config resource '" + path + "'");
@@ -161,8 +156,7 @@ final class ChainResources {
                 parser.parse(url);
             }
         } catch (Exception e) {
-            throw new RuntimeException
-                ("Exception parsing chain config resource '" + path + "': "
+            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
     }
@@ -194,8 +188,7 @@ final class ChainResources {
                 path = path2;
                 URL url = context.getResource(path);
                 if (url == null) {
-                    throw new IllegalStateException
-                        ("Missing chain config resource '" + path + "'");
+                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("Loading chain config resource '" + path + "'");
@@ -203,8 +196,7 @@ final class ChainResources {
                 parser.parse(catalog, url);
             }
         } catch (Exception e) {
-            throw new RuntimeException
-                ("Exception parsing chain config resource '" + path + "': "
+            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
                  + e.getMessage());
         }
     }

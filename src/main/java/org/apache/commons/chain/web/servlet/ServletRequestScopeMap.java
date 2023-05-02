@@ -39,7 +39,7 @@ final class ServletRequestScopeMap implements Map<String, Object> {
 
     private final HttpServletRequest request;
 
-    public ServletRequestScopeMap(HttpServletRequest request) {
+    ServletRequestScopeMap(HttpServletRequest request) {
         this.request = request;
     }
 

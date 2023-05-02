@@ -60,7 +60,7 @@ class ConfigCatalogRule extends Rule {
      * @param catalogClass Name of the implementation class for newly
      *        created {@link Catalog} instances
      */
-    public ConfigCatalogRule(String nameAttribute, String catalogClass) {
+    ConfigCatalogRule(String nameAttribute, String catalogClass) {
         super();
         this.nameAttribute = nameAttribute;
         this.catalogClass = catalogClass;

@@ -39,7 +39,7 @@ final class ServletParamMap implements Map<String, String> {
 
     private final HttpServletRequest request;
 
-    public ServletParamMap(HttpServletRequest request) {
+    ServletParamMap(HttpServletRequest request) {
         this.request = request;
     }
 

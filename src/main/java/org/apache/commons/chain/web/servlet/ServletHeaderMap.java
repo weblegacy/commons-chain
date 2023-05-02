@@ -39,7 +39,7 @@ final class ServletHeaderMap implements Map<String, String> {
 
     private final HttpServletRequest request;
 
-    public ServletHeaderMap(HttpServletRequest request) {
+    ServletHeaderMap(HttpServletRequest request) {
         this.request = request;
     }
 

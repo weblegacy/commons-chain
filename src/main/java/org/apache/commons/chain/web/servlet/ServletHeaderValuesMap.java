@@ -40,7 +40,7 @@ final class ServletHeaderValuesMap implements Map<String, String[]> {
 
     private final HttpServletRequest request;
 
-    public ServletHeaderValuesMap(HttpServletRequest request) {
+    ServletHeaderValuesMap(HttpServletRequest request) {
         this.request = request;
     }
 

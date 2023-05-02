@@ -53,7 +53,7 @@ class ConfigRegisterRule extends Rule {
      * @param nameAttribute Name of the attribute containing the name under
      *  which this command should be registered
      */
-    public ConfigRegisterRule(String nameAttribute) {
+    ConfigRegisterRule(String nameAttribute) {
         super();
         this.nameAttribute = nameAttribute;
     }

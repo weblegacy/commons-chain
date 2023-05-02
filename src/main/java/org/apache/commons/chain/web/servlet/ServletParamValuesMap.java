@@ -40,7 +40,7 @@ final class ServletParamValuesMap implements Map<String, String[]> {
 
     private final HttpServletRequest request;
 
-    public ServletParamValuesMap(HttpServletRequest request) {
+    ServletParamValuesMap(HttpServletRequest request) {
         this.request = request;
     }
 

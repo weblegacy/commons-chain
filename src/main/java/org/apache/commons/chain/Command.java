@@ -86,7 +86,7 @@ public interface Command<C extends Context> {
      *
      * @since Chain 1.1
      */
-    public static final boolean CONTINUE_PROCESSING = false;
+    boolean CONTINUE_PROCESSING = false;
 
     /**
      * Commands should return {@code PROCESSING_COMPLETE}
@@ -95,7 +95,7 @@ public interface Command<C extends Context> {
      *
      * @since Chain 1.1
      */
-    public static final boolean PROCESSING_COMPLETE = true;
+    boolean PROCESSING_COMPLETE = true;
 
     /**
      * Execute a unit of processing work to be performed. This

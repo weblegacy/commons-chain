@@ -36,13 +36,13 @@ import org.apache.commons.chain.Context;
  */
 public abstract class DispatchCommand<C extends Context> implements Command<C> {
 
-    /** Cache of methods */
+    /** The cache of methods. */
     private Map<String, Method> methods = new WeakHashMap<>();
 
-    /** Method name */
+    /** The method name. */
     private String method = null;
 
-    /** Method key */
+    /** The method key. */
     private String methodKey = null;
 
     /**
@@ -81,7 +81,7 @@ public abstract class DispatchCommand<C extends Context> implements Command<C> {
         } catch (InvocationTargetException e) {
             Throwable cause = e.getTargetException();
             if (cause instanceof Exception) {
-                throw (Exception)cause;
+                throw (Exception) cause;
             }
             throw e;
         }

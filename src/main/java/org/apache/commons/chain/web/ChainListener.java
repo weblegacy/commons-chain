@@ -202,16 +202,12 @@ public class ChainListener implements ServletContextListener {
         // Parse the resources specified in our init parameters (if any)
         if (attr == null) {
             parseJarResources(context, parser, log);
-            ChainResources.parseClassResources
-                (classResources, parser);
-            ChainResources.parseWebResources
-                (context, webResources, parser);
+            ChainResources.parseClassResources(classResources, parser);
+            ChainResources.parseWebResources(context, webResources, parser);
         } else {
             parseJarResources(catalog, context, parser, log);
-            ChainResources.parseClassResources
-                (catalog, classResources, parser);
-            ChainResources.parseWebResources
-                (catalog, context, webResources, parser);
+            ChainResources.parseClassResources(catalog, classResources, parser);
+            ChainResources.parseWebResources(catalog, context, webResources, parser);
         }
 
         // Expose the completed catalog (if requested)
@@ -228,6 +224,7 @@ public class ChainListener implements ServletContextListener {
      *
      * @param context {@code ServletContext} for this web application
      * @param parser {@link ConfigParser} to use for parsing
+     * @param log to use for logging
      */
     private void parseJarResources(ServletContext context,
                                    ConfigParser parser, Log log) {
@@ -269,8 +266,7 @@ public class ChainListener implements ServletContextListener {
                 }
                 parser.parse(resourceURL);
             } catch (Exception e) {
-                throw new RuntimeException
-                    ("Exception parsing chain config resource '"
+                throw new RuntimeException("Exception parsing chain config resource '"
                      + resourceURL.toExternalForm() + "': "
                      + e.getMessage());
             }
@@ -284,6 +280,7 @@ public class ChainListener implements ServletContextListener {
      * @param catalog {@link Catalog} we are populating
      * @param context {@code ServletContext} for this web application
      * @param parser {@link ConfigParser} to use for parsing
+     * @param log to use for logging
      *
      * @deprecated Use the variant that does not take a catalog, on a
      *  configuration resource containing "catalog" element(s)
@@ -329,8 +326,7 @@ public class ChainListener implements ServletContextListener {
                 }
                 parser.parse(catalog, resourceURL);
             } catch (Exception e) {
-                throw new RuntimeException
-                    ("Exception parsing chain config resource '"
+                throw new RuntimeException("Exception parsing chain config resource '"
                      + resourceURL.toExternalForm() + "': "
                      + e.getMessage());
             }
@@ -342,6 +338,8 @@ public class ChainListener implements ServletContextListener {
      * with paths that contain spaces on some JVMs.
      *
      * @param value Value to translate
+     *
+     * @return the translated value
      */
     private String translate(String value) {
         while (true) {

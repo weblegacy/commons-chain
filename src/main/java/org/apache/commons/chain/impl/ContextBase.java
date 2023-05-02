@@ -60,7 +60,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      * key that is actually a property. This value is used to ensure that
      * {@code equals()} comparisons will always fail.
      */
-    private final static Object SINGLETON = new Serializable() {
+    private static final Object SINGLETON = new Serializable() {
         private static final long serialVersionUID = -6023767081282668587L;
 
         @Override
@@ -89,7 +89,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
         if (!(o instanceof Map)) {
             return false;
         }
-        Map<?,?> m = (Map<?,?>) o;
+        Map<?, ?> m = (Map<?, ?>) o;
         if (m.size() != size()) {
             return false;
         }
@@ -99,11 +99,13 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
                 String key = e.getKey();
                 Object value = e.getValue();
                 if (value == null) {
-                    if (!(m.get(key) == null && m.containsKey(key)))
+                    if (!(m.get(key) == null && m.containsKey(key))) {
                         return false;
+                    }
                 } else {
-                    if (!value.equals(m.get(key)))
+                    if (!value.equals(m.get(key))) {
                         return false;
+                    }
                 }
             }
         } catch (ClassCastException unused) {
@@ -113,6 +115,21 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
         }
 
         return true;
+    }
+
+    /**
+     * Because {@code ConcurrentHashMap} doesn't accept null values, use
+     * hashCode-method from {@code AbstractMap}.
+     *
+     * @see java.util.AbstractMap#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        int h = 0;
+        for (Entry<String, Object> entry : entrySet()) {
+            h += Objects.hashCode(entry.getKey()) ^ Objects.hashCode(entry.getValue());
+        }
+        return h;
     }
 
     // ------------------------------------------------------ Instance Variables
@@ -425,8 +442,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
         if (key != null) {
             PropertyDescriptor descriptor = descriptors.get(key);
             if (descriptor != null) {
-                throw new UnsupportedOperationException
-                    ("Local property '" + key + "' cannot be removed");
+                throw new UnsupportedOperationException("Local property '" + key + "' cannot be removed");
             }
         }
 
@@ -453,6 +469,8 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
     /**
      * Return an {@code Iterator} over the set of {@code Map.Entry}
      * objects representing our key-value pairs.
+     *
+     * @return an {@code Iterator} over the set of {@code Map.Entry} objects
      */
     private Iterator<Map.Entry<String, Object>> entriesIterator() {
         return new EntrySetIterator();
@@ -463,6 +481,9 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      * is present; otherwise, return {@code null}.
      *
      * @param key Attribute key or property name
+     *
+     * @return a {@code Map.Entry} for the specified key value, if it
+     *         is present; otherwise, return {@code null}
      */
     private Map.Entry<String, Object> entry(Object key) {
         if (containsKey(key)) {
@@ -489,15 +510,13 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
         try {
             Method method = descriptor.getReadMethod();
             if (method == null) {
-                throw new UnsupportedOperationException
-                    ("Property '" + descriptor.getName()
-                     + "' is not readable");
+                throw new UnsupportedOperationException("Property '"
+                     + descriptor.getName() + "' is not readable");
             }
             return method.invoke(this);
         } catch (Exception e) {
-            throw new UnsupportedOperationException
-                ("Exception reading property '" + descriptor.getName()
-                 + "': " + e.getMessage());
+            throw new UnsupportedOperationException("Exception reading property '"
+                 + descriptor.getName() + "': " + e.getMessage());
         }
     }
 
@@ -506,6 +525,9 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      * {@code true}. If this pair does not exist, return {@code false}.
      *
      * @param entry Key-value pair to be removed
+     *
+     * @return if the specified key-value pair is removed, return
+     *         {@code true}, otherwise {@code false}
      *
      * @throws UnsupportedOperationException if the specified key
      *         identifies a property instead of an attribute.
@@ -525,6 +547,9 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
     /**
      * Return an {@code Iterator} over the set of values in this
      * {@code Map}.
+     *
+     * @return an {@code Iterator} over the set of values in this
+     *         {@code Map}
      */
     private Iterator<Object> valuesIterator() {
         return new ValuesIterator();
@@ -547,15 +572,13 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
         try {
             Method method = descriptor.getWriteMethod();
             if (method == null) {
-                throw new UnsupportedOperationException
-                    ("Property '" + descriptor.getName()
+                throw new UnsupportedOperationException("Property '" + descriptor.getName()
                      + "' is not writeable");
             }
             method.invoke(this, value);
         } catch (Exception e) {
-            throw new UnsupportedOperationException
-                ("Exception writing property '" + descriptor.getName()
-                 + "': " + e.getMessage());
+            throw new UnsupportedOperationException("Exception writing property '"
+                 + descriptor.getName() + "': " + e.getMessage());
         }
     }
 
@@ -568,8 +591,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
     private PropertyDescriptor[] getPropertyDescriptors() {
         // Retrieve the set of property descriptors for this Context class
         try {
-            return Introspector.getBeanInfo
-                (getClass()).getPropertyDescriptors();
+            return Introspector.getBeanInfo(getClass()).getPropertyDescriptors();
         } catch (IntrospectionException e) {
             return new PropertyDescriptor[0]; // Should never happen
         }

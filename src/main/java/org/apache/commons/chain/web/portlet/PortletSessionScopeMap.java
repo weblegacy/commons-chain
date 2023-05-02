@@ -41,7 +41,7 @@ final class PortletSessionScopeMap implements Map<String, Object> {
     private PortletSession session = null;
     private PortletRequest request = null;
 
-    public PortletSessionScopeMap(PortletRequest request) {
+    PortletSessionScopeMap(PortletRequest request) {
         this.request = request;
         sessionExists();
     }

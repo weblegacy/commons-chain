@@ -18,6 +18,7 @@ package org.apache.commons.chain.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.chain.Chain;
@@ -99,13 +100,13 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    protected final ArrayList<Command<C>> commands = new ArrayList<>();
+    private final ArrayList<Command<C>> commands = new ArrayList<>();
 
     /**
      * Flag indicating whether the configuration of our commands list
      * has been frozen by a call to the {@code execute()} method.
      */
-    protected boolean frozen = false;
+    private boolean frozen = false;
 
     // ---------------------------------------------------------- Chain Methods
 
@@ -207,14 +208,31 @@ public class ChainBase<C extends Context> implements Chain<C> {
         }
     }
 
+    /**
+     * Returns {@code true}, if the configuration of our commands list
+     * has been frozen by a call to the {@code execute()} method,
+     * {@code false} otherwise.
+     *
+     * @return {@code true}, if the configuration of our commands list
+     * has been frozen by a call to the {@code execute()} method,
+     * {@code false} otherwise.
+     *
+     * @since 1.3
+     */
+    public boolean isFrozen() {
+        return frozen;
+    }
+
     // -------------------------------------------------------- Package Methods
 
     /**
      * Return an array of the configured {@link Command}s for this
      * {@link Chain}. This method is package private, and is used only
      * for the unit tests.
+     *
+     * @return an array of the configured {@link Command}s for this {@link Chain}
      */
     List<Command<C>> getCommands() {
-        return commands;
+        return Collections.unmodifiableList(commands);
     }
 }

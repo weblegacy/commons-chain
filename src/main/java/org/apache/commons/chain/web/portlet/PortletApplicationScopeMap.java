@@ -39,7 +39,7 @@ final class PortletApplicationScopeMap implements Map<String, Object> {
 
     private final PortletContext context;
 
-    public PortletApplicationScopeMap(PortletContext context) {
+    PortletApplicationScopeMap(PortletContext context) {
         this.context = context;
     }
 

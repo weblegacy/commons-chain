@@ -197,15 +197,11 @@ public class ChainServlet extends HttpServlet {
 
         // Parse the resources specified in our init parameters (if any)
         if (attr == null) {
-            ChainResources.parseClassResources
-                (classResources, parser);
-            ChainResources.parseWebResources
-                (context, webResources, parser);
+            ChainResources.parseClassResources(classResources, parser);
+            ChainResources.parseWebResources(context, webResources, parser);
         } else {
-            ChainResources.parseClassResources
-                (catalog, classResources, parser);
-            ChainResources.parseWebResources
-                (catalog, context, webResources, parser);
+            ChainResources.parseClassResources(catalog, classResources, parser);
+            ChainResources.parseWebResources(catalog, context, webResources, parser);
         }
 
         // Expose the completed catalog (if requested)

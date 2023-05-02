@@ -39,7 +39,7 @@ final class PortletInitParamMap implements Map<String, String> {
 
     private final PortletContext context;
 
-    public PortletInitParamMap(PortletContext context) {
+    PortletInitParamMap(PortletContext context) {
         this.context = context;
     }
 

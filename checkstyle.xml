@@ -36,8 +36,6 @@
 
       <property name="fileExtensions" value="java, properties, xml"/>
 
-      <property name="tabWidth" value="4"/>
-
       <!-- Excludes all 'module-info.java' files                            -->
       <!-- See https://checkstyle.org/config_filefilters.html               -->
       <module name="BeforeExecutionExclusionFileFilter">
@@ -73,9 +71,7 @@
 
       <!-- Checks for whitespace                                            -->
       <!-- See https://checkstyle.org/config_whitespace.html                -->
-      <module name="FileTabCharacter">
-          <property name="fileExtensions" value="java,xml"/>
-      </module>
+      <module name="FileTabCharacter"/>
 
       <!-- Miscellaneous other checks.                                      -->
       <!-- See https://checkstyle.org/config_misc.html                      -->
@@ -94,29 +90,10 @@
 
       <module name="TreeWalker">
 
-          <!-- ************************************************************** -->
-          <!-- Checks that are different from the sun coding conventions ones -->
-          <!-- ************************************************************** -->
-          <module name="MethodLength">
-            <property name="max" value="175"/>
-          </module>
-          <!-- No Paren pad check
-          <module name="ParenPad"/>
-          -->
-          <module name="ConstantName">
-            <property name="format" value="log|^[a-zA-Z][a-zA-Z0-9_]*$"/>
-          </module>
-          
-          <!-- ************************************************************** -->
-          <!-- Default Sun coding conventions checks                          -->
-          <!-- ************************************************************** -->
-
           <!-- Checks for Javadoc comments.                                 -->
           <!-- See https://checkstyle.org/config_javadoc.html               -->
           <module name="InvalidJavadocPosition"/>
-          <module name="JavadocMethod">
-              <property name="allowMissingReturnTag" value="true"/>
-          </module>
+          <module name="JavadocMethod"/>
           <module name="JavadocType"/>
           <module name="JavadocVariable">
               <property name="scope" value="protected"/>
@@ -126,7 +103,7 @@
 
           <!-- Checks for Naming Conventions.                               -->
           <!-- See https://checkstyle.org/config_naming.html                -->
-          <!-- module name="ConstantName"/ -->
+          <module name="ConstantName"/>
           <module name="LocalFinalVariableName"/>
           <module name="LocalVariableName"/>
           <module name="MemberName"/>
@@ -145,7 +122,7 @@
 
           <!-- Checks for Size Violations.                                  -->
           <!-- See https://checkstyle.org/config_sizes.html                 -->
-          <!-- module name="MethodLength"/ -->
+          <module name="MethodLength"/>
           <module name="ParameterNumber"/>
 
           <!-- Checks for whitespace                                        -->
@@ -155,25 +132,21 @@
           <module name="MethodParamPad"/>
           <module name="NoWhitespaceAfter"/>
           <module name="NoWhitespaceBefore"/>
-          <!-- module name="OperatorWrap"/ -->
-          <!-- module name="ParenPad"/ -->
+          <module name="OperatorWrap"/>
+          <module name="ParenPad"/>
           <module name="TypecastParenPad"/>
-          <module name="WhitespaceAfter">
-             <property name="tokens" value="COMMA, SEMI"/>
-          </module>
+          <module name="WhitespaceAfter"/>
           <module name="WhitespaceAround"/>
 
           <!-- Modifier Checks                                              -->
           <!-- See https://checkstyle.org/config_modifier.html              -->
           <module name="ModifierOrder"/>
-          <!-- module name="RedundantModifier"/ -->
+          <module name="RedundantModifier"/>
 
           <!-- Checks for blocks. You know, those {}'s                      -->
           <!-- See https://checkstyle.org/config_blocks.html                -->
           <module name="AvoidNestedBlocks"/>
-          <module name="EmptyBlock">
-             <property name="option" value="text"/>
-          </module>
+          <module name="EmptyBlock"/>
           <module name="LeftCurly"/>
           <module name="NeedBraces"/>
           <module name="RightCurly"/>
@@ -193,7 +166,7 @@
 
           <!-- Checks for class design                                      -->
           <!-- See https://checkstyle.org/config_design.html                -->
-          <!-- module name="DesignForExtension"/ -->
+          <module name="DesignForExtension"/>
           <module name="FinalClass"/>
           <module name="HideUtilityClassConstructor"/>
           <module name="InterfaceIsType"/>
