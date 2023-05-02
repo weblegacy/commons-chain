@@ -160,7 +160,6 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      * Default, no argument constructor.
      */
     public ContextBase() {
-        super();
     }
 
     /**

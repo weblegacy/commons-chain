@@ -61,7 +61,6 @@ class ConfigCatalogRule extends Rule {
      *        created {@link Catalog} instances
      */
     ConfigCatalogRule(String nameAttribute, String catalogClass) {
-        super();
         this.nameAttribute = nameAttribute;
         this.catalogClass = catalogClass;
     }

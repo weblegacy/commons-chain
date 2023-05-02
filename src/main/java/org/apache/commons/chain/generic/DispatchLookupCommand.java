@@ -64,7 +64,6 @@ public class DispatchLookupCommand<C extends Context> extends LookupCommand<C> {
      * {@code CatalogFactory.getInstance()} will be used.
      */
     public DispatchLookupCommand() {
-        super();
     }
 
     /**

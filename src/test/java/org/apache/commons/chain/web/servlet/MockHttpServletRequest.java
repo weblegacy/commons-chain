@@ -49,24 +49,20 @@ import org.apache.commons.chain.web.MockPrincipal;
  */
 public class MockHttpServletRequest implements HttpServletRequest {
     public MockHttpServletRequest() {
-        super();
     }
 
     public MockHttpServletRequest(HttpSession session) {
-        super();
         setHttpSession(session);
     }
 
     public MockHttpServletRequest(String contextPath, String servletPath,
                                   String pathInfo, String queryString) {
-        super();
         setPathElements(contextPath, servletPath, pathInfo, queryString);
     }
 
     public MockHttpServletRequest(String contextPath, String servletPath,
                                   String pathInfo, String queryString,
                                   HttpSession session) {
-        super();
         setPathElements(contextPath, servletPath, pathInfo, queryString);
         setHttpSession(session);
     }

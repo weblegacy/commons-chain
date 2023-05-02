@@ -30,11 +30,9 @@ import org.apache.commons.chain.web.MockEnumeration;
  */
 public class MockHttpSession implements HttpSession {
     public MockHttpSession() {
-        super();
     }
 
     public MockHttpSession(ServletContext servletContext) {
-        super();
         setServletContext(servletContext);
     }
 

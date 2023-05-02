@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Remove redundant calls to super()
 * Remove useless null-check
 * Resolve pmd messages
 * Resolve all checkstyle-errors
