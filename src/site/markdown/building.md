@@ -22,15 +22,13 @@ author: Commons Documentation Team <dev@commons.apache.org>
 
 ## Overview
 
-Commons Chain uses [Maven 2](https://maven.apache.org) or
-[Ant](https://ant.apache.org) as a build system.
+Commons Chain uses [Apache Maven](https://maven.apache.org) as a build system.
 
-Chain 1.2 requires a minimum of JDK 1.3 to build, although the Maven 2 build
-requires JDK 1.4+
+Chain 1.3 requires a minimum of JDK 1.8 to build.
 
-## Maven 2 Goals
+## Apache Maven Goals
 
-The following **_Maven 2_** commands can be used to build Chain:
+The following **_Maven_** commands can be used to build Chain:
 
 * `mvn clean` - clean up
 * `mvn test` - compile and run the unit tests
@@ -38,13 +36,3 @@ The following **_Maven 2_** commands can be used to build Chain:
 * `mvn package` - build the jar
 * `mvn install` - build the jar and install in local maven repository
 * `mvn site assembly:assembly` - Create the source and binary distributions
-
-## Ant Goals
-
-The following **_Ant_** commands can be used to build Chain:
-
-* `ant clean` - clean up
-* `ant test` - compile and run the unit tests
-* `ant javadoc` - create javadocs
-* `ant jar` - build the jar
-* `ant dist` - Create the source and binary distributions
