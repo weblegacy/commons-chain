@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Config jar-plugin to generate a more detail `MANIFEST.MF`
 * Add license and organization to POM
 * Doc: Update links to GitHub
 * Doc: Building only with `Maven`
