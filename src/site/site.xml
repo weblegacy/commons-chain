@@ -36,18 +36,17 @@
       <item name="Overview"      href="/index.html"/>
       <item name="Proposal"      href="/proposal.html"/>
       <item name="Whiteboard"    href="/whiteboard.html"/>
-      <item name="Download"      href="http://commons.apache.org/chain/download_chain.cgi"/>
+      <item name="Download"      href="https://github.com/weblegacy/commons-chain/releases"/>
       <item name="Release Notes" href="/changes-report.html"/>
       <item name="Cookbook"      href="/cookbook.html"/>
-      <item name="Javadoc (latest release)" href="api-release/index.html"/>
-      <item name="Wiki"          href="http://wiki.apache.org/commons/Chain"/>
+      <item name="Javadoc"       href="apidocs/index.html"/>
+      <item name="Wiki"          href="https://cwiki.apache.org/confluence/display/commons/Chain"/>
     </menu>
     
     <menu name="Development">
-      <item name="Mailing Lists"           href="/mail-lists.html"/>
-      <item name="Issue Tracking"          href="/issue-tracking.html"/>
-      <item name="Source Repository"       href="/source-repository.html"/>
-      <item name="Javadoc (latest)"        href="http://commons.apache.org/chain/apidocs/index.html"/>
+      <item name="Mailing Lists"           href="/mailing-lists.html"/>
+      <item name="Issue Tracking"          href="/issue-management.html"/>
+      <item name="Source Repository"       href="/scm.html"/>
       <item name="Building"                href="/building.html"/>
     </menu>
 

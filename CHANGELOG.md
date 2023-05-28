@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Doc: Update links to GitHub
 * Doc: Building only with `Maven`
 * Move `proposal`- and `whiteboard`-doc to site
 * Convert site-doc-files to md

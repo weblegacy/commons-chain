@@ -77,21 +77,21 @@ changes in the context that is supplied.
 
 ## Documentation
 
-* The [Javadoc](./api-release/index.html) of the latest Release.
+* The [Javadoc](./apidocs/index.html) of the latest Release.
 * The [Cookbook](./cookbook.html) containing "recipes" for using the chain.
-* The [SVN repository](./source-repository.html) can be browsed.
+* The [Source Code Management](./scm.html) can be browsed.
 
 ## Downloading Chain
 
-See the [Downloads](./downloads.html) page for current/previous
+See the [Downloads](https://github.com/weblegacy/commons-chain/releases) page for current/previous
 releases.
 
 ## Support
 
-The [commons mailing lists](./mail-lists.html) act as the main support forum.
+The [commons mailing lists](./mailing-lists.html) act as the main support forum.
 The user list is suitable for most library usage queries.
 The dev list is intended for the development discussion.
 Please remember that the lists are shared between all commons components,
 so prefix your email by [chain].
 
-Issues may be reported via [ASF JIRA](./issue-tracking.html).
+Issues may be reported via [GitHub Issues](./issue-management.html).

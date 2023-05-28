@@ -30,8 +30,8 @@
     </description>
     <url>http://commons.apache.org/chain/</url>
     <issueManagement>
-        <system>jira</system>
-        <url>http://issues.apache.org/jira/browse/CHAIN</url>
+        <system>GitHub</system>
+        <url>https://github.com/weblegacy/commons-chain/issues</url>
     </issueManagement>
     <inceptionYear>2003</inceptionYear>
 
@@ -100,6 +100,17 @@
 
     <developers>
         <developer>
+            <id>ste-gr</id>
+            <name>Stefan Graff</name>
+            <email>stefan.graff@gmx.at</email>
+            <url>https://github.com/ste-gr</url>
+            <roles>
+                <role>architect (since 2023)</role>
+                <role>developer (since 2023)</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
             <name>Craig McClanahan</name>
             <id>craigmcc</id>
             <email>craigmcc at apache.org</email>
@@ -137,9 +148,9 @@
     </developers>
 
     <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/chain/trunk/</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/chain/trunk/</developerConnection>
-        <url>http://svn.apache.org/viewvc/commons/proper/chain/trunk/</url>
+        <connection>scm:git:https://github.com/weblegacy/commons-chain.git</connection>
+        <developerConnection>scm:git:git@github.com:weblegacy/commons-chain.git</developerConnection>
+        <url>https://github.com/weblegacy/commons-chain</url>
     </scm>
 
     <properties>
@@ -160,7 +171,7 @@
         <commons.osgi.import>!javax.portlet,*</commons.osgi.import>
         <commons.osgi.dynamicImport>javax.portlet</commons.osgi.dynamicImport>
     </properties> 
-  
+
     <build>
         <pluginManagement>
             <plugins>
