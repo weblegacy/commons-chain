@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Move `proposal`- and `whiteboard`-doc to site
 * Convert site-doc-files to md
 * Delete old jdk-1.3-profile
 * Delete old building-files

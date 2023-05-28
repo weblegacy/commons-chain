@@ -34,6 +34,8 @@
   <body>
     <menu name="Chain">
       <item name="Overview"      href="/index.html"/>
+      <item name="Proposal"      href="/proposal.html"/>
+      <item name="Whiteboard"    href="/whiteboard.html"/>
       <item name="Download"      href="http://commons.apache.org/chain/download_chain.cgi"/>
       <item name="Release Notes" href="/changes-report.html"/>
       <item name="Cookbook"      href="/cookbook.html"/>
