@@ -1,0 +1,6 @@
+org.apache.commons.chain.config
+org.apache.commons.chain.generic
+org.apache.commons.chain.impl
+org.apache.commons.chain.web
+org.apache.commons.chain.web.portlet
+org.apache.commons.chain.web.servlet

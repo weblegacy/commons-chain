@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DispatchLookupCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.generic</a> &gt; <span class="el_source">DispatchLookupCommand.java</span></div><h1>DispatchLookupCommand.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.generic;
+
+import java.lang.reflect.Method;
+import java.util.WeakHashMap;
+
+import org.apache.commons.chain.CatalogFactory;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.Filter;
+
+/**
+ * This command combines elements of the {@link LookupCommand} with the
+ * {@link DispatchCommand}. Look up a specified {@link Command} (which could
+ * also be a {@link org.apache.commons.chain.Chain}) in a
+ * {@link org.apache.commons.chain.Catalog}, and delegate execution to
+ * it. Introspection is used to lookup the appropriate method to delegate
+ * execution to. If the delegated-to {@link Command} is also a
+ * {@link Filter}, its {@code postprocess()} method will also be invoked
+ * at the appropriate time.
+ *
+ * &lt;p&gt;The name of the {@link Command} can be specified either directly (via
+ * the {@code name} property) or indirectly (via the {@code nameKey}
+ * property). Exactly one of these must be set.&lt;/p&gt;
+ *
+ * &lt;p&gt;The name of the method to be called can be specified either directly
+ * (via the {@code method} property) or indirectly (via the {@code methodKey}
+ * property). Exactly one of these must be set.&lt;/p&gt;
+ *
+ * &lt;p&gt;If the {@code optional} property is set to {@code true},
+ * failure to find the specified command in the specified catalog will be
+ * silently ignored. Otherwise, a lookup failure will trigger an
+ * {@code IllegalArgumentException}.&lt;/p&gt;
+ *
+ * @param &lt;C&gt; Type of the context associated with this command
+ *
+ * @author Sean Schofield
+ * @version $Revision$
+ * @since Chain 1.1
+ */
+public class DispatchLookupCommand&lt;C extends Context&gt; extends LookupCommand&lt;C&gt; {
+
+    // -------------------------------------------------------------- Constructors
+
+    /**
+     * Create an instance with an unspecified {@code catalogFactory} property.
+     * This property can be set later using {@code setProperty}, or if it is
+     * not set, the static singleton instance from
+     * {@code CatalogFactory.getInstance()} will be used.
+     */
+<span class="fc" id="L66">    public DispatchLookupCommand() {</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Create an instance and initialize the {@code catalogFactory} property
+     * to given {@code factory}.
+     *
+     * @param factory The Catalog Factory.
+     */
+    public DispatchLookupCommand(CatalogFactory&lt;C&gt; factory) {
+<span class="nc" id="L76">        super(factory);</span>
+<span class="nc" id="L77">    }</span>
+
+    // ------------------------------------------------------- Static Variables
+
+    /**
+     * The base implementation expects dispatch methods to take a
+     * {@code Context} as their only argument.
+     */
+<span class="fc" id="L85">    private static final Class&lt;?&gt;[] DEFAULT_SIGNATURE =</span>
+        new Class&lt;?&gt;[] {Context.class};
+
+    // ----------------------------------------------------- Instance Variables
+
+<span class="pc" id="L90">    private WeakHashMap&lt;String, Method&gt; methods = new WeakHashMap&lt;&gt;();</span>
+
+    // ------------------------------------------------------------- Properties
+
+<span class="pc" id="L94">    private String method = null;</span>
+<span class="pc" id="L95">    private String methodKey = null;</span>
+
+    /**
+     * Return the method name.
+     *
+     * @return The method name.
+     */
+    public String getMethod() {
+<span class="fc" id="L103">        return method;</span>
+    }
+
+    /**
+     * Return the Context key for the method name.
+     *
+     * @return The Context key for the method name.
+     */
+    public String getMethodKey() {
+<span class="fc" id="L112">        return methodKey;</span>
+    }
+
+    /**
+     * Set the method name.
+     *
+     * @param method The method name.
+     */
+    public void setMethod(String method) {
+<span class="fc" id="L121">        this.method = method;</span>
+<span class="fc" id="L122">    }</span>
+
+    /**
+     * Set the Context key for the method name.
+     *
+     * @param methodKey The Context key for the method name.
+     */
+    public void setMethodKey(String methodKey) {
+<span class="fc" id="L130">        this.methodKey = methodKey;</span>
+<span class="fc" id="L131">    }</span>
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Look up the specified command, and (if found) execute it.
+     *
+     * @param context The context for this request
+     *
+     * @return the result of executing the looked-up command's method, or
+     *         {@code false} if no command is found.
+     *
+     * @throws Exception if no such {@link Command} can be found and the
+     *         {@code optional} property is set to {@code false}
+     */
+    @Override
+    public boolean execute(C context) throws Exception {
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">        if (this.getMethod() == null &amp;&amp; this.getMethodKey() == null) {</span>
+<span class="nc" id="L149">            throw new IllegalStateException(</span>
+                &quot;Neither 'method' nor 'methodKey' properties are defined &quot;
+            );
+        }
+
+<span class="fc" id="L154">        Command&lt;C&gt; command = getCommand(context);</span>
+
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (command != null) {</span>
+<span class="fc" id="L157">            Method methodObject = extractMethod(command, context);</span>
+<span class="fc" id="L158">            Object obj = methodObject.invoke(command, getArguments(context));</span>
+
+<span class="pc bpc" id="L160" title="2 of 4 branches missed.">            return obj instanceof Boolean &amp;&amp; ((Boolean) obj).booleanValue();</span>
+        } else {
+<span class="nc" id="L162">            return false;</span>
+        }
+    }
+
+    // ------------------------------------------------------ Protected Methods
+
+    /**
+     * Return a {@code Class[]} describing the expected signature of
+     * the method. The default is a signature that just accepts the command's
+     * {@link Context}. The method can be overidden to provide a different
+     * method signature.
+     *
+     * @return the expected method signature
+     */
+    protected Class&lt;?&gt;[] getSignature() {
+<span class="fc" id="L177">        return DEFAULT_SIGNATURE;</span>
+    }
+
+    /**
+     * Get the arguments to be passed into the dispatch method.
+     * Default implementation simply returns the context which was passed in,
+     * but subclasses could use this to wrap the context in some other type,
+     * or extract key values from the context to pass in. The length and types
+     * of values returned by this must coordinate with the return value of
+     * {@code getSignature()}.
+     *
+     * @param context The context associated with the request
+     *
+     * @return the method arguments to be used
+     */
+    protected Object[] getArguments(C context) {
+<span class="fc" id="L193">        return new Object[] {context};</span>
+    }
+
+    // -------------------------------------------------------- Private Methods
+
+    /**
+     * Extract the dispatch method. The base implementation uses the
+     * command's {@code method} property at the name of a method
+     * to look up, or, if that is not defined, uses the {@code methodKey}
+     * to lookup the method name in the context.
+     *
+     * @param command The command that contains the method to be
+     *        executed.
+     * @param context The context associated with this request
+     *
+     * @return the dispatch method
+     *
+     * @throws NoSuchMethodException if no method can be found under the
+     *         specified name.
+     * @throws NullPointerException if no methodName can be determined
+     */
+    private Method extractMethod(Command&lt;C&gt; command, C context)
+        throws NoSuchMethodException {
+
+<span class="fc" id="L217">        String methodName = this.getMethod();</span>
+
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (methodName == null) {</span>
+<span class="fc" id="L220">            Object methodContextObj = context.get(getMethodKey());</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">            if (methodContextObj == null) {</span>
+<span class="nc" id="L222">                throw new NullPointerException(&quot;No value found in context under &quot; + getMethodKey());</span>
+            }
+<span class="fc" id="L224">            methodName = methodContextObj.toString();</span>
+        }
+
+<span class="fc" id="L227">        Method theMethod = null;</span>
+
+<span class="fc" id="L229">        synchronized (methods) {</span>
+<span class="fc" id="L230">            theMethod = methods.get(methodName);</span>
+
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">            if (theMethod == null) {</span>
+<span class="fc" id="L233">                theMethod = command.getClass().getMethod(methodName,</span>
+<span class="fc" id="L234">                                                         getSignature());</span>
+<span class="fc" id="L235">                methods.put(methodName, theMethod);</span>
+            }
+<span class="fc" id="L237">        }</span>
+
+<span class="fc" id="L239">        return theMethod;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

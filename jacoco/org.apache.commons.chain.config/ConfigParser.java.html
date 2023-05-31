@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.config</a> &gt; <span class="el_source">ConfigParser.java</span></div><h1>ConfigParser.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.config;
+
+import java.net.URL;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.digester.Digester;
+import org.apache.commons.digester.RuleSet;
+
+/**
+ * Class to parse the contents of an XML configuration file (using
+ * Commons Digester) that defines and configures commands and command chains
+ * to be registered in a {@link Catalog}. Advanced users can configure the
+ * detailed parsing behavior by configuring the properties of an instance
+ * of this class prior to calling the {@code parse()} method. It
+ * is legal to call the {@code parse()} method more than once, in order
+ * to parse more than one configuration document.
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+<span class="fc" id="L37">public class ConfigParser {</span>
+
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The {@code Digester} to be used for parsing.
+     */
+<span class="fc" id="L44">    private Digester digester = null;</span>
+
+    /**
+     * The {@code RuleSet} to be used for configuring our Digester
+     * parsing rules.
+     */
+<span class="fc" id="L50">    private RuleSet ruleSet = null;</span>
+
+    /**
+     * Should Digester use the context class loader?
+     */
+<span class="fc" id="L55">    private boolean useContextClassLoader = true;</span>
+
+    // ------------------------------------------------------------- Properties
+
+    /**
+     * Return the {@code Digester} instance to be used for
+     * parsing, creating one if necessary.
+     *
+     * @return A Digester instance.
+     */
+    public Digester getDigester() {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (digester == null) {</span>
+<span class="fc" id="L67">            digester = new Digester();</span>
+<span class="fc" id="L68">            RuleSet ruleSet = getRuleSet();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            digester.setNamespaceAware(ruleSet.getNamespaceURI() != null);</span>
+<span class="fc" id="L70">            digester.setUseContextClassLoader(getUseContextClassLoader());</span>
+<span class="fc" id="L71">            digester.setValidating(false);</span>
+<span class="fc" id="L72">            digester.addRuleSet(ruleSet);</span>
+        }
+<span class="fc" id="L74">        return digester;</span>
+    }
+
+    /**
+     * Return the {@code RuleSet} to be used for configuring
+     * our {@code Digester} parsing rules, creating one if necessary.
+     *
+     * @return The RuleSet for configuring a Digester instance.
+     */
+    public RuleSet getRuleSet() {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (ruleSet == null) {</span>
+<span class="fc" id="L85">            ruleSet = new ConfigRuleSet();</span>
+        }
+<span class="fc" id="L87">        return ruleSet;</span>
+    }
+
+    /**
+     * Set the {@code RuleSet} to be used for configuring
+     * our {@code Digester} parsing rules.
+     *
+     * @param ruleSet The new RuleSet to use
+     */
+    public void setRuleSet(RuleSet ruleSet) {
+<span class="nc" id="L97">        this.digester = null;</span>
+<span class="nc" id="L98">        this.ruleSet = ruleSet;</span>
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * Return the &quot;use context class loader&quot; flag. If set to
+     * {@code true}, Digester will attempt to instantiate new
+     * command and chain instances from the context class loader.
+     *
+     * @return {@code true} if Digester should use the context class loader.
+     */
+    public boolean getUseContextClassLoader() {
+<span class="fc" id="L109">        return this.useContextClassLoader;</span>
+    }
+
+    /**
+     * Set the &quot;use context class loader&quot; flag.
+     *
+     * @param useContextClassLoader The new flag value
+     */
+    public void setUseContextClassLoader(boolean useContextClassLoader) {
+<span class="nc" id="L118">        this.useContextClassLoader = useContextClassLoader;</span>
+<span class="nc" id="L119">    }</span>
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Parse the XML document at the specified URL, using the configured
+     * {@code RuleSet}, registering top level commands into the specified
+     * {@link Catalog}. Use this method &lt;strong&gt;only&lt;/strong&gt; if you have
+     * &lt;strong&gt;NOT&lt;/strong&gt; included any {@code factory} element in your
+     * configuration resource, and wish to supply the catalog explicitly.
+     *
+     * @param catalog {@link Catalog} into which configured chains are
+     *        to be registered
+     * @param url {@code URL} of the XML document to be parsed
+     *
+     * @throws Exception if a parsing error occurs
+     *
+     * @deprecated Use parse(URL) on a configuration resource with &quot;factory&quot;
+     *  element(s) embedded
+     */
+    @Deprecated
+    public void parse(Catalog&lt;?&gt; catalog, URL url) throws Exception {
+        // Prepare our Digester instance
+<span class="nc" id="L142">        Digester digester = getDigester();</span>
+<span class="nc" id="L143">        digester.clear();</span>
+<span class="nc" id="L144">        digester.push(catalog);</span>
+
+        // Parse the configuration document
+<span class="nc" id="L147">        digester.parse(url);</span>
+<span class="nc" id="L148">    }</span>
+
+    /**
+     * Parse the XML document at the specified URL using the configured
+     * {@code RuleSet}, registering catalogs with nested chains and
+     * commands as they are encountered. Use this method &lt;strong&gt;only&lt;/strong&gt;
+     * if you have included one or more {@code factory} elements in your
+     * configuration resource.
+     *
+     * @param url {@code URL} of the XML document to be parsed
+     *
+     * @throws Exception if a parsing error occurs
+     */
+    public void parse(URL url) throws Exception {
+        // Prepare our Digester instance
+<span class="fc" id="L163">        Digester digester = getDigester();</span>
+<span class="fc" id="L164">        digester.clear();</span>
+
+        // Parse the configuration document
+<span class="fc" id="L167">        digester.parse(url);</span>
+<span class="fc" id="L168">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

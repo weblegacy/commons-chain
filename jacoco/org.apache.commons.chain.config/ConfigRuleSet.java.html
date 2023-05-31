@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigRuleSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.config</a> &gt; <span class="el_source">ConfigRuleSet.java</span></div><h1>ConfigRuleSet.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.config;
+
+import org.apache.commons.digester.Digester;
+import org.apache.commons.digester.RuleSetBase;
+
+/**
+ * Digester {@code RuleSet} for configuring &lt;em&gt;Chain of
+ * Responsibility&lt;/em&gt; command chains, and adding them to an appropriate
+ * {@link org.apache.commons.chain.Catalog}. The following properties
+ * may be configured prior to executing the {@code addRuleInstance()}
+ * method in order to influence the rules that get added, with default
+ * values in square brackets:
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;strong&gt;catalogClass&lt;/strong&gt; -- Fully qualified name of the
+ *     implementation class used to create new
+ *     {@link org.apache.commons.chain.Catalog} instances.
+ *     If not specified, the default value is
+ *     {@code org.apache.commons.chain.impl.CatalogBase}.&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;catalogElement&lt;/strong&gt; -- Name of the XML element representing
+ *     the addition of a {@link org.apache.commons.chain.Catalog}.
+ *     Any such catalog that is created will be registered with the
+ *     {@link org.apache.commons.chain.CatalogFactory} instance for our
+ *     application, under the name specified by the {@code nameAttribute}
+ *     attribute (if present), or as the default {@link org.apache.commons.chain.Catalog}.
+ *     If not specified, the default value is {@code catalog}.&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;chainClass&lt;/strong&gt; -- Fully qualified name of the implementation
+ *     class used to create new {@link org.apache.commons.chain.Chain} instances.
+ *     If not specified, the default value is
+ *     {@code org.apache.commons.chain.impl.ChainBase}.
+ *     &lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;chainElement&lt;/strong&gt; -- Name of the XML element representing
+ *     the addition of a {@link org.apache.commons.chain.Chain}. A chain
+ *     element has the same functionality as a command element, except that
+ *     it defaults the implementation class to
+ *     {@code org.apache.commons.chain.impl.ChainBase}. [chain]&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;classAttribute&lt;/strong&gt; -- Attribute on a chain (optional) or
+ *     command (required) element that specifies the fully qualified class
+ *     name of the implementation class that should be instantiated.
+ *     [className]&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;commandElement&lt;/strong&gt; -- Name of the XML element
+ *     representing the addition of a {@link org.apache.commons.chain.Command}.
+ *     An implementation class name must be provided on the attribute named by the
+ *     {@code classAttribute} property. [command]&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;defineElement&lt;/strong&gt; -- Name of the XML element
+ *     that associates the element specified by the {@code nameAttribute}
+ *     attributes with a {@link org.apache.commons.chain.Command} or
+ *     {@link org.apache.commons.chain.Chain} implementation class
+ *     named by the {@code classAttribute} attribute. [define]&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;nameAttribute&lt;/strong&gt; -- Attribute on an outermost chain or
+ *     command element that will be used to register this command with the
+ *     associated {@link org.apache.commons.chain.Catalog} instance on the stack.
+ *     [name]&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;namespaceURI&lt;/strong&gt; -- The XML namespace URI with which these
+ *     rules will be associated, or {@code null} for no namespace.
+ *     [null]&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+<span class="fc" id="L77">public class ConfigRuleSet extends RuleSetBase {</span>
+
+    // ----------------------------------------------------- Instance Variables
+
+<span class="fc" id="L81">    private String catalogClass = &quot;org.apache.commons.chain.impl.CatalogBase&quot;;</span>
+<span class="fc" id="L82">    private String catalogElement = &quot;catalog&quot;;</span>
+<span class="fc" id="L83">    private String chainClass = &quot;org.apache.commons.chain.impl.ChainBase&quot;;</span>
+<span class="fc" id="L84">    private String chainElement = &quot;chain&quot;;</span>
+<span class="fc" id="L85">    private String classAttribute = &quot;className&quot;;</span>
+<span class="fc" id="L86">    private String commandElement = &quot;command&quot;;</span>
+<span class="fc" id="L87">    private String defineElement = &quot;define&quot;;</span>
+<span class="fc" id="L88">    private String nameAttribute = &quot;name&quot;;</span>
+
+    // ------------------------------------------------------------- Properties
+
+    /**
+     * Return the fully qualified {@link org.apache.commons.chain.Catalog}
+     * implementation class.
+     *
+     * @return The Catalog's class name.
+     */
+    public String getCatalogClass() {
+<span class="nc" id="L99">        return this.catalogClass;</span>
+    }
+
+    /**
+     * Set the fully qualified {@link org.apache.commons.chain.Catalog}
+     * implementation class.
+     *
+     * @param catalogClass The new {@link org.apache.commons.chain.Catalog}
+     *        implementation class
+     */
+    public void setCatalogClass(String catalogClass) {
+<span class="nc" id="L110">        this.catalogClass = catalogClass;</span>
+<span class="nc" id="L111">    }</span>
+
+    /**
+     * Return the element name of a catalog element.
+     *
+     * @return The element name of a catalog element.
+     */
+    public String getCatalogElement() {
+<span class="fc" id="L119">        return this.catalogElement;</span>
+    }
+
+    /**
+     * Set the element name of a catalog element.
+     *
+     * @param catalogElement The new element name
+     */
+    public void setCatalogElement(String catalogElement) {
+<span class="nc" id="L128">        this.catalogElement = catalogElement;</span>
+<span class="nc" id="L129">    }</span>
+
+    /**
+     * Return the fully qualified {@link org.apache.commons.chain.Chain}
+     * implementation class.
+     *
+     * @return The Chain's class name.
+     */
+    public String getChainClass() {
+<span class="fc" id="L138">        return this.chainClass;</span>
+    }
+
+    /**
+     * Set the fully qualified {@link org.apache.commons.chain.Chain}
+     * implementation class.
+     *
+     * @param chainClass The new {@link org.apache.commons.chain.Chain}
+     *        implementation class
+     */
+    public void setChainClass(String chainClass) {
+<span class="nc" id="L149">        this.chainClass = chainClass;</span>
+<span class="nc" id="L150">    }</span>
+
+    /**
+     * Return the element name of a chain element.
+     *
+     * @return The element name of a catalog element.
+     */
+    public String getChainElement() {
+<span class="fc" id="L158">        return this.chainElement;</span>
+    }
+
+    /**
+     * Set the element name of a chain element.
+     *
+     * @param chainElement The new element name
+     */
+    public void setChainElement(String chainElement) {
+<span class="nc" id="L167">        this.chainElement = chainElement;</span>
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * Return the attribute name of a class attribute.
+     *
+     * @return The attribute name of a class attribute.
+     */
+    public String getClassAttribute() {
+<span class="fc" id="L176">        return this.classAttribute;</span>
+    }
+
+    /**
+     * Set the attribute name of a class attribute.
+     *
+     * @param classAttribute The new attribute name
+     */
+    public void setClassAttribute(String classAttribute) {
+<span class="nc" id="L185">        this.classAttribute = classAttribute;</span>
+<span class="nc" id="L186">    }</span>
+
+    /**
+     * Return the element name of a command element.
+     *
+     * @return The element name of a command element.
+     */
+    public String getCommandElement() {
+<span class="fc" id="L194">        return this.commandElement;</span>
+    }
+
+    /**
+     * Set the element name of a command element.
+     *
+     * @param commandElement The new element name
+     */
+    public void setCommandElement(String commandElement) {
+<span class="nc" id="L203">        this.commandElement = commandElement;</span>
+<span class="nc" id="L204">    }</span>
+
+    /**
+     * Return the element name of a define element.
+     *
+     * @return The element name of a define element.
+     */
+    public String getDefineElement() {
+<span class="fc" id="L212">        return this.defineElement;</span>
+    }
+
+    /**
+     * Set the element name of a define element.
+     *
+     * @param defineElement The new element name
+     */
+    public void setDefineElement(String defineElement) {
+<span class="nc" id="L221">        this.defineElement = defineElement;</span>
+<span class="nc" id="L222">    }</span>
+
+    /**
+     * Return the attribute name of a name attribute.
+     *
+     * @return The attribute name of an attribute element.
+     */
+    public String getNameAttribute() {
+<span class="fc" id="L230">        return this.nameAttribute;</span>
+    }
+
+    /**
+     * Set the attribute name of a name attribute.
+     *
+     * @param nameAttribute The new attribute name
+     */
+    public void setNameAttribute(String nameAttribute) {
+<span class="nc" id="L239">        this.nameAttribute = nameAttribute;</span>
+<span class="nc" id="L240">    }</span>
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Add the set of Rule instances defined in this RuleSet to the
+     * specified {@code Digester} instance, associating them with
+     * our namespace URI (if any). This method should only be called
+     * by a Digester instance.
+     *
+     * @param digester Digester instance to which the new Rule instances
+     *        should be added.
+     */
+    @Override
+    public void addRuleInstances(Digester digester) {
+        // Add rules for a catalog element
+<span class="fc" id="L256">        digester.addRule(&quot;*/&quot; + getCatalogElement(),</span>
+                         new ConfigCatalogRule(nameAttribute, catalogClass));
+<span class="fc" id="L258">        digester.addSetProperties(&quot;*/&quot; + getCatalogElement());</span>
+
+        // Add rules for a chain element
+<span class="fc" id="L261">        digester.addObjectCreate(&quot;*/&quot; + getChainElement(),</span>
+<span class="fc" id="L262">                                 getChainClass(),</span>
+<span class="fc" id="L263">                                 getClassAttribute());</span>
+<span class="fc" id="L264">        digester.addSetProperties(&quot;*/&quot; + getChainElement());</span>
+<span class="fc" id="L265">        digester.addRule(&quot;*/&quot; + getChainElement(),</span>
+                         new ConfigRegisterRule(nameAttribute));
+
+        // Add rules for a command element
+<span class="fc" id="L269">        digester.addObjectCreate(&quot;*/&quot; + getCommandElement(),</span>
+                                 null,
+<span class="fc" id="L271">                                 getClassAttribute());</span>
+<span class="fc" id="L272">        digester.addSetProperties(&quot;*/&quot; + getCommandElement());</span>
+<span class="fc" id="L273">        digester.addRule(&quot;*/&quot; + getCommandElement(),</span>
+                         new ConfigRegisterRule(nameAttribute));
+
+        // Add rules for a define element
+<span class="fc" id="L277">        digester.addRule(&quot;*/&quot; + getDefineElement(),</span>
+<span class="fc" id="L278">                         new ConfigDefineRule(getNameAttribute(),</span>
+<span class="fc" id="L279">                                              getClassAttribute()));</span>
+<span class="fc" id="L280">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractSetLocaleCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web</a> &gt; <span class="el_source">AbstractSetLocaleCommand.java</span></div><h1>AbstractSetLocaleCommand.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web;
+
+import java.util.Locale;
+
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+
+/**
+ * Abstract base {@link Command} implementation for setting the
+ * response locale for this response to the {@code Locale} stored
+ * under the context attribute key returned by the {@code localeKey}
+ * property.
+ *
+ * @param &lt;C&gt; Type of the context associated with this command
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+<span class="fc" id="L35">public abstract class AbstractSetLocaleCommand&lt;C extends WebContext&gt; implements Command&lt;C&gt; {</span>
+
+    // -------------------------------------------------------------- Properties
+
+    /**
+     * The context attribute key used to retrieve the {@code Locale}.
+     */
+<span class="fc" id="L42">    private String localeKey = &quot;locale&quot;;</span>
+
+    /**
+     * Return the context attribute key under which we will retrieve
+     * the response {@code Locale}.
+     *
+     * @return The context attribute key of the request {@code Locale}.
+     */
+    public String getLocaleKey() {
+<span class="fc" id="L51">        return this.localeKey;</span>
+    }
+
+    /**
+     * Set the context attribute key under which we will retrieve
+     * the response {@code Locale}.
+     *
+     * @param localeKey The new context attribute key
+     */
+    public void setLocaleKey(String localeKey) {
+<span class="fc" id="L61">        this.localeKey = localeKey;</span>
+<span class="fc" id="L62">    }</span>
+
+    // --------------------------------------------------------- Command Methods
+
+    /**
+     * Retrieve the {@code Locale} stored under the specified
+     * context attribute key, and establish it on this response.
+     *
+     * @param context The {@link Context} we are operating on
+     *
+     * @return {@code false} so that processing will continue
+     *
+     * @throws Exception If an error occurs during execution.
+     */
+    @Override
+    public boolean execute(C context) throws Exception {
+<span class="fc" id="L78">        setLocale(context,</span>
+<span class="fc" id="L79">              (Locale) context.get(getLocaleKey()));</span>
+<span class="fc" id="L80">        return false;</span>
+    }
+
+    // ------------------------------------------------------- Protected Methods
+
+    /**
+     * Establish the specified {@code Locale} for this response.
+     *
+     * @param context The {@link Context} we are operating on.
+     * @param locale The Locale for the request.
+     */
+    protected abstract void setLocale(C context, Locale locale);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

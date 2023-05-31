@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChainProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.servlet</a> &gt; <span class="el_source">ChainProcessor.java</span></div><h1>ChainProcessor.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.CatalogFactory;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.web.ChainServlet;
+
+/**
+ * Custom subclass of {@link ChainServlet} that also dispatches incoming
+ * requests to a configurable {@link Command} loaded from the specified
+ * {@link Catalog}.
+ *
+ * &lt;p&gt;In addition to the &lt;em&gt;servlet&lt;/em&gt; init parameters supported by
+ * {@link ChainServlet}, this class supports the following additional
+ * parameters:&lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CATALOG&lt;/strong&gt; - Name of the
+ *     catalog from which to acquire commands to be executed. If not
+ *     specified, the default catalog for this application will be used.&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.COMMAND&lt;/strong&gt; - Name of the
+ *     {@link Command} (looked up in our configured {@link Catalog} used
+ *     to process all incoming servlet requests. If not specified,
+ *     defaults to {@code command}.&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;Also, the {@code org.apache.commons.chain.CONFIG_ATTR}
+ * init parameter is also used to identify the
+ * {@link org.apache.commons.chain.Context} attribute under
+ * which our configured {@link Catalog} will be made available to
+ * {@link Command}s processing our requests, in addition to its definition
+ * of the {@code ServletContext} attribute key under which the
+ * {@link Catalog} is available.&lt;/p&gt;
+ */
+
+<span class="fc" id="L57">public class ChainProcessor extends ChainServlet {</span>
+    private static final long serialVersionUID = -6817532768031279260L;
+
+    // ------------------------------------------------------ Manifest Constants
+
+    /**
+     * The name of the servlet init parameter containing the name of the
+     * {@link Catalog} to use for processing incoming requests.
+     */
+    public static final String CATALOG =
+        &quot;org.apache.commons.chain.CATALOG&quot;;
+
+    /**
+     * The default request attribute under which we expose the
+     * {@link Catalog} being used to subordinate {@link Command}s.
+     */
+    public static final String CATALOG_DEFAULT =
+        &quot;org.apache.commons.chain.CATALOG&quot;;
+
+    /**
+     * The name of the servlet init parameter containing the name of the
+     * {@link Command} (loaded from our configured {@link Catalog} to use
+     * for processing each incoming request.
+     */
+    public static final String COMMAND =
+        &quot;org.apache.commons.chain.COMMAND&quot;;
+
+    /**
+     * The default command name.
+     */
+    private static final String COMMAND_DEFAULT = &quot;command&quot;;
+
+    // ------------------------------------------------------ Instance Variables
+
+    /**
+     * The name of the context attribute under which our {@link Catalog}
+     * is stored. This value is also used as the name of the context
+     * attribute under which the catalog is exposed to commands. If not
+     * specified, we will look up commands in the appropriate
+     * {@link Catalog} retrieved from our {@link CatalogFactory}
+     */
+<span class="fc" id="L98">    private String attribute = null;</span>
+
+    /**
+     * The name of the {@link Catalog} to retrieve from the
+     * {@link CatalogFactory} for this application, or {@code null}
+     * to select the default {@link Catalog}.
+     */
+<span class="fc" id="L105">    private String catalog = null;</span>
+
+    /**
+     * The name of the {@link Command} to be executed for each incoming
+     * request.
+     */
+<span class="fc" id="L111">    private String command = null;</span>
+
+    // --------------------------------------------------------- Servlet Methods
+
+    /**
+     * Clean up as this application is shut down.
+     */
+    @Override
+    public void destroy() {
+<span class="nc" id="L120">        super.destroy();</span>
+<span class="nc" id="L121">        attribute = null;</span>
+<span class="nc" id="L122">        catalog = null;</span>
+<span class="nc" id="L123">        command = null;</span>
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * Cache the name of the command we should execute for each request.
+     *
+     * @throws ServletException if an initialization error occurs
+     */
+    @Override
+    public void init() throws ServletException {
+<span class="fc" id="L133">        super.init();</span>
+<span class="fc" id="L134">        attribute = getServletConfig().getInitParameter(CONFIG_ATTR);</span>
+<span class="fc" id="L135">        catalog = getServletConfig().getInitParameter(CATALOG);</span>
+<span class="fc" id="L136">        command = getServletConfig().getInitParameter(COMMAND);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (command == null) {</span>
+<span class="fc" id="L138">            command = COMMAND_DEFAULT;</span>
+        }
+<span class="fc" id="L140">    }</span>
+
+    /**
+     * Configure a {@link ServletWebContext} for the current request, and
+     * pass it to the {@code execute()} method of the specified
+     * {@link Command}, loaded from our configured {@link Catalog}.
+     *
+     * @param request The request we are processing
+     * @param response The response we are creating
+     *
+     * @throws IOException if an input/output error occurs
+     * @throws ServletException if a servlet exception occurs
+     */
+    @Override
+    public void service(HttpServletRequest request,
+                        HttpServletResponse response)
+        throws IOException, ServletException {
+
+<span class="nc" id="L158">        ServletWebContext context =</span>
+<span class="nc" id="L159">            new ServletWebContext(getServletContext(), request, response);</span>
+<span class="nc" id="L160">        Catalog&lt;ServletWebContext&gt; theCatalog = null;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (attribute != null) {</span>
+            @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L163">            Catalog&lt;ServletWebContext&gt; catalog = (Catalog&lt;ServletWebContext&gt;)</span>
+<span class="nc" id="L164">                    getServletContext().getAttribute(this.attribute);</span>
+<span class="nc" id="L165">            theCatalog = catalog;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        } else if (catalog != null) {</span>
+<span class="nc" id="L167">            theCatalog = CatalogFactory.&lt;ServletWebContext&gt;getInstance().getCatalog(catalog);</span>
+        } else {
+<span class="nc" id="L169">            theCatalog = CatalogFactory.&lt;ServletWebContext&gt;getInstance().getCatalog();</span>
+        }
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (attribute == null) {</span>
+<span class="nc" id="L172">            request.setAttribute(CATALOG_DEFAULT, theCatalog);</span>
+        }
+<span class="nc" id="L174">        Command&lt;ServletWebContext&gt; command = theCatalog.getCommand(this.command);</span>
+        try {
+<span class="nc" id="L176">            command.execute(context);</span>
+<span class="nc" id="L177">        } catch (Exception e) {</span>
+<span class="nc" id="L178">            throw new ServletException(e);</span>
+<span class="nc" id="L179">        }</span>
+<span class="nc" id="L180">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContextBase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.impl</a> &gt; <span class="el_source">ContextBase.java</span></div><h1>ContextBase.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.impl;
+
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.AbstractCollection;
+import java.util.AbstractSet;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.commons.chain.Context;
+
+/**
+ * Convenience base class for {@link Context} implementations.
+ *
+ * &lt;p&gt;In addition to the minimal functionality required by the {@link Context}
+ * interface, this class implements the recommended support for
+ * &lt;em&gt;Attribute-Property Transparency&lt;/em&gt;. This is implemented by
+ * analyzing the available JavaBeans properties of this class (or its
+ * subclass), exposes them as key-value pairs in the {@code Map},
+ * with the key being the name of the property itself.&lt;/p&gt;
+ *
+ * &lt;p&gt;&lt;strong&gt;IMPLEMENTATION NOTE&lt;/strong&gt; - Because {@code empty} is a
+ * read-only property defined by the {@code Map} interface, it may not
+ * be utilized as an attribute key or property name.&lt;/p&gt;
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+public class ContextBase extends ConcurrentHashMap&lt;String, Object&gt; implements Context {
+    private static final long serialVersionUID = 8739326206700827827L;
+
+    // ------------------------------------------------------ Static Variables
+
+    /**
+     * Distinguished singleton value that is stored in the map for each
+     * key that is actually a property. This value is used to ensure that
+     * {@code equals()} comparisons will always fail.
+     */
+<span class="fc" id="L63">    private static final Object SINGLETON = new Serializable() {</span>
+        private static final long serialVersionUID = -6023767081282668587L;
+
+        @Override
+        public boolean equals(Object object) {
+<span class="nc" id="L68">            return false;</span>
+        }
+
+        @Override
+        public int hashCode() {
+<span class="nc" id="L73">            return super.hashCode();</span>
+        }
+    };
+
+    /**
+     * Because {@code ConcurrentHashMap} doesn't accept null values, use
+     * equals-method from {@code AbstractMap}.
+     *
+     * @see java.util.AbstractMap#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (o == this) {</span>
+<span class="fc" id="L86">            return true;</span>
+        }
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (!(o instanceof Map)) {</span>
+<span class="nc" id="L90">            return false;</span>
+        }
+<span class="fc" id="L92">        Map&lt;?, ?&gt; m = (Map&lt;?, ?&gt;) o;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (m.size() != size()) {</span>
+<span class="fc" id="L94">            return false;</span>
+        }
+
+        try {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            for (Entry&lt;String, Object&gt; e : entrySet()) {</span>
+<span class="fc" id="L99">                String key = e.getKey();</span>
+<span class="fc" id="L100">                Object value = e.getValue();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                if (value == null) {</span>
+<span class="pc bpc" id="L102" title="2 of 4 branches missed.">                    if (!(m.get(key) == null &amp;&amp; m.containsKey(key))) {</span>
+<span class="nc" id="L103">                        return false;</span>
+                    }
+                } else {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">                    if (!value.equals(m.get(key))) {</span>
+<span class="nc" id="L107">                        return false;</span>
+                    }
+                }
+<span class="fc" id="L110">            }</span>
+<span class="nc" id="L111">        } catch (ClassCastException unused) {</span>
+<span class="nc" id="L112">            return false;</span>
+<span class="nc" id="L113">        } catch (NullPointerException unused) {</span>
+<span class="nc" id="L114">            return false;</span>
+<span class="fc" id="L115">        }</span>
+
+<span class="fc" id="L117">        return true;</span>
+    }
+
+    /**
+     * Because {@code ConcurrentHashMap} doesn't accept null values, use
+     * hashCode-method from {@code AbstractMap}.
+     *
+     * @see java.util.AbstractMap#hashCode()
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L128">        int h = 0;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        for (Entry&lt;String, Object&gt; entry : entrySet()) {</span>
+<span class="fc" id="L130">            h += Objects.hashCode(entry.getKey()) ^ Objects.hashCode(entry.getValue());</span>
+<span class="fc" id="L131">        }</span>
+<span class="fc" id="L132">        return h;</span>
+    }
+
+    // ------------------------------------------------------ Instance Variables
+
+    // NOTE - PropertyDescriptor instances are not Serializable, so the
+    // following variables must be declared as transient. When a ContextBase
+    // instance is deserialized, the no-arguments constructor is called,
+    // and the initialize() method called there will repopulate them.
+    // Therefore, no special restoration activity is required.
+
+    /**
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
+     * of this {@link Context} implementation class as an array.
+     */
+<span class="pc" id="L147">    private final transient PropertyDescriptor[] pds = getPropertyDescriptors();</span>
+
+    /**
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
+     * of this {@link Context} implementation class, keyed by property name.
+     * This collection is allocated only if there are any JavaBeans
+     * properties.
+     */
+<span class="pc" id="L155">    private final transient Map&lt;String, PropertyDescriptor&gt; descriptors = getMapDescriptors();</span>
+
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * Default, no argument constructor.
+     */
+<span class="fc" id="L162">    public ContextBase() {</span>
+<span class="fc" id="L163">    }</span>
+
+    /**
+     * Initialize the contents of this {@link Context} by copying the
+     * values from the specified {@code Map}. Any keys in {@code map}
+     * that correspond to local properties will cause the setter method for
+     * that property to be called.
+     *
+     * @param map Map whose key-value pairs are added
+     *
+     * @throws IllegalArgumentException if an exception is thrown
+     *         writing a local property value.
+     * @throws UnsupportedOperationException if a local property does not
+     *         have a write method.
+     */
+    public ContextBase(Map&lt;String, Object&gt; map) {
+<span class="nc" id="L179">        super(map);</span>
+<span class="nc" id="L180">        putAll(map);</span>
+<span class="nc" id="L181">    }</span>
+
+    // ------------------------------------------------------------- Map Methods
+
+    /**
+     * Override the default {@code Map} behavior to clear all keys and
+     * values except those corresponding to JavaBeans properties.
+     */
+    @Override
+    public void clear() {
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (descriptors == null) {</span>
+<span class="fc" id="L192">            super.clear();</span>
+        } else {
+<span class="fc" id="L194">            Iterator&lt;String&gt; keys = keySet().iterator();</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            while (keys.hasNext()) {</span>
+<span class="fc" id="L196">                String key = keys.next();</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                if (!descriptors.containsKey(key)) {</span>
+<span class="fc" id="L198">                    keys.remove();</span>
+                }
+<span class="fc" id="L200">            }</span>
+        }
+<span class="fc" id="L202">    }</span>
+
+    /**
+     * Override the default {@code Map} behavior to return
+     * {@code true} if the specified key is present in either the
+     * underlying {@code Map} or one of the local property keys.
+     *
+     * @param  key the key look for in the context.
+     *
+     * @return {@code true} if found in this context otherwise
+     *         {@code false}.
+     *
+     * @throws IllegalArgumentException if a property getter
+     *         throws an exception
+     */
+    @Override
+    public boolean containsKey(Object key) {
+<span class="fc bfc" id="L219" title="All 6 branches covered.">        return descriptors != null &amp;&amp; descriptors.containsKey(key) || super.containsKey(key);</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to return
+     * {@code true} if the specified value is present in either the
+     * underlying {@code Map} or one of the local property values.
+     *
+     * @param value the value look for in the context.
+     *
+     * @return {@code true} if found in this context otherwise
+     *         {@code false}.
+     *
+     * @throws IllegalArgumentException if a property getter
+     *         throws an exception
+     */
+    @Override
+    public boolean containsValue(Object value) {
+<span class="fc" id="L237">        boolean b = super.containsValue(value);</span>
+
+        // Case 1 -- no local properties
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        if (descriptors == null) {</span>
+<span class="fc" id="L241">            return b;</span>
+        }
+
+        // Case 2 -- value found in the underlying Map
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        if (b) {</span>
+<span class="fc" id="L246">            return true;</span>
+        }
+
+        // Case 3 -- check the values of our readable properties
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        for (PropertyDescriptor pd : pds) {</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">            if (pd.getReadMethod() != null) {</span>
+<span class="fc" id="L252">                Object prop = readProperty(pd);</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">                if (value == null) {</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">                    if (prop == null) {</span>
+<span class="nc" id="L255">                        return true;</span>
+                    }
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">                } else if (value.equals(prop)) {</span>
+<span class="nc" id="L258">                    return true;</span>
+                }
+            }
+        }
+<span class="fc" id="L262">        return false;</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to return a
+     * {@code Set} that meets the specified default behavior except
+     * for attempts to remove the key for a property of the {@link Context}
+     * implementation class, which will throw
+     * {@code UnsupportedOperationException}.
+     *
+     * @return Set of entries in the Context.
+     */
+    @Override
+    public Set&lt;Map.Entry&lt;String, Object&gt;&gt; entrySet() {
+<span class="fc" id="L276">        return new EntrySetImpl();</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to return the value
+     * of a local property if the specified key matches a local property name.
+     *
+     * &lt;p&gt;&lt;strong&gt;IMPLEMENTATION NOTE&lt;/strong&gt; - If the specified
+     * {@code key} identifies a write-only property, {@code null}
+     * will arbitrarily be returned, in order to avoid difficulties implementing
+     * the contracts of the {@code Map} interface.&lt;/p&gt;
+     *
+     * @param key Key of the value to be returned
+     *
+     * @return The value for the specified key.
+     *
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a read method.
+     */
+    @Override
+    public Object get(Object key) {
+        // Case 1 -- no local properties
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        if (descriptors == null) {</span>
+<span class="fc" id="L301">            return super.get(key);</span>
+        }
+
+        // Case 2 -- this is a local property
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">        if (key != null) {</span>
+<span class="fc" id="L306">            PropertyDescriptor descriptor = descriptors.get(key);</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">            if (descriptor != null) {</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">                if (descriptor.getReadMethod() != null) {</span>
+<span class="fc" id="L309">                    return readProperty(descriptor);</span>
+                } else {
+<span class="fc" id="L311">                    return null;</span>
+                }
+            }
+        }
+
+        // Case 3 -- retrieve value from our underlying Map
+<span class="fc" id="L317">        return super.get(key);</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to return
+     * {@code true} if the underlying {@code Map} only contains
+     * key-value pairs for local properties (if any).
+     *
+     * @return {@code true} if this Context is empty, otherwise
+     *         {@code false}.
+     */
+    @Override
+    public boolean isEmpty() {
+        // Case 1 -- no local properties
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        if (descriptors == null) {</span>
+<span class="fc" id="L332">            return super.isEmpty();</span>
+        }
+
+        // Case 2 -- compare key count to property count
+<span class="fc bfc" id="L336" title="All 2 branches covered.">        return super.size() &lt;= descriptors.size();</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to set the value of a
+     * local property if the specified key matches a local property name.
+     *
+     * @param key Key of the value to be stored or replaced
+     * @param value New value to be stored
+     *
+     * @return The value added to the Context.
+     *
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading or writing this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have both a read method and a write method
+     */
+    @Override
+    public Object put(String key, Object value) {
+        /*
+         * ConcurrentHashMap doesn't accept null values, see
+         * @see ConcurrentHashMap#put(String, Object)
+         */
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">        if (value == null) {</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">            if (containsKey(key)) {</span>
+<span class="nc" id="L361">                remove(key);</span>
+            }
+
+<span class="nc" id="L364">            return null;</span>
+        }
+
+        // Case 1 -- no local properties
+<span class="fc bfc" id="L368" title="All 2 branches covered.">        if (descriptors == null) {</span>
+<span class="fc" id="L369">            return super.put(key, value);</span>
+        }
+
+        // Case 2 -- this is a local property
+<span class="pc bpc" id="L373" title="1 of 2 branches missed.">        if (key != null) {</span>
+<span class="fc" id="L374">            PropertyDescriptor descriptor = descriptors.get(key);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">            if (descriptor != null) {</span>
+<span class="fc" id="L376">                Object previous = null;</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">                if (descriptor.getReadMethod() != null) {</span>
+<span class="fc" id="L378">                    previous = readProperty(descriptor);</span>
+                }
+<span class="fc" id="L380">                writeProperty(descriptor, value);</span>
+<span class="fc" id="L381">                return previous;</span>
+            }
+        }
+
+        // Case 3 -- store or replace value in our underlying map
+<span class="fc" id="L386">        return super.put(key, value);</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to call the
+     * {@code put()} method individually for each key-value pair
+     * in the specified {@code Map}.
+     *
+     * @param map {@code Map} containing key-value pairs to store
+     *        (or replace)
+     *
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading or writing a local property value.
+     * @throws UnsupportedOperationException if a local property does not
+     *         have both a read method and a write method
+     */
+    @Override
+    public void putAll(Map&lt;? extends String, ? extends Object&gt; map) {
+<span class="fc" id="L404">        map.forEach(this::put);</span>
+<span class="fc" id="L405">    }</span>
+
+    /**
+     * Override the default {@code Map} behavior to throw
+     * {@code UnsupportedOperationException} on any attempt to
+     * remove a key that is the name of a local property.
+     *
+     * @param key Key to be removed
+     *
+     * @return The value removed from the Context.
+     *
+     * @throws UnsupportedOperationException if the specified
+     *         {@code key} matches the name of a local property
+     */
+    @Override
+    public Object remove(Object key) {
+        // Case 1 -- no local properties
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        if (descriptors == null) {</span>
+<span class="fc" id="L423">            return super.remove(key);</span>
+        }
+
+        // Case 2 -- this is a local property
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">        if (key != null) {</span>
+<span class="fc" id="L428">            PropertyDescriptor descriptor = descriptors.get(key);</span>
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">            if (descriptor != null) {</span>
+<span class="nc" id="L430">                throw new UnsupportedOperationException(&quot;Local property '&quot; + key + &quot;' cannot be removed&quot;);</span>
+            }
+        }
+
+        // Case 3 -- remove from underlying Map
+<span class="fc" id="L435">        return super.remove(key);</span>
+    }
+
+    /**
+     * Override the default {@code Map} behavior to return a
+     * {@code Collection} that meets the specified default behavior except
+     * for attempts to remove the key for a property of the {@link Context}
+     * implementation class, which will throw
+     * {@code UnsupportedOperationException}.
+     *
+     * @return The collection of values in this Context.
+     */
+    @Override
+    public Collection&lt;Object&gt; values() {
+<span class="nc" id="L449">        return new ValuesImpl();</span>
+    }
+
+    // --------------------------------------------------------- Private Methods
+
+    /**
+     * Return an {@code Iterator} over the set of {@code Map.Entry}
+     * objects representing our key-value pairs.
+     *
+     * @return an {@code Iterator} over the set of {@code Map.Entry} objects
+     */
+    private Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; entriesIterator() {
+<span class="fc" id="L461">        return new EntrySetIterator();</span>
+    }
+
+    /**
+     * Return a {@code Map.Entry} for the specified key value, if it
+     * is present; otherwise, return {@code null}.
+     *
+     * @param key Attribute key or property name
+     *
+     * @return a {@code Map.Entry} for the specified key value, if it
+     *         is present; otherwise, return {@code null}
+     */
+    private Map.Entry&lt;String, Object&gt; entry(Object key) {
+<span class="pc bpc" id="L474" title="1 of 2 branches missed.">        if (containsKey(key)) {</span>
+<span class="fc" id="L475">            return new MapEntryImpl(key.toString(), get(key));</span>
+        } else {
+<span class="nc" id="L477">            return null;</span>
+        }
+    }
+
+    /**
+     * Get and return the value for the specified property.
+     *
+     * @param descriptor {@code PropertyDescriptor} for the
+     *        specified property
+     *
+     * @return the value of the specified property
+     *
+     * @throws IllegalArgumentException if an exception is thrown
+     *         reading this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a read method.
+     */
+    private Object readProperty(PropertyDescriptor descriptor) {
+        try {
+<span class="fc" id="L496">            Method method = descriptor.getReadMethod();</span>
+<span class="pc bpc" id="L497" title="1 of 2 branches missed.">            if (method == null) {</span>
+<span class="nc" id="L498">                throw new UnsupportedOperationException(&quot;Property '&quot;</span>
+<span class="nc" id="L499">                     + descriptor.getName() + &quot;' is not readable&quot;);</span>
+            }
+<span class="fc" id="L501">            return method.invoke(this);</span>
+<span class="nc" id="L502">        } catch (Exception e) {</span>
+<span class="nc" id="L503">            throw new UnsupportedOperationException(&quot;Exception reading property '&quot;</span>
+<span class="nc" id="L504">                 + descriptor.getName() + &quot;': &quot; + e.getMessage());</span>
+        }
+    }
+
+    /**
+     * Remove the specified key-value pair, if it exists, and return
+     * {@code true}. If this pair does not exist, return {@code false}.
+     *
+     * @param entry Key-value pair to be removed
+     *
+     * @return if the specified key-value pair is removed, return
+     *         {@code true}, otherwise {@code false}
+     *
+     * @throws UnsupportedOperationException if the specified key
+     *         identifies a property instead of an attribute.
+     */
+    private boolean remove(Map.Entry&lt;?, ?&gt; entry) {
+<span class="nc" id="L521">        Map.Entry&lt;String, Object&gt; actual = entry(entry.getKey());</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">        if (actual == null) {</span>
+<span class="nc" id="L523">            return false;</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">        } else if (entry.equals(actual)) {</span>
+<span class="nc" id="L525">            remove(entry.getKey());</span>
+<span class="nc" id="L526">            return true;</span>
+        } else {
+<span class="nc" id="L528">            return false;</span>
+        }
+    }
+
+    /**
+     * Return an {@code Iterator} over the set of values in this
+     * {@code Map}.
+     *
+     * @return an {@code Iterator} over the set of values in this
+     *         {@code Map}
+     */
+    private Iterator&lt;Object&gt; valuesIterator() {
+<span class="nc" id="L540">        return new ValuesIterator();</span>
+    }
+
+    /**
+     * Set the value for the specified property.
+     *
+     * @param descriptor {@code PropertyDescriptor} for the
+     *        specified property
+     * @param value The new value for this property (must be of the
+     *        correct type)
+     *
+     * @throws IllegalArgumentException if an exception is thrown
+     *         writing this local property value.
+     * @throws UnsupportedOperationException if this local property does not
+     *         have a write method.
+     */
+    private void writeProperty(PropertyDescriptor descriptor, Object value) {
+        try {
+<span class="fc" id="L558">            Method method = descriptor.getWriteMethod();</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">            if (method == null) {</span>
+<span class="fc" id="L560">                throw new UnsupportedOperationException(&quot;Property '&quot; + descriptor.getName()</span>
+                     + &quot;' is not writeable&quot;);
+            }
+<span class="fc" id="L563">            method.invoke(this, value);</span>
+<span class="fc" id="L564">        } catch (Exception e) {</span>
+<span class="fc" id="L565">            throw new UnsupportedOperationException(&quot;Exception writing property '&quot;</span>
+<span class="fc" id="L566">                 + descriptor.getName() + &quot;': &quot; + e.getMessage());</span>
+<span class="fc" id="L567">        }</span>
+<span class="fc" id="L568">    }</span>
+
+    /**
+     * Returns descriptors for all properties of the bean.
+     *
+     * @return descriptors for all properties of the bean
+     *         or an empty array if an problem occurs
+     */
+    private PropertyDescriptor[] getPropertyDescriptors() {
+        // Retrieve the set of property descriptors for this Context class
+        try {
+<span class="fc" id="L579">            return Introspector.getBeanInfo(getClass()).getPropertyDescriptors();</span>
+<span class="nc" id="L580">        } catch (IntrospectionException e) {</span>
+<span class="nc" id="L581">            return new PropertyDescriptor[0]; // Should never happen</span>
+        }
+    }
+
+    /**
+     * The {@code PropertyDescriptor}s for all JavaBeans properties
+     * of this {@link Context} implementation class, keyed by property
+     * name. This collection is allocated only if there are any JavaBeans
+     * properties.
+     *
+     * @return {@code PropertyDescriptor}s for all JavaBeans properties
+     *         as an collection or {@code null} if there are no JavaBeans
+     *         properties
+     */
+    private Map&lt;String, PropertyDescriptor&gt; getMapDescriptors() {
+<span class="fc" id="L596">        Map&lt;String, PropertyDescriptor&gt; ret = new HashMap&lt;&gt;();</span>
+
+        // Initialize the underlying Map contents
+<span class="fc bfc" id="L599" title="All 2 branches covered.">        for (PropertyDescriptor pd : pds) {</span>
+<span class="fc" id="L600">            String name = pd.getName();</span>
+
+            // Add descriptor (ignoring getClass() and isEmpty())
+<span class="fc bfc" id="L603" title="All 4 branches covered.">            if (!(&quot;class&quot;.equals(name) || &quot;empty&quot;.equals(name))) {</span>
+<span class="fc" id="L604">                ret.put(name, pd);</span>
+<span class="fc" id="L605">                super.put(name, SINGLETON);</span>
+            }
+        }
+
+<span class="fc bfc" id="L609" title="All 2 branches covered.">        return ret.isEmpty() ? null : ret;</span>
+    }
+
+    // --------------------------------------------------------- Private Classes
+
+    /**
+     * Private implementation of {@code Set} that implements the
+     * semantics required for the value returned by {@code entrySet()}.
+     */
+<span class="fc" id="L618">    private class EntrySetImpl extends AbstractSet&lt;Map.Entry&lt;String, Object&gt;&gt; {</span>
+
+        @Override
+        public void clear() {
+<span class="nc" id="L622">            ContextBase.this.clear();</span>
+<span class="nc" id="L623">        }</span>
+
+        @Override
+        public boolean contains(Object obj) {
+<span class="nc bnc" id="L627" title="All 2 branches missed.">            if (!(obj instanceof Map.Entry)) {</span>
+<span class="nc" id="L628">                return false;</span>
+            }
+<span class="nc" id="L630">            Map.Entry&lt;?, ?&gt; entry = (Map.Entry&lt;?, ?&gt;) obj;</span>
+<span class="nc" id="L631">            Map.Entry&lt;String, Object&gt; actual = ContextBase.this.entry(entry.getKey());</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">            if (actual != null) {</span>
+<span class="nc" id="L633">                return actual.equals(entry);</span>
+            } else {
+<span class="nc" id="L635">                return false;</span>
+            }
+        }
+
+        @Override
+        public boolean isEmpty() {
+<span class="nc" id="L641">            return ContextBase.this.isEmpty();</span>
+        }
+
+        @Override
+        public Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; iterator() {
+<span class="fc" id="L646">            return ContextBase.this.entriesIterator();</span>
+        }
+
+        @Override
+        public boolean remove(Object obj) {
+<span class="nc bnc" id="L651" title="All 2 branches missed.">            if (obj instanceof Map.Entry) {</span>
+<span class="nc" id="L652">                return ContextBase.this.remove((Map.Entry&lt;?, ?&gt;) obj);</span>
+            } else {
+<span class="nc" id="L654">                return false;</span>
+            }
+        }
+
+        @Override
+        public int size() {
+<span class="nc" id="L660">            return ContextBase.this.size();</span>
+        }
+    }
+
+    /**
+     * Private implementation of {@code Iterator} for the
+     * {@code Set} returned by {@code entrySet()}.
+     */
+<span class="fc" id="L668">    private class EntrySetIterator implements Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; {</span>
+
+<span class="fc" id="L670">        private Map.Entry&lt;String, Object&gt; entry = null;</span>
+<span class="fc" id="L671">        private Iterator&lt;String&gt; keys = ContextBase.this.keySet().iterator();</span>
+
+        @Override
+        public boolean hasNext() {
+<span class="fc" id="L675">            return keys.hasNext();</span>
+        }
+
+        @Override
+        public Map.Entry&lt;String, Object&gt; next() {
+<span class="fc" id="L680">            entry = ContextBase.this.entry(keys.next());</span>
+<span class="fc" id="L681">            return entry;</span>
+        }
+
+        @Override
+        public void remove() {
+<span class="nc" id="L686">            ContextBase.this.remove(entry);</span>
+<span class="nc" id="L687">        }</span>
+    }
+
+    /**
+     * Private implementation of {@code Map.Entry} for each item in
+     * {@code EntrySetImpl}.
+     */
+    private class MapEntryImpl implements Map.Entry&lt;String, Object&gt; {
+
+        private String key;
+        private Object value;
+
+<span class="fc" id="L699">        MapEntryImpl(String key, Object value) {</span>
+<span class="fc" id="L700">            this.key = key;</span>
+<span class="fc" id="L701">            this.value = value;</span>
+<span class="fc" id="L702">        }</span>
+
+        @Override
+        public boolean equals(Object obj) {
+<span class="nc bnc" id="L706" title="All 2 branches missed.">            if (this == obj) {</span>
+<span class="nc" id="L707">                return true;</span>
+            }
+<span class="nc bnc" id="L709" title="All 4 branches missed.">            if (obj == null || getClass() != obj.getClass()) {</span>
+<span class="nc" id="L710">                return false;</span>
+            }
+<span class="nc" id="L712">            MapEntryImpl other = (MapEntryImpl) obj;</span>
+<span class="nc bnc" id="L713" title="All 2 branches missed.">            if (!getEnclosingInstance().equals(other.getEnclosingInstance())) {</span>
+<span class="nc" id="L714">                return false;</span>
+            }
+<span class="nc bnc" id="L716" title="All 4 branches missed.">            return Objects.equals(key, other.key) &amp;&amp; Objects.equals(value, other.value);</span>
+        }
+
+        @Override
+        public String getKey() {
+<span class="fc" id="L721">            return this.key;</span>
+        }
+
+        @Override
+        public Object getValue() {
+<span class="fc" id="L726">            return this.value;</span>
+        }
+
+        @Override
+        public int hashCode() {
+<span class="nc" id="L731">            return Objects.hashCode(key) ^ Objects.hashCode(value);</span>
+        }
+
+        @Override
+        public Object setValue(Object value) {
+<span class="nc" id="L736">            Object previous = this.value;</span>
+<span class="nc" id="L737">            ContextBase.this.put(this.key, value);</span>
+<span class="nc" id="L738">            this.value = value;</span>
+<span class="nc" id="L739">            return previous;</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="nc" id="L744">            return getKey() + &quot;=&quot; + getValue();</span>
+        }
+
+        private ContextBase getEnclosingInstance() {
+<span class="nc" id="L748">            return ContextBase.this;</span>
+        }
+    }
+
+    /**
+     * Private implementation of {@code Collection} that implements the
+     * semantics required for the value returned by {@code values()}.
+     */
+<span class="nc" id="L756">    private class ValuesImpl extends AbstractCollection&lt;Object&gt; {</span>
+
+        @Override
+        public void clear() {
+<span class="nc" id="L760">            ContextBase.this.clear();</span>
+<span class="nc" id="L761">        }</span>
+
+        @Override
+        public boolean contains(Object obj) {
+<span class="nc bnc" id="L765" title="All 2 branches missed.">            if (!(obj instanceof Map.Entry)) {</span>
+<span class="nc" id="L766">                return false;</span>
+            }
+<span class="nc" id="L768">            Map.Entry&lt;?, ?&gt; entry = (Map.Entry&lt;?, ?&gt;) obj;</span>
+<span class="nc" id="L769">            return ContextBase.this.containsValue(entry.getValue());</span>
+        }
+
+        @Override
+        public boolean isEmpty() {
+<span class="nc" id="L774">            return ContextBase.this.isEmpty();</span>
+        }
+
+        @Override
+        public Iterator&lt;Object&gt; iterator() {
+<span class="nc" id="L779">            return ContextBase.this.valuesIterator();</span>
+        }
+
+        @Override
+        public boolean remove(Object obj) {
+<span class="nc bnc" id="L784" title="All 2 branches missed.">            if (obj instanceof Map.Entry) {</span>
+<span class="nc" id="L785">                return ContextBase.this.remove((Map.Entry&lt;?, ?&gt;) obj);</span>
+            } else {
+<span class="nc" id="L787">                return false;</span>
+            }
+        }
+
+        @Override
+        public int size() {
+<span class="nc" id="L793">            return ContextBase.this.size();</span>
+        }
+    }
+
+    /**
+     * Private implementation of {@code Iterator} for the
+     * {@code Collection} returned by {@code values()}.
+     */
+<span class="nc" id="L801">    private class ValuesIterator implements Iterator&lt;Object&gt; {</span>
+
+<span class="nc" id="L803">        private Map.Entry&lt;String, Object&gt; entry = null;</span>
+<span class="nc" id="L804">        private Iterator&lt;String&gt; keys = ContextBase.this.keySet().iterator();</span>
+
+        @Override
+        public boolean hasNext() {
+<span class="nc" id="L808">            return keys.hasNext();</span>
+        }
+
+        @Override
+        public Object next() {
+<span class="nc" id="L813">            entry = ContextBase.this.entry(keys.next());</span>
+<span class="nc" id="L814">            return entry.getValue();</span>
+        }
+
+        @Override
+        public void remove() {
+<span class="nc" id="L819">            ContextBase.this.remove(entry);</span>
+<span class="nc" id="L820">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
