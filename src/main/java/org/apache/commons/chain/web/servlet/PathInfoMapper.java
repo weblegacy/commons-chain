@@ -85,12 +85,11 @@ public class PathInfoMapper extends LookupCommand<ServletWebContext> {
     @Override
     protected String getCommandName(ServletWebContext context) {
         // Look up the extra path information for this request
-        HttpServletRequest request = context.getRequest();
-        String pathInfo =
-            request.getAttribute("javax.servlet.include.path_info").toString();
-        if (pathInfo == null) {
-            pathInfo = request.getPathInfo();
-        }
+        final HttpServletRequest request = context.getRequest();
+        final Object attrPathInfo = request.getAttribute("javax.servlet.include.path_info");
+        final String pathInfo = attrPathInfo == null
+                ? request.getPathInfo()
+                : attrPathInfo.toString();
 
         return pathInfo;
     }

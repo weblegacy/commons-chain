@@ -85,12 +85,11 @@ public class ServletPathMapper extends LookupCommand<ServletWebContext> {
     @Override
     protected String getCommandName(ServletWebContext context) {
         // Look up the servlet path for this request
-        HttpServletRequest request = context.getRequest();
-        String servletPath =
-            request.getAttribute("javax.servlet.include.servlet_path").toString();
-        if (servletPath == null) {
-            servletPath = request.getServletPath();
-        }
+        final HttpServletRequest request = context.getRequest();
+        final Object attrServletPath = request.getAttribute("javax.servlet.include.servlet_path");
+        final String servletPath = attrServletPath == null
+                ? request.getServletPath()
+                : attrServletPath.toString();
 
         return servletPath;
     }

@@ -229,24 +229,28 @@ public class ChainListener implements ServletContextListener {
     private void parseJarResources(ServletContext context,
                                    ConfigParser parser, Log log) {
 
-        Set<?> jars = context.getResourcePaths("/WEB-INF/lib");
+        Set<String> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
             jars = Collections.emptySet();
         }
         String path = null;
-        Iterator<?> paths = jars.iterator();
+        Iterator<String> paths = jars.iterator();
         while (paths.hasNext()) {
 
-            path = paths.next().toString();
+            path = paths.next();
             if (!path.endsWith(".jar")) {
                 continue;
             }
             URL resourceURL = null;
             try {
                 URL jarURL = context.getResource(path);
+                path = jarURL.toExternalForm();
+
                 resourceURL = new URL("jar:"
-                                      + translate(jarURL.toExternalForm())
+                                      + translate(path)
                                       + "!/META-INF/chain-config.xml");
+                path = resourceURL.toExternalForm();
+
                 InputStream is = null;
                 try {
                     is = resourceURL.openStream();
@@ -267,8 +271,7 @@ public class ChainListener implements ServletContextListener {
                 parser.parse(resourceURL);
             } catch (Exception e) {
                 throw new RuntimeException("Exception parsing chain config resource '"
-                     + resourceURL.toExternalForm() + "': "
-                     + e.getMessage());
+                     + path + "': " + e.getMessage());
             }
         }
     }
@@ -289,24 +292,28 @@ public class ChainListener implements ServletContextListener {
     private void parseJarResources(Catalog<?> catalog, ServletContext context,
                                    ConfigParser parser, Log log) {
 
-        Set<?> jars = context.getResourcePaths("/WEB-INF/lib");
+        Set<String> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
             jars = Collections.emptySet();
         }
         String path = null;
-        Iterator<?> paths = jars.iterator();
+        Iterator<String> paths = jars.iterator();
         while (paths.hasNext()) {
 
-            path = paths.next().toString();
+            path = paths.next();
             if (!path.endsWith(".jar")) {
                 continue;
             }
             URL resourceURL = null;
             try {
                 URL jarURL = context.getResource(path);
+                path = jarURL.toExternalForm();
+
                 resourceURL = new URL("jar:"
-                                      + translate(jarURL.toExternalForm())
+                                      + translate(path)
                                       + "!/META-INF/chain-config.xml");
+                path = resourceURL.toExternalForm();
+
                 InputStream is = null;
                 try {
                     is = resourceURL.openStream();
@@ -327,8 +334,7 @@ public class ChainListener implements ServletContextListener {
                 parser.parse(catalog, resourceURL);
             } catch (Exception e) {
                 throw new RuntimeException("Exception parsing chain config resource '"
-                     + resourceURL.toExternalForm() + "': "
-                     + e.getMessage());
+                     + path + "': " + e.getMessage());
             }
         }
     }
