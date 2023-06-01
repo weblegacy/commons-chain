@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Change back to more back-version-compatibility
 * Config jar-plugin to generate a more detail `MANIFEST.MF`
 * Add license and organization to POM
 * Doc: Update links to GitHub

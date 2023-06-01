@@ -22,8 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.List;
-
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -358,10 +356,10 @@ public class ChainBaseTestCase {
      */
     protected void checkCommandCount(int expected) {
         if (chain instanceof ChainBase) {
-            List<Command<Context>> commands = ((ChainBase<Context>) chain).getCommands();
+            Command<Context>[] commands = ((ChainBase<Context>) chain).getCommands();
             assertNotNull(commands,
                           "getCommands() returned a non-null list");
-            assertEquals(expected, commands.size(), "Correct command count");
+            assertEquals(expected, commands.length, "Correct command count");
         }
     }
 

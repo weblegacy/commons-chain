@@ -93,7 +93,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Ted Husted
  */
 public class ChainServlet extends HttpServlet {
-    private static final long serialVersionUID = -6545081938506661333L;
+    private static final long serialVersionUID = 4833344945293509188L;
 
     // ------------------------------------------------------ Manifest Constants
 

@@ -38,8 +38,8 @@ public class PortletSetLocaleCommand extends AbstractSetLocaleCommand<PortletWeb
      */
     @Override
     protected void setLocale(PortletWebContext context, Locale locale) {
-//        PortletResponse response = context.getResponse();
-//        response.setLocale(locale);
-//        Not supported by the Portlet API
+//      PortletResponse response = context.getResponse();
+//      response.setLocale(locale);
+//      Not supported by the Portlet API
     }
 }

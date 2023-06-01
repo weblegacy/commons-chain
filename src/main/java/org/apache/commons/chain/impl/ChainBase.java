@@ -16,10 +16,8 @@
  */
 package org.apache.commons.chain.impl;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
@@ -100,13 +98,14 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    private final ArrayList<Command<C>> commands = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    protected Command<C>[] commands = new Command[0];
 
     /**
      * Flag indicating whether the configuration of our commands list
      * has been frozen by a call to the {@code execute()} method.
      */
-    private boolean frozen = false;
+    protected boolean frozen = false;
 
     // ---------------------------------------------------------- Chain Methods
 
@@ -127,7 +126,9 @@ public class ChainBase<C extends Context> implements Chain<C> {
         if (frozen) {
             throw new IllegalStateException();
         }
-        commands.add(command);
+        final int len = commands.length;
+        commands = Arrays.copyOf(commands, len + 1);
+        commands[len] = command;
     }
 
     /**
@@ -155,20 +156,17 @@ public class ChainBase<C extends Context> implements Chain<C> {
         }
 
         // Freeze the configuration of the command list
-        if (!frozen) {
-            frozen = true;
-            commands.trimToSize();
-        }
+        frozen = true;
 
         // Execute the commands in this list until one returns true
         // or throws an exception
         boolean saveResult = false;
         Exception saveException = null;
         int i = 0;
-        int n = commands.size();
+        int n = commands.length;
         for (i = 0; i < n; i++) {
             try {
-                saveResult = commands.get(i).execute(context);
+                saveResult = commands[i].execute(context);
                 if (saveResult) {
                     break;
                 }
@@ -185,7 +183,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
         boolean handled = false;
         boolean result = false;
         for (int j = i; j >= 0; j--) {
-            Command<C> command = commands.get(j);
+            Command<C> command = commands[j];
             if (command instanceof Filter) {
                 try {
                     result =
@@ -232,7 +230,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      *
      * @return an array of the configured {@link Command}s for this {@link Chain}
      */
-    List<Command<C>> getCommands() {
-        return Collections.unmodifiableList(commands);
+    Command<C>[] getCommands() {
+        return commands;
     }
 }

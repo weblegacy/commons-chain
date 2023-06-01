@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.chain.Context;
 
@@ -50,8 +49,8 @@ import org.apache.commons.chain.Context;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ContextBase extends ConcurrentHashMap<String, Object> implements Context {
-    private static final long serialVersionUID = 8739326206700827827L;
+public class ContextBase extends HashMap<String, Object> implements Context {
+    private static final long serialVersionUID = -2482145117370708259L;
 
     // ------------------------------------------------------ Static Variables
 
@@ -73,64 +72,6 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
             return super.hashCode();
         }
     };
-
-    /**
-     * Because {@code ConcurrentHashMap} doesn't accept null values, use
-     * equals-method from {@code AbstractMap}.
-     *
-     * @see java.util.AbstractMap#equals(Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-
-        if (!(o instanceof Map)) {
-            return false;
-        }
-        Map<?, ?> m = (Map<?, ?>) o;
-        if (m.size() != size()) {
-            return false;
-        }
-
-        try {
-            for (Entry<String, Object> e : entrySet()) {
-                String key = e.getKey();
-                Object value = e.getValue();
-                if (value == null) {
-                    if (!(m.get(key) == null && m.containsKey(key))) {
-                        return false;
-                    }
-                } else {
-                    if (!value.equals(m.get(key))) {
-                        return false;
-                    }
-                }
-            }
-        } catch (ClassCastException unused) {
-            return false;
-        } catch (NullPointerException unused) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Because {@code ConcurrentHashMap} doesn't accept null values, use
-     * hashCode-method from {@code AbstractMap}.
-     *
-     * @see java.util.AbstractMap#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        int h = 0;
-        for (Entry<String, Object> entry : entrySet()) {
-            h += Objects.hashCode(entry.getKey()) ^ Objects.hashCode(entry.getValue());
-        }
-        return h;
-    }
 
     // ------------------------------------------------------ Instance Variables
 
@@ -199,24 +140,6 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
                 }
             }
         }
-    }
-
-    /**
-     * Override the default {@code Map} behavior to return
-     * {@code true} if the specified key is present in either the
-     * underlying {@code Map} or one of the local property keys.
-     *
-     * @param  key the key look for in the context.
-     *
-     * @return {@code true} if found in this context otherwise
-     *         {@code false}.
-     *
-     * @throws IllegalArgumentException if a property getter
-     *         throws an exception
-     */
-    @Override
-    public boolean containsKey(Object key) {
-        return descriptors != null && descriptors.containsKey(key) || super.containsKey(key);
     }
 
     /**
@@ -303,7 +226,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
 
         // Case 2 -- this is a local property
         if (key != null) {
-            PropertyDescriptor descriptor = descriptors.get(key);
+            final PropertyDescriptor descriptor = descriptors.get(key);
             if (descriptor != null) {
                 if (descriptor.getReadMethod() != null) {
                     return readProperty(descriptor);
@@ -337,6 +260,19 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
     }
 
     /**
+     * Override the default {@code Map} behavior to return a
+     * {@code Set} that meets the specified default behavior except
+     * for attempts to remove the key for a property of the {@link Context}
+     * implementation class, which will throw
+     * {@code UnsupportedOperationException}.
+     *
+     * @return The set of keys for objects in this Context.
+     */
+    public Set<String> keySet() {
+        return super.keySet();
+    }
+
+    /**
      * Override the default {@code Map} behavior to set the value of a
      * local property if the specified key matches a local property name.
      *
@@ -352,18 +288,6 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
      */
     @Override
     public Object put(String key, Object value) {
-        /*
-         * ConcurrentHashMap doesn't accept null values, see
-         * @see ConcurrentHashMap#put(String, Object)
-         */
-        if (value == null) {
-            if (containsKey(key)) {
-                remove(key);
-            }
-
-            return null;
-        }
-
         // Case 1 -- no local properties
         if (descriptors == null) {
             return super.put(key, value);
@@ -371,7 +295,7 @@ public class ContextBase extends ConcurrentHashMap<String, Object> implements Co
 
         // Case 2 -- this is a local property
         if (key != null) {
-            PropertyDescriptor descriptor = descriptors.get(key);
+            final PropertyDescriptor descriptor = descriptors.get(key);
             if (descriptor != null) {
                 Object previous = null;
                 if (descriptor.getReadMethod() != null) {

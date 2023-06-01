@@ -25,7 +25,6 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.web.WebContext;
-import org.apache.commons.chain.web.WebContextBase;
 
 /**
  * Concrete implementation of {@link WebContext} suitable for use in
@@ -36,7 +35,7 @@ import org.apache.commons.chain.web.WebContextBase;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class PortletWebContext extends WebContextBase {
+public class PortletWebContext extends WebContext {
     private static final long serialVersionUID = 7590757017994210786L;
 
     // ------------------------------------------------------------ Constructors
@@ -73,7 +72,7 @@ public class PortletWebContext extends WebContextBase {
     /**
      * The {@code PortletContext} for this web application.
      */
-    private transient PortletContext context = null;
+    protected transient PortletContext context = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-value
@@ -113,7 +112,7 @@ public class PortletWebContext extends WebContextBase {
     /**
      * The {@code PortletRequest} for this request.
      */
-    private transient PortletRequest request = null;
+    protected transient PortletRequest request = null;
 
     /**
      * The lazily instantiated {@code Map} of request scope
@@ -124,7 +123,7 @@ public class PortletWebContext extends WebContextBase {
     /**
      * The {@code PortletResponse} for this request.
      */
-    private transient PortletResponse response = null;
+    protected transient PortletResponse response = null;
 
     /**
      * The lazily instantiated {@code Map} of session scope

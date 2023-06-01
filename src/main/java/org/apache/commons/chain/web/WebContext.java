@@ -16,12 +16,12 @@
  */
 package org.apache.commons.chain.web;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.Context;
+import org.apache.commons.chain.impl.ContextBase;
 
 /**
  * Extended {@link Context} that provides web based applications that use
@@ -35,12 +35,13 @@ import org.apache.commons.chain.Context;
  *
  * <p>The characteristics of a web request/response are made visible via
  * a series of JavaBeans properties (and mapped to read-only attributes
- * of the same name, as supported by {@link Context}.</p>
+ * of the same name, as supported by {@link ContextBase}.</p>
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public interface WebContext extends Context, Serializable {
+public abstract class WebContext extends ContextBase {
+    private static final long serialVersionUID = 6804961872140299027L;
 
     /**
      * Return a mutable {@code Map} that maps application scope
@@ -48,7 +49,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Application scope Map.
      */
-    Map<String, Object> getApplicationScope();
+    public abstract Map<String, Object> getApplicationScope();
 
     /**
      * Return an immutable {@code Map} that maps header names to
@@ -57,7 +58,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Header values Map.
      */
-    Map<String, String> getHeader();
+    public abstract Map<String, String> getHeader();
 
     /**
      * Return an immutable {@code Map} that maps header names to
@@ -66,7 +67,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Header values Map.
      */
-    Map<String, String[]> getHeaderValues();
+    public abstract Map<String, String[]> getHeaderValues();
 
     /**
      * Return an immutable {@code Map} that maps context application
@@ -74,7 +75,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Initialization parameter Map.
      */
-    Map<String, String> getInitParam();
+    public abstract Map<String, String> getInitParam();
 
     /**
      * Return an immutable {@code Map} that maps request parameter
@@ -82,7 +83,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Request parameter Map.
      */
-    Map<String, String> getParam();
+    public abstract Map<String, String> getParam();
 
     /**
      * Return an immutable {@code Map} that maps request parameter
@@ -90,7 +91,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Request parameter Map.
      */
-    Map<String, String[]> getParamValues();
+    public abstract Map<String, String[]> getParamValues();
 
     /**
      * Return an immutable {@code Map} that maps cookie names to
@@ -100,7 +101,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @since Chain 1.1
      */
-    Map<String, Cookie> getCookies();
+    public abstract Map<String, Cookie> getCookies();
 
     /**
      * Return a mutable {@code Map} that maps request scope
@@ -108,7 +109,7 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Request scope Map.
      */
-    Map<String, Object> getRequestScope();
+    public abstract Map<String, Object> getRequestScope();
 
     /**
      * Return a mutable {@code Map} that maps session scope
@@ -116,5 +117,5 @@ public interface WebContext extends Context, Serializable {
      *
      * @return Session scope Map.
      */
-    Map<String, Object> getSessionScope();
+    public abstract Map<String, Object> getSessionScope();
 }

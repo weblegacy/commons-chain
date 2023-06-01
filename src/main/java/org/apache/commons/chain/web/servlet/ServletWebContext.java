@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.chain.web.WebContext;
-import org.apache.commons.chain.web.WebContextBase;
 
 /**
  * Concrete implementation of {@link WebContext} suitable for use in
@@ -35,7 +34,7 @@ import org.apache.commons.chain.web.WebContextBase;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class ServletWebContext extends WebContextBase {
+public class ServletWebContext extends WebContext {
     private static final long serialVersionUID = 5302874006663111922L;
 
     // ------------------------------------------------------ Instance Variables
@@ -49,7 +48,7 @@ public class ServletWebContext extends WebContextBase {
     /**
      * The {@code ServletContext} for this web application.
      */
-    private transient ServletContext context = null;
+    protected transient ServletContext context = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-value
@@ -89,7 +88,7 @@ public class ServletWebContext extends WebContextBase {
     /**
      * The {@code HttpServletRequest} for this request.
      */
-    private transient HttpServletRequest request = null;
+    protected transient HttpServletRequest request = null;
 
     /**
      * The lazily instantiated {@code Map} of request scope
@@ -100,7 +99,7 @@ public class ServletWebContext extends WebContextBase {
     /**
      * The {@code HttpServletResponse} for this request.
      */
-    private transient HttpServletResponse response = null;
+    protected transient HttpServletResponse response = null;
 
     /**
      * The lazily instantiated {@code Map} of session scope
