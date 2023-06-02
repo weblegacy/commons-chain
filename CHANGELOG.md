@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Resolve some pmd messages
 * Resolve some SpotBugs-messages
 * Change back to more back-version-compatibility
 * Config jar-plugin to generate a more detail `MANIFEST.MF`

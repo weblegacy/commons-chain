@@ -23,6 +23,9 @@ import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
+import org.apache.commons.chain.internal.Unsafe;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Convenience base class for {@link Chain} implementations.
@@ -98,8 +101,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    @SuppressWarnings("unchecked")
-    protected Command<C>[] commands = new Command[0];
+    protected Command<C>[] commands = Unsafe.newArray(Command.class, 0);
 
     /**
      * Flag indicating whether the configuration of our commands list
@@ -193,7 +195,9 @@ public class ChainBase<C extends Context> implements Chain<C> {
                         handled = true;
                     }
                 } catch (Exception e) {
-                      // Silently ignore
+                    // Silently ignore
+                    Log log = LogFactory.getLog(ChainBase.class);
+                    log.trace("Filter-postprocessing", e);
                 }
             }
         }

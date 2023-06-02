@@ -30,6 +30,7 @@ import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.config.ConfigParser;
 import org.apache.commons.chain.impl.CatalogBase;
+import org.apache.commons.chain.internal.CheckedConsumer;
 import org.apache.commons.digester.RuleSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -158,9 +159,7 @@ public class ChainListener implements ServletContextListener {
     @SuppressWarnings("deprecation")
     public void contextInitialized(ServletContextEvent event) {
         Log log = LogFactory.getLog(ChainListener.class);
-        if (log.isInfoEnabled()) {
-            log.info("Initializing chain listener");
-        }
+        log.info("Initializing chain listener");
         ServletContext context = event.getServletContext();
 
         // Retrieve context init parameters that we need
@@ -228,52 +227,7 @@ public class ChainListener implements ServletContextListener {
      */
     private void parseJarResources(ServletContext context,
                                    ConfigParser parser, Log log) {
-
-        Set<String> jars = context.getResourcePaths("/WEB-INF/lib");
-        if (jars == null) {
-            jars = Collections.emptySet();
-        }
-        String path = null;
-        Iterator<String> paths = jars.iterator();
-        while (paths.hasNext()) {
-
-            path = paths.next();
-            if (!path.endsWith(".jar")) {
-                continue;
-            }
-            URL resourceURL = null;
-            try {
-                URL jarURL = context.getResource(path);
-                path = jarURL.toExternalForm();
-
-                resourceURL = new URL("jar:"
-                                      + translate(path)
-                                      + "!/META-INF/chain-config.xml");
-                path = resourceURL.toExternalForm();
-
-                InputStream is = null;
-                try {
-                    is = resourceURL.openStream();
-                } catch (Exception e) {
-                      // means there is no such resource
-                }
-                if (is == null) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Not Found: " + resourceURL);
-                    }
-                    continue;
-                } else {
-                    is.close();
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Parsing: " + resourceURL);
-                }
-                parser.parse(resourceURL);
-            } catch (Exception e) {
-                throw new RuntimeException("Exception parsing chain config resource '"
-                     + path + "': " + e.getMessage());
-            }
-        }
+        parseJarResources(context, parser::parse, log);
     }
 
     /**
@@ -292,6 +246,23 @@ public class ChainListener implements ServletContextListener {
     private void parseJarResources(Catalog<?> catalog, ServletContext context,
                                    ConfigParser parser, Log log) {
 
+        @SuppressWarnings("deprecation")
+        final CheckedConsumer<URL, Exception> parse = resourceURL -> parser.parse(catalog, resourceURL);
+        parseJarResources(context, parse, log);
+    }
+
+    /**
+     * Parse resources found in JAR files in the {@code /WEB-INF/lib}
+     * subdirectory (if any).
+     *
+     * @param <E> the type of the exception
+     * @param context {@code ServletContext} for this web application
+     * @param parse parse-function to parse the XML document
+     * @param log to use for logging
+     */
+    private <E extends Exception> void parseJarResources(ServletContext context,
+                CheckedConsumer<URL, E> parse, Log log) {
+
         Set<String> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
             jars = Collections.emptySet();
@@ -318,7 +289,10 @@ public class ChainListener implements ServletContextListener {
                 try {
                     is = resourceURL.openStream();
                 } catch (Exception e) {
-                      // means there is no such resource
+                    // means there is no such resource
+                    if (log.isTraceEnabled()) {
+                        log.trace("OpenStream: " + resourceURL, e);
+                    }
                 }
                 if (is == null) {
                     if (log.isDebugEnabled()) {
@@ -331,7 +305,7 @@ public class ChainListener implements ServletContextListener {
                 if (log.isDebugEnabled()) {
                     log.debug("Parsing: " + resourceURL);
                 }
-                parser.parse(catalog, resourceURL);
+                parse.accept(resourceURL);
             } catch (Exception e) {
                 throw new RuntimeException("Exception parsing chain config resource '"
                      + path + "': " + e.getMessage());
