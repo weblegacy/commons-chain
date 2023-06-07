@@ -30,7 +30,7 @@ import java.util.Objects;
  * @param <T> the type of the input to the operation
  * @param <E> the type of the exception to the operation
  *
- * @since 1.3
+ * @since Chain 1.3
  */
 @FunctionalInterface
 public interface CheckedConsumer<T, E extends Throwable> {

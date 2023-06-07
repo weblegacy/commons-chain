@@ -117,7 +117,7 @@ public class ChainListener implements ServletContextListener {
 
     /**
      * The name of the context init parameter containing a comma-delimited
-     * list of web applicaton resources to be scanned.
+     * list of web application resources to be scanned.
      */
     public static final String CONFIG_WEB_RESOURCE =
         "org.apache.commons.chain.CONFIG_WEB_RESOURCE";
