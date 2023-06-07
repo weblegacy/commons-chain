@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Rename class `Unsafe` to `Utilities`
 * Resolve some pmd messages
 * Resolve some SpotBugs-messages
 * Change back to more back-version-compatibility
