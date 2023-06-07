@@ -112,7 +112,7 @@ public class MapEntry<T> implements Map.Entry<String, T> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MapEntry<?> other = (MapEntry<?>) o;
+        final MapEntry<?> other = (MapEntry<?>) o;
         return Objects.equals(key, other.key) && Objects.equals(value, other.value);
     }
 
