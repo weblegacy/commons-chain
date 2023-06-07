@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Optimize get-/set-locale-command with lambda expressions
 * Resolve some `SpotBugs`
 * Add final keyword
 * Optimize portlet- and servlet-classes with lambda expressions

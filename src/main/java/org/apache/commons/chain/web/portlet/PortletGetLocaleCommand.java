@@ -16,31 +16,19 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-
-import org.apache.commons.chain.Context;
-import org.apache.commons.chain.web.AbstractGetLocaleCommand;
+import org.apache.commons.chain.web.GetLocaleCommand;
 
 /**
  * Concrete implementation of {@link AbstractGetLocaleCommand} for
  * the Portlet API.
  */
-public class PortletGetLocaleCommand extends AbstractGetLocaleCommand<PortletWebContext> {
-
-    // ------------------------------------------------------- Protected Methods
+public class PortletGetLocaleCommand extends GetLocaleCommand<PortletWebContext> {
 
     /**
-     * Retrieve and return the {@code Locale} for this request.
-     *
-     * @param context The {@link Context} we are operating on.
-     *
-     * @return The Locale for the request.
+     * Construct a new instance to get the locale from the
+     * Portlet API.
      */
-    @Override
-    protected Locale getLocale(PortletWebContext context) {
-        PortletRequest request = context.getRequest();
-        return request.getLocale();
+    public PortletGetLocaleCommand() {
+        super(c -> c.getRequest().getLocale());
     }
 }

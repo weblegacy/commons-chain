@@ -17,33 +17,52 @@
 package org.apache.commons.chain.web;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
 /**
- * Abstract base {@link Command} implementation for setting the
- * response locale for this response to the {@code Locale} stored
- * under the context attribute key returned by the {@code localeKey}
- * property.
+ * Base {@link Command} implementation for retrieving the
+ * requested Locale from our {@link Context}, and storing it under the
+ * context attribute key returned by the {@code localeKey} property.
  *
  * @param <C> Type of the context associated with this command
  *
- * @author Craig R. McClanahan
- * @version $Revision$ $Date$
+ * @author Stefan Graff
+ * @since Chain 1.3
  */
-public abstract class AbstractSetLocaleCommand<C extends WebContext> implements Command<C> {
+public class GetLocaleCommand<C extends WebContext> implements Command<C> {
+
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * Function to get the {@link Locale} from the {@code context}.
+     */
+    private final Function<C, Locale> localeFunction;
+
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * Construct a new instance to get the locale from the context.
+     *
+     * @param localeFunction Function to get the {@link Locale} from
+     *                       the {@code context}
+     */
+    public GetLocaleCommand(final Function<C, Locale> localeFunction) {
+        this.localeFunction = localeFunction;
+    }
 
     // -------------------------------------------------------------- Properties
 
     /**
-     * The context attribute key used to retrieve the {@code Locale}.
+     * The context attribute key used to store the {@code Locale}.
      */
     private String localeKey = "locale";
 
     /**
-     * Return the context attribute key under which we will retrieve
-     * the response {@code Locale}.
+     * Return the context attribute key under which we will store
+     * the request {@code Locale}.
      *
      * @return The context attribute key of the request {@code Locale}.
      */
@@ -52,8 +71,8 @@ public abstract class AbstractSetLocaleCommand<C extends WebContext> implements 
     }
 
     /**
-     * Set the context attribute key under which we will retrieve
-     * the response {@code Locale}.
+     * Set the context attribute key under which we will store
+     * the request {@code Locale}.
      *
      * @param localeKey The new context attribute key
      */
@@ -64,8 +83,8 @@ public abstract class AbstractSetLocaleCommand<C extends WebContext> implements 
     // --------------------------------------------------------- Command Methods
 
     /**
-     * Retrieve the {@code Locale} stored under the specified
-     * context attribute key, and establish it on this response.
+     * Retrieve the {@code Locale} for this request, and store it
+     * under the specified context attribute.
      *
      * @param context The {@link Context} we are operating on
      *
@@ -75,18 +94,7 @@ public abstract class AbstractSetLocaleCommand<C extends WebContext> implements 
      */
     @Override
     public boolean execute(C context) throws Exception {
-        setLocale(context,
-              (Locale) context.get(getLocaleKey()));
+        context.put(getLocaleKey(), localeFunction.apply(context));
         return false;
     }
-
-    // ------------------------------------------------------- Protected Methods
-
-    /**
-     * Establish the specified {@code Locale} for this response.
-     *
-     * @param context The {@link Context} we are operating on.
-     * @param locale The Locale for the request.
-     */
-    protected abstract void setLocale(C context, Locale locale);
 }
