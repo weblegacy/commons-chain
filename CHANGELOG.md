@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Resolve some `SpotBugs`
 * Add final keyword
 * Optimize portlet- and servlet-classes with lambda expressions
 * tipfix in Javadoc

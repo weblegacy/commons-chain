@@ -144,7 +144,7 @@ public class CookieMap<P> extends ParameterMap<P, Cookie> {
     @Override
     public boolean isEmpty() {
         final Cookie[] cookies = cookiesSupplier.get();
-        return cookies == null ? true : cookies.length == 0;
+        return cookies == null || cookies.length == 0;
     }
 
     /**
@@ -188,5 +188,43 @@ public class CookieMap<P> extends ParameterMap<P, Cookie> {
     public Collection<Cookie> values() {
         final Cookie[] cookies = cookiesSupplier.get();
         return cookies == null ? Collections.emptyList() : Arrays.asList(cookies);
+    }
+
+    /**
+     * Returns the hash code value for this cookie-map. The
+     * hash code of a cookie-map is defined to be the sum of
+     * the hash codes of each entry in the cookie-map's
+     * {@code entrySet()} view. This ensures that {@code m1.equals(m2)}
+     * implies that {@code m1.hashCode()==m2.hashCode()} for any two
+     * parameter-maps {@code m1} and {@code m2}, as required by the
+     * general contract of {@link Object#hashCode}.
+     *
+     * @implSpec
+     * This implementation calls the {@code hashCode()} from the
+     * parameter-map.
+     *
+     * @return the hash code value for this cookie-map
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * Compares the specified object with this cookie-map for equality.
+     * Returns {@code true} if the given object is also a cookie-map
+     * and the two cookie-maps represent the same mappings. More formally,
+     * two cookie-maps {@code m1} and {@code m2} represent the same
+     * mappings if {@code m1.entrySet().equals(m2.entrySet())}.
+     *
+     * @param obj object to be compared for equality with this
+     *        cookie-map
+     *
+     * @return {@code true} if the specified object is equal to this
+     *         cookie-map
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

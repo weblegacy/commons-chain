@@ -164,4 +164,49 @@ public class MutableParameterMap<P, T> extends ParameterMap<P, T> {
         removeConsumer.accept(skey);
         return previous;
     }
+
+    /**
+     * Returns the hash code value for this parameter-map. The
+     * hash code of a parameter-map is defined to be the sum of
+     * the hash codes of each entry in the parameter-map's
+     * {@code entrySet()} view. This ensures that {@code m1.equals(m2)}
+     * implies that {@code m1.hashCode()==m2.hashCode()} for any two
+     * parameter-maps {@code m1} and {@code m2}, as required by the
+     * general contract of {@link Object#hashCode}.
+     *
+     * @implSpec
+     * This implementation calls the {@code hashCode()} from the
+     * parameter-provider.
+     *
+     * @return the hash code value for this parameter-map
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * Compares the specified object with this parameter-map for equality.
+     * Returns {@code true} if the given object is also a parameter-map
+     * and the two parameter-maps represent the same mappings. More formally,
+     * two parameter-maps {@code m1} and {@code m2} represent the same
+     * mappings if {@code m1.entrySet().equals(m2.entrySet())}.
+     *
+     * @implSpec
+     * This implementation first checks if the specified object is this
+     * parameter-map; if so it returns {@code true}. Then, it checks if
+     * the specified object is the identical class this parameter-map; if
+     * not, it returns {@code false}. If so, it calls the {@code equals()}
+     * from the parameter-provider and returns its return-code.
+     *
+     * @param obj object to be compared for equality with this
+     *        parameter-map
+     *
+     * @return {@code true} if the specified object is equal to this
+     *         parameter-map
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

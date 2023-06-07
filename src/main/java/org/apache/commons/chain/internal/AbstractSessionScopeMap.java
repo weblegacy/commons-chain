@@ -311,7 +311,7 @@ public abstract class AbstractSessionScopeMap<S, R> implements Map<String, Objec
      */
     protected S getSession() {
         return session;
-    };
+    }
 
     /**
      * Returns the request-class.
@@ -320,7 +320,7 @@ public abstract class AbstractSessionScopeMap<S, R> implements Map<String, Objec
      */
     protected R getRequest() {
         return request;
-    };
+    }
 
     /**
      * Returns {@code true} if a session exists.
