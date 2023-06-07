@@ -18,9 +18,9 @@ package org.apache.commons.chain.internal;
 
 import java.lang.reflect.Array;
 
-public final class Unsafe {
+public final class Utilities {
 
-    private Unsafe() {
+    private Utilities() {
     }
 
     /**
@@ -31,7 +31,7 @@ public final class Unsafe {
      * <blockquote>
      * <pre>
      * int[] x = {length};
-     * Unsafe.newArray(componentType, length);
+     * Utilities.newArray(componentType, length);
      * </pre>
      * </blockquote>
      *
