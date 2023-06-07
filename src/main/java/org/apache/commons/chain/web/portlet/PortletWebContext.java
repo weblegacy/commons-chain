@@ -48,7 +48,7 @@ public class PortletWebContext extends WebContext {
     /**
      * The {@code PortletContext} for this web application.
      */
-    protected transient PortletContext context = null;
+    private transient PortletContext context = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-value
@@ -88,7 +88,7 @@ public class PortletWebContext extends WebContext {
     /**
      * The {@code PortletRequest} for this request.
      */
-    protected transient PortletRequest request = null;
+    private transient PortletRequest request = null;
 
     /**
      * The lazily instantiated {@code Map} of request scope
@@ -99,7 +99,7 @@ public class PortletWebContext extends WebContext {
     /**
      * The {@code PortletResponse} for this request.
      */
-    protected transient PortletResponse response = null;
+    private transient PortletResponse response = null;
 
     /**
      * The lazily instantiated {@code Map} of session scope

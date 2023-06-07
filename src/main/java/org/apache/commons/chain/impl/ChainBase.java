@@ -101,13 +101,13 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    protected Command<C>[] commands = Utilities.newArray(Command.class, 0);
+    private Command<C>[] commands = Utilities.newArray(Command.class, 0);
 
     /**
      * Flag indicating whether the configuration of our commands list
      * has been frozen by a call to the {@code execute()} method.
      */
-    protected boolean frozen = false;
+    private boolean frozen = false;
 
     // ---------------------------------------------------------- Chain Methods
 

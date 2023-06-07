@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Resolve `Checkstyle`-Messages with irrelevant API-break
 * Optimize get-/set-locale-command with lambda expressions
 * Resolve some `SpotBugs`
 * Add final keyword

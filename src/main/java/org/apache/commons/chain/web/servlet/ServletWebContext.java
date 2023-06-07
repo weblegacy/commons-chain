@@ -47,7 +47,7 @@ public class ServletWebContext extends WebContext {
     /**
      * The {@code ServletContext} for this web application.
      */
-    protected transient ServletContext context = null;
+    private transient ServletContext context = null;
 
     /**
      * The lazily instantiated {@code Map} of header name-value
@@ -87,7 +87,7 @@ public class ServletWebContext extends WebContext {
     /**
      * The {@code HttpServletRequest} for this request.
      */
-    protected transient HttpServletRequest request = null;
+    private transient HttpServletRequest request = null;
 
     /**
      * The lazily instantiated {@code Map} of request scope
@@ -98,7 +98,7 @@ public class ServletWebContext extends WebContext {
     /**
      * The {@code HttpServletResponse} for this request.
      */
-    protected transient HttpServletResponse response = null;
+    private transient HttpServletResponse response = null;
 
     /**
      * The lazily instantiated {@code Map} of session scope
