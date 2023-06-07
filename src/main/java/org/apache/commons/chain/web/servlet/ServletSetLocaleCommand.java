@@ -35,7 +35,6 @@ public class ServletSetLocaleCommand extends AbstractSetLocaleCommand<ServletWeb
      * Establish the specified {@code Locale} for this response.
      *
      * @param context The {@link Context} we are operating on.
-     *
      * @param locale The Locale for the request.
      */
     @Override

@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Optimize portlet- and servlet-classes with lambda expressions
 * tipfix in Javadoc
 * Rename class `Unsafe` to `Utilities`
 * Resolve some pmd messages

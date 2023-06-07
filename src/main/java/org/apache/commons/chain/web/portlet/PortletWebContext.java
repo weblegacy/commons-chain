@@ -33,33 +33,9 @@ import org.apache.commons.chain.web.WebContext;
  * instances that are passed to the constructor (or the initialize method).
  *
  * @author Craig R. McClanahan
- * @version $Revision$ $Date$
  */
 public class PortletWebContext extends WebContext {
     private static final long serialVersionUID = 7590757017994210786L;
-
-    // ------------------------------------------------------------ Constructors
-
-    /**
-     * Construct an uninitialized {@link PortletWebContext} instance.
-     */
-    public PortletWebContext() {
-    }
-
-    /**
-     * Construct a {@link PortletWebContext} instance that is initialized
-     * with the specified Portlet API objects.
-     *
-     * @param context The {@code PortletContext} for this web application
-     * @param request The {@code PortletRequest} for this request
-     * @param response The {@code PortletResponse} for this request
-     */
-    public PortletWebContext(PortletContext context,
-                             PortletRequest request,
-                             PortletResponse response) {
-
-        initialize(context, request, response);
-    }
 
     // ------------------------------------------------------ Instance Variables
 
@@ -130,6 +106,29 @@ public class PortletWebContext extends WebContext {
      * attributes.
      */
     private transient Map<String, Object> sessionScope = null;
+
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * Construct an uninitialized {@link PortletWebContext} instance.
+     */
+    public PortletWebContext() {
+    }
+
+    /**
+     * Construct a {@link PortletWebContext} instance that is initialized
+     * with the specified Portlet API objects.
+     *
+     * @param context The {@code PortletContext} for this web application
+     * @param request The {@code PortletRequest} for this request
+     * @param response The {@code PortletResponse} for this request
+     */
+    public PortletWebContext(PortletContext context,
+                             PortletRequest request,
+                             PortletResponse response) {
+
+        initialize(context, request, response);
+    }
 
     // ---------------------------------------------------------- Public Methods
 

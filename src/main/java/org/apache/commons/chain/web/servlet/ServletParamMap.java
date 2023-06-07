@@ -16,17 +16,9 @@
  */
 package org.apache.commons.chain.web.servlet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.chain.web.MapEntry;
+import org.apache.commons.chain.internal.ParameterMap;
 
 /**
  * Private implementation of {@code Map} for servlet parameter
@@ -35,121 +27,14 @@ import org.apache.commons.chain.web.MapEntry;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-final class ServletParamMap implements Map<String, String> {
+final class ServletParamMap extends ParameterMap<HttpServletRequest, String> {
 
-    private final HttpServletRequest request;
-
+    /**
+     * The constructor for the servlet parameter name-value.
+     *
+     * @param request the servlet-request for the adapter.
+     */
     ServletParamMap(HttpServletRequest request) {
-        this.request = request;
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean containsKey(Object key) {
-        return request.getParameter(key(key)) != null;
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        Enumeration<?> keys = request.getParameterNames();
-        while (keys.hasMoreElements()) {
-            Object next = request.getParameter((String) keys.nextElement());
-            if (value.equals(next)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public Set<Map.Entry<String, String>> entrySet() {
-        Set<Map.Entry<String, String>> set = new HashSet<>();
-        Enumeration<?> keys = request.getParameterNames();
-        String key;
-        while (keys.hasMoreElements()) {
-            key = keys.nextElement().toString();
-            set.add(new MapEntry<>(key, request.getParameter(key), false));
-        }
-        return set;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return request.equals(o);
-    }
-
-    @Override
-    public String get(Object key) {
-        return request.getParameter(key(key));
-    }
-
-    @Override
-    public int hashCode() {
-        return request.hashCode();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return !request.getParameterNames().hasMoreElements();
-    }
-
-    @Override
-    public Set<String> keySet() {
-        Set<String> set = new HashSet<>();
-        Enumeration<?> keys = request.getParameterNames();
-        while (keys.hasMoreElements()) {
-            set.add(keys.nextElement().toString());
-        }
-        return set;
-    }
-
-    @Override
-    public String put(String key, String value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void putAll(Map<? extends String, ? extends String> map) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String remove(Object key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int size() {
-        int n = 0;
-        Enumeration<?> keys = request.getParameterNames();
-        while (keys.hasMoreElements()) {
-            keys.nextElement();
-            n++;
-        }
-        return n;
-    }
-
-    @Override
-    public Collection<String> values() {
-        List<String> list = new ArrayList<>();
-        Enumeration<?> keys = request.getParameterNames();
-        while (keys.hasMoreElements()) {
-            list.add(request.getParameter((String) keys.nextElement()));
-        }
-        return list;
-    }
-
-    private static String key(Object key) {
-        if (key == null) {
-            throw new IllegalArgumentException();
-        } else if (key instanceof String) {
-            return (String) key;
-        } else {
-            return key.toString();
-        }
+        super(request, request::getParameter, request::getParameterNames);
     }
 }

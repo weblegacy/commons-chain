@@ -32,7 +32,6 @@ import org.apache.commons.chain.web.WebContext;
  * instances that are passed to the constructor (or the initialize method).
  *
  * @author Craig R. McClanahan
- * @version $Revision$ $Date$
  */
 public class ServletWebContext extends WebContext {
     private static final long serialVersionUID = 5302874006663111922L;
