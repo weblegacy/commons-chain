@@ -28,8 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.config.ConfigParser;
-import org.apache.commons.chain.impl.CatalogBase;
-import org.apache.commons.digester.RuleSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -102,30 +100,28 @@ public class ChainServlet extends HttpServlet {
      * servlet context attribute under which our resulting {@link Catalog}
      * will be stored.
      */
-    public static final String CONFIG_ATTR =
-        "org.apache.commons.chain.CONFIG_ATTR";
+    public static final String CONFIG_ATTR = ChainInit.CONFIG_ATTR;
 
     /**
      * The name of the context init parameter containing a comma-delimited
      * list of class loader resources to be scanned.
      */
     public static final String CONFIG_CLASS_RESOURCE =
-        "org.apache.commons.chain.CONFIG_CLASS_RESOURCE";
+        ChainInit.CONFIG_CLASS_RESOURCE;
 
     /**
      * The name of the context init parameter containing a comma-delimited
      * list of web application resources to be scanned.
      */
     public static final String CONFIG_WEB_RESOURCE =
-        "org.apache.commons.chain.CONFIG_WEB_RESOURCE";
+        ChainInit.CONFIG_WEB_RESOURCE;
 
     /**
      * The name of the context init parameter containing the fully
      * qualified class name of the {@code RuleSet} implementation
      * for configuring our {@link ConfigParser}.
      */
-    public static final String RULE_SET =
-        "org.apache.commons.chain.RULE_SET";
+    public static final String RULE_SET = ChainInit.RULE_SET;
 
     // --------------------------------------------------------- Servlet Methods
 
@@ -134,13 +130,9 @@ public class ChainServlet extends HttpServlet {
      */
     @Override
     public void destroy() {
-        ServletConfig config = getServletConfig();
-        ServletContext context = getServletContext();
-        String attr = config.getInitParameter(CONFIG_ATTR);
-        if (attr != null) {
-            context.removeAttribute(attr);
-        }
-        CatalogFactory.clear();
+        final ServletConfig config = getServletConfig();
+        final ServletContext context = getServletContext();
+        ChainInit.destroy(context, config.getInitParameter(CONFIG_ATTR));
     }
 
     /**
@@ -150,64 +142,16 @@ public class ChainServlet extends HttpServlet {
      * @throws ServletException if the servlet could not be initialized
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void init() throws ServletException {
-        Log log = LogFactory.getLog(ChainServlet.class);
-        ServletConfig config = getServletConfig();
-        ServletContext context = getServletContext();
+        final Log log = LogFactory.getLog(ChainServlet.class);
+        final ServletConfig config = getServletConfig();
+        final ServletContext context = getServletContext();
         if (log.isInfoEnabled()) {
             log.info("Initializing chain servlet '"
                      + config.getServletName() + "'");
         }
 
-        // Retrieve servlet init parameters that we need
-        String attr = config.getInitParameter(CONFIG_ATTR);
-        String classResources =
-            context.getInitParameter(CONFIG_CLASS_RESOURCE);
-        String ruleSet = context.getInitParameter(RULE_SET);
-        String webResources = context.getInitParameter(CONFIG_WEB_RESOURCE);
-
-        // Retrieve or create the Catalog instance we may be updating
-        Catalog<?> catalog = null;
-        if (attr != null) {
-            catalog = (Catalog<?>) context.getAttribute(attr);
-            if (catalog == null) {
-                catalog = new CatalogBase<>();
-            }
-        }
-
-        // Construct the configuration resource parser we will use
-        ConfigParser parser = new ConfigParser();
-        if (ruleSet != null) {
-            try {
-                ClassLoader loader =
-                    Thread.currentThread().getContextClassLoader();
-                if (loader == null) {
-                    loader = this.getClass().getClassLoader();
-                }
-                Class<? extends RuleSet> clazz = loader
-                        .loadClass(ruleSet)
-                        .asSubclass(RuleSet.class);
-                parser.setRuleSet(clazz.getDeclaredConstructor().newInstance());
-            } catch (Exception e) {
-                throw new ServletException("Exception initalizing RuleSet '"
-                                           + ruleSet + "' instance", e);
-            }
-        }
-
-        // Parse the resources specified in our init parameters (if any)
-        if (attr == null) {
-            ChainResources.parseClassResources(classResources, parser);
-            ChainResources.parseWebResources(context, webResources, parser);
-        } else {
-            ChainResources.parseClassResources(catalog, classResources, parser);
-            ChainResources.parseWebResources(catalog, context, webResources, parser);
-        }
-
-        // Expose the completed catalog (if requested)
-        if (attr != null) {
-            context.setAttribute(attr, catalog);
-        }
+        ChainInit.initialize(context, config.getInitParameter(CONFIG_ATTR), log, false);
     }
 
     /**

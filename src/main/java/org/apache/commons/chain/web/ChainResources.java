@@ -23,7 +23,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.chain.Catalog;
-import org.apache.commons.chain.config.ConfigParser;
+import org.apache.commons.chain.internal.CheckedConsumer;
+import org.apache.commons.chain.internal.CheckedFunction;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -48,134 +49,48 @@ final class ChainResources {
     /**
      * Parse the specified class loader resources.
      *
+     * @param <E> the type of the exception from parse-function
      * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
+     * @param parse parse-function to parse the XML document
      */
-    static void parseClassResources(String resources,
-                                    ConfigParser parser) {
+    static <E extends Exception> void parseClassResources(String resources,
+                                    CheckedConsumer<URL, E> parse) {
 
-        if (resources == null) {
-            return;
-        }
-        Log log = LogFactory.getLog(ChainResources.class);
         ClassLoader loader =
             Thread.currentThread().getContextClassLoader();
         if (loader == null) {
             loader = ChainResources.class.getClassLoader();
         }
-        String[] paths = getResourcePaths(resources);
-        String path = null;
-        try {
-            for (String path2 : paths) {
-                path = path2;
-                URL url = loader.getResource(path);
-                if (url == null) {
-                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Loading chain config resource '" + path + "'");
-                }
-                parser.parse(url);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
-                 + e.getMessage());
-        }
-    }
-
-    /**
-     * Parse the specified class loader resources.
-     *
-     * @param catalog {@link Catalog} we are populating
-     * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
-     *
-     * @deprecated Use the variant that does not take a catalog, on a
-     *             configuration resource containing "catalog" element(s)
-     */
-    @Deprecated
-    static void parseClassResources(Catalog<?> catalog, String resources,
-                                    ConfigParser parser) {
-
-        if (resources == null) {
-            return;
-        }
-        Log log = LogFactory.getLog(ChainResources.class);
-        ClassLoader loader =
-            Thread.currentThread().getContextClassLoader();
-        if (loader == null) {
-            loader = ChainResources.class.getClassLoader();
-        }
-        String[] paths = getResourcePaths(resources);
-        String path = null;
-        try {
-            for (String path2 : paths) {
-                path = path2;
-                URL url = loader.getResource(path);
-                if (url == null) {
-                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Loading chain config resource '" + path + "'");
-                }
-                parser.parse(catalog, url);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
-                 + e.getMessage());
-        }
+        parseResources(loader::getResource, resources, parse);
     }
 
     /**
      * Parse the specified web application resources.
      *
+     * @param <E> the type of the exception from parse-function
      * @param context {@code ServletContext} for this web application
      * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
+     * @param parse parse-function to parse the XML document
      */
-    static void parseWebResources(ServletContext context,
+    static <E extends Exception> void parseWebResources(ServletContext context,
                                   String resources,
-                                  ConfigParser parser) {
+                                  CheckedConsumer<URL, E> parse) {
 
-        if (resources == null) {
-            return;
-        }
-        Log log = LogFactory.getLog(ChainResources.class);
-        String[] paths = getResourcePaths(resources);
-        String path = null;
-        try {
-            for (String path2 : paths) {
-                path = path2;
-                URL url = context.getResource(path);
-                if (url == null) {
-                    throw new IllegalStateException("Missing chain config resource '" + path + "'");
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Loading chain config resource '" + path + "'");
-                }
-                parser.parse(url);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
-                 + e.getMessage());
-        }
+        parseResources(context::getResource, resources, parse);
     }
 
     /**
-     * Parse the specified web application resources.
+     * Parse the specified resources with a resource-get-function.
      *
-     * @param catalog {@link Catalog} we are populating
-     * @param context {@code ServletContext} for this web application
+     * @param <ER> the type of the exception from resource-function
+     * @param <EP> the type of the exception from parse-function
+     * @param resourceFunction function to get the {@link URL} from a path
      * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
-     *
-     * @deprecated Use the variant that does not take a catalog, on a
-     *             configuration resource containing "catalog" element(s)
+     * @param parse parse-function to parse the XML document
      */
-    @Deprecated
-    static void parseWebResources(Catalog<?> catalog, ServletContext context,
-                                  String resources,
-                                  ConfigParser parser) {
+    private static <ER extends Exception, EP extends Exception> void parseResources(
+            CheckedFunction<String, URL, ER> resourceFunction, String resources,
+            CheckedConsumer<URL, EP> parse) {
 
         if (resources == null) {
             return;
@@ -186,14 +101,14 @@ final class ChainResources {
         try {
             for (String path2 : paths) {
                 path = path2;
-                URL url = context.getResource(path);
+                URL url = resourceFunction.apply(path);
                 if (url == null) {
                     throw new IllegalStateException("Missing chain config resource '" + path + "'");
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("Loading chain config resource '" + path + "'");
                 }
-                parser.parse(catalog, url);
+                parse.accept(url);
             }
         } catch (Exception e) {
             throw new RuntimeException("Exception parsing chain config resource '" + path + "': "
@@ -213,7 +128,7 @@ final class ChainResources {
      * @since Chain 1.1
      */
     static String[] getResourcePaths(String resources) {
-        List<String> paths = new ArrayList<>();
+        final List<String> paths = new ArrayList<>();
 
         if (resources != null) {
             String path;
