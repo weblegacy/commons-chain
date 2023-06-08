@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update checkstyle from 10.10.0 to 10.12.0
 * Correct site-url
 * Correction in `cookbook.md`
 * Change Javadoc
