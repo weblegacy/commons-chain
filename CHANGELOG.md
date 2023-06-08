@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correction in `cookbook.md`
 * Change Javadoc
 * Resolve `Checkstyle`-Messages with irrelevant API-break
 * Optimize get-/set-locale-command with lambda expressions

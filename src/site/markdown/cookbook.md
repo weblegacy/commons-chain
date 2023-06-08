@@ -1017,7 +1017,7 @@ them call the appropriate Command class. A set of related tasks (or
 often, the Actions can be standard, reusable Actions.
 
 Something else to note about <!-- Example 14 --> the above example is that we use the
-"LocaleChange" token as the <property>path</property> attribute. This
+"LocaleChange" token as the `path` attribute. This
 means that the story would be trigged by opening (for example) the
 "`/LocaleChange.do`" page. Even so, the path is
 _not_ part of our semantic
