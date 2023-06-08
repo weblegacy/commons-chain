@@ -18,8 +18,17 @@ package org.apache.commons.chain.internal;
 
 import java.lang.reflect.Array;
 
+/**
+ * This class contains utilities-functions.
+ *
+ * @author Stefan Graff
+ * @since Chain 1.3
+ */
 public final class Utilities {
 
+    /**
+     * Private constructor.
+     */
     private Utilities() {
     }
 
