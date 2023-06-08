@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update maven-site-plugin from 3.12.1 to 4.0.0-M7
 * Update checkstyle from 10.10.0 to 10.12.0
 * Correct site-url
 * Correction in `cookbook.md`
