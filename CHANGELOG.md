@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correct site-url
 * Correction in `cookbook.md`
 * Change Javadoc
 * Resolve `Checkstyle`-Messages with irrelevant API-break

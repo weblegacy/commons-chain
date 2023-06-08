@@ -32,7 +32,7 @@
     <description>
         An implementation of the GoF Chain of Responsibility pattern
     </description>
-    <url>http://commons.apache.org/chain/</url>
+    <url>https://weblegacy.github.io/commons-chain/</url>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/weblegacy/commons-chain/issues</url>
