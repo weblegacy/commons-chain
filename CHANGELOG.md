@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update checkstyle from 10.12.0 to 10.12.1
 * Correct Clone-Link in README
 * Add OSGi-Infos
 * Update junit-jupiter-api from 5.9.3 to 5.10.0-M1
