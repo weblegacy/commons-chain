@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add `LICENSE.txt` and `NOTICE.txt` to jars
 * Corr: Add OSGi-Infos
 * Update junit-jupiter-api from 5.10.0-M1 to 5.10.0-RC1
 * Update checkstyle from 10.12.0 to 10.12.1

@@ -191,6 +191,38 @@
     </properties> 
 
     <build>
+        <!-- ensure jars also get NOTICE & LICENSE files -->
+        <resources>
+            <!-- This is the default setting from the super-pom -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <!-- hack to ensure the N&L appear in jars -->
+            <resource>
+                <directory>${basedir}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE.txt</include>
+                    <include>NOTICE.txt</include>
+                </includes>
+            </resource>
+        </resources>
+        <!-- ensure test jars also get NOTICE & LICENSE files -->
+        <testResources>
+            <!-- This is the default setting from the super-pom -->
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <!-- hack to ensure the N&L appear in jars -->
+            <testResource>
+                <directory>${basedir}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE.txt</include>
+                    <include>NOTICE.txt</include>
+                </includes>
+            </testResource>
+        </testResources>
         <pluginManagement>
             <plugins>
                 <plugin>
