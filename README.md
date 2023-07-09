@@ -1,6 +1,6 @@
 # Commons-Chain - Reloaded
 
-Is a clone of <https://github.com/weblegacy/commons-chain.git> - Branche `CHAIN_1_X`, aiming to bring Commons-Chain to a current technology.
+Is a clone of <https://github.com/apache/commons-chain.git> - Branche `CHAIN_1_X`, aiming to bring Commons-Chain to a current technology.
 
 Full [CHANGELOG](CHANGELOG.md)
 
