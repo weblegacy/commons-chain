@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add OSGi-Infos
 * Update junit-jupiter-api from 5.9.3 to 5.10.0-M1
 * Update maven-fluido-skin from 1.11.2 to 2.0.0-M6
 * Update maven-site-plugin from 3.12.1 to 4.0.0-M7

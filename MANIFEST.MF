@@ -1,0 +1,52 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: 1.5.0_07 (Sun Microsystems Inc.)
+Built-By: Niall Pemberton
+Build-Jdk: 1.5.0_07
+X-Compile-Source-JDK: 1.3
+X-Compile-Target-JDK: 1.3
+Bnd-LastModified: 1212079535468
+Bundle-Description: An implementation of the GoF Chain of Responsibili
+ ty pattern
+Bundle-DocURL: http://commons.apache.org/chain/
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: Commons Chain
+Bundle-SymbolicName: org.apache.commons.chain
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 1.2
+DynamicImport-Package: javax.portlet
+Export-Package:
+ org.apache.commons.chain;version="1.2",
+ org.apache.commons.chain.config;version="1.2",
+ org.apache.commons.chain.generic;version="1.2",
+ org.apache.commons.chain.impl;version="1.2",
+ org.apache.commons.chain.web;version="1.2",
+ org.apache.commons.chain.web.faces;version="1.2",
+ org.apache.commons.chain.web.portlet;version="1.2"
+ org.apache.commons.chain.web.servlet;version="1.2",
+Implementation-Title: Commons Chain
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Vendor-Id: org.apache
+Implementation-Version: 1.2
+Import-Package:
+ javax.faces.component,
+ javax.faces.context,
+ javax.servlet,
+ javax.servlet.http,
+ org.apache.commons.chain;version="1.2",
+ org.apache.commons.chain.config;version="1.2",
+ org.apache.commons.chain.generic;version="1.2",
+ org.apache.commons.chain.impl;version="1.2",
+ org.apache.commons.chain.web;version="1.2",
+ org.apache.commons.chain.web.faces;version="1.2",
+ org.apache.commons.chain.web.portlet;version="1.2",
+ org.apache.commons.chain.web.servlet;version="1.2",
+ org.apache.commons.digester,
+ org.apache.commons.logging,
+ org.xml.sax
+Specification-Title: Commons Chain
+Specification-Vendor: The Apache Software Foundation
+Specification-Version: 1.2
+Tool: Bnd-0.0.238
+
