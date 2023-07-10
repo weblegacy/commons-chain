@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FacesWebContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.faces</a> &gt; <span class="el_source">FacesWebContext.java</span></div><h1>FacesWebContext.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FacesWebContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.faces</a> &gt; <span class="el_source">FacesWebContext.java</span></div><h1>FacesWebContext.java</h1><pre class="source lang-java linenums">/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -24,7 +24,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.chain.web.WebContext;
-import org.apache.commons.chain.web.WebContextBase;
 
 /**
  * Concrete implementation of {@link WebContext} suitable for use in
@@ -35,7 +34,7 @@ import org.apache.commons.chain.web.WebContextBase;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public class FacesWebContext extends WebContextBase {
+public class FacesWebContext extends WebContext {
     private static final long serialVersionUID = -1429681424077509130L;
 
     // ------------------------------------------------------ Instance Variables
@@ -44,20 +43,20 @@ public class FacesWebContext extends WebContextBase {
      * The {@code FacesContext} instance for the request represented
      * by this {@link WebContext}.
      */
-<span class="nc" id="L47">    private transient FacesContext context = null;</span>
+<span class="nc" id="L46">    private transient FacesContext context = null;</span>
 
     /**
      * The lazily instantiated {@code Map} of cookies.
      */
-<span class="nc" id="L52">    private transient Map&lt;String, Cookie&gt; cookieValues = null;</span>
+<span class="nc" id="L51">    private transient Map&lt;String, Cookie&gt; cookieValues = null;</span>
 
     // ------------------------------------------------------------ Constructors
 
     /**
      * Construct an uninitialized {@link FacesWebContext} instance.
      */
-<span class="nc" id="L59">    public FacesWebContext() {</span>
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L58">    public FacesWebContext() {</span>
+<span class="nc" id="L59">    }</span>
 
     /**
      * Construct a {@link FacesWebContext} instance that is initialized
@@ -65,9 +64,9 @@ public class FacesWebContext extends WebContextBase {
      *
      * @param context The {@code FacesContext} for this request
      */
-<span class="nc" id="L68">    public FacesWebContext(FacesContext context) {</span>
-<span class="nc" id="L69">        initialize(context);</span>
-<span class="nc" id="L70">    }</span>
+<span class="nc" id="L67">    public FacesWebContext(FacesContext context) {</span>
+<span class="nc" id="L68">        initialize(context);</span>
+<span class="nc" id="L69">    }</span>
     // ---------------------------------------------------------- Public Methods
 
     /**
@@ -77,7 +76,7 @@ public class FacesWebContext extends WebContextBase {
      * @return The {@code FacesContext} for this request
      */
     public FacesContext getContext() {
-<span class="nc" id="L80">        return this.context;</span>
+<span class="nc" id="L79">        return this.context;</span>
     }
 
     /**
@@ -87,8 +86,8 @@ public class FacesWebContext extends WebContextBase {
      * @param context The {@code FacesContext} for this request
      */
     public void initialize(FacesContext context) {
-<span class="nc" id="L90">        this.context = context;</span>
-<span class="nc" id="L91">    }</span>
+<span class="nc" id="L89">        this.context = context;</span>
+<span class="nc" id="L90">    }</span>
 
     /**
      * Release references to allocated resources acquired in
@@ -97,9 +96,9 @@ public class FacesWebContext extends WebContextBase {
      * {@code initialize()} will return undefined results.
      */
     public void release() {
-<span class="nc" id="L100">        context = null;</span>
-<span class="nc" id="L101">        cookieValues = null;</span>
-<span class="nc" id="L102">    }</span>
+<span class="nc" id="L99">        context = null;</span>
+<span class="nc" id="L100">        cookieValues = null;</span>
+<span class="nc" id="L101">    }</span>
 
     // ------------------------------------------------------ WebContext Methods
 
@@ -110,7 +109,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, Object&gt; getApplicationScope() {
-<span class="nc" id="L113">        return context.getExternalContext().getApplicationMap();</span>
+<span class="nc" id="L112">        return context.getExternalContext().getApplicationMap();</span>
     }
 
     /**
@@ -120,7 +119,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, String&gt; getHeader() {
-<span class="nc" id="L123">        return context.getExternalContext().getRequestHeaderMap();</span>
+<span class="nc" id="L122">        return context.getExternalContext().getRequestHeaderMap();</span>
     }
 
     /**
@@ -130,7 +129,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, String[]&gt; getHeaderValues() {
-<span class="nc" id="L133">        return context.getExternalContext().getRequestHeaderValuesMap();</span>
+<span class="nc" id="L132">        return context.getExternalContext().getRequestHeaderValuesMap();</span>
     }
 
     /**
@@ -140,7 +139,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, String&gt; getInitParam() {
-<span class="nc" id="L143">        return context.getExternalContext().getInitParameterMap();</span>
+<span class="nc" id="L142">        return context.getExternalContext().getInitParameterMap();</span>
     }
 
     /**
@@ -150,7 +149,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, String&gt; getParam() {
-<span class="nc" id="L153">        return context.getExternalContext().getRequestParameterMap();</span>
+<span class="nc" id="L152">        return context.getExternalContext().getRequestParameterMap();</span>
     }
 
     /**
@@ -160,7 +159,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, String[]&gt; getParamValues() {
-<span class="nc" id="L163">        return context.getExternalContext().getRequestParameterValuesMap();</span>
+<span class="nc" id="L162">        return context.getExternalContext().getRequestParameterValuesMap();</span>
     }
 
     /**
@@ -171,16 +170,16 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, Cookie&gt; getCookies() {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (cookieValues == null) {</span>
-<span class="nc" id="L175">            final Map&lt;String, Object&gt; cookiesSrc = context.getExternalContext().getRequestCookieMap();</span>
-<span class="nc" id="L176">            final Map&lt;String, Cookie&gt; cookiesDest = new HashMap&lt;&gt;(cookiesSrc.size());</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if (cookieValues == null) {</span>
+<span class="nc" id="L174">            final Map&lt;String, Object&gt; cookiesSrc = context.getExternalContext().getRequestCookieMap();</span>
+<span class="nc" id="L175">            final Map&lt;String, Cookie&gt; cookiesDest = new HashMap&lt;&gt;(cookiesSrc.size());</span>
 
-<span class="nc" id="L178">            cookiesSrc.forEach((k, v) -&gt; cookiesDest.put(k, (Cookie) v));</span>
+<span class="nc" id="L177">            cookiesSrc.forEach((k, v) -&gt; cookiesDest.put(k, (Cookie) v));</span>
 
-<span class="nc" id="L180">            cookieValues = Collections.unmodifiableMap(cookiesDest);</span>
+<span class="nc" id="L179">            cookieValues = Collections.unmodifiableMap(cookiesDest);</span>
         }
 
-<span class="nc" id="L183">        return cookieValues;</span>
+<span class="nc" id="L182">        return cookieValues;</span>
     }
 
     /**
@@ -190,7 +189,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, Object&gt; getRequestScope() {
-<span class="nc" id="L193">        return context.getExternalContext().getRequestMap();</span>
+<span class="nc" id="L192">        return context.getExternalContext().getRequestMap();</span>
     }
 
     /**
@@ -200,7 +199,7 @@ public class FacesWebContext extends WebContextBase {
      */
     @Override
     public Map&lt;String, Object&gt; getSessionScope() {
-<span class="nc" id="L203">        return context.getExternalContext().getSessionMap();</span>
+<span class="nc" id="L202">        return context.getExternalContext().getSessionMap();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

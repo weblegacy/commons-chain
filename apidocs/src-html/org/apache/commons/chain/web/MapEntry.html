@@ -125,7 +125,7 @@
 <span class="source-line-no">112</span><span id="line-112">        if (o == null || getClass() != o.getClass()) {</span>
 <span class="source-line-no">113</span><span id="line-113">            return false;</span>
 <span class="source-line-no">114</span><span id="line-114">        }</span>
-<span class="source-line-no">115</span><span id="line-115">        MapEntry&lt;?&gt; other = (MapEntry&lt;?&gt;) o;</span>
+<span class="source-line-no">115</span><span id="line-115">        final MapEntry&lt;?&gt; other = (MapEntry&lt;?&gt;) o;</span>
 <span class="source-line-no">116</span><span id="line-116">        return Objects.equals(key, other.key) &amp;&amp; Objects.equals(value, other.value);</span>
 <span class="source-line-no">117</span><span id="line-117">    }</span>
 <span class="source-line-no">118</span><span id="line-118"></span>

@@ -57,6 +57,7 @@ loadScripts(document, 'script');</script>
 <li><a href="org/apache/commons/chain/config/package-tree.html">org.apache.commons.chain.config</a>, </li>
 <li><a href="org/apache/commons/chain/generic/package-tree.html">org.apache.commons.chain.generic</a>, </li>
 <li><a href="org/apache/commons/chain/impl/package-tree.html">org.apache.commons.chain.impl</a>, </li>
+<li><a href="org/apache/commons/chain/internal/package-tree.html">org.apache.commons.chain.internal</a>, </li>
 <li><a href="org/apache/commons/chain/web/package-tree.html">org.apache.commons.chain.web</a>, </li>
 <li><a href="org/apache/commons/chain/web/faces/package-tree.html">org.apache.commons.chain.web.faces</a>, </li>
 <li><a href="org/apache/commons/chain/web/portlet/package-tree.html">org.apache.commons.chain.web.portlet</a>, </li>
@@ -67,20 +68,13 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" class="type-name-link external-link" title="Klasse oder Schnittstelle in java.lang">Object</a>
 <ul>
-<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/AbstractGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">AbstractGetLocaleCommand</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Command.html" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;C&gt;)
-<ul>
-<li class="circle">org.apache.commons.chain.web.faces.<a href="org/apache/commons/chain/web/faces/FacesGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesGetLocaleCommand</a></li>
-<li class="circle">org.apache.commons.chain.web.portlet.<a href="org/apache/commons/chain/web/portlet/PortletGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletGetLocaleCommand</a></li>
-<li class="circle">org.apache.commons.chain.web.servlet.<a href="org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.servlet">ServletGetLocaleCommand</a></li>
-</ul>
-</li>
 <li class="circle">java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html" class="type-name-link external-link" title="Klasse oder Schnittstelle in java.util">AbstractMap</a>&lt;K,<wbr>V&gt; (implements java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;K,<wbr>V&gt;)
 <ul>
-<li class="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html" class="type-name-link external-link" title="Klasse oder Schnittstelle in java.util.concurrent">ConcurrentHashMap</a>&lt;K,<wbr>V&gt; (implements java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html" title="Klasse oder Schnittstelle in java.util.concurrent" class="external-link">ConcurrentMap</a>&lt;K,<wbr>V&gt;, java.io.<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html" title="Klasse oder Schnittstelle in java.io" class="external-link">Serializable</a>)
+<li class="circle">java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html" class="type-name-link external-link" title="Klasse oder Schnittstelle in java.util">HashMap</a>&lt;K,<wbr>V&gt; (implements java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Cloneable</a>, java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;K,<wbr>V&gt;, java.io.<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html" title="Klasse oder Schnittstelle in java.io" class="external-link">Serializable</a>)
 <ul>
 <li class="circle">org.apache.commons.chain.impl.<a href="org/apache/commons/chain/impl/ContextBase.html" class="type-name-link" title="Klasse in org.apache.commons.chain.impl">ContextBase</a> (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Context.html" title="Schnittstelle in org.apache.commons.chain">Context</a>)
 <ul>
-<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/WebContextBase.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">WebContextBase</a> (implements org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/WebContext.html" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a>)
+<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/WebContext.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">WebContext</a>
 <ul>
 <li class="circle">org.apache.commons.chain.web.faces.<a href="org/apache/commons/chain/web/faces/FacesWebContext.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesWebContext</a></li>
 <li class="circle">org.apache.commons.chain.web.portlet.<a href="org/apache/commons/chain/web/portlet/PortletWebContext.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletWebContext</a></li>
@@ -93,13 +87,7 @@ loadScripts(document, 'script');</script>
 </li>
 </ul>
 </li>
-<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/AbstractSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">AbstractSetLocaleCommand</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Command.html" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;C&gt;)
-<ul>
-<li class="circle">org.apache.commons.chain.web.faces.<a href="org/apache/commons/chain/web/faces/FacesSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesSetLocaleCommand</a></li>
-<li class="circle">org.apache.commons.chain.web.portlet.<a href="org/apache/commons/chain/web/portlet/PortletSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletSetLocaleCommand</a></li>
-<li class="circle">org.apache.commons.chain.web.servlet.<a href="org/apache/commons/chain/web/servlet/ServletSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.servlet">ServletSetLocaleCommand</a></li>
-</ul>
-</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/AbstractSessionScopeMap.html" class="type-name-link" title="Klasse in org.apache.commons.chain.internal">AbstractSessionScopeMap</a>&lt;S,<wbr>R&gt; (implements java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;K,<wbr>V&gt;)</li>
 <li class="circle">org.apache.commons.chain.impl.<a href="org/apache/commons/chain/impl/CatalogBase.html" class="type-name-link" title="Klasse in org.apache.commons.chain.impl">CatalogBase</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Catalog.html" title="Schnittstelle in org.apache.commons.chain">Catalog</a>&lt;C&gt;)</li>
 <li class="circle">org.apache.commons.chain.<a href="org/apache/commons/chain/CatalogFactory.html" class="type-name-link" title="Klasse in org.apache.commons.chain">CatalogFactory</a>&lt;C&gt;
 <ul>
@@ -124,6 +112,13 @@ loadScripts(document, 'script');</script>
 </li>
 </ul>
 </li>
+<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/GetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">GetLocaleCommand</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Command.html" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;C&gt;)
+<ul>
+<li class="circle">org.apache.commons.chain.web.faces.<a href="org/apache/commons/chain/web/faces/FacesGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesGetLocaleCommand</a></li>
+<li class="circle">org.apache.commons.chain.web.portlet.<a href="org/apache/commons/chain/web/portlet/PortletGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletGetLocaleCommand</a></li>
+<li class="circle">org.apache.commons.chain.web.servlet.<a href="org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.servlet">ServletGetLocaleCommand</a></li>
+</ul>
+</li>
 <li class="circle">org.apache.commons.chain.generic.<a href="org/apache/commons/chain/generic/LookupCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.generic">LookupCommand</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Filter.html" title="Schnittstelle in org.apache.commons.chain">Filter</a>&lt;C&gt;)
 <ul>
 <li class="circle">org.apache.commons.chain.generic.<a href="org/apache/commons/chain/generic/DispatchLookupCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.generic">DispatchLookupCommand</a>&lt;C&gt;</li>
@@ -133,12 +128,27 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/MapEntry.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">MapEntry</a>&lt;T&gt; (implements java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map.Entry</a>&lt;K,<wbr>V&gt;)</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/ParameterMap.html" class="type-name-link" title="Klasse in org.apache.commons.chain.internal">ParameterMap</a>&lt;P,<wbr>T&gt; (implements java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;K,<wbr>V&gt;)
+<ul>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/CookieMap.html" class="type-name-link" title="Klasse in org.apache.commons.chain.internal">CookieMap</a>&lt;P&gt;</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/MutableParameterMap.html" class="type-name-link" title="Klasse in org.apache.commons.chain.internal">MutableParameterMap</a>&lt;P,<wbr>T&gt;</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/ParamValuesMap.html" class="type-name-link" title="Klasse in org.apache.commons.chain.internal">ParamValuesMap</a>&lt;P&gt;</li>
+</ul>
+</li>
 <li class="circle">org.apache.commons.chain.generic.<a href="org/apache/commons/chain/generic/RemoveCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.generic">RemoveCommand</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Command.html" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;C&gt;)</li>
 <li class="circle">org.apache.commons.digester.RuleSetBase (implements org.apache.commons.digester.RuleSet)
 <ul>
 <li class="circle">org.apache.commons.chain.config.<a href="org/apache/commons/chain/config/ConfigRuleSet.html" class="type-name-link" title="Klasse in org.apache.commons.chain.config">ConfigRuleSet</a></li>
 </ul>
 </li>
+<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/SetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">SetLocaleCommand</a>&lt;C&gt; (implements org.apache.commons.chain.<a href="org/apache/commons/chain/Command.html" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;C&gt;)
+<ul>
+<li class="circle">org.apache.commons.chain.web.faces.<a href="org/apache/commons/chain/web/faces/FacesSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesSetLocaleCommand</a></li>
+<li class="circle">org.apache.commons.chain.web.portlet.<a href="org/apache/commons/chain/web/portlet/PortletSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletSetLocaleCommand</a></li>
+<li class="circle">org.apache.commons.chain.web.servlet.<a href="org/apache/commons/chain/web/servlet/ServletSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.servlet">ServletSetLocaleCommand</a></li>
+</ul>
+</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/Utilities.html" class="type-name-link" title="Klasse in org.apache.commons.chain.internal">Utilities</a></li>
 </ul>
 </li>
 </ul>
@@ -147,6 +157,8 @@ loadScripts(document, 'script');</script>
 <h2 title="Schnittstellenhierarchie">Schnittstellenhierarchie</h2>
 <ul>
 <li class="circle">org.apache.commons.chain.<a href="org/apache/commons/chain/Catalog.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain">Catalog</a>&lt;C&gt;</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/CheckedConsumer.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain.internal">CheckedConsumer</a>&lt;T,<wbr>E&gt;</li>
+<li class="circle">org.apache.commons.chain.internal.<a href="org/apache/commons/chain/internal/CheckedFunction.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain.internal">CheckedFunction</a>&lt;T,<wbr>R,<wbr>E&gt;</li>
 <li class="circle">org.apache.commons.chain.<a href="org/apache/commons/chain/Command.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;C&gt;
 <ul>
 <li class="circle">org.apache.commons.chain.<a href="org/apache/commons/chain/Chain.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain">Chain</a>&lt;C&gt;</li>
@@ -155,16 +167,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" class="type-name-link external-link" title="Klasse oder Schnittstelle in java.util">Map</a>&lt;K,<wbr>V&gt;
 <ul>
-<li class="circle">org.apache.commons.chain.<a href="org/apache/commons/chain/Context.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain">Context</a>
-<ul>
-<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/WebContext.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a> (auch extends java.io.<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html" title="Klasse oder Schnittstelle in java.io" class="external-link">Serializable</a>)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="circle">java.io.<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html" class="type-name-link external-link" title="Klasse oder Schnittstelle in java.io">Serializable</a>
-<ul>
-<li class="circle">org.apache.commons.chain.web.<a href="org/apache/commons/chain/web/WebContext.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a> (auch extends org.apache.commons.chain.<a href="org/apache/commons/chain/Context.html" title="Schnittstelle in org.apache.commons.chain">Context</a>)</li>
+<li class="circle">org.apache.commons.chain.<a href="org/apache/commons/chain/Context.html" class="type-name-link" title="Schnittstelle in org.apache.commons.chain">Context</a></li>
 </ul>
 </li>
 </ul>
@@ -172,7 +175,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">The Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

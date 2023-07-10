@@ -29,342 +29,144 @@
 <span class="source-line-no">016</span><span id="line-16"> */</span>
 <span class="source-line-no">017</span><span id="line-17">package org.apache.commons.chain.web;</span>
 <span class="source-line-no">018</span><span id="line-18"></span>
-<span class="source-line-no">019</span><span id="line-19">import java.io.InputStream;</span>
-<span class="source-line-no">020</span><span id="line-20">import java.net.URL;</span>
-<span class="source-line-no">021</span><span id="line-21">import java.util.Collections;</span>
-<span class="source-line-no">022</span><span id="line-22">import java.util.Iterator;</span>
-<span class="source-line-no">023</span><span id="line-23">import java.util.Set;</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">import javax.servlet.ServletContext;</span>
-<span class="source-line-no">026</span><span id="line-26">import javax.servlet.ServletContextEvent;</span>
-<span class="source-line-no">027</span><span id="line-27">import javax.servlet.ServletContextListener;</span>
-<span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">import org.apache.commons.chain.Catalog;</span>
-<span class="source-line-no">030</span><span id="line-30">import org.apache.commons.chain.CatalogFactory;</span>
-<span class="source-line-no">031</span><span id="line-31">import org.apache.commons.chain.config.ConfigParser;</span>
-<span class="source-line-no">032</span><span id="line-32">import org.apache.commons.chain.impl.CatalogBase;</span>
-<span class="source-line-no">033</span><span id="line-33">import org.apache.commons.digester.RuleSet;</span>
-<span class="source-line-no">034</span><span id="line-34">import org.apache.commons.logging.Log;</span>
-<span class="source-line-no">035</span><span id="line-35">import org.apache.commons.logging.LogFactory;</span>
-<span class="source-line-no">036</span><span id="line-36"></span>
-<span class="source-line-no">037</span><span id="line-37">/**</span>
-<span class="source-line-no">038</span><span id="line-38"> * {@code ServletContextListener} that automatically</span>
-<span class="source-line-no">039</span><span id="line-39"> * scans chain configuration files in the current web application at</span>
-<span class="source-line-no">040</span><span id="line-40"> * startup time, and exposes the result in a {@link Catalog} under a</span>
-<span class="source-line-no">041</span><span id="line-41"> * specified servlet context attribute. The following &lt;em&gt;context&lt;/em&gt; init</span>
-<span class="source-line-no">042</span><span id="line-42"> * parameters are utilized:</span>
-<span class="source-line-no">043</span><span id="line-43"> * &lt;ul&gt;</span>
-<span class="source-line-no">044</span><span id="line-44"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_CLASS_RESOURCE&lt;/strong&gt; -</span>
-<span class="source-line-no">045</span><span id="line-45"> *     comma-delimited list of chain configuration resources to be loaded</span>
-<span class="source-line-no">046</span><span id="line-46"> *     via {@code ClassLoader.getResource()} calls. If not specified,</span>
-<span class="source-line-no">047</span><span id="line-47"> *     no class loader resources will be loaded.&lt;/li&gt;</span>
-<span class="source-line-no">048</span><span id="line-48"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_WEB_RESOURCE&lt;/strong&gt; -</span>
-<span class="source-line-no">049</span><span id="line-49"> *     comma-delimited list of chain configuration webapp resources</span>
-<span class="source-line-no">050</span><span id="line-50"> *     to be loaded. If not specified, no web application resources</span>
-<span class="source-line-no">051</span><span id="line-51"> *     will be loaded.&lt;/li&gt;</span>
-<span class="source-line-no">052</span><span id="line-52"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_ATTR&lt;/strong&gt; -</span>
-<span class="source-line-no">053</span><span id="line-53"> *     Name of the servlet context attribute under which the</span>
-<span class="source-line-no">054</span><span id="line-54"> *     resulting {@link Catalog} will be created or updated.</span>
-<span class="source-line-no">055</span><span id="line-55"> *     If not specified, it is expected that parsed resources will</span>
-<span class="source-line-no">056</span><span id="line-56"> *     contain {@code &amp;lt;catalog&amp;gt;} elements (which will</span>
-<span class="source-line-no">057</span><span id="line-57"> *     cause registration of the created {@link Catalog}s into</span>
-<span class="source-line-no">058</span><span id="line-58"> *     the {@link CatalogFactory} for this application, and no</span>
-<span class="source-line-no">059</span><span id="line-59"> *     servet context attribute will be created.</span>
-<span class="source-line-no">060</span><span id="line-60"> *     &lt;strong&gt;NOTE&lt;/strong&gt; - This parameter is deprecated.&lt;/li&gt;</span>
-<span class="source-line-no">061</span><span id="line-61"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.RULE_SET&lt;/strong&gt; -</span>
-<span class="source-line-no">062</span><span id="line-62"> *     Fully qualified class name of a Digester {@code RuleSet}</span>
-<span class="source-line-no">063</span><span id="line-63"> *     implementation to use for parsing configuration resources (this</span>
-<span class="source-line-no">064</span><span id="line-64"> *     class must have a public zero-args constructor). If not defined,</span>
-<span class="source-line-no">065</span><span id="line-65"> *     the standard {@code RuleSet} implementation will be used.&lt;/li&gt;</span>
-<span class="source-line-no">066</span><span id="line-66"> * &lt;/ul&gt;</span>
-<span class="source-line-no">067</span><span id="line-67"> *</span>
-<span class="source-line-no">068</span><span id="line-68"> * &lt;p&gt;When a web application that has configured this listener is</span>
-<span class="source-line-no">069</span><span id="line-69"> * started, it will acquire the {@link Catalog} under the specified servlet</span>
-<span class="source-line-no">070</span><span id="line-70"> * context attribute key, creating a new one if there is none already there.</span>
-<span class="source-line-no">071</span><span id="line-71"> * This {@link Catalog} will then be populated by scanning configuration</span>
-<span class="source-line-no">072</span><span id="line-72"> * resources from the following sources (loaded in this order):&lt;/p&gt;</span>
-<span class="source-line-no">073</span><span id="line-73"> * &lt;ul&gt;</span>
-<span class="source-line-no">074</span><span id="line-74"> * &lt;li&gt;Resources loaded from any {@code META-INF/chain-config.xml}</span>
-<span class="source-line-no">075</span><span id="line-75"> *     resource found in a JAR file in {@code /WEB-INF/lib}.&lt;/li&gt;</span>
-<span class="source-line-no">076</span><span id="line-76"> * &lt;li&gt;Resources loaded from specified resource paths from the</span>
-<span class="source-line-no">077</span><span id="line-77"> *     webapp's class loader (via {@code ClassLoader.getResource()}).&lt;/li&gt;</span>
-<span class="source-line-no">078</span><span id="line-78"> * &lt;li&gt;Resources loaded from specified resource paths in the web application</span>
-<span class="source-line-no">079</span><span id="line-79"> *     archive (via {@code ServetContext.getResource()}).&lt;/li&gt;</span>
-<span class="source-line-no">080</span><span id="line-80"> * &lt;/ul&gt;</span>
-<span class="source-line-no">081</span><span id="line-81"> *</span>
-<span class="source-line-no">082</span><span id="line-82"> * &lt;p&gt;If no attribute key is specified, on the other hand, parsed configuration</span>
-<span class="source-line-no">083</span><span id="line-83"> * resources are expected to contain {@code &amp;lt;catalog&amp;gt;} elements,</span>
-<span class="source-line-no">084</span><span id="line-84"> * and the catalogs will be registered with the {@link CatalogFactory}</span>
-<span class="source-line-no">085</span><span id="line-85"> * for this web application.&lt;/p&gt;</span>
+<span class="source-line-no">019</span><span id="line-19">import javax.servlet.ServletContext;</span>
+<span class="source-line-no">020</span><span id="line-20">import javax.servlet.ServletContextEvent;</span>
+<span class="source-line-no">021</span><span id="line-21">import javax.servlet.ServletContextListener;</span>
+<span class="source-line-no">022</span><span id="line-22">import javax.servlet.ServletException;</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">import org.apache.commons.chain.Catalog;</span>
+<span class="source-line-no">025</span><span id="line-25">import org.apache.commons.chain.CatalogFactory;</span>
+<span class="source-line-no">026</span><span id="line-26">import org.apache.commons.chain.config.ConfigParser;</span>
+<span class="source-line-no">027</span><span id="line-27">import org.apache.commons.logging.Log;</span>
+<span class="source-line-no">028</span><span id="line-28">import org.apache.commons.logging.LogFactory;</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">/**</span>
+<span class="source-line-no">031</span><span id="line-31"> * {@code ServletContextListener} that automatically</span>
+<span class="source-line-no">032</span><span id="line-32"> * scans chain configuration files in the current web application at</span>
+<span class="source-line-no">033</span><span id="line-33"> * startup time, and exposes the result in a {@link Catalog} under a</span>
+<span class="source-line-no">034</span><span id="line-34"> * specified servlet context attribute. The following &lt;em&gt;context&lt;/em&gt; init</span>
+<span class="source-line-no">035</span><span id="line-35"> * parameters are utilized:</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;ul&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_CLASS_RESOURCE&lt;/strong&gt; -</span>
+<span class="source-line-no">038</span><span id="line-38"> *     comma-delimited list of chain configuration resources to be loaded</span>
+<span class="source-line-no">039</span><span id="line-39"> *     via {@code ClassLoader.getResource()} calls. If not specified,</span>
+<span class="source-line-no">040</span><span id="line-40"> *     no class loader resources will be loaded.&lt;/li&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_WEB_RESOURCE&lt;/strong&gt; -</span>
+<span class="source-line-no">042</span><span id="line-42"> *     comma-delimited list of chain configuration webapp resources</span>
+<span class="source-line-no">043</span><span id="line-43"> *     to be loaded. If not specified, no web application resources</span>
+<span class="source-line-no">044</span><span id="line-44"> *     will be loaded.&lt;/li&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_ATTR&lt;/strong&gt; -</span>
+<span class="source-line-no">046</span><span id="line-46"> *     Name of the servlet context attribute under which the</span>
+<span class="source-line-no">047</span><span id="line-47"> *     resulting {@link Catalog} will be created or updated.</span>
+<span class="source-line-no">048</span><span id="line-48"> *     If not specified, it is expected that parsed resources will</span>
+<span class="source-line-no">049</span><span id="line-49"> *     contain {@code &amp;lt;catalog&amp;gt;} elements (which will</span>
+<span class="source-line-no">050</span><span id="line-50"> *     cause registration of the created {@link Catalog}s into</span>
+<span class="source-line-no">051</span><span id="line-51"> *     the {@link CatalogFactory} for this application, and no</span>
+<span class="source-line-no">052</span><span id="line-52"> *     servet context attribute will be created.</span>
+<span class="source-line-no">053</span><span id="line-53"> *     &lt;strong&gt;NOTE&lt;/strong&gt; - This parameter is deprecated.&lt;/li&gt;</span>
+<span class="source-line-no">054</span><span id="line-54"> * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.RULE_SET&lt;/strong&gt; -</span>
+<span class="source-line-no">055</span><span id="line-55"> *     Fully qualified class name of a Digester {@code RuleSet}</span>
+<span class="source-line-no">056</span><span id="line-56"> *     implementation to use for parsing configuration resources (this</span>
+<span class="source-line-no">057</span><span id="line-57"> *     class must have a public zero-args constructor). If not defined,</span>
+<span class="source-line-no">058</span><span id="line-58"> *     the standard {@code RuleSet} implementation will be used.&lt;/li&gt;</span>
+<span class="source-line-no">059</span><span id="line-59"> * &lt;/ul&gt;</span>
+<span class="source-line-no">060</span><span id="line-60"> *</span>
+<span class="source-line-no">061</span><span id="line-61"> * &lt;p&gt;When a web application that has configured this listener is</span>
+<span class="source-line-no">062</span><span id="line-62"> * started, it will acquire the {@link Catalog} under the specified servlet</span>
+<span class="source-line-no">063</span><span id="line-63"> * context attribute key, creating a new one if there is none already there.</span>
+<span class="source-line-no">064</span><span id="line-64"> * This {@link Catalog} will then be populated by scanning configuration</span>
+<span class="source-line-no">065</span><span id="line-65"> * resources from the following sources (loaded in this order):&lt;/p&gt;</span>
+<span class="source-line-no">066</span><span id="line-66"> * &lt;ul&gt;</span>
+<span class="source-line-no">067</span><span id="line-67"> * &lt;li&gt;Resources loaded from any {@code META-INF/chain-config.xml}</span>
+<span class="source-line-no">068</span><span id="line-68"> *     resource found in a JAR file in {@code /WEB-INF/lib}.&lt;/li&gt;</span>
+<span class="source-line-no">069</span><span id="line-69"> * &lt;li&gt;Resources loaded from specified resource paths from the</span>
+<span class="source-line-no">070</span><span id="line-70"> *     webapp's class loader (via {@code ClassLoader.getResource()}).&lt;/li&gt;</span>
+<span class="source-line-no">071</span><span id="line-71"> * &lt;li&gt;Resources loaded from specified resource paths in the web application</span>
+<span class="source-line-no">072</span><span id="line-72"> *     archive (via {@code ServetContext.getResource()}).&lt;/li&gt;</span>
+<span class="source-line-no">073</span><span id="line-73"> * &lt;/ul&gt;</span>
+<span class="source-line-no">074</span><span id="line-74"> *</span>
+<span class="source-line-no">075</span><span id="line-75"> * &lt;p&gt;If no attribute key is specified, on the other hand, parsed configuration</span>
+<span class="source-line-no">076</span><span id="line-76"> * resources are expected to contain {@code &amp;lt;catalog&amp;gt;} elements,</span>
+<span class="source-line-no">077</span><span id="line-77"> * and the catalogs will be registered with the {@link CatalogFactory}</span>
+<span class="source-line-no">078</span><span id="line-78"> * for this web application.&lt;/p&gt;</span>
+<span class="source-line-no">079</span><span id="line-79"> *</span>
+<span class="source-line-no">080</span><span id="line-80"> * &lt;p&gt;This class requires Servlet 2.3 or later. If you are running on</span>
+<span class="source-line-no">081</span><span id="line-81"> * Servlet 2.2 system, consider using {@link ChainServlet} instead.</span>
+<span class="source-line-no">082</span><span id="line-82"> * Note that {@link ChainServlet} uses parameters of the</span>
+<span class="source-line-no">083</span><span id="line-83"> * same names, but they are &lt;em&gt;servlet&lt;/em&gt; init parameters instead</span>
+<span class="source-line-no">084</span><span id="line-84"> * of &lt;em&gt;context&lt;/em&gt; init parameters. Because of this, you can use</span>
+<span class="source-line-no">085</span><span id="line-85"> * both facilities in the same application, if desired.&lt;/p&gt;</span>
 <span class="source-line-no">086</span><span id="line-86"> *</span>
-<span class="source-line-no">087</span><span id="line-87"> * &lt;p&gt;This class requires Servlet 2.3 or later. If you are running on</span>
-<span class="source-line-no">088</span><span id="line-88"> * Servlet 2.2 system, consider using {@link ChainServlet} instead.</span>
-<span class="source-line-no">089</span><span id="line-89"> * Note that {@link ChainServlet} uses parameters of the</span>
-<span class="source-line-no">090</span><span id="line-90"> * same names, but they are &lt;em&gt;servlet&lt;/em&gt; init parameters instead</span>
-<span class="source-line-no">091</span><span id="line-91"> * of &lt;em&gt;context&lt;/em&gt; init parameters. Because of this, you can use</span>
-<span class="source-line-no">092</span><span id="line-92"> * both facilities in the same application, if desired.&lt;/p&gt;</span>
-<span class="source-line-no">093</span><span id="line-93"> *</span>
-<span class="source-line-no">094</span><span id="line-94"> * @author Craig R. McClanahan</span>
-<span class="source-line-no">095</span><span id="line-95"> * @author Ted Husted</span>
-<span class="source-line-no">096</span><span id="line-96"> * @version $Revision$ $Date$</span>
-<span class="source-line-no">097</span><span id="line-97"> */</span>
-<span class="source-line-no">098</span><span id="line-98">public class ChainListener implements ServletContextListener {</span>
-<span class="source-line-no">099</span><span id="line-99"></span>
-<span class="source-line-no">100</span><span id="line-100">    // ------------------------------------------------------ Manifest Constants</span>
+<span class="source-line-no">087</span><span id="line-87"> * @author Craig R. McClanahan</span>
+<span class="source-line-no">088</span><span id="line-88"> * @author Ted Husted</span>
+<span class="source-line-no">089</span><span id="line-89"> * @version $Revision$ $Date$</span>
+<span class="source-line-no">090</span><span id="line-90"> */</span>
+<span class="source-line-no">091</span><span id="line-91">public class ChainListener implements ServletContextListener {</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    // ------------------------------------------------------ Manifest Constants</span>
+<span class="source-line-no">094</span><span id="line-94"></span>
+<span class="source-line-no">095</span><span id="line-95">    /**</span>
+<span class="source-line-no">096</span><span id="line-96">     * The name of the context init parameter containing the name of the</span>
+<span class="source-line-no">097</span><span id="line-97">     * servlet context attribute under which our resulting {@link Catalog}</span>
+<span class="source-line-no">098</span><span id="line-98">     * will be stored.</span>
+<span class="source-line-no">099</span><span id="line-99">     */</span>
+<span class="source-line-no">100</span><span id="line-100">    public static final String CONFIG_ATTR = ChainInit.CONFIG_ATTR;</span>
 <span class="source-line-no">101</span><span id="line-101"></span>
 <span class="source-line-no">102</span><span id="line-102">    /**</span>
-<span class="source-line-no">103</span><span id="line-103">     * The name of the context init parameter containing the name of the</span>
-<span class="source-line-no">104</span><span id="line-104">     * servlet context attribute under which our resulting {@link Catalog}</span>
-<span class="source-line-no">105</span><span id="line-105">     * will be stored.</span>
-<span class="source-line-no">106</span><span id="line-106">     */</span>
-<span class="source-line-no">107</span><span id="line-107">    public static final String CONFIG_ATTR =</span>
-<span class="source-line-no">108</span><span id="line-108">        "org.apache.commons.chain.CONFIG_ATTR";</span>
-<span class="source-line-no">109</span><span id="line-109"></span>
-<span class="source-line-no">110</span><span id="line-110">    /**</span>
-<span class="source-line-no">111</span><span id="line-111">     * The name of the context init parameter containing a comma-delimited</span>
-<span class="source-line-no">112</span><span id="line-112">     * list of class loader resources to be scanned.</span>
-<span class="source-line-no">113</span><span id="line-113">     */</span>
-<span class="source-line-no">114</span><span id="line-114">    public static final String CONFIG_CLASS_RESOURCE =</span>
-<span class="source-line-no">115</span><span id="line-115">        "org.apache.commons.chain.CONFIG_CLASS_RESOURCE";</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">    /**</span>
-<span class="source-line-no">118</span><span id="line-118">     * The name of the context init parameter containing a comma-delimited</span>
-<span class="source-line-no">119</span><span id="line-119">     * list of web applicaton resources to be scanned.</span>
+<span class="source-line-no">103</span><span id="line-103">     * The name of the context init parameter containing a comma-delimited</span>
+<span class="source-line-no">104</span><span id="line-104">     * list of class loader resources to be scanned.</span>
+<span class="source-line-no">105</span><span id="line-105">     */</span>
+<span class="source-line-no">106</span><span id="line-106">    public static final String CONFIG_CLASS_RESOURCE =</span>
+<span class="source-line-no">107</span><span id="line-107">            ChainInit.CONFIG_CLASS_RESOURCE;</span>
+<span class="source-line-no">108</span><span id="line-108"></span>
+<span class="source-line-no">109</span><span id="line-109">    /**</span>
+<span class="source-line-no">110</span><span id="line-110">     * The name of the context init parameter containing a comma-delimited</span>
+<span class="source-line-no">111</span><span id="line-111">     * list of web application resources to be scanned.</span>
+<span class="source-line-no">112</span><span id="line-112">     */</span>
+<span class="source-line-no">113</span><span id="line-113">    public static final String CONFIG_WEB_RESOURCE =</span>
+<span class="source-line-no">114</span><span id="line-114">            ChainInit.CONFIG_WEB_RESOURCE;</span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">    /**</span>
+<span class="source-line-no">117</span><span id="line-117">     * The name of the context init parameter containing the fully</span>
+<span class="source-line-no">118</span><span id="line-118">     * qualified class name of the {@code RuleSet} implementation</span>
+<span class="source-line-no">119</span><span id="line-119">     * for configuring our {@link ConfigParser}.</span>
 <span class="source-line-no">120</span><span id="line-120">     */</span>
-<span class="source-line-no">121</span><span id="line-121">    public static final String CONFIG_WEB_RESOURCE =</span>
-<span class="source-line-no">122</span><span id="line-122">        "org.apache.commons.chain.CONFIG_WEB_RESOURCE";</span>
-<span class="source-line-no">123</span><span id="line-123"></span>
-<span class="source-line-no">124</span><span id="line-124">    /**</span>
-<span class="source-line-no">125</span><span id="line-125">     * The name of the context init parameter containing the fully</span>
-<span class="source-line-no">126</span><span id="line-126">     * qualified class name of the {@code RuleSet} implementation</span>
-<span class="source-line-no">127</span><span id="line-127">     * for configuring our {@link ConfigParser}.</span>
-<span class="source-line-no">128</span><span id="line-128">     */</span>
-<span class="source-line-no">129</span><span id="line-129">    public static final String RULE_SET =</span>
-<span class="source-line-no">130</span><span id="line-130">        "org.apache.commons.chain.RULE_SET";</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">    // ------------------------------------------ ServletContextListener Methods</span>
-<span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">    /**</span>
-<span class="source-line-no">135</span><span id="line-135">     * Remove the configured {@link Catalog} from the servlet context</span>
-<span class="source-line-no">136</span><span id="line-136">     * attributes for this web application.</span>
-<span class="source-line-no">137</span><span id="line-137">     *</span>
-<span class="source-line-no">138</span><span id="line-138">     * @param event {@code ServletContextEvent} to be processed</span>
-<span class="source-line-no">139</span><span id="line-139">     */</span>
-<span class="source-line-no">140</span><span id="line-140">    @Override</span>
-<span class="source-line-no">141</span><span id="line-141">    public void contextDestroyed(ServletContextEvent event) {</span>
-<span class="source-line-no">142</span><span id="line-142">        ServletContext context = event.getServletContext();</span>
-<span class="source-line-no">143</span><span id="line-143">        String attr = context.getInitParameter(CONFIG_ATTR);</span>
-<span class="source-line-no">144</span><span id="line-144">        if (attr != null) {</span>
-<span class="source-line-no">145</span><span id="line-145">            context.removeAttribute(attr);</span>
-<span class="source-line-no">146</span><span id="line-146">        }</span>
-<span class="source-line-no">147</span><span id="line-147">        CatalogFactory.clear();</span>
-<span class="source-line-no">148</span><span id="line-148">    }</span>
+<span class="source-line-no">121</span><span id="line-121">    public static final String RULE_SET = ChainInit.RULE_SET;</span>
+<span class="source-line-no">122</span><span id="line-122"></span>
+<span class="source-line-no">123</span><span id="line-123">    // ------------------------------------------ ServletContextListener Methods</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    /**</span>
+<span class="source-line-no">126</span><span id="line-126">     * Remove the configured {@link Catalog} from the servlet context</span>
+<span class="source-line-no">127</span><span id="line-127">     * attributes for this web application.</span>
+<span class="source-line-no">128</span><span id="line-128">     *</span>
+<span class="source-line-no">129</span><span id="line-129">     * @param event {@code ServletContextEvent} to be processed</span>
+<span class="source-line-no">130</span><span id="line-130">     */</span>
+<span class="source-line-no">131</span><span id="line-131">    @Override</span>
+<span class="source-line-no">132</span><span id="line-132">    public void contextDestroyed(ServletContextEvent event) {</span>
+<span class="source-line-no">133</span><span id="line-133">        final ServletContext context = event.getServletContext();</span>
+<span class="source-line-no">134</span><span id="line-134">        ChainInit.destroy(context, context.getInitParameter(CONFIG_ATTR));</span>
+<span class="source-line-no">135</span><span id="line-135">    }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">    /**</span>
+<span class="source-line-no">138</span><span id="line-138">     * Scan the required chain configuration resources, assemble the</span>
+<span class="source-line-no">139</span><span id="line-139">     * configured chains into a {@link Catalog}, and expose it as a</span>
+<span class="source-line-no">140</span><span id="line-140">     * servlet context attribute under the specified key.</span>
+<span class="source-line-no">141</span><span id="line-141">     *</span>
+<span class="source-line-no">142</span><span id="line-142">     * @param event {@code ServletContextEvent} to be processed</span>
+<span class="source-line-no">143</span><span id="line-143">     */</span>
+<span class="source-line-no">144</span><span id="line-144">    @Override</span>
+<span class="source-line-no">145</span><span id="line-145">    public void contextInitialized(ServletContextEvent event) {</span>
+<span class="source-line-no">146</span><span id="line-146">        final Log log = LogFactory.getLog(ChainListener.class);</span>
+<span class="source-line-no">147</span><span id="line-147">        log.info("Initializing chain listener");</span>
+<span class="source-line-no">148</span><span id="line-148">        final ServletContext context = event.getServletContext();</span>
 <span class="source-line-no">149</span><span id="line-149"></span>
-<span class="source-line-no">150</span><span id="line-150">    /**</span>
-<span class="source-line-no">151</span><span id="line-151">     * Scan the required chain configuration resources, assemble the</span>
-<span class="source-line-no">152</span><span id="line-152">     * configured chains into a {@link Catalog}, and expose it as a</span>
-<span class="source-line-no">153</span><span id="line-153">     * servlet context attribute under the specified key.</span>
-<span class="source-line-no">154</span><span id="line-154">     *</span>
-<span class="source-line-no">155</span><span id="line-155">     * @param event {@code ServletContextEvent} to be processed</span>
-<span class="source-line-no">156</span><span id="line-156">     */</span>
-<span class="source-line-no">157</span><span id="line-157">    @Override</span>
-<span class="source-line-no">158</span><span id="line-158">    @SuppressWarnings("deprecation")</span>
-<span class="source-line-no">159</span><span id="line-159">    public void contextInitialized(ServletContextEvent event) {</span>
-<span class="source-line-no">160</span><span id="line-160">        Log log = LogFactory.getLog(ChainListener.class);</span>
-<span class="source-line-no">161</span><span id="line-161">        if (log.isInfoEnabled()) {</span>
-<span class="source-line-no">162</span><span id="line-162">            log.info("Initializing chain listener");</span>
-<span class="source-line-no">163</span><span id="line-163">        }</span>
-<span class="source-line-no">164</span><span id="line-164">        ServletContext context = event.getServletContext();</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">        // Retrieve context init parameters that we need</span>
-<span class="source-line-no">167</span><span id="line-167">        String attr = context.getInitParameter(CONFIG_ATTR);</span>
-<span class="source-line-no">168</span><span id="line-168">        String classResources =</span>
-<span class="source-line-no">169</span><span id="line-169">            context.getInitParameter(CONFIG_CLASS_RESOURCE);</span>
-<span class="source-line-no">170</span><span id="line-170">        String ruleSet = context.getInitParameter(RULE_SET);</span>
-<span class="source-line-no">171</span><span id="line-171">        String webResources = context.getInitParameter(CONFIG_WEB_RESOURCE);</span>
-<span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">        // Retrieve or create the Catalog instance we may be updating</span>
-<span class="source-line-no">174</span><span id="line-174">        Catalog&lt;?&gt; catalog = null;</span>
-<span class="source-line-no">175</span><span id="line-175">        if (attr != null) {</span>
-<span class="source-line-no">176</span><span id="line-176">            catalog = (Catalog&lt;?&gt;) context.getAttribute(attr);</span>
-<span class="source-line-no">177</span><span id="line-177">            if (catalog == null) {</span>
-<span class="source-line-no">178</span><span id="line-178">                catalog = new CatalogBase&lt;&gt;();</span>
-<span class="source-line-no">179</span><span id="line-179">            }</span>
-<span class="source-line-no">180</span><span id="line-180">        }</span>
-<span class="source-line-no">181</span><span id="line-181"></span>
-<span class="source-line-no">182</span><span id="line-182">        // Construct the configuration resource parser we will use</span>
-<span class="source-line-no">183</span><span id="line-183">        ConfigParser parser = new ConfigParser();</span>
-<span class="source-line-no">184</span><span id="line-184">        if (ruleSet != null) {</span>
-<span class="source-line-no">185</span><span id="line-185">            try {</span>
-<span class="source-line-no">186</span><span id="line-186">                ClassLoader loader =</span>
-<span class="source-line-no">187</span><span id="line-187">                    Thread.currentThread().getContextClassLoader();</span>
-<span class="source-line-no">188</span><span id="line-188">                if (loader == null) {</span>
-<span class="source-line-no">189</span><span id="line-189">                    loader = this.getClass().getClassLoader();</span>
-<span class="source-line-no">190</span><span id="line-190">                }</span>
-<span class="source-line-no">191</span><span id="line-191">                Class&lt;? extends RuleSet&gt; clazz = loader</span>
-<span class="source-line-no">192</span><span id="line-192">                        .loadClass(ruleSet)</span>
-<span class="source-line-no">193</span><span id="line-193">                        .asSubclass(RuleSet.class);</span>
-<span class="source-line-no">194</span><span id="line-194">                parser.setRuleSet(clazz.getDeclaredConstructor().newInstance());</span>
-<span class="source-line-no">195</span><span id="line-195">            } catch (Exception e) {</span>
-<span class="source-line-no">196</span><span id="line-196">                throw new RuntimeException("Exception initalizing RuleSet '"</span>
-<span class="source-line-no">197</span><span id="line-197">                                           + ruleSet + "' instance: "</span>
-<span class="source-line-no">198</span><span id="line-198">                                           + e.getMessage());</span>
-<span class="source-line-no">199</span><span id="line-199">            }</span>
-<span class="source-line-no">200</span><span id="line-200">        }</span>
-<span class="source-line-no">201</span><span id="line-201"></span>
-<span class="source-line-no">202</span><span id="line-202">        // Parse the resources specified in our init parameters (if any)</span>
-<span class="source-line-no">203</span><span id="line-203">        if (attr == null) {</span>
-<span class="source-line-no">204</span><span id="line-204">            parseJarResources(context, parser, log);</span>
-<span class="source-line-no">205</span><span id="line-205">            ChainResources.parseClassResources(classResources, parser);</span>
-<span class="source-line-no">206</span><span id="line-206">            ChainResources.parseWebResources(context, webResources, parser);</span>
-<span class="source-line-no">207</span><span id="line-207">        } else {</span>
-<span class="source-line-no">208</span><span id="line-208">            parseJarResources(catalog, context, parser, log);</span>
-<span class="source-line-no">209</span><span id="line-209">            ChainResources.parseClassResources(catalog, classResources, parser);</span>
-<span class="source-line-no">210</span><span id="line-210">            ChainResources.parseWebResources(catalog, context, webResources, parser);</span>
-<span class="source-line-no">211</span><span id="line-211">        }</span>
-<span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">        // Expose the completed catalog (if requested)</span>
-<span class="source-line-no">214</span><span id="line-214">        if (attr != null) {</span>
-<span class="source-line-no">215</span><span id="line-215">            context.setAttribute(attr, catalog);</span>
-<span class="source-line-no">216</span><span id="line-216">        }</span>
-<span class="source-line-no">217</span><span id="line-217">    }</span>
-<span class="source-line-no">218</span><span id="line-218"></span>
-<span class="source-line-no">219</span><span id="line-219">    // --------------------------------------------------------- Private Methods</span>
-<span class="source-line-no">220</span><span id="line-220"></span>
-<span class="source-line-no">221</span><span id="line-221">    /**</span>
-<span class="source-line-no">222</span><span id="line-222">     * Parse resources found in JAR files in the {@code /WEB-INF/lib}</span>
-<span class="source-line-no">223</span><span id="line-223">     * subdirectory (if any).</span>
-<span class="source-line-no">224</span><span id="line-224">     *</span>
-<span class="source-line-no">225</span><span id="line-225">     * @param context {@code ServletContext} for this web application</span>
-<span class="source-line-no">226</span><span id="line-226">     * @param parser {@link ConfigParser} to use for parsing</span>
-<span class="source-line-no">227</span><span id="line-227">     * @param log to use for logging</span>
-<span class="source-line-no">228</span><span id="line-228">     */</span>
-<span class="source-line-no">229</span><span id="line-229">    private void parseJarResources(ServletContext context,</span>
-<span class="source-line-no">230</span><span id="line-230">                                   ConfigParser parser, Log log) {</span>
-<span class="source-line-no">231</span><span id="line-231"></span>
-<span class="source-line-no">232</span><span id="line-232">        Set&lt;?&gt; jars = context.getResourcePaths("/WEB-INF/lib");</span>
-<span class="source-line-no">233</span><span id="line-233">        if (jars == null) {</span>
-<span class="source-line-no">234</span><span id="line-234">            jars = Collections.emptySet();</span>
-<span class="source-line-no">235</span><span id="line-235">        }</span>
-<span class="source-line-no">236</span><span id="line-236">        String path = null;</span>
-<span class="source-line-no">237</span><span id="line-237">        Iterator&lt;?&gt; paths = jars.iterator();</span>
-<span class="source-line-no">238</span><span id="line-238">        while (paths.hasNext()) {</span>
-<span class="source-line-no">239</span><span id="line-239"></span>
-<span class="source-line-no">240</span><span id="line-240">            path = paths.next().toString();</span>
-<span class="source-line-no">241</span><span id="line-241">            if (!path.endsWith(".jar")) {</span>
-<span class="source-line-no">242</span><span id="line-242">                continue;</span>
-<span class="source-line-no">243</span><span id="line-243">            }</span>
-<span class="source-line-no">244</span><span id="line-244">            URL resourceURL = null;</span>
-<span class="source-line-no">245</span><span id="line-245">            try {</span>
-<span class="source-line-no">246</span><span id="line-246">                URL jarURL = context.getResource(path);</span>
-<span class="source-line-no">247</span><span id="line-247">                resourceURL = new URL("jar:"</span>
-<span class="source-line-no">248</span><span id="line-248">                                      + translate(jarURL.toExternalForm())</span>
-<span class="source-line-no">249</span><span id="line-249">                                      + "!/META-INF/chain-config.xml");</span>
-<span class="source-line-no">250</span><span id="line-250">                InputStream is = null;</span>
-<span class="source-line-no">251</span><span id="line-251">                try {</span>
-<span class="source-line-no">252</span><span id="line-252">                    is = resourceURL.openStream();</span>
-<span class="source-line-no">253</span><span id="line-253">                } catch (Exception e) {</span>
-<span class="source-line-no">254</span><span id="line-254">                      // means there is no such resource</span>
-<span class="source-line-no">255</span><span id="line-255">                }</span>
-<span class="source-line-no">256</span><span id="line-256">                if (is == null) {</span>
-<span class="source-line-no">257</span><span id="line-257">                    if (log.isDebugEnabled()) {</span>
-<span class="source-line-no">258</span><span id="line-258">                        log.debug("Not Found: " + resourceURL);</span>
-<span class="source-line-no">259</span><span id="line-259">                    }</span>
-<span class="source-line-no">260</span><span id="line-260">                    continue;</span>
-<span class="source-line-no">261</span><span id="line-261">                } else {</span>
-<span class="source-line-no">262</span><span id="line-262">                    is.close();</span>
-<span class="source-line-no">263</span><span id="line-263">                }</span>
-<span class="source-line-no">264</span><span id="line-264">                if (log.isDebugEnabled()) {</span>
-<span class="source-line-no">265</span><span id="line-265">                    log.debug("Parsing: " + resourceURL);</span>
-<span class="source-line-no">266</span><span id="line-266">                }</span>
-<span class="source-line-no">267</span><span id="line-267">                parser.parse(resourceURL);</span>
-<span class="source-line-no">268</span><span id="line-268">            } catch (Exception e) {</span>
-<span class="source-line-no">269</span><span id="line-269">                throw new RuntimeException("Exception parsing chain config resource '"</span>
-<span class="source-line-no">270</span><span id="line-270">                     + resourceURL.toExternalForm() + "': "</span>
-<span class="source-line-no">271</span><span id="line-271">                     + e.getMessage());</span>
-<span class="source-line-no">272</span><span id="line-272">            }</span>
-<span class="source-line-no">273</span><span id="line-273">        }</span>
-<span class="source-line-no">274</span><span id="line-274">    }</span>
-<span class="source-line-no">275</span><span id="line-275"></span>
-<span class="source-line-no">276</span><span id="line-276">    /**</span>
-<span class="source-line-no">277</span><span id="line-277">     * Parse resources found in JAR files in the {@code /WEB-INF/lib}</span>
-<span class="source-line-no">278</span><span id="line-278">     * subdirectory (if any).</span>
-<span class="source-line-no">279</span><span id="line-279">     *</span>
-<span class="source-line-no">280</span><span id="line-280">     * @param catalog {@link Catalog} we are populating</span>
-<span class="source-line-no">281</span><span id="line-281">     * @param context {@code ServletContext} for this web application</span>
-<span class="source-line-no">282</span><span id="line-282">     * @param parser {@link ConfigParser} to use for parsing</span>
-<span class="source-line-no">283</span><span id="line-283">     * @param log to use for logging</span>
-<span class="source-line-no">284</span><span id="line-284">     *</span>
-<span class="source-line-no">285</span><span id="line-285">     * @deprecated Use the variant that does not take a catalog, on a</span>
-<span class="source-line-no">286</span><span id="line-286">     *  configuration resource containing "catalog" element(s)</span>
-<span class="source-line-no">287</span><span id="line-287">     */</span>
-<span class="source-line-no">288</span><span id="line-288">    @Deprecated</span>
-<span class="source-line-no">289</span><span id="line-289">    private void parseJarResources(Catalog&lt;?&gt; catalog, ServletContext context,</span>
-<span class="source-line-no">290</span><span id="line-290">                                   ConfigParser parser, Log log) {</span>
-<span class="source-line-no">291</span><span id="line-291"></span>
-<span class="source-line-no">292</span><span id="line-292">        Set&lt;?&gt; jars = context.getResourcePaths("/WEB-INF/lib");</span>
-<span class="source-line-no">293</span><span id="line-293">        if (jars == null) {</span>
-<span class="source-line-no">294</span><span id="line-294">            jars = Collections.emptySet();</span>
-<span class="source-line-no">295</span><span id="line-295">        }</span>
-<span class="source-line-no">296</span><span id="line-296">        String path = null;</span>
-<span class="source-line-no">297</span><span id="line-297">        Iterator&lt;?&gt; paths = jars.iterator();</span>
-<span class="source-line-no">298</span><span id="line-298">        while (paths.hasNext()) {</span>
-<span class="source-line-no">299</span><span id="line-299"></span>
-<span class="source-line-no">300</span><span id="line-300">            path = paths.next().toString();</span>
-<span class="source-line-no">301</span><span id="line-301">            if (!path.endsWith(".jar")) {</span>
-<span class="source-line-no">302</span><span id="line-302">                continue;</span>
-<span class="source-line-no">303</span><span id="line-303">            }</span>
-<span class="source-line-no">304</span><span id="line-304">            URL resourceURL = null;</span>
-<span class="source-line-no">305</span><span id="line-305">            try {</span>
-<span class="source-line-no">306</span><span id="line-306">                URL jarURL = context.getResource(path);</span>
-<span class="source-line-no">307</span><span id="line-307">                resourceURL = new URL("jar:"</span>
-<span class="source-line-no">308</span><span id="line-308">                                      + translate(jarURL.toExternalForm())</span>
-<span class="source-line-no">309</span><span id="line-309">                                      + "!/META-INF/chain-config.xml");</span>
-<span class="source-line-no">310</span><span id="line-310">                InputStream is = null;</span>
-<span class="source-line-no">311</span><span id="line-311">                try {</span>
-<span class="source-line-no">312</span><span id="line-312">                    is = resourceURL.openStream();</span>
-<span class="source-line-no">313</span><span id="line-313">                } catch (Exception e) {</span>
-<span class="source-line-no">314</span><span id="line-314">                      // means there is no such resource</span>
-<span class="source-line-no">315</span><span id="line-315">                }</span>
-<span class="source-line-no">316</span><span id="line-316">                if (is == null) {</span>
-<span class="source-line-no">317</span><span id="line-317">                    if (log.isDebugEnabled()) {</span>
-<span class="source-line-no">318</span><span id="line-318">                        log.debug("Not Found: " + resourceURL);</span>
-<span class="source-line-no">319</span><span id="line-319">                    }</span>
-<span class="source-line-no">320</span><span id="line-320">                    continue;</span>
-<span class="source-line-no">321</span><span id="line-321">                } else {</span>
-<span class="source-line-no">322</span><span id="line-322">                    is.close();</span>
-<span class="source-line-no">323</span><span id="line-323">                }</span>
-<span class="source-line-no">324</span><span id="line-324">                if (log.isDebugEnabled()) {</span>
-<span class="source-line-no">325</span><span id="line-325">                    log.debug("Parsing: " + resourceURL);</span>
-<span class="source-line-no">326</span><span id="line-326">                }</span>
-<span class="source-line-no">327</span><span id="line-327">                parser.parse(catalog, resourceURL);</span>
-<span class="source-line-no">328</span><span id="line-328">            } catch (Exception e) {</span>
-<span class="source-line-no">329</span><span id="line-329">                throw new RuntimeException("Exception parsing chain config resource '"</span>
-<span class="source-line-no">330</span><span id="line-330">                     + resourceURL.toExternalForm() + "': "</span>
-<span class="source-line-no">331</span><span id="line-331">                     + e.getMessage());</span>
-<span class="source-line-no">332</span><span id="line-332">            }</span>
-<span class="source-line-no">333</span><span id="line-333">        }</span>
-<span class="source-line-no">334</span><span id="line-334">    }</span>
-<span class="source-line-no">335</span><span id="line-335"></span>
-<span class="source-line-no">336</span><span id="line-336">    /**</span>
-<span class="source-line-no">337</span><span id="line-337">     * Translate space character into {@code %20} to avoid problems</span>
-<span class="source-line-no">338</span><span id="line-338">     * with paths that contain spaces on some JVMs.</span>
-<span class="source-line-no">339</span><span id="line-339">     *</span>
-<span class="source-line-no">340</span><span id="line-340">     * @param value Value to translate</span>
-<span class="source-line-no">341</span><span id="line-341">     *</span>
-<span class="source-line-no">342</span><span id="line-342">     * @return the translated value</span>
-<span class="source-line-no">343</span><span id="line-343">     */</span>
-<span class="source-line-no">344</span><span id="line-344">    private String translate(String value) {</span>
-<span class="source-line-no">345</span><span id="line-345">        while (true) {</span>
-<span class="source-line-no">346</span><span id="line-346">            int index = value.indexOf(' ');</span>
-<span class="source-line-no">347</span><span id="line-347">            if (index &lt; 0) {</span>
-<span class="source-line-no">348</span><span id="line-348">                break;</span>
-<span class="source-line-no">349</span><span id="line-349">            }</span>
-<span class="source-line-no">350</span><span id="line-350">            value = value.substring(0, index) + "%20" + value.substring(index + 1);</span>
-<span class="source-line-no">351</span><span id="line-351">        }</span>
-<span class="source-line-no">352</span><span id="line-352">        return value;</span>
-<span class="source-line-no">353</span><span id="line-353">    }</span>
-<span class="source-line-no">354</span><span id="line-354">}</span>
+<span class="source-line-no">150</span><span id="line-150">        try {</span>
+<span class="source-line-no">151</span><span id="line-151">            ChainInit.initialize(context, context.getInitParameter(CONFIG_ATTR), log, true);</span>
+<span class="source-line-no">152</span><span id="line-152">        } catch (ServletException e) {</span>
+<span class="source-line-no">153</span><span id="line-153">            throw new RuntimeException(e);</span>
+<span class="source-line-no">154</span><span id="line-154">        }</span>
+<span class="source-line-no">155</span><span id="line-155">    }</span>
+<span class="source-line-no">156</span><span id="line-156">}</span>
 
 
 

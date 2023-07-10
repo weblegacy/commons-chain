@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 <ul>
 <li>Feld</li>
 <li><a href="#constructor-detail">Konstruktor</a></li>
-<li><a href="#method-detail">Methode</a></li>
+<li>Methode</li>
 </ul>
 </li>
 </ul>
@@ -68,7 +68,7 @@ loadScripts(document, 'script');</script>
 <li>Details:&nbsp;</li>
 <li>Feld&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Konstruktor</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Methode</a></li>
+<li>Methode</li>
 </ul>
 </div>
 <div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Klasse ServletGetLocaleCommand" class="title">Klasse ServletGetLocaleCommand</h1>
 </div>
 <div class="inheritance" title="Vererbungsbaum"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="../AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">org.apache.commons.chain.web.AbstractGetLocaleCommand</a>&lt;<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&gt;
+<div class="inheritance"><a href="../GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">org.apache.commons.chain.web.GetLocaleCommand</a>&lt;<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&gt;
 <div class="inheritance">org.apache.commons.chain.web.servlet.ServletGetLocaleCommand</div>
 </div>
 </div>
@@ -97,9 +97,9 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../../Command.html" title="Schnittstelle in org.apache.commons.chain">Command</a>&lt;<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&gt;</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html#line-30">ServletGetLocaleCommand</a></span>
-<span class="extends-implements">extends <a href="../AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">AbstractGetLocaleCommand</a>&lt;<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&gt;</span></div>
-<div class="block">Concrete implementation of <a href="../AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractGetLocaleCommand</code></a> for
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html#line-25">ServletGetLocaleCommand</a></span>
+<span class="extends-implements">extends <a href="../GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">GetLocaleCommand</a>&lt;<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&gt;</span></div>
+<div class="block">Concrete implementation of <a href="../GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>GetLocaleCommand</code></a> for
  the Servlet API.</div>
 </section>
 <section class="summary">
@@ -122,7 +122,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Konstruktor</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">ServletGetLocaleCommand</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Construct a new instance to get the locale from the
+ Servlet API.</div>
+</div>
 </div>
 </section>
 </li>
@@ -130,24 +133,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="method-summary" id="method-summary">
 <h2>Methodenübersicht</h2>
-<div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Konkrete Methoden</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifizierer und Typ</div>
-<div class="table-header col-second">Methode</div>
-<div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Locale</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocale(org.apache.commons.chain.web.servlet.ServletWebContext)" class="member-name-link">getLocale</a><wbr>(<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&nbsp;context)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieve and return the <code>Locale</code> for this request.</div>
-</div>
-</div>
-</div>
-</div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.apache.commons.chain.web.AbstractGetLocaleCommand">Von Klasse geerbte Methoden&nbsp;org.apache.commons.chain.web.<a href="../AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">AbstractGetLocaleCommand</a></h3>
-<code><a href="../AbstractGetLocaleCommand.html#execute(C)">execute</a>, <a href="../AbstractGetLocaleCommand.html#getLocaleKey()">getLocaleKey</a>, <a href="../AbstractGetLocaleCommand.html#setLocaleKey(java.lang.String)">setLocaleKey</a></code></div>
+<h3 id="methods-inherited-from-class-org.apache.commons.chain.web.GetLocaleCommand">Von Klasse geerbte Methoden&nbsp;org.apache.commons.chain.web.<a href="../GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">GetLocaleCommand</a></h3>
+<code><a href="../GetLocaleCommand.html#execute(C)">execute</a>, <a href="../GetLocaleCommand.html#getLocaleKey()">getLocaleKey</a>, <a href="../GetLocaleCommand.html#setLocaleKey(java.lang.String)">setLocaleKey</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Von Klasse geerbte Methoden&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone()" title="Klasse oder Schnittstelle in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals(java.lang.Object)" title="Klasse oder Schnittstelle in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#finalize()" title="Klasse oder Schnittstelle in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#getClass()" title="Klasse oder Schnittstelle in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode()" title="Klasse oder Schnittstelle in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notify()" title="Klasse oder Schnittstelle in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notifyAll()" title="Klasse oder Schnittstelle in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString()" title="Klasse oder Schnittstelle in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait()" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait(long)" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait(long,int)" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a></code></div>
@@ -165,30 +153,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ServletGetLocaleCommand</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html#line-30">ServletGetLocaleCommand</a></span>()</div>
-</section>
-</li>
-</ul>
-</section>
-</li>
-<!-- ============ METHOD DETAIL ========== -->
-<li>
-<section class="method-details" id="method-detail">
-<h2>Methodendetails</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="getLocale(org.apache.commons.chain.web.servlet.ServletWebContext)">
-<h3>getLocale</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Locale</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html#line-41">getLocale</a></span><wbr><span class="parameters">(<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&nbsp;context)</span></div>
-<div class="block">Retrieve and return the <code>Locale</code> for this request.</div>
-<dl class="notes">
-<dt>Angegeben von:</dt>
-<dd><code><a href="../AbstractGetLocaleCommand.html#getLocale(C)">getLocale</a></code>&nbsp;in Klasse&nbsp;<code><a href="../AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">AbstractGetLocaleCommand</a>&lt;<a href="ServletWebContext.html" title="Klasse in org.apache.commons.chain.web.servlet">ServletWebContext</a>&gt;</code></dd>
-<dt>Parameter:</dt>
-<dd><code>context</code> - The <a href="../../Context.html" title="Schnittstelle in org.apache.commons.chain"><code>Context</code></a> we are operating on.</dd>
-<dt>Gibt zurück:</dt>
-<dd>The Locale for the request.</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/apache/commons/chain/web/servlet/ServletGetLocaleCommand.html#line-31">ServletGetLocaleCommand</a></span>()</div>
+<div class="block">Construct a new instance to get the locale from the
+ Servlet API.</div>
 </section>
 </li>
 </ul>
@@ -200,7 +167,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">The Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

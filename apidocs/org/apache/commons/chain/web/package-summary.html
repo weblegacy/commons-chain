@@ -118,29 +118,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Convenient base implementations of Chain of Responsibility Pattern
  contracts from <code>org.apache.commons.chain</code>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="../internal/package-summary.html">org.apache.commons.chain.internal</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Internal classes which are hidden for external thru <code>JPMS</code>.</div>
+</div>
 </div>
 </div>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">Alle Klassen und Schnittstellen</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Schnittstellen</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Klassen</button></div>
-<div id="class-summary.tabpanel" role="tabpanel">
-<div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
+<div class="caption"><span>Klassen</span></div>
+<div class="summary-table two-column-summary">
 <div class="table-header col-first">Klasse</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">AbstractGetLocaleCommand</a>&lt;C extends <a href="WebContext.html" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a>&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Abstract base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for retrieving the
- requested Locale from our <a href="../Context.html" title="Schnittstelle in org.apache.commons.chain"><code>Context</code></a>, and storing it under the
- context attribute key returned by the <code>localeKey</code> property.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractSetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">AbstractSetLocaleCommand</a>&lt;C extends <a href="WebContext.html" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a>&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Abstract base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for setting the
- response locale for this response to the <code>Locale</code> stored
- under the context attribute key returned by the <code>localeKey</code>
- property.</div>
-</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="ChainListener.html" title="Klasse in org.apache.commons.chain.web">ChainListener</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block"><code>ServletContextListener</code> that automatically
@@ -154,25 +144,30 @@ loadScripts(document, 'script');</script>
  in the current web application at startup time, and exposes the result in a
  <a href="../Catalog.html" title="Schnittstelle in org.apache.commons.chain"><code>Catalog</code></a> under a specified servlet context attribute.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MapEntry.html" title="Klasse in org.apache.commons.chain.web">MapEntry</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">GetLocaleCommand</a>&lt;C extends <a href="WebContext.html" title="Klasse in org.apache.commons.chain.web">WebContext</a>&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for retrieving the
+ requested Locale from our <a href="../Context.html" title="Schnittstelle in org.apache.commons.chain"><code>Context</code></a>, and storing it under the
+ context attribute key returned by the <code>localeKey</code> property.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MapEntry.html" title="Klasse in org.apache.commons.chain.web">MapEntry</a>&lt;T&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block"><code>Map.Entry</code> implementation that can be constructed to either be read-only
  or not.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="WebContext.html" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web">SetLocaleCommand</a>&lt;C extends <a href="WebContext.html" title="Klasse in org.apache.commons.chain.web">WebContext</a>&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for setting the
+ response locale for this response to the <code>Locale</code> stored
+ under the context attribute key returned by the <code>localeKey</code>
+ property.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="WebContext.html" title="Klasse in org.apache.commons.chain.web">WebContext</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Extended <a href="../Context.html" title="Schnittstelle in org.apache.commons.chain"><code>Context</code></a> that provides web based applications that use
  it a "generic" view of HTTP related requests and responses, without
  tying the application to a particular underlying Java API (such as
  servlets).</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="WebContextBase.html" title="Klasse in org.apache.commons.chain.web">WebContextBase</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Abstract base implementation of <a href="../Context.html" title="Schnittstelle in org.apache.commons.chain"><code>Context</code></a> that
- provides web based applications that use it a "generic" view of HTTP related
- requests and responses, without tying the application to a particular underlying
- Java API (such as servlets).</div>
-</div>
 </div>
 </div>
 </div>
@@ -182,7 +177,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">The Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

@@ -289,16 +289,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Klasse</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../web/AbstractGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">AbstractGetLocaleCommand</a>&lt;C extends <a href="../web/WebContext.html" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="../web/GetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">GetLocaleCommand</a>&lt;C extends <a href="../web/WebContext.html" title="Klasse in org.apache.commons.chain.web">WebContext</a>&gt;</code></div>
 <div class="col-last even-row-color">
-<div class="block">Abstract base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for retrieving the
+<div class="block">Base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for retrieving the
  requested Locale from our <a href="../Context.html" title="Schnittstelle in org.apache.commons.chain"><code>Context</code></a>, and storing it under the
  context attribute key returned by the <code>localeKey</code> property.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../web/AbstractSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">AbstractSetLocaleCommand</a>&lt;C extends <a href="../web/WebContext.html" title="Schnittstelle in org.apache.commons.chain.web">WebContext</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="../web/SetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web">SetLocaleCommand</a>&lt;C extends <a href="../web/WebContext.html" title="Klasse in org.apache.commons.chain.web">WebContext</a>&gt;</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Abstract base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for setting the
+<div class="block">Base <a href="../Command.html" title="Schnittstelle in org.apache.commons.chain"><code>Command</code></a> implementation for setting the
  response locale for this response to the <code>Locale</code> stored
  under the context attribute key returned by the <code>localeKey</code>
  property.</div>
@@ -317,13 +317,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../web/faces/FacesGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesGetLocaleCommand</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Concrete implementation of <a href="../web/AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractGetLocaleCommand</code></a> for
+<div class="block">Concrete implementation of <a href="../web/GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>GetLocaleCommand</code></a> for
  the JavaServer Faces API.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../web/faces/FacesSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.faces">FacesSetLocaleCommand</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Concrete implementation of <a href="../web/AbstractSetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractSetLocaleCommand</code></a> for
+<div class="block">Concrete implementation of <a href="../web/SetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>SetLocaleCommand</code></a> for
  the JavaServer Faces API.</div>
 </div>
 </div>
@@ -340,13 +340,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../web/portlet/PortletGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletGetLocaleCommand</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Concrete implementation of <a href="../web/AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractGetLocaleCommand</code></a> for
+<div class="block">Concrete implementation of 
+<details class="invalid-tag">
+<summary>ungültiges @link</summary>
+<pre><code>AbstractGetLocaleCommand</code></pre>
+</details>
+ for
  the Portlet API.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../web/portlet/PortletSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.portlet">PortletSetLocaleCommand</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Concrete implementation of <a href="../web/AbstractSetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractSetLocaleCommand</code></a> for
+<div class="block">Concrete implementation of <a href="../web/SetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>SetLocaleCommand</code></a> for
  the Portlet API.</div>
 </div>
 </div>
@@ -377,7 +382,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../web/servlet/ServletGetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.servlet">ServletGetLocaleCommand</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Concrete implementation of <a href="../web/AbstractGetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractGetLocaleCommand</code></a> for
+<div class="block">Concrete implementation of <a href="../web/GetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>GetLocaleCommand</code></a> for
  the Servlet API.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
@@ -390,7 +395,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../web/servlet/ServletSetLocaleCommand.html" class="type-name-link" title="Klasse in org.apache.commons.chain.web.servlet">ServletSetLocaleCommand</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Concrete implementation of <a href="../web/AbstractSetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>AbstractSetLocaleCommand</code></a> for
+<div class="block">Concrete implementation of <a href="../web/SetLocaleCommand.html" title="Klasse in org.apache.commons.chain.web"><code>SetLocaleCommand</code></a> for
  the Servlet API.</div>
 </div>
 </div>
@@ -401,7 +406,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2003&#x2013;2023 <a href="https://www.apache.org">The Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

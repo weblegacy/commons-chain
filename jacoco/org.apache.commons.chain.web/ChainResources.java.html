@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChainResources.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web</a> &gt; <span class="el_source">ChainResources.java</span></div><h1>ChainResources.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChainResources.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web</a> &gt; <span class="el_source">ChainResources.java</span></div><h1>ChainResources.java</h1><pre class="source lang-java linenums">/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -23,7 +23,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.chain.Catalog;
-import org.apache.commons.chain.config.ConfigParser;
+import org.apache.commons.chain.internal.CheckedConsumer;
+import org.apache.commons.chain.internal.CheckedFunction;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -48,158 +49,72 @@ final class ChainResources {
     /**
      * Parse the specified class loader resources.
      *
+     * @param &lt;E&gt; the type of the exception from parse-function
      * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
+     * @param parse parse-function to parse the XML document
      */
-    static void parseClassResources(String resources,
-                                    ConfigParser parser) {
+    static &lt;E extends Exception&gt; void parseClassResources(String resources,
+                                    CheckedConsumer&lt;URL, E&gt; parse) {
 
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (resources == null) {</span>
-<span class="fc" id="L58">            return;</span>
-        }
-<span class="nc" id="L60">        Log log = LogFactory.getLog(ChainResources.class);</span>
         ClassLoader loader =
-<span class="nc" id="L62">            Thread.currentThread().getContextClassLoader();</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (loader == null) {</span>
-<span class="nc" id="L64">            loader = ChainResources.class.getClassLoader();</span>
+<span class="fc" id="L60">            Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (loader == null) {</span>
+<span class="nc" id="L62">            loader = ChainResources.class.getClassLoader();</span>
         }
-<span class="nc" id="L66">        String[] paths = getResourcePaths(resources);</span>
-<span class="nc" id="L67">        String path = null;</span>
-        try {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">            for (String path2 : paths) {</span>
-<span class="nc" id="L70">                path = path2;</span>
-<span class="nc" id="L71">                URL url = loader.getResource(path);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">                if (url == null) {</span>
-<span class="nc" id="L73">                    throw new IllegalStateException(&quot;Missing chain config resource '&quot; + path + &quot;'&quot;);</span>
-                }
-<span class="nc bnc" id="L75" title="All 2 branches missed.">                if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L76">                    log.debug(&quot;Loading chain config resource '&quot; + path + &quot;'&quot;);</span>
-                }
-<span class="nc" id="L78">                parser.parse(url);</span>
-            }
-<span class="nc" id="L80">        } catch (Exception e) {</span>
-<span class="nc" id="L81">            throw new RuntimeException(&quot;Exception parsing chain config resource '&quot; + path + &quot;': &quot;</span>
-<span class="nc" id="L82">                 + e.getMessage());</span>
-<span class="nc" id="L83">        }</span>
-<span class="nc" id="L84">    }</span>
-
-    /**
-     * Parse the specified class loader resources.
-     *
-     * @param catalog {@link Catalog} we are populating
-     * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
-     *
-     * @deprecated Use the variant that does not take a catalog, on a
-     *             configuration resource containing &quot;catalog&quot; element(s)
-     */
-    @Deprecated
-    static void parseClassResources(Catalog&lt;?&gt; catalog, String resources,
-                                    ConfigParser parser) {
-
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (resources == null) {</span>
-<span class="nc" id="L101">            return;</span>
-        }
-<span class="nc" id="L103">        Log log = LogFactory.getLog(ChainResources.class);</span>
-        ClassLoader loader =
-<span class="nc" id="L105">            Thread.currentThread().getContextClassLoader();</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (loader == null) {</span>
-<span class="nc" id="L107">            loader = ChainResources.class.getClassLoader();</span>
-        }
-<span class="nc" id="L109">        String[] paths = getResourcePaths(resources);</span>
-<span class="nc" id="L110">        String path = null;</span>
-        try {
-<span class="nc bnc" id="L112" title="All 2 branches missed.">            for (String path2 : paths) {</span>
-<span class="nc" id="L113">                path = path2;</span>
-<span class="nc" id="L114">                URL url = loader.getResource(path);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">                if (url == null) {</span>
-<span class="nc" id="L116">                    throw new IllegalStateException(&quot;Missing chain config resource '&quot; + path + &quot;'&quot;);</span>
-                }
-<span class="nc bnc" id="L118" title="All 2 branches missed.">                if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L119">                    log.debug(&quot;Loading chain config resource '&quot; + path + &quot;'&quot;);</span>
-                }
-<span class="nc" id="L121">                parser.parse(catalog, url);</span>
-            }
-<span class="nc" id="L123">        } catch (Exception e) {</span>
-<span class="nc" id="L124">            throw new RuntimeException(&quot;Exception parsing chain config resource '&quot; + path + &quot;': &quot;</span>
-<span class="nc" id="L125">                 + e.getMessage());</span>
-<span class="nc" id="L126">        }</span>
-<span class="nc" id="L127">    }</span>
+<span class="fc" id="L64">        parseResources(loader::getResource, resources, parse);</span>
+<span class="fc" id="L65">    }</span>
 
     /**
      * Parse the specified web application resources.
      *
+     * @param &lt;E&gt; the type of the exception from parse-function
      * @param context {@code ServletContext} for this web application
      * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
+     * @param parse parse-function to parse the XML document
      */
-    static void parseWebResources(ServletContext context,
+    static &lt;E extends Exception&gt; void parseWebResources(ServletContext context,
                                   String resources,
-                                  ConfigParser parser) {
+                                  CheckedConsumer&lt;URL, E&gt; parse) {
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (resources == null) {</span>
-<span class="fc" id="L141">            return;</span>
-        }
-<span class="nc" id="L143">        Log log = LogFactory.getLog(ChainResources.class);</span>
-<span class="nc" id="L144">        String[] paths = getResourcePaths(resources);</span>
-<span class="nc" id="L145">        String path = null;</span>
-        try {
-<span class="nc bnc" id="L147" title="All 2 branches missed.">            for (String path2 : paths) {</span>
-<span class="nc" id="L148">                path = path2;</span>
-<span class="nc" id="L149">                URL url = context.getResource(path);</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">                if (url == null) {</span>
-<span class="nc" id="L151">                    throw new IllegalStateException(&quot;Missing chain config resource '&quot; + path + &quot;'&quot;);</span>
-                }
-<span class="nc bnc" id="L153" title="All 2 branches missed.">                if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L154">                    log.debug(&quot;Loading chain config resource '&quot; + path + &quot;'&quot;);</span>
-                }
-<span class="nc" id="L156">                parser.parse(url);</span>
-            }
-<span class="nc" id="L158">        } catch (Exception e) {</span>
-<span class="nc" id="L159">            throw new RuntimeException(&quot;Exception parsing chain config resource '&quot; + path + &quot;': &quot;</span>
-<span class="nc" id="L160">                 + e.getMessage());</span>
-<span class="nc" id="L161">        }</span>
-<span class="nc" id="L162">    }</span>
+<span class="fc" id="L79">        parseResources(context::getResource, resources, parse);</span>
+<span class="fc" id="L80">    }</span>
 
     /**
-     * Parse the specified web application resources.
+     * Parse the specified resources with a resource-get-function.
      *
-     * @param catalog {@link Catalog} we are populating
-     * @param context {@code ServletContext} for this web application
+     * @param &lt;ER&gt; the type of the exception from resource-function
+     * @param &lt;EP&gt; the type of the exception from parse-function
+     * @param resourceFunction function to get the {@link URL} from a path
      * @param resources Comma-delimited list of resources (or {@code null})
-     * @param parser {@link ConfigParser} to use for parsing
-     *
-     * @deprecated Use the variant that does not take a catalog, on a
-     *             configuration resource containing &quot;catalog&quot; element(s)
+     * @param parse parse-function to parse the XML document
      */
-    @Deprecated
-    static void parseWebResources(Catalog&lt;?&gt; catalog, ServletContext context,
-                                  String resources,
-                                  ConfigParser parser) {
+    private static &lt;ER extends Exception, EP extends Exception&gt; void parseResources(
+            CheckedFunction&lt;String, URL, ER&gt; resourceFunction, String resources,
+            CheckedConsumer&lt;URL, EP&gt; parse) {
 
-<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (resources == null) {</span>
-<span class="nc" id="L181">            return;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (resources == null) {</span>
+<span class="fc" id="L96">            return;</span>
         }
-<span class="nc" id="L183">        Log log = LogFactory.getLog(ChainResources.class);</span>
-<span class="nc" id="L184">        String[] paths = getResourcePaths(resources);</span>
-<span class="nc" id="L185">        String path = null;</span>
+<span class="nc" id="L98">        Log log = LogFactory.getLog(ChainResources.class);</span>
+<span class="nc" id="L99">        String[] paths = getResourcePaths(resources);</span>
+<span class="nc" id="L100">        String path = null;</span>
         try {
-<span class="nc bnc" id="L187" title="All 2 branches missed.">            for (String path2 : paths) {</span>
-<span class="nc" id="L188">                path = path2;</span>
-<span class="nc" id="L189">                URL url = context.getResource(path);</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">                if (url == null) {</span>
-<span class="nc" id="L191">                    throw new IllegalStateException(&quot;Missing chain config resource '&quot; + path + &quot;'&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            for (String path2 : paths) {</span>
+<span class="nc" id="L103">                path = path2;</span>
+<span class="nc" id="L104">                URL url = resourceFunction.apply(path);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                if (url == null) {</span>
+<span class="nc" id="L106">                    throw new IllegalStateException(&quot;Missing chain config resource '&quot; + path + &quot;'&quot;);</span>
                 }
-<span class="nc bnc" id="L193" title="All 2 branches missed.">                if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L194">                    log.debug(&quot;Loading chain config resource '&quot; + path + &quot;'&quot;);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L109">                    log.debug(&quot;Loading chain config resource '&quot; + path + &quot;'&quot;);</span>
                 }
-<span class="nc" id="L196">                parser.parse(catalog, url);</span>
+<span class="nc" id="L111">                parse.accept(url);</span>
             }
-<span class="nc" id="L198">        } catch (Exception e) {</span>
-<span class="nc" id="L199">            throw new RuntimeException(&quot;Exception parsing chain config resource '&quot; + path + &quot;': &quot;</span>
-<span class="nc" id="L200">                 + e.getMessage());</span>
-<span class="nc" id="L201">        }</span>
-<span class="nc" id="L202">    }</span>
+<span class="nc" id="L113">        } catch (Exception e) {</span>
+<span class="nc" id="L114">            throw new RuntimeException(&quot;Exception parsing chain config resource '&quot; + path + &quot;': &quot;</span>
+<span class="nc" id="L115">                 + e.getMessage());</span>
+<span class="nc" id="L116">        }</span>
+<span class="nc" id="L117">    }</span>
 
     /**
      * Parse the resource string into an array of paths. Empty entries will
@@ -213,27 +128,27 @@ final class ChainResources {
      * @since Chain 1.1
      */
     static String[] getResourcePaths(String resources) {
-<span class="fc" id="L216">        List&lt;String&gt; paths = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L131">        final List&lt;String&gt; paths = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (resources != null) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (resources != null) {</span>
             String path;
             int comma;
 
-<span class="fc" id="L222">            int lastComma = 0;</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">            while ((comma = resources.indexOf(',', lastComma)) &gt;= 0) {</span>
-<span class="fc" id="L224">                path = resources.substring(lastComma, comma).trim();</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">                if (path.length() &gt; 0) {</span>
-<span class="fc" id="L226">                    paths.add(path);</span>
+<span class="fc" id="L137">            int lastComma = 0;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            while ((comma = resources.indexOf(',', lastComma)) &gt;= 0) {</span>
+<span class="fc" id="L139">                path = resources.substring(lastComma, comma).trim();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                if (path.length() &gt; 0) {</span>
+<span class="fc" id="L141">                    paths.add(path);</span>
                 }
-<span class="fc" id="L228">                lastComma = comma + 1;</span>
+<span class="fc" id="L143">                lastComma = comma + 1;</span>
             }
-<span class="fc" id="L230">            path = resources.substring(lastComma).trim();</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">            if (path.length() &gt; 0) {</span>
-<span class="fc" id="L232">                paths.add(path);</span>
+<span class="fc" id="L145">            path = resources.substring(lastComma).trim();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            if (path.length() &gt; 0) {</span>
+<span class="fc" id="L147">                paths.add(path);</span>
             }
         }
 
-<span class="fc" id="L236">        return paths.toArray(new String[0]);</span>
+<span class="fc" id="L151">        return paths.toArray(new String[0]);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

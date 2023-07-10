@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortletRequestScopeMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.portlet</a> &gt; <span class="el_source">PortletRequestScopeMap.java</span></div><h1>PortletRequestScopeMap.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortletRequestScopeMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.portlet</a> &gt; <span class="el_source">PortletRequestScopeMap.java</span></div><h1>PortletRequestScopeMap.java</h1><pre class="source lang-java linenums">/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,154 +16,26 @@
  */
 package org.apache.commons.chain.web.portlet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.portlet.PortletRequest;
 
-import org.apache.commons.chain.web.MapEntry;
+import org.apache.commons.chain.internal.MutableParameterMap;
 
 /**
  * Private implementation of {@code Map} for portlet request
  * attributes.
  *
  * @author Craig R. McClanahan
- * @version $Revision$ $Date$
  */
-final class PortletRequestScopeMap implements Map&lt;String, Object&gt; {
+final class PortletRequestScopeMap extends MutableParameterMap&lt;PortletRequest, Object&gt; {
 
-    private final PortletRequest request;
-
-<span class="fc" id="L42">    PortletRequestScopeMap(PortletRequest request) {</span>
-<span class="fc" id="L43">        this.request = request;</span>
-<span class="fc" id="L44">    }</span>
-
-    @Override
-    public void clear() {
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (String key : keySet()) {</span>
-<span class="fc" id="L49">            request.removeAttribute(key);</span>
-<span class="fc" id="L50">        }</span>
-<span class="fc" id="L51">    }</span>
-
-    @Override
-    public boolean containsKey(Object key) {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        return request.getAttribute(key(key)) != null;</span>
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L61">            return false;</span>
-        }
-<span class="nc" id="L63">        Enumeration&lt;?&gt; keys = request.getAttributeNames();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        while (keys.hasMoreElements()) {</span>
-<span class="nc" id="L65">            Object next = request.getAttribute(keys.nextElement().toString());</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (value.equals(next)) {</span>
-<span class="nc" id="L67">                return true;</span>
-            }
-<span class="nc" id="L69">        }</span>
-<span class="nc" id="L70">        return false;</span>
-    }
-
-    @Override
-    public Set&lt;Map.Entry&lt;String, Object&gt;&gt; entrySet() {
-<span class="fc" id="L75">        Set&lt;Map.Entry&lt;String, Object&gt;&gt; set = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L76">        Enumeration&lt;?&gt; keys = request.getAttributeNames();</span>
-        String key;
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        while (keys.hasMoreElements()) {</span>
-<span class="fc" id="L79">            key = keys.nextElement().toString();</span>
-<span class="fc" id="L80">            set.add(new MapEntry&lt;&gt;(key, request.getAttribute(key), true));</span>
-        }
-<span class="fc" id="L82">        return set;</span>
-    }
-
-    @Override
-    public boolean equals(Object o) {
-<span class="nc" id="L87">        return request.equals(o);</span>
-    }
-
-    @Override
-    public Object get(Object key) {
-<span class="fc" id="L92">        return request.getAttribute(key(key));</span>
-    }
-
-    @Override
-    public int hashCode() {
-<span class="fc" id="L97">        return request.hashCode();</span>
-    }
-
-    @Override
-    public boolean isEmpty() {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        return !request.getAttributeNames().hasMoreElements();</span>
-    }
-
-    @Override
-    public Set&lt;String&gt; keySet() {
-<span class="fc" id="L107">        Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L108">        Enumeration&lt;?&gt; keys = request.getAttributeNames();</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        while (keys.hasMoreElements()) {</span>
-<span class="fc" id="L110">            set.add(keys.nextElement().toString());</span>
-        }
-<span class="fc" id="L112">        return set;</span>
-    }
-
-    @Override
-    public Object put(String key, Object value) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L118">            return remove(key);</span>
-        }
-<span class="fc" id="L120">        Object previous = request.getAttribute(key);</span>
-<span class="fc" id="L121">        request.setAttribute(key, value);</span>
-<span class="fc" id="L122">        return previous;</span>
-    }
-
-    @Override
-    public void putAll(Map&lt;? extends String, ? extends Object&gt; map) {
-<span class="fc" id="L127">        map.forEach(this::put);</span>
-<span class="fc" id="L128">    }</span>
-
-    @Override
-    public Object remove(Object key) {
-<span class="fc" id="L132">        String skey = key(key);</span>
-<span class="fc" id="L133">        Object previous = request.getAttribute(skey);</span>
-<span class="fc" id="L134">        request.removeAttribute(skey);</span>
-<span class="fc" id="L135">        return previous;</span>
-    }
-
-    @Override
-    public int size() {
-<span class="fc" id="L140">        int n = 0;</span>
-<span class="fc" id="L141">        Enumeration&lt;?&gt; keys = request.getAttributeNames();</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">        while (keys.hasMoreElements()) {</span>
-<span class="fc" id="L143">            keys.nextElement();</span>
-<span class="fc" id="L144">            n++;</span>
-        }
-<span class="fc" id="L146">        return n;</span>
-    }
-
-    @Override
-    public Collection&lt;Object&gt; values() {
-<span class="fc" id="L151">        List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L152">        Enumeration&lt;?&gt; keys = request.getAttributeNames();</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">        while (keys.hasMoreElements()) {</span>
-<span class="fc" id="L154">            list.add(request.getAttribute(keys.nextElement().toString()));</span>
-        }
-<span class="fc" id="L156">        return list;</span>
-    }
-
-    private static String key(Object key) {
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (key == null) {</span>
-<span class="nc" id="L161">            throw new IllegalArgumentException();</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        } else if (key instanceof String) {</span>
-<span class="fc" id="L163">            return (String) key;</span>
-        } else {
-<span class="nc" id="L165">            return key.toString();</span>
-        }
-    }
+    /**
+     * The constructor for the portlet request attributes.
+     *
+     * @param request the portlet-request for the adapter.
+     */
+    PortletRequestScopeMap(PortletRequest request) {
+<span class="fc" id="L37">        super(request, request::getAttribute, request::getAttributeNames,</span>
+<span class="fc" id="L38">                request::removeAttribute, request::setAttribute);</span>
+<span class="fc" id="L39">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

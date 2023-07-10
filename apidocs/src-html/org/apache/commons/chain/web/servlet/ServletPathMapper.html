@@ -98,47 +98,46 @@
 <span class="source-line-no">085</span><span id="line-85">    @Override</span>
 <span class="source-line-no">086</span><span id="line-86">    protected String getCommandName(ServletWebContext context) {</span>
 <span class="source-line-no">087</span><span id="line-87">        // Look up the servlet path for this request</span>
-<span class="source-line-no">088</span><span id="line-88">        HttpServletRequest request = context.getRequest();</span>
-<span class="source-line-no">089</span><span id="line-89">        String servletPath =</span>
-<span class="source-line-no">090</span><span id="line-90">            request.getAttribute("javax.servlet.include.servlet_path").toString();</span>
-<span class="source-line-no">091</span><span id="line-91">        if (servletPath == null) {</span>
-<span class="source-line-no">092</span><span id="line-92">            servletPath = request.getServletPath();</span>
-<span class="source-line-no">093</span><span id="line-93">        }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">        return servletPath;</span>
-<span class="source-line-no">096</span><span id="line-96">    }</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    /**</span>
-<span class="source-line-no">099</span><span id="line-99">     * Return the {@link Catalog} to look up the {@link Command} in.</span>
-<span class="source-line-no">100</span><span id="line-100">     *</span>
-<span class="source-line-no">101</span><span id="line-101">     * @param context {@link Context} for this request</span>
-<span class="source-line-no">102</span><span id="line-102">     *</span>
-<span class="source-line-no">103</span><span id="line-103">     * @return The catalog.</span>
-<span class="source-line-no">104</span><span id="line-104">     *</span>
-<span class="source-line-no">105</span><span id="line-105">     * @throws IllegalArgumentException if no {@link Catalog}</span>
-<span class="source-line-no">106</span><span id="line-106">     *         can be found</span>
-<span class="source-line-no">107</span><span id="line-107">     *</span>
-<span class="source-line-no">108</span><span id="line-108">     * @since Chain 1.2</span>
-<span class="source-line-no">109</span><span id="line-109">     */</span>
-<span class="source-line-no">110</span><span id="line-110">    @Override</span>
-<span class="source-line-no">111</span><span id="line-111">    protected Catalog&lt;ServletWebContext&gt; getCatalog(ServletWebContext context) {</span>
-<span class="source-line-no">112</span><span id="line-112">        /* If the object returned from the passed context is not a valid catalog</span>
-<span class="source-line-no">113</span><span id="line-113">         * then we use the super class's catalog extraction logic to pull it</span>
-<span class="source-line-no">114</span><span id="line-114">         * or to error gracefully.</span>
-<span class="source-line-no">115</span><span id="line-115">         */</span>
-<span class="source-line-no">116</span><span id="line-116">        Object testCatalog = context.get(getCatalogKey());</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">        /* Assume that the underlying implementation is following convention and</span>
-<span class="source-line-no">119</span><span id="line-119">         * returning a catalog with the current context.</span>
-<span class="source-line-no">120</span><span id="line-120">         */</span>
-<span class="source-line-no">121</span><span id="line-121">        @SuppressWarnings("unchecked")</span>
-<span class="source-line-no">122</span><span id="line-122">        Catalog&lt;ServletWebContext&gt; catalog = testCatalog instanceof Catalog</span>
-<span class="source-line-no">123</span><span id="line-123">                    ? (Catalog&lt;ServletWebContext&gt;) testCatalog</span>
-<span class="source-line-no">124</span><span id="line-124">                    : super.getCatalog(context);</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">        return catalog;</span>
-<span class="source-line-no">127</span><span id="line-127">    }</span>
-<span class="source-line-no">128</span><span id="line-128">}</span>
+<span class="source-line-no">088</span><span id="line-88">        final HttpServletRequest request = context.getRequest();</span>
+<span class="source-line-no">089</span><span id="line-89">        final Object attrServletPath = request.getAttribute("javax.servlet.include.servlet_path");</span>
+<span class="source-line-no">090</span><span id="line-90">        final String servletPath = attrServletPath == null</span>
+<span class="source-line-no">091</span><span id="line-91">                ? request.getServletPath()</span>
+<span class="source-line-no">092</span><span id="line-92">                : attrServletPath.toString();</span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">        return servletPath;</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">    /**</span>
+<span class="source-line-no">098</span><span id="line-98">     * Return the {@link Catalog} to look up the {@link Command} in.</span>
+<span class="source-line-no">099</span><span id="line-99">     *</span>
+<span class="source-line-no">100</span><span id="line-100">     * @param context {@link Context} for this request</span>
+<span class="source-line-no">101</span><span id="line-101">     *</span>
+<span class="source-line-no">102</span><span id="line-102">     * @return The catalog.</span>
+<span class="source-line-no">103</span><span id="line-103">     *</span>
+<span class="source-line-no">104</span><span id="line-104">     * @throws IllegalArgumentException if no {@link Catalog}</span>
+<span class="source-line-no">105</span><span id="line-105">     *         can be found</span>
+<span class="source-line-no">106</span><span id="line-106">     *</span>
+<span class="source-line-no">107</span><span id="line-107">     * @since Chain 1.2</span>
+<span class="source-line-no">108</span><span id="line-108">     */</span>
+<span class="source-line-no">109</span><span id="line-109">    @Override</span>
+<span class="source-line-no">110</span><span id="line-110">    protected Catalog&lt;ServletWebContext&gt; getCatalog(ServletWebContext context) {</span>
+<span class="source-line-no">111</span><span id="line-111">        /* If the object returned from the passed context is not a valid catalog</span>
+<span class="source-line-no">112</span><span id="line-112">         * then we use the super class's catalog extraction logic to pull it</span>
+<span class="source-line-no">113</span><span id="line-113">         * or to error gracefully.</span>
+<span class="source-line-no">114</span><span id="line-114">         */</span>
+<span class="source-line-no">115</span><span id="line-115">        Object testCatalog = context.get(getCatalogKey());</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">        /* Assume that the underlying implementation is following convention and</span>
+<span class="source-line-no">118</span><span id="line-118">         * returning a catalog with the current context.</span>
+<span class="source-line-no">119</span><span id="line-119">         */</span>
+<span class="source-line-no">120</span><span id="line-120">        @SuppressWarnings("unchecked")</span>
+<span class="source-line-no">121</span><span id="line-121">        Catalog&lt;ServletWebContext&gt; catalog = testCatalog instanceof Catalog</span>
+<span class="source-line-no">122</span><span id="line-122">                    ? (Catalog&lt;ServletWebContext&gt;) testCatalog</span>
+<span class="source-line-no">123</span><span id="line-123">                    : super.getCatalog(context);</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">        return catalog;</span>
+<span class="source-line-no">126</span><span id="line-126">    }</span>
+<span class="source-line-no">127</span><span id="line-127">}</span>
 
 
 
