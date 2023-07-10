@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add `Distribution-Management` in `POM`-File
 * Delete `Issue-Link-Template`-Parameter in `POM`-File
 * Add `LICENSE.txt` and `NOTICE.txt` to jars
 * Corr: Add OSGi-Infos
