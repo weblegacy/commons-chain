@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `README` and correct link in `CHANGELOG`
 * Add `maven-scm-publish-plugin` and update `README`
 * Downgrade `maven-fluido-skin` from 2.0.0-M6 to 1.11.2
 * Downgrade `maven-site-plugin` from 4.0.0-M7 to 3.12.1 (Change-Report not correct)
@@ -115,4 +116,4 @@
 * Update `.gitignore`
 * Add `README.md`
 * Add `CHANGELOG.md`
-* Clone of <https://github.com/weblegacy/commons-chain.git> - CHAIN_1_X
+* Clone of <https://github.com/apache/commons-chain.git> - CHAIN_1_X
