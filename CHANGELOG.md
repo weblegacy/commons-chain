@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Delete `Issue-Link-Template`-Parameter in `POM`-File
 * Add `LICENSE.txt` and `NOTICE.txt` to jars
 * Corr: Add OSGi-Infos
 * Update junit-jupiter-api from 5.10.0-M1 to 5.10.0-RC1

@@ -510,7 +510,6 @@
                 <artifactId>maven-changes-plugin</artifactId>
                 <configuration>
                     <xmlPath>${basedir}/src/changes/changes.xml</xmlPath>
-                    <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
                 </configuration>
                 <reportSets>
                     <reportSet>
