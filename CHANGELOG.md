@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Downgrade `maven-fluido-skin` from 2.0.0-M6 to 1.11.2
 * Downgrade `maven-site-plugin` from 4.0.0-M7 to 3.12.1 (Change-Report not correct)
 * Add `Distribution-Management` in `POM`-File
 * Delete `Issue-Link-Template`-Parameter in `POM`-File
