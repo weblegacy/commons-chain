@@ -24,11 +24,11 @@ For documentation see [https://weblegacy.github.io/commons-chain](https://webleg
 4. Generate source- and javadoc-artifacts  
    `mvn -DskipTests package`
 5. Generate site-documentation  
-   `mvn -DskipTests site`  
+   `mvn site site:stage`  
    or  
-   `mvn -DskipTests clean site site:stage`
+   `mvn clean site site:stage`
 6. Publish site-documentation  
-   1. `mvn -DskipTests clean site site:stage`
+   1. `mvn clean site site:stage`
    2. `mvn scm-publish:publish-scm`
 7. Generate Assemblies  
    `mvn -DskipTests package`
