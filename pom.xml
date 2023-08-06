@@ -565,18 +565,43 @@
             <plugin>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <reportSets>
-                  <reportSet>
-                    <id>default</id>
-                    <reports>
-                      <report>jxr</report>
-                      <report>test-jxr</report>
-                    </reports>
-                  </reportSet>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>jxr-no-fork</report>
+                            <report>test-jxr-no-fork</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>aggregrate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate</report>
+                            <report>test-aggregate</report>
+                        </reports>
+                    </reportSet>
                 </reportSets>
             </plugin>
 
             <plugin>
                 <artifactId>maven-pmd-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>cpd</report>
+                            <report>pmd</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>aggregrate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate-cpd</report>
+                            <report>aggregate-pmd-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
@@ -586,6 +611,21 @@
                     <enableRulesSummary>false</enableRulesSummary>
                     <headerLocation>license-header.txt</headerLocation>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>aggregrate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>checkstyle-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
@@ -643,6 +683,23 @@
                     <notimestamp>true</notimestamp>
                     <source>${javaVersion}</source>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>javadoc-no-fork</report>
+                            <report>test-javadoc-no-fork</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>aggregrate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate-no-fork</report>
+                            <report>test-aggregate-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
