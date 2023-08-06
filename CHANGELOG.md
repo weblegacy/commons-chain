@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Split module `core` into `core` and `web`
 * Adaptions for mulit-module-project
 * Move `src` to new submodule `core`
 * Update checkstyle from 10.12.1 to 10.12.2

@@ -28,8 +28,8 @@
         <version>1.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons-chain</artifactId>
-    <name>Commons Chain :: Core</name>
+    <artifactId>commons-chain-web</artifactId>
+    <name>Commons Chain :: Web</name>
 
     <scm>
         <connection>scm:git:https://github.com/weblegacy/commons-chain.git</connection>
@@ -37,26 +37,19 @@
         <url>https://github.com/weblegacy/commons-chain</url>
     </scm>
 
-   <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-   </build>
-
     <dependencies>
 
         <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>commons-chain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>commons-chain</artifactId>
+            <classifier>tests</classifier>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -67,6 +60,24 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.portlet</groupId>
+            <artifactId>portlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
