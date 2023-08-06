@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update junit-jupiter-api from 5.10.0-RC1 to 5.10.0
 * Update `README` and correct link in `CHANGELOG`
 * Add `maven-scm-publish-plugin` and update `README`
 * Downgrade `maven-fluido-skin` from 2.0.0-M6 to 1.11.2
