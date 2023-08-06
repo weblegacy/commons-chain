@@ -179,6 +179,7 @@
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
         <mavenVersion>[3.6.3,4)</mavenVersion>
         <javaVersion>8</javaVersion>
+        <surefireVersion>3.0.0</surefireVersion>
         <oldversion>1.2</oldversion>
         <javaxServletVersion>4.0.1</javaxServletVersion>
         <javaxPortletVersion>3.0.1</javaxPortletVersion>
@@ -324,7 +325,11 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>${surefireVersion}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${surefireVersion}</version>
                 </plugin>
                 <plugin>
                     <groupId>com.github.siom79.japicmp</groupId>
@@ -614,6 +619,10 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-report-plugin</artifactId>
             </plugin>
 
             <plugin>
