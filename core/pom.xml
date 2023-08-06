@@ -31,11 +31,9 @@
     <artifactId>commons-chain</artifactId>
     <name>Commons Chain :: Core</name>
 
-    <scm>
-        <connection>scm:git:https://github.com/weblegacy/commons-chain.git</connection>
-        <developerConnection>scm:git:git@github.com:weblegacy/commons-chain.git</developerConnection>
-        <url>https://github.com/weblegacy/commons-chain</url>
-    </scm>
+    <description>
+        The core-part of commons-chain.
+    </description>
 
    <build>
         <plugins>
@@ -53,7 +51,6 @@
    </build>
 
     <dependencies>
-
         <dependency>
             <groupId>commons-digester</groupId>
             <artifactId>commons-digester</artifactId>
@@ -69,6 +66,5 @@
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>

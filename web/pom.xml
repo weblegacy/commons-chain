@@ -31,14 +31,11 @@
     <artifactId>commons-chain-web</artifactId>
     <name>Commons Chain :: Web</name>
 
-    <scm>
-        <connection>scm:git:https://github.com/weblegacy/commons-chain.git</connection>
-        <developerConnection>scm:git:git@github.com:weblegacy/commons-chain.git</developerConnection>
-        <url>https://github.com/weblegacy/commons-chain</url>
-    </scm>
+    <description>
+        The web-part of commons-chain.
+    </description>
 
     <dependencies>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>commons-chain</artifactId>
@@ -85,6 +82,5 @@
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>

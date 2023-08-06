@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Some doc-updates
 * Remove unused dependency `commons-beanutils`
 * Delete unused `Utilities`-class
 * Split module `core` into `core` and `web`
