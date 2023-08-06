@@ -23,7 +23,6 @@ import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
-import org.apache.commons.chain.internal.Utilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -101,7 +100,8 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    private Command<C>[] commands = Utilities.newArray(Command.class, 0);
+    @SuppressWarnings("unchecked")
+    private Command<C>[] commands = new Command[0];
 
     /**
      * Flag indicating whether the configuration of our commands list

@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Delete unused `Utilities`-class
 * Split module `core` into `core` and `web`
 * Adaptions for mulit-module-project
 * Move `src` to new submodule `core`
