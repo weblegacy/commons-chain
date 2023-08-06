@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigDefineRule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.config</a> &gt; <span class="el_source">ConfigDefineRule.java</span></div><h1>ConfigDefineRule.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.config;
+
+import org.apache.commons.digester.Rule;
+import org.xml.sax.Attributes;
+
+/**
+ * Digester rule that will dynamically register a new set of rules
+ * for a specified element name and default implementation class. This
+ * allows &quot;alias&quot; elements to be created for {@link org.apache.commons.chain.Chain}
+ * and {@link org.apache.commons.chain.Command}
+ * implementation classes that are commonly used. Besides factoring out
+ * the class names to make changes easier, this also makes configuration
+ * files &lt;strong&gt;much&lt;/strong&gt; easier to read and write.
+ *
+ * @version $Revision$ $Date$
+ */
+class ConfigDefineRule extends Rule {
+
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The name of the attribute under which we can retrieve the
+     * fully qualified class name of the implementation class for this
+     * new element.
+     */
+    private final String classAttribute;
+
+    /**
+     * The name of the attribute under which we can retrieve the name
+     * this element for which rules should be created.
+     */
+    private final String nameAttribute;
+
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * Construct a new instance of this rule that will in turn
+     * dynamically register appropriate rules for a new alias element.
+     *
+     * @param nameAttribute Name of the attribute containing the name
+     *        of the new element for which rules should generated
+     * @param classAttribute Name of the attribute containing the
+     *        implementation class for the new chain or command
+     */
+<span class="fc" id="L61">    ConfigDefineRule(String nameAttribute, String classAttribute) {</span>
+<span class="fc" id="L62">        this.nameAttribute = nameAttribute;</span>
+<span class="fc" id="L63">        this.classAttribute = classAttribute;</span>
+<span class="fc" id="L64">    }</span>
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Register new rules for the specified name and class.
+     *
+     * @param namespace the namespace URI of the matching element, or an
+     *        empty string if the parser is not namespace aware or the
+     *        element has no namespace
+     * @param name the local name if the parser is namespace aware, or
+     *        just the element name otherwise
+     * @param attributes The attribute list of this element
+     */
+    @Override
+    public void begin(String namespace, String name, Attributes attributes)
+        throws Exception {
+
+        // Extract the actual name and implementation class to use
+<span class="fc" id="L83">        String nameValue = attributes.getValue(nameAttribute);</span>
+<span class="fc" id="L84">        String classValue = attributes.getValue(classAttribute);</span>
+
+        // Add rules for this new element
+<span class="fc" id="L87">        digester.addObjectCreate(&quot;*/&quot; + nameValue, classValue);</span>
+<span class="fc" id="L88">        digester.addSetProperties(&quot;*/&quot; + nameValue);</span>
+<span class="fc" id="L89">        digester.addRule(&quot;*/&quot; + nameValue,</span>
+                         new ConfigRegisterRule(nameAttribute));
+<span class="fc" id="L91">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

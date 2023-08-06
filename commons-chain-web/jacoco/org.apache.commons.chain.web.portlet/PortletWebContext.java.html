@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortletWebContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Web</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.portlet</a> &gt; <span class="el_source">PortletWebContext.java</span></div><h1>PortletWebContext.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web.portlet;
+
+import java.util.Collections;
+import java.util.Map;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.servlet.http.Cookie;
+
+import org.apache.commons.chain.web.WebContext;
+
+/**
+ * Concrete implementation of {@link WebContext} suitable for use in
+ * portlets. The abstract methods are mapped to the appropriate
+ * collections of the underlying portlet context, request, and response
+ * instances that are passed to the constructor (or the initialize method).
+ *
+ * @author Craig R. McClanahan
+ */
+public class PortletWebContext extends WebContext {
+    private static final long serialVersionUID = 7590757017994210786L;
+
+    // ------------------------------------------------------ Instance Variables
+
+    /**
+     * The lazily instantiated {@code Map} of application scope
+     * attributes.
+     */
+<span class="pc" id="L46">    private transient Map&lt;String, Object&gt; applicationScope = null;</span>
+
+    /**
+     * The {@code PortletContext} for this web application.
+     */
+<span class="pc" id="L51">    private transient PortletContext context = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of header name-value
+     * combinations (immutable).
+     */
+<span class="pc" id="L57">    private transient Map&lt;String, String&gt; header = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of header name-values
+     * combinations (immutable).
+     */
+<span class="pc" id="L63">    private transient Map&lt;String, String[]&gt; headerValues = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of context initialization
+     * parameters.
+     */
+<span class="pc" id="L69">    private transient Map&lt;String, String&gt; initParam = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of cookies.
+     */
+<span class="pc" id="L74">    private transient Map&lt;String, Cookie&gt; cookieValues = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of request
+     * parameter name-value.
+     */
+<span class="pc" id="L80">    private transient Map&lt;String, String&gt; param = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of request
+     * parameter name-values.
+     */
+<span class="pc" id="L86">    private transient Map&lt;String, String[]&gt; paramValues = null;</span>
+
+    /**
+     * The {@code PortletRequest} for this request.
+     */
+<span class="pc" id="L91">    private transient PortletRequest request = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of request scope
+     * attributes.
+     */
+<span class="pc" id="L97">    private transient Map&lt;String, Object&gt; requestScope = null;</span>
+
+    /**
+     * The {@code PortletResponse} for this request.
+     */
+<span class="pc" id="L102">    private transient PortletResponse response = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of session scope
+     * attributes.
+     */
+<span class="pc" id="L108">    private transient Map&lt;String, Object&gt; sessionScope = null;</span>
+
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * Construct an uninitialized {@link PortletWebContext} instance.
+     */
+<span class="nc" id="L115">    public PortletWebContext() {</span>
+<span class="nc" id="L116">    }</span>
+
+    /**
+     * Construct a {@link PortletWebContext} instance that is initialized
+     * with the specified Portlet API objects.
+     *
+     * @param context The {@code PortletContext} for this web application
+     * @param request The {@code PortletRequest} for this request
+     * @param response The {@code PortletResponse} for this request
+     */
+    public PortletWebContext(PortletContext context,
+                             PortletRequest request,
+<span class="fc" id="L128">                             PortletResponse response) {</span>
+
+<span class="fc" id="L130">        initialize(context, request, response);</span>
+<span class="fc" id="L131">    }</span>
+
+    // ---------------------------------------------------------- Public Methods
+
+    /**
+     * Return the {@link PortletContext} for this context.
+     *
+     * @return The {@code PortletContext} for this request
+     */
+    public PortletContext getContext() {
+<span class="fc" id="L141">        return this.context;</span>
+    }
+
+    /**
+     * Return the {@link PortletRequest} for this context.
+     *
+     * @return The {@code PortletRequest} for this context.
+     */
+    public PortletRequest getRequest() {
+<span class="fc" id="L150">        return this.request;</span>
+    }
+
+    /**
+     * Return the {@link PortletResponse} for this context.
+     *
+     * @return The {@code PortletResponse} for this context.
+     */
+    public PortletResponse getResponse() {
+<span class="fc" id="L159">        return this.response;</span>
+    }
+
+    /**
+     * Initialize (or reinitialize) this {@link PortletWebContext} instance
+     * for the specified Portlet API objects.
+     *
+     * @param context The {@code PortletContext} for this web application
+     * @param request The {@code PortletRequest} for this request
+     * @param response The {@code PortletResponse} for this request
+     */
+    public void initialize(PortletContext context,
+                           PortletRequest request,
+                           PortletResponse response) {
+
+        // Save the specified Portlet API object references
+<span class="fc" id="L175">        this.context = context;</span>
+<span class="fc" id="L176">        this.request = request;</span>
+<span class="fc" id="L177">        this.response = response;</span>
+
+        // Perform other setup as needed
+<span class="fc" id="L180">    }</span>
+
+    /**
+     * Release references to allocated resources acquired in
+     * {@code initialize()} of via subsequent processing. After this
+     * method is called, subsequent calls to any other method than
+     * {@code initialize()} will return undefined results.
+     */
+    public void release() {
+        // Release references to allocated collections
+<span class="fc" id="L190">        applicationScope = null;</span>
+<span class="fc" id="L191">        header = null;</span>
+<span class="fc" id="L192">        headerValues = null;</span>
+<span class="fc" id="L193">        initParam = null;</span>
+<span class="fc" id="L194">        param = null;</span>
+<span class="fc" id="L195">        paramValues = null;</span>
+<span class="fc" id="L196">        cookieValues = null;</span>
+<span class="fc" id="L197">        requestScope = null;</span>
+<span class="fc" id="L198">        sessionScope = null;</span>
+
+        // Release references to Portlet API objects
+<span class="fc" id="L201">        context = null;</span>
+<span class="fc" id="L202">        request = null;</span>
+<span class="fc" id="L203">        response = null;</span>
+<span class="fc" id="L204">    }</span>
+
+    // ------------------------------------------------------ WebContext Methods
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Application scope Map.
+     */
+    @Override
+    public Map&lt;String, Object&gt; getApplicationScope() {
+<span class="fc bfc" id="L215" title="All 4 branches covered.">        if (applicationScope == null &amp;&amp; context != null) {</span>
+<span class="fc" id="L216">            applicationScope = new PortletApplicationScopeMap(context);</span>
+        }
+<span class="fc" id="L218">        return applicationScope;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Header values Map.
+     */
+    @Override
+    public Map&lt;String, String&gt; getHeader() {
+<span class="fc bfc" id="L228" title="All 4 branches covered.">        if (header == null &amp;&amp; request != null) {</span>
+            // header = new PortletHeaderMap(request);
+<span class="fc" id="L230">            header = Collections.emptyMap();</span>
+        }
+<span class="fc" id="L232">        return header;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Header values Map.
+     */
+    @Override
+    public Map&lt;String, String[]&gt; getHeaderValues() {
+<span class="fc bfc" id="L242" title="All 4 branches covered.">        if (headerValues == null &amp;&amp; request != null) {</span>
+            // headerValues = new PortletHeaderValuesMap(request);
+<span class="fc" id="L244">            headerValues = Collections.emptyMap();</span>
+        }
+<span class="fc" id="L246">        return headerValues;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Initialization parameter Map.
+     */
+    @Override
+    public Map&lt;String, String&gt; getInitParam() {
+<span class="fc bfc" id="L256" title="All 4 branches covered.">        if (initParam == null &amp;&amp; context != null) {</span>
+<span class="fc" id="L257">            initParam = new PortletInitParamMap(context);</span>
+        }
+<span class="fc" id="L259">        return initParam;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Request parameter Map.
+     */
+    @Override
+    public Map&lt;String, String&gt; getParam() {
+<span class="fc bfc" id="L269" title="All 4 branches covered.">        if (param == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L270">            param = new PortletParamMap(request);</span>
+        }
+<span class="fc" id="L272">        return param;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Request parameter Map.
+     */
+    @Override
+    public Map&lt;String, String[]&gt; getParamValues() {
+<span class="fc bfc" id="L282" title="All 4 branches covered.">        if (paramValues == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L283">            paramValues = new PortletParamValuesMap(request);</span>
+        }
+<span class="fc" id="L285">        return paramValues;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Map of Cookies.
+     * @since Chain 1.1
+     */
+    @Override
+    public Map&lt;String, Cookie&gt; getCookies() {
+<span class="pc bpc" id="L296" title="1 of 4 branches missed.">        if (cookieValues == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L297">            cookieValues = new PortletCookieMap(request);</span>
+        }
+<span class="fc" id="L299">        return cookieValues;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Request scope Map.
+     */
+    @Override
+    public Map&lt;String, Object&gt; getRequestScope() {
+<span class="fc bfc" id="L309" title="All 4 branches covered.">        if (requestScope == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L310">            requestScope = new PortletRequestScopeMap(request);</span>
+        }
+<span class="fc" id="L312">        return requestScope;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Session scope Map.
+     */
+    @Override
+    public Map&lt;String, Object&gt; getSessionScope() {
+<span class="fc bfc" id="L322" title="All 4 branches covered.">        if (sessionScope == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L323">            sessionScope = new PortletSessionScopeMap(request);</span>
+        }
+<span class="fc" id="L325">        return sessionScope;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

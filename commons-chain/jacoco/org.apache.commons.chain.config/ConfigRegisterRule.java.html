@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigRegisterRule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.config</a> &gt; <span class="el_source">ConfigRegisterRule.java</span></div><h1>ConfigRegisterRule.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.config;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.Chain;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+import org.apache.commons.digester.Rule;
+import org.xml.sax.Attributes;
+
+/**
+ * Digester rule that will cause the top-most element on the Digester
+ * stack (if it is a {@link Command} to be registered with the next-to-top
+ * element on the Digester stack (if it is a {@link Catalog} or {@link Chain}).
+ * To be registered with a {@link Catalog}, the top-most element must contain
+ * a value for the specified attribute that contains the name under which
+ * it should be registered.
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+class ConfigRegisterRule extends Rule {
+
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The name of the attribute under which we can retrieve the name
+     * this command should be registered with.
+     */
+    private final String nameAttribute;
+
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * Construct a new instance of this rule that looks for an attribute
+     * with the specified name.
+     *
+     * @param nameAttribute Name of the attribute containing the name under
+     *  which this command should be registered
+     */
+<span class="fc" id="L56">    ConfigRegisterRule(String nameAttribute) {</span>
+<span class="fc" id="L57">        this.nameAttribute = nameAttribute;</span>
+<span class="fc" id="L58">    }</span>
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Register the top {@link Command} if appropriate.
+     *
+     * @param namespace the namespace URI of the matching element, or an
+     *        empty string if the parser is not namespace aware or the
+     *        element has no namespace
+     * @param name the local name if the parser is namespace aware, or
+     *        just the element name otherwise
+     * @param attributes The attribute list of this element
+     */
+    @Override
+    public void begin(String namespace, String name, Attributes attributes)
+        throws Exception {
+
+        // Is the top object a Command?
+<span class="fc" id="L77">        Object top = digester.peek(0);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (!(top instanceof Command)) {</span>
+<span class="nc" id="L79">            return;</span>
+        }
+
+        /* All commands can consume a generic context. Here we depend on
+         * the configuration being correct because the rule binding is
+         * dynamic. */
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L86">        Command&lt;Context&gt; command = (Command&lt;Context&gt;) top;</span>
+
+        // Is the next object a Catalog or a Chain?
+<span class="fc" id="L89">        Object next = digester.peek(1);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (next == null) {</span>
+<span class="nc" id="L91">            return;</span>
+        }
+
+        // Register the top element appropriately
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (next instanceof Catalog) {</span>
+<span class="fc" id="L96">            String nameValue = attributes.getValue(nameAttribute);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (nameValue != null) {</span>
+                /* We are dynamically building a catalog and assigning
+                 * generics to the most base types possible. */
+                @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L101">                Catalog&lt;Context&gt; catalog = (Catalog&lt;Context&gt;) next;</span>
+<span class="fc" id="L102">                catalog.addCommand(nameValue, command);</span>
+            }
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        } else if (next instanceof Chain) {</span>
+            /* Like above - the chain is being dynamically generated,
+             * so we can add a generic context signature at compile-time. */
+            @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L108">            Chain&lt;Context&gt; chain = (Chain&lt;Context&gt;) next;</span>
+<span class="fc" id="L109">            chain.addCommand(command);</span>
+        }
+<span class="fc" id="L111">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

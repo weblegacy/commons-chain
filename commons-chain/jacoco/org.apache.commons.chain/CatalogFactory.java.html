@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CatalogFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain</a> &gt; <span class="el_source">CatalogFactory.java</span></div><h1>CatalogFactory.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain;
+
+import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.commons.chain.impl.CatalogFactoryBase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+ * A {@link CatalogFactory} is a class used to store and retrieve
+ * {@link Catalog}s. The factory allows for a default {@link Catalog}
+ * as well as {@link Catalog}s stored with a name key. Follows the
+ * Factory pattern (see GoF).
+ *
+ * &lt;p&gt;The base {@code CatalogFactory} implementation also implements
+ * a resolution mechanism which allows lookup of a command based on a single
+ * String which encodes both the catalog and command names.&lt;/p&gt;
+ *
+ * @param &lt;C&gt; Type of the context associated with this command
+ *
+ * @author Sean Schofield
+ * @version $Revision$ $Date$
+ */
+<span class="fc" id="L41">public abstract class CatalogFactory&lt;C extends Context&gt; {</span>
+
+    // ------------------------------------------------------- Static Variables
+
+    /**
+     * Values passed to the {@code getCommand(String)} method should
+     * use this as the delimiter between the &quot;catalog&quot; name and the &quot;command&quot;
+     * name.
+     */
+    public static final String DELIMITER = &quot;:&quot;;
+
+    /**
+     * The set of registered {@link CatalogFactory} instances,
+     * keyed by the relevant class loader.
+     */
+<span class="fc" id="L56">    private static final ConcurrentHashMap&lt;ClassLoader, CatalogFactory&lt;?&gt;&gt; FACTORIES = new ConcurrentHashMap&lt;&gt;();</span>
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Gets the default instance of Catalog associated with the factory
+     * (if any); otherwise, return {@code null}.
+     *
+     * @return the default Catalog instance
+     */
+    public abstract Catalog&lt;C&gt; getCatalog();
+
+    /**
+     * Sets the default instance of Catalog associated with the factory.
+     *
+     * @param catalog the default Catalog instance
+     */
+    public abstract void setCatalog(Catalog&lt;C&gt; catalog);
+
+    /**
+     * Retrieves a Catalog instance by name (if any); otherwise
+     * return {@code null}.
+     *
+     * @param name the name of the Catalog to retrieve
+     *
+     * @return the specified Catalog
+     */
+    public abstract Catalog&lt;C&gt; getCatalog(String name);
+
+    /**
+     * Adds a named instance of Catalog to the factory (for subsequent
+     * retrieval later).
+     *
+     * @param name the name of the Catalog to add
+     * @param catalog the Catalog to add
+     */
+    public abstract void addCatalog(String name, Catalog&lt;C&gt; catalog);
+
+    /**
+     * Return an {@code Iterator} over the set of named
+     * {@link Catalog}s known to this {@link CatalogFactory}.
+     * If there are no known catalogs, an empty Iterator is returned.
+     *
+     * @return An Iterator of the names of the Catalogs known by this factory.
+     */
+    public abstract Iterator&lt;String&gt; getNames();
+
+    /**
+     * Return a {@code Command} based on the given commandID.
+     *
+     * &lt;p&gt;At this time, the structure of commandID is relatively simple: if the
+     * commandID contains a DELIMITER, treat the segment of the commandID
+     * up to (but not including) the DELIMITER as the name of a catalog, and the
+     * segment following the DELIMITER as a command name within that catalog.
+     * If the commandID contains no DELIMITER, treat the commandID as the name
+     * of a command in the default catalog.&lt;/p&gt;
+     *
+     * &lt;p&gt;To preserve the possibility of future extensions to this lookup
+     * mechanism, the DELIMITER string should be considered reserved, and
+     * should not be used in command names. commandID values which contain
+     * more than one DELIMITER will cause an {@code IllegalArgumentException}
+     * to be thrown.&lt;/p&gt;
+     *
+     * @param &lt;CMD&gt; the expected {@link Command} type to be returned
+     * @param commandID the identifier of the command to return
+     *
+     * @return the command located with commandID, or {@code null}
+     *         if either the command name or the catalog name cannot be
+     *         resolved
+     *
+     * @throws IllegalArgumentException if the commandID contains more than
+     *         one DELIMITER
+     *
+     * @since Chain 1.1
+     */
+    public &lt;CMD extends Command&lt;C&gt;&gt; CMD getCommand(String commandID) {
+<span class="fc" id="L132">        String commandName = commandID;</span>
+<span class="fc" id="L133">        String catalogName = null;</span>
+<span class="fc" id="L134">        Catalog&lt;C&gt; catalog = null;</span>
+
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (commandID != null) {</span>
+<span class="fc" id="L137">            int splitPos = commandID.indexOf(DELIMITER);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            if (splitPos != -1) {</span>
+<span class="fc" id="L139">                catalogName = commandID.substring(0, splitPos);</span>
+<span class="fc" id="L140">                commandName = commandID.substring(splitPos + DELIMITER.length());</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                if (commandName.contains(DELIMITER)) {</span>
+<span class="fc" id="L142">                    throw new IllegalArgumentException(&quot;commandID [&quot;</span>
+                            + commandID + &quot;] has too many delimiters (reserved for future use)&quot;);
+                }
+            }
+        }
+
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (catalogName != null) {</span>
+<span class="fc" id="L149">            catalog = this.getCatalog(catalogName);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            if (catalog == null) {</span>
+<span class="fc" id="L151">                Log log = LogFactory.getLog(CatalogFactory.class);</span>
+<span class="fc" id="L152">                log.warn(&quot;No catalog found for name: &quot; + catalogName + &quot;.&quot;);</span>
+<span class="fc" id="L153">                return null;</span>
+            }
+        } else {
+<span class="fc" id="L156">            catalog = this.getCatalog();</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">            if (catalog == null) {</span>
+<span class="nc" id="L158">                Log log = LogFactory.getLog(CatalogFactory.class);</span>
+<span class="nc" id="L159">                log.warn(&quot;No default catalog found.&quot;);</span>
+<span class="nc" id="L160">                return null;</span>
+            }
+        }
+
+<span class="fc" id="L164">        return catalog.getCommand(commandName);</span>
+    }
+
+    // -------------------------------------------------------- Static Methods
+
+    /**
+     * Return the singleton {@link CatalogFactory} instance
+     * for the relevant {@code ClassLoader}. For applications
+     * that use a thread context class loader (such as web applications
+     * running inside a servet container), this will return a separate
+     * instance for each application, even if this class is loaded from
+     * a shared parent class loader.
+     *
+     * @param &lt;C&gt; Type of the context associated with this command
+     *
+     * @return the per-application singleton instance of {@link CatalogFactory}
+     */
+    public static &lt;C extends Context&gt; CatalogFactory&lt;C&gt; getInstance() {
+<span class="fc" id="L182">        ClassLoader cl = getClassLoader();</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L185">        CatalogFactory&lt;C&gt; ret = (CatalogFactory&lt;C&gt;) FACTORIES.computeIfAbsent(cl, k -&gt; new CatalogFactoryBase&lt;&gt;());</span>
+<span class="fc" id="L186">        return ret;</span>
+    }
+
+    /**
+     * Clear all references to registered catalogs, as well as to the
+     * relevant class loader. This method should be called, for example,
+     * when a web application utilizing this class is removed from
+     * service, to allow for garbage collection.
+     */
+    public static void clear() {
+<span class="fc" id="L196">        FACTORIES.remove(getClassLoader());</span>
+<span class="fc" id="L197">    }</span>
+
+    // ------------------------------------------------------- Private Methods
+
+    /**
+     * Return the relevant {@code ClassLoader} to use as a Map key
+     * for this request. If there is a thread context class loader, return
+     * that; otherwise, return the class loader that loaded this class.
+     *
+     * @return the relevant {@code ClassLoader} to use as a Map key for this request
+     */
+    private static ClassLoader getClassLoader() {
+<span class="fc" id="L209">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (cl == null) {</span>
+<span class="nc" id="L211">            cl = CatalogFactory.class.getClassLoader();</span>
+        }
+<span class="fc" id="L213">        return cl;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookieMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Web</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.internal</a> &gt; <span class="el_source">CookieMap.java</span></div><h1>CookieMap.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web.internal;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Supplier;
+
+import javax.servlet.http.Cookie;
+
+import org.apache.commons.chain.web.MapEntry;
+
+/**
+ * Implementation of {@code Map} for cookies with
+ * a parameter-provider.
+ *
+ * @param &lt;P&gt; the type of the parameter-provider
+ *
+ * @author Graff Stefan
+ * @since Chain 1.3
+ */
+public class CookieMap&lt;P&gt; extends ParameterMap&lt;P, Cookie&gt; {
+
+    /**
+     * Supplier to return the {@link Cookie}-Array in this object.
+     */
+    private final Supplier&lt;Cookie[]&gt; cookiesSupplier;
+
+    /**
+     * The constructor for the {@code Map} for cookies.
+     *
+     * @param request         the request with the cookies
+     * @param cookiesSupplier Supplier to return the {@link Cookie}-Array in this
+     *                        object
+     */
+    public CookieMap(final P request, final Supplier&lt;Cookie[]&gt; cookiesSupplier) {
+<span class="fc" id="L55">        super(request, null, null);</span>
+<span class="fc" id="L56">        this.cookiesSupplier = cookiesSupplier;</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Returns {@code true} if this cookie-map contains a mapping
+     * for the specified cookie-name.
+     *
+     * @param key The key whose presence in this cookie-map is to
+     *            be tested
+     *
+     * @return {@code true} if this cookie-map contains a mapping
+     *         for the specified cookie-name.
+     */
+    @Override
+    public boolean containsKey(Object key) {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        return get(key) != null;</span>
+    }
+
+    /**
+     * Returns {@code true} if this cookie-map maps one or more keys
+     * to the specified cookie.
+     *
+     * @param value cookie whose presence in this cookie-map is to be
+     *        tested
+     *
+     * @return {@code true} if this cookie-map maps one or more keys
+     *         to the specified cookie
+     */
+    @Override
+    public boolean containsValue(Object value) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        for (Cookie cookie : values()) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (cookie.equals(value)) {</span>
+<span class="fc" id="L88">                return true;</span>
+            }
+<span class="fc" id="L90">        }</span>
+<span class="nc" id="L91">        return false;</span>
+    }
+
+    /**
+     * Returns a {@link Set} view of the mappings contained in this
+     * cookie-map. The set is not backed by the cookie-map, so
+     * changes to the cookie-map are not reflected in the set,
+     * and vice-versa.
+     *
+     * @return a set view of the mappings contained in this cookie-map
+     */
+    @Override
+    public Set&lt;Map.Entry&lt;String, Cookie&gt;&gt; entrySet() {
+<span class="fc" id="L104">        final Set&lt;Map.Entry&lt;String, Cookie&gt;&gt; set = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        for (Cookie cookie : values()) {</span>
+<span class="fc" id="L106">            set.add(new MapEntry&lt;&gt;(cookie.getName(), cookie, false));</span>
+<span class="fc" id="L107">        }</span>
+<span class="fc" id="L108">        return set;</span>
+    }
+
+    /**
+     * Returns the cookie to which the specified cookie-name is mapped,
+     * or {@code null} if this cookie-map contains no mapping for the
+     * cookie-name.
+     *
+     * @param key the cookie-name whose associated value is to be
+     *            returned
+     *
+     * @return the value to which the specified key is mapped, or
+     *         {@code null} if this cookie-map contains no mapping for
+     *         the cookie-name
+     *
+     * @see #put(Object, Object)
+     */
+    @Override
+    public Cookie get(Object key) {
+<span class="fc" id="L127">        final Collection&lt;Cookie&gt; cookies = values();</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (!cookies.isEmpty()) {</span>
+<span class="fc" id="L129">            final String skey = key(key);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">            for (Cookie cookie : cookies) {</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">                if (cookie.getName().equals(skey)) {</span>
+<span class="fc" id="L132">                    return cookie;</span>
+                }
+<span class="fc" id="L134">            }</span>
+        }
+<span class="nc" id="L136">        return null;</span>
+    }
+
+    /**
+     * Returns {@code true} if this cookie-map contains no cookies.
+     *
+     * @return {@code true} if this cookie-map contains no cookies
+     */
+    @Override
+    public boolean isEmpty() {
+<span class="nc" id="L146">        final Cookie[] cookies = cookiesSupplier.get();</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">        return cookies == null || cookies.length == 0;</span>
+    }
+
+    /**
+     * Returns a {@link Set} view of the cookies contained in this
+     * cookie-map. The set is not backed by the cookie-map, so
+     * changes to the cookie-map are not reflected in the set, and
+     * vice-versa.
+     *
+     * @return a set view of the cookies contained in this cookie-map
+     */
+    @Override
+    public Set&lt;String&gt; keySet() {
+<span class="fc" id="L160">        final Collection&lt;Cookie&gt; cookies = values();</span>
+<span class="fc" id="L161">        final Set&lt;String&gt; set = new HashSet&lt;String&gt;(Math.max((int) (cookies.size() / .75f) + 1, 16));</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (Cookie cookie : cookies) {</span>
+<span class="fc" id="L163">            set.add(cookie.getName());</span>
+<span class="fc" id="L164">        }</span>
+<span class="fc" id="L165">        return set;</span>
+    }
+
+    /**
+     * Returns the number of cookies in this cookie-map.
+     *
+     * @return the number of cookies in this cookie-map
+     */
+    @Override
+    public int size() {
+<span class="fc" id="L175">        final Cookie[] cookies = cookiesSupplier.get();</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">        return cookies == null ? 0 : cookies.length;</span>
+    }
+
+    /**
+     * Returns a {@link Collection} view of the cookies contained in
+     * this cookie-map. The collection is not backed by the
+     * cookie-map, so changes to the cookie-map are not
+     * reflected in the collection, and vice-versa.
+     *
+     * @return a view of the cookies contained in this cookie-map
+     */
+    @Override
+    public Collection&lt;Cookie&gt; values() {
+<span class="fc" id="L189">        final Cookie[] cookies = cookiesSupplier.get();</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">        return cookies == null ? Collections.emptyList() : Arrays.asList(cookies);</span>
+    }
+
+    /**
+     * Returns the hash code value for this cookie-map. The
+     * hash code of a cookie-map is defined to be the sum of
+     * the hash codes of each entry in the cookie-map's
+     * {@code entrySet()} view. This ensures that {@code m1.equals(m2)}
+     * implies that {@code m1.hashCode()==m2.hashCode()} for any two
+     * parameter-maps {@code m1} and {@code m2}, as required by the
+     * general contract of {@link Object#hashCode}.
+     *
+     * @implSpec
+     * This implementation calls the {@code hashCode()} from the
+     * parameter-map.
+     *
+     * @return the hash code value for this cookie-map
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L210">        return super.hashCode();</span>
+    }
+
+    /**
+     * Compares the specified object with this cookie-map for equality.
+     * Returns {@code true} if the given object is also a cookie-map
+     * and the two cookie-maps represent the same mappings. More formally,
+     * two cookie-maps {@code m1} and {@code m2} represent the same
+     * mappings if {@code m1.entrySet().equals(m2.entrySet())}.
+     *
+     * @param obj object to be compared for equality with this
+     *        cookie-map
+     *
+     * @return {@code true} if the specified object is equal to this
+     *         cookie-map
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc" id="L228">        return super.equals(obj);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

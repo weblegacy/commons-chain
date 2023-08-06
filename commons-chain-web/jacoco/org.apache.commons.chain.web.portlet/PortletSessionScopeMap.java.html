@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortletSessionScopeMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Web</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.portlet</a> &gt; <span class="el_source">PortletSessionScopeMap.java</span></div><h1>PortletSessionScopeMap.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web.portlet;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+
+import org.apache.commons.chain.web.internal.AbstractSessionScopeMap;
+import org.apache.commons.chain.web.internal.MutableParameterMap;
+
+/**
+ * Private implementation of {@code Map} for portlet session attributes.
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+final class PortletSessionScopeMap extends AbstractSessionScopeMap&lt;PortletSession, PortletRequest&gt; {
+
+    /**
+     * The constructor for the portlet session attributes.
+     *
+     * @param request the portlet-request.
+     */
+    PortletSessionScopeMap(PortletRequest request) {
+<span class="fc" id="L39">        super(request);</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * Returns the current portlet session or, if there is no current session and
+     * the given flag is {@code true}, creates one and returns the new session.
+     *
+     * &lt;p&gt;If the given flag is {@code false} and there is no current portlet
+     * session, this method returns {@code null}.&lt;/p&gt;
+     *
+     * &lt;p&gt;Creating a new portlet session will result in creating a new
+     * {@code HttpSession} on which the portlet session is based.&lt;/p&gt;
+     *
+     * @param create {@code true} to create a new session, {@code false} to return
+     *               {@code null} if there is no current session
+     *
+     * @return the portlet session
+     */
+    @Override
+    protected PortletSession getSession(final boolean create) {
+<span class="fc" id="L59">        return getRequest().getPortletSession(create);</span>
+    }
+
+    /**
+     * Creates a new mutable-parameter-map to access the session-attributes.
+     *
+     * @return a new mutable-parameter-map to access the session-attributes
+     */
+    @Override
+    protected MutableParameterMap&lt;PortletSession, Object&gt; createParameterMap() {
+<span class="fc" id="L69">        return new MutableParameterMap&lt;&gt;(getSession(), getSession()::getAttribute,</span>
+<span class="fc" id="L70">                () -&gt; getSession().getAttributeNames(PortletSession.PORTLET_SCOPE),</span>
+<span class="fc" id="L71">                getSession()::removeAttribute, getSession()::setAttribute);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

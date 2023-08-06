@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LookupCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.generic</a> &gt; <span class="el_source">LookupCommand.java</span></div><h1>LookupCommand.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.generic;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.CatalogFactory;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.Filter;
+
+/**
+ * Look up a specified {@link Command} (which could also be a
+ * {@link org.apache.commons.chain.Chain})
+ * in a {@link Catalog}, and delegate execution to it. If the delegated-to
+ * {@link Command} is also a {@link Filter}, its {@code postprocess()}
+ * method will also be invoked at the appropriate time.
+ *
+ * &lt;p&gt;The name of the {@link Command} can be specified either directly (via
+ * the {@code name} property) or indirectly (via the {@code nameKey}
+ * property). Exactly one of these must be set.&lt;/p&gt;
+ *
+ * &lt;p&gt;If the {@code optional} property is set to {@code true},
+ * failure to find the specified command in the specified catalog will be
+ * silently ignored. Otherwise, a lookup failure will trigger an
+ * {@code IllegalArgumentException}.&lt;/p&gt;
+ *
+ * @param &lt;C&gt; Type of the context associated with this command
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+public class LookupCommand&lt;C extends Context&gt; implements Filter&lt;C&gt; {
+
+    // -------------------------------------------------------------- Constructors
+
+    /**
+     * Create an instance, setting its {@code catalogFactory} property to the
+     * value of {@code CatalogFactory.getInstance()}.
+     *
+     * @since Chain 1.1
+     */
+    public LookupCommand() {
+<span class="fc" id="L57">        this(CatalogFactory.getInstance());</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Create an instance and initialize the {@code catalogFactory} property
+     * to given {@code factory}.
+     *
+     * @param factory The Catalog Factory.
+     *
+     * @since Chain 1.1
+     */
+<span class="fc" id="L68">    public LookupCommand(CatalogFactory&lt;C&gt; factory) {</span>
+<span class="fc" id="L69">        this.catalogFactory = factory;</span>
+<span class="fc" id="L70">    }</span>
+
+    // -------------------------------------------------------------- Properties
+
+<span class="fc" id="L74">    private CatalogFactory&lt;C&gt; catalogFactory = null;</span>
+
+    /**
+     * Set the {@link CatalogFactory} from which lookups will be
+     * performed.
+     *
+     * @param catalogFactory The Catalog Factory.
+     *
+     * @since Chain 1.1
+     */
+    public void setCatalogFactory(CatalogFactory&lt;C&gt; catalogFactory) {
+<span class="nc" id="L85">        this.catalogFactory = catalogFactory;</span>
+<span class="nc" id="L86">    }</span>
+
+    /**
+     * Return the {@link CatalogFactory} from which lookups will be performed.
+     *
+     * @return The Catalog factory.
+     *
+     * @since Chain 1.1
+     */
+    public CatalogFactory&lt;C&gt; getCatalogFactory() {
+<span class="nc" id="L96">        return this.catalogFactory;</span>
+    }
+
+<span class="fc" id="L99">    private String catalogName = null;</span>
+
+    /**
+     * Return the name of the {@link Catalog} to be searched, or
+     * {@code null} to search the default {@link Catalog}.
+     *
+     * @return The Catalog name.
+     */
+    public String getCatalogName() {
+<span class="fc" id="L108">        return this.catalogName;</span>
+    }
+
+    /**
+     * Set the name of the {@link Catalog} to be searched, or
+     * {@code null} to search the default {@link Catalog}.
+     *
+     * @param catalogName The new {@link Catalog} name or {@code null}
+     */
+    public void setCatalogName(String catalogName) {
+<span class="nc" id="L118">        this.catalogName = catalogName;</span>
+<span class="nc" id="L119">    }</span>
+
+<span class="fc" id="L121">    private String name = null;</span>
+
+    /**
+     * Return the name of the {@link Command} that we will look up and
+     * delegate execution to.
+     *
+     * @return The name of the Command.
+     */
+    public String getName() {
+<span class="fc" id="L130">        return this.name;</span>
+    }
+
+    /**
+     * Set the name of the {@link Command} that we will look up and
+     * delegate execution to.
+     *
+     * @param name The new command name
+     */
+    public void setName(String name) {
+<span class="fc" id="L140">        this.name = name;</span>
+<span class="fc" id="L141">    }</span>
+
+<span class="fc" id="L143">    private String nameKey = null;</span>
+
+    /**
+     * Return the context attribute key under which the {@link Command}
+     * name is stored.
+     *
+     * @return The context key of the Command.
+     */
+    public String getNameKey() {
+<span class="fc" id="L152">        return this.nameKey;</span>
+    }
+
+    /**
+     * Set the context attribute key under which the {@link Command}
+     * name is stored.
+     *
+     * @param nameKey The new context attribute key
+     */
+    public void setNameKey(String nameKey) {
+<span class="fc" id="L162">        this.nameKey = nameKey;</span>
+<span class="fc" id="L163">    }</span>
+
+<span class="fc" id="L165">    private boolean optional = false;</span>
+
+    /**
+     * Return {@code true} if locating the specified command
+     * is optional.
+     *
+     * @return {@code true} if the Command is optional.
+     */
+    public boolean isOptional() {
+<span class="fc" id="L174">        return this.optional;</span>
+    }
+
+    /**
+     * Set the optional flag for finding the specified command.
+     *
+     * @param optional The new optional flag
+     */
+    public void setOptional(boolean optional) {
+<span class="nc" id="L183">        this.optional = optional;</span>
+<span class="nc" id="L184">    }</span>
+
+<span class="fc" id="L186">    private boolean ignoreExecuteResult = false;</span>
+
+    /**
+     * Return {@code true} if this command should ignore
+     * the return value from executing the looked-up command.
+     * Defaults to {@code false}, which means that the return result
+     * of executing this lookup will be whatever is returned from that
+     * command.
+     *
+     * @return {@code true} if result of the looked up Command
+     *         should be ignored.
+     *
+     * @since Chain 1.1
+     */
+    public boolean isIgnoreExecuteResult() {
+<span class="fc" id="L201">        return ignoreExecuteResult;</span>
+    }
+
+    /**
+     * Set the rules for whether or not this class will ignore or
+     * pass through the value returned from executing the looked up
+     * command.
+     *
+     * &lt;p&gt;If you are looking up a chain which may be &quot;aborted&quot; and
+     * you do not want this class to stop chain processing, then this
+     * value should be set to {@code true}.&lt;/p&gt;
+     *
+     * @param ignoreReturn {@code true} if result of the
+     *        looked up Command should be ignored.
+     *
+     * @since Chain 1.1
+     */
+    public void setIgnoreExecuteResult(boolean ignoreReturn) {
+<span class="fc" id="L219">        this.ignoreExecuteResult = ignoreReturn;</span>
+<span class="fc" id="L220">    }</span>
+
+<span class="fc" id="L222">    private boolean ignorePostprocessResult = false;</span>
+
+    /**
+     * Return {@code true} if this command is a Filter and
+     * should ignore the return value from executing the looked-up Filter's
+     * {@code postprocess()} method.
+     *
+     * &lt;p&gt;Defaults to {@code false}, which means that the return result
+     * of executing this lookup will be whatever is returned from that
+     * Filter.&lt;/p&gt;
+     *
+     * @return {@code true} if result of the looked up Filter's
+     *         {@code postprocess()} method should be ignored.
+     *
+     * @since Chain 1.1
+     */
+    public boolean isIgnorePostprocessResult() {
+<span class="nc" id="L239">        return ignorePostprocessResult;</span>
+    }
+
+    /**
+     * Set the rules for whether or not this class will ignore or
+     * pass through the value returned from executing the looked up
+     * Filter's {@code postprocess()} method.
+     *
+     * &lt;p&gt;If you are looking up a Filter which may be &quot;aborted&quot; and
+     * you do not want this class to stop chain processing, then this
+     * value should be set to {@code true}.&lt;/p&gt;
+     *
+     * @param ignorePostprocessResult {@code true} if result of the
+     *         looked up Filter's {@code postprocess()} method should
+     *         be ignored.
+     *
+     * @since Chain 1.1
+     */
+    public void setIgnorePostprocessResult(boolean ignorePostprocessResult) {
+<span class="nc" id="L258">        this.ignorePostprocessResult = ignorePostprocessResult;</span>
+<span class="nc" id="L259">    }</span>
+
+    // ---------------------------------------------------------- Filter Methods
+
+    /**
+     * Look up the specified command, and (if found) execute it.
+     * Unless {@code ignoreExecuteResult} is set to {@code true},
+     * return the result of executing the found command. If no command
+     * is found, return {@code false}, unless the {@code optional}
+     * property is {@code false}, in which case an
+     * {@code IllegalArgumentException} will be thrown.
+     *
+     * @param context The context for this request
+     *
+     * @return the result of executing the looked-up command, or
+     *         {@code false} if no command is found or if the command
+     *         is found but the {@code ignoreExecuteResult} property of
+     *         this instance is {@code true}
+     *
+     * @throws IllegalArgumentException if no such {@link Command}
+     *         can be found and the {@code optional} property is set
+     *         to {@code false}
+     * @throws Exception if and error occurs in the looked-up Command.
+     */
+    @Override
+    public boolean execute(C context) throws Exception {
+<span class="fc" id="L285">        Command&lt;C&gt; command = getCommand(context);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        if (command != null) {</span>
+<span class="fc" id="L287">            boolean result = command.execute(context);</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">            if (isIgnoreExecuteResult()) {</span>
+<span class="fc" id="L289">                return false;</span>
+            }
+<span class="fc" id="L291">            return result;</span>
+        } else {
+<span class="nc" id="L293">            return false;</span>
+        }
+    }
+
+    /**
+     * If the executed command was itself a {@link Filter}, call the
+     * {@code postprocess()} method of that {@link Filter} as well.
+     *
+     * @param context The context for this request
+     * @param exception Any {@code Exception} thrown by command execution
+     *
+     * @return the result of executing the {@code postprocess} method
+     *         of the looked-up command, unless
+     *         {@code ignorePostprocessResult} is {@code true}. If no
+     *         command is found, return {@code false}, unless the
+     *         {@code optional} property is {@code false}, in which case
+     *         {@code IllegalArgumentException} will be thrown.
+     */
+    @Override
+    public boolean postprocess(C context, Exception exception) {
+<span class="nc" id="L313">        Command&lt;C&gt; command = getCommand(context);</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">        if (command instanceof Filter) {</span>
+<span class="nc" id="L315">            boolean result = ((Filter&lt;C&gt;) command).postprocess(context, exception);</span>
+<span class="nc bnc" id="L316" title="All 4 branches missed.">            return !isIgnorePostprocessResult() &amp;&amp; result;</span>
+        }
+<span class="nc" id="L318">        return false;</span>
+    }
+
+    // --------------------------------------------------------- Private Methods
+
+    /**
+     * Return the {@link Catalog} to look up the {@link Command} in.
+     *
+     * @param context {@link Context} for this request
+     *
+     * @return The catalog.
+     *
+     * @throws IllegalArgumentException if no {@link Catalog}
+     *         can be found
+     *
+     * @since Chain 1.2
+     */
+    protected Catalog&lt;C&gt; getCatalog(C context) {
+<span class="fc" id="L336">        CatalogFactory&lt;C&gt; lookupFactory = this.catalogFactory;</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">        if (lookupFactory == null) {</span>
+<span class="nc" id="L338">            lookupFactory = CatalogFactory.getInstance();</span>
+        }
+
+<span class="fc" id="L341">        String catalogName = getCatalogName();</span>
+<span class="fc" id="L342">        Catalog&lt;C&gt; catalog = null;</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">        if (catalogName == null) {</span>
+            // use default catalog
+<span class="fc" id="L345">            catalog = lookupFactory.getCatalog();</span>
+        } else {
+<span class="nc" id="L347">            catalog = lookupFactory.getCatalog(catalogName);</span>
+        }
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">        if (catalog == null) {</span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">            if (catalogName == null) {</span>
+<span class="nc" id="L351">                throw new IllegalArgumentException(&quot;Cannot find default catalog&quot;);</span>
+            } else {
+<span class="nc" id="L353">                throw new IllegalArgumentException(&quot;Cannot find catalog '&quot; + catalogName + &quot;'&quot;);</span>
+            }
+        }
+
+<span class="fc" id="L357">        return catalog;</span>
+    }
+
+    /**
+     * Return the {@link Command} instance to be delegated to.
+     *
+     * @param context {@link Context} for this request
+     *
+     * @return The looked-up Command.
+     *
+     * @throws IllegalArgumentException if no such {@link Command}
+     *         can be found and the {@code optional} property is
+     *         set to {@code false}
+     */
+    protected Command&lt;C&gt; getCommand(C context) {
+<span class="fc" id="L372">        Catalog&lt;C&gt; catalog = getCatalog(context);</span>
+
+<span class="fc" id="L374">        Command&lt;C&gt; command = null;</span>
+<span class="fc" id="L375">        String name = getCommandName(context);</span>
+<span class="pc bpc" id="L376" title="1 of 2 branches missed.">        if (name != null) {</span>
+<span class="fc" id="L377">            command = catalog.getCommand(name);</span>
+<span class="pc bpc" id="L378" title="1 of 4 branches missed.">            if (command == null &amp;&amp; !isOptional()) {</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">                if (catalogName == null) {</span>
+<span class="fc" id="L380">                    throw new IllegalArgumentException(&quot;Cannot find command '&quot; + name</span>
+                         + &quot;' in default catalog&quot;);
+                } else {
+<span class="nc" id="L383">                    throw new IllegalArgumentException(&quot;Cannot find command '&quot; + name</span>
+                         + &quot;' in catalog '&quot; + catalogName + &quot;'&quot;);
+                }
+            }
+<span class="fc" id="L387">            return command;</span>
+        } else {
+<span class="nc" id="L389">            throw new IllegalArgumentException(&quot;No command name&quot;);</span>
+        }
+    }
+
+    /**
+     * Return the name of the {@link Command} instance to be
+     * delegated to.
+     *
+     * @param context {@link Context} for this request
+     *
+     * @return The name of the {@link Command} instance
+     *
+     * @since Chain 1.2
+     */
+    protected String getCommandName(C context) {
+<span class="fc" id="L404">        String name = getName();</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        if (name == null) {</span>
+<span class="fc" id="L406">            name = context.get(getNameKey()).toString();</span>
+        }
+<span class="fc" id="L408">        return name;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

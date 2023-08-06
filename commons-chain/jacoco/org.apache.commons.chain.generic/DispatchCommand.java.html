@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DispatchCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.generic</a> &gt; <span class="el_source">DispatchCommand.java</span></div><h1>DispatchCommand.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.generic;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.WeakHashMap;
+
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+
+/**
+ * An abstract base command which uses introspection to look up a
+ * method to execute. For use by developers who prefer to group
+ * related functionality into a single class rather than an
+ * inheritance family.
+ *
+ * @param &lt;C&gt; Type of the context associated with this command
+ *
+ * @since Chain 1.1
+ */
+<span class="fc" id="L37">public abstract class DispatchCommand&lt;C extends Context&gt; implements Command&lt;C&gt; {</span>
+
+    /** The cache of methods. */
+<span class="fc" id="L40">    private Map&lt;String, Method&gt; methods = new WeakHashMap&lt;&gt;();</span>
+
+    /** The method name. */
+<span class="fc" id="L43">    private String method = null;</span>
+
+    /** The method key. */
+<span class="fc" id="L46">    private String methodKey = null;</span>
+
+    /**
+     * The base implementation expects dispatch methods to take a
+     * {@code Context} as their only argument.
+     */
+<span class="fc" id="L52">    protected static final Class&lt;?&gt;[] DEFAULT_SIGNATURE = new Class&lt;?&gt;[] {Context.class};</span>
+
+    /**
+     * Look up the method specified by either &quot;method&quot; or &quot;methodKey&quot;
+     * and invoke it, returning a boolean value as interpreted by
+     * {@code evaluateResult}.
+     *
+     * @param context The Context to be processed by this Command.
+     *
+     * @return the result of method being dispatched to.
+     *
+     * @throws IllegalStateException if neither 'method' nor 'methodKey'
+     *         properties are defined
+     * @throws Exception if any is thrown by the invocation. Note that if
+     *         invoking the method results in an InvocationTargetException,
+     *         the cause of that exception is thrown instead of the
+     *         exception itself, unless the cause is an {@code Error} or
+     *         other {@code Throwable} which is not an {@code Exception}.
+     */
+    @Override
+    public boolean execute(C context) throws Exception {
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">        if (this.getMethod() == null &amp;&amp; this.getMethodKey() == null) {</span>
+<span class="nc" id="L74">            throw new IllegalStateException(&quot;Neither 'method' nor 'methodKey' properties are defined &quot;);</span>
+        }
+
+<span class="fc" id="L77">        Method methodObject = extractMethod(context);</span>
+
+        try {
+<span class="fc" id="L80">            return evaluateResult(methodObject.invoke(this, getArguments(context)));</span>
+<span class="nc" id="L81">        } catch (InvocationTargetException e) {</span>
+<span class="nc" id="L82">            Throwable cause = e.getTargetException();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (cause instanceof Exception) {</span>
+<span class="nc" id="L84">                throw (Exception) cause;</span>
+            }
+<span class="nc" id="L86">            throw e;</span>
+        }
+    }
+
+    /**
+     * Extract the dispatch method. The base implementation uses the command's
+     * {@code method} property as the name of a method to look up, or, if that
+     * is not defined, looks up the the method name in the Context using the
+     * {@code methodKey}.
+     *
+     * @param context The Context being processed by this Command.
+     *
+     * @return The method to execute
+     *
+     * @throws NoSuchMethodException if no method can be found under the
+     *         specified name.
+     * @throws NullPointerException if no methodName cannot be determined
+     */
+    protected Method extractMethod(C context) throws NoSuchMethodException {
+<span class="fc" id="L105">        String methodName = this.getMethod();</span>
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (methodName == null) {</span>
+<span class="fc" id="L108">            Object methodContextObj = context.get(this.getMethodKey());</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            if (methodContextObj == null) {</span>
+<span class="nc" id="L110">                throw new NullPointerException(&quot;No value found in context under &quot; + this.getMethodKey());</span>
+            }
+<span class="fc" id="L112">            methodName = methodContextObj.toString();</span>
+        }
+
+<span class="fc" id="L115">        Method theMethod = null;</span>
+
+<span class="fc" id="L117">        synchronized (methods) {</span>
+<span class="fc" id="L118">            theMethod = methods.get(methodName);</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">            if (theMethod == null) {</span>
+<span class="fc" id="L121">                theMethod = getClass().getMethod(methodName, getSignature());</span>
+<span class="fc" id="L122">                methods.put(methodName, theMethod);</span>
+            }
+<span class="fc" id="L124">        }</span>
+
+<span class="fc" id="L126">        return theMethod;</span>
+    }
+
+    /**
+     * Evaluate the result of the method invocation as a boolean value. Base
+     * implementation expects that the invoked method returns boolean
+     * true/false, but subclasses might implement other interpretations.
+     *
+     * @param o The result of the method execution
+     *
+     * @return The evaluated result/
+     */
+    protected boolean evaluateResult(Object o) {
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        return o instanceof Boolean &amp;&amp; ((Boolean) o).booleanValue();</span>
+    }
+
+    /**
+     * Return a {@code Class[]} describing the expected signature of the method.
+     *
+     * @return The method signature.
+     */
+    protected Class&lt;?&gt;[] getSignature() {
+<span class="fc" id="L148">        return DEFAULT_SIGNATURE;</span>
+    }
+
+    /**
+     * Get the arguments to be passed into the dispatch method.
+     * Default implementation simply returns the context which was passed in,
+     * but subclasses could use this to wrap the context in some other type, or
+     * extract key values from the context to pass in. The length and types of
+     * values returned by this must coordinate with the return value of
+     * {@code getSignature()}.
+     *
+     * @param context The Context being processed by this Command.
+     *
+     * @return The method arguments.
+     */
+    protected Object[] getArguments(C context) {
+<span class="fc" id="L164">        return new Object[] {context};</span>
+    }
+
+    /**
+     * Return the method name.
+     *
+     * @return The method name.
+     */
+    public String getMethod() {
+<span class="fc" id="L173">        return method;</span>
+    }
+
+    /**
+     * Return the Context key for the method name.
+     *
+     * @return The Context key for the method name.
+     */
+    public String getMethodKey() {
+<span class="fc" id="L182">        return methodKey;</span>
+    }
+
+    /**
+     * Set the method name.
+     *
+     * @param method The method name.
+     */
+    public void setMethod(String method) {
+<span class="fc" id="L191">        this.method = method;</span>
+<span class="fc" id="L192">    }</span>
+
+    /**
+     * Set the Context key for the method name.
+     *
+     * @param methodKey The Context key for the method name.
+     */
+    public void setMethodKey(String methodKey) {
+<span class="fc" id="L200">        this.methodKey = methodKey;</span>
+<span class="fc" id="L201">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

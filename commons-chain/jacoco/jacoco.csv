@@ -1,0 +1,22 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Commons Chain :: Core,org.apache.commons.chain.config,ConfigDefineRule,0,59,0,0,0,10,0,2,0,2
+Commons Chain :: Core,org.apache.commons.chain.config,ConfigCatalogRule,0,61,1,5,0,18,1,4,0,2
+Commons Chain :: Core,org.apache.commons.chain.config,ConfigParser,26,70,2,4,10,20,5,6,3,5
+Commons Chain :: Core,org.apache.commons.chain.config,ConfigRegisterRule,2,52,4,6,2,17,4,3,0,2
+Commons Chain :: Core,org.apache.commons.chain.config,ConfigRuleSet,35,179,0,0,17,31,9,9,9,9
+Commons Chain :: Core,org.apache.commons.chain.generic,RemoveCommand,20,0,0,0,7,0,4,0,4,0
+Commons Chain :: Core,org.apache.commons.chain.generic,DispatchCommand,30,123,6,10,7,30,5,14,0,11
+Commons Chain :: Core,org.apache.commons.chain.generic,LookupCommand,99,148,15,13,23,50,18,17,7,14
+Commons Chain :: Core,org.apache.commons.chain.generic,DispatchLookupCommand,36,127,6,10,5,34,7,12,1,10
+Commons Chain :: Core,org.apache.commons.chain.generic,CopyCommand,59,0,4,0,20,0,10,0,8,0
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase.MapEntryImpl,72,26,12,0,14,7,10,4,4,4
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase.ValuesImpl,47,0,4,0,13,0,9,0,7,0
+Commons Chain :: Core,org.apache.commons.chain.impl,CatalogBase,50,28,4,0,15,8,4,4,2,4
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase.ValuesIterator,38,0,0,0,8,0,4,0,4,0
+Commons Chain :: Core,org.apache.commons.chain.impl,ChainBase,101,105,13,15,26,35,13,9,4,4
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase,109,342,14,50,24,81,15,38,4,17
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase.EntrySetImpl,45,10,6,0,14,2,8,2,5,2
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase.EntrySetIterator,7,30,0,0,2,6,1,3,1,3
+Commons Chain :: Core,org.apache.commons.chain.impl,ContextBase.new Serializable() {...},5,3,0,0,2,1,2,1,2,1
+Commons Chain :: Core,org.apache.commons.chain.impl,CatalogFactoryBase,0,36,0,0,0,11,0,6,0,6
+Commons Chain :: Core,org.apache.commons.chain,CatalogFactory,11,113,3,11,4,29,3,11,0,7

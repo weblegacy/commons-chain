@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChainServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Web</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web</a> &gt; <span class="el_source">ChainServlet.java</span></div><h1>ChainServlet.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web;
+
+import java.io.IOException;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.CatalogFactory;
+import org.apache.commons.chain.config.ConfigParser;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+ * {@code Servlet} that automatically scans chain configuration files
+ * in the current web application at startup time, and exposes the result in a
+ * {@link Catalog} under a specified servlet context attribute. The following
+ * &lt;em&gt;servlet&lt;/em&gt; init parameters are utilized:
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_CLASS_RESOURCE&lt;/strong&gt; -
+ *     comma-delimited list of chain configuration resources to be loaded
+ *     via {@code ClassLoader.getResource()} calls. If not specified,
+ *     no class loader resources will be loaded.&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_WEB_RESOURCE&lt;/strong&gt; -
+ *     comma-delimited list of chain configuration webapp resources
+ *     to be loaded. If not specified, no web application resources
+ *     will be loaded.&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.CONFIG_ATTR&lt;/strong&gt; -
+ *     Name of the servlet context attribute under which the
+ *     resulting {@link Catalog} will be created or updated.
+ *     If not specified, it is expected that parsed resources will
+ *     contain {@code &amp;lt;catalog&amp;gt;} elements (which will
+ *     cause registration of the created {@link Catalog}s into
+ *     the {@link CatalogFactory} for this application, and no
+ *     servet context attribute will be created.
+ *     &lt;strong&gt;NOTE&lt;/strong&gt; - This parameter is deprecated.&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;org.apache.commons.chain.RULE_SET&lt;/strong&gt; -
+ *     Fully qualified class name of a Digester {@code RuleSet}
+ *     implementation to use for parsing configuration resources (this
+ *     class must have a public zero-args constructor). If not defined,
+ *     the standard {@code RuleSet} implementation will be used.&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;When a web application that has configured this servlet is
+ * started, it will acquire the {@link Catalog} under the specified servlet
+ * context attribute key, creating a new one if there is none already there.
+ * This {@link Catalog} will then be populated by scanning configuration
+ * resources from the following sources (loaded in this order):&lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;Resources loaded from specified resource paths from the
+ *     webapp's class loader (via {@code ClassLoader.getResource()}).&lt;/li&gt;
+ * &lt;li&gt;Resources loaded from specified resource paths in the web application
+ *     archive (via {@code ServetContext.getResource()}).&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;If no attribute key is specified, on the other hand, parsed configuration
+ * resources are expected to contain {@code &amp;lt;catalog&amp;gt;} elements,
+ * and the catalogs will be registered with the {@link CatalogFactory}
+ * for this web application.&lt;/p&gt;
+ *
+ * &lt;p&gt;This class runs on Servlet 2.2 or later. If you are running on a
+ * Servlet 2.3 or later system, you should also consider using
+ * {@link ChainListener} to initialize your {@link Catalog}. Note that
+ * {@link ChainListener} uses parameters of the same names, but they are
+ * &lt;em&gt;context&lt;/em&gt; init parameters instead of &lt;em&gt;servlet&lt;/em&gt; init
+ * parameters. Because of this, you can use both facilities in the
+ * same application, if desired.&lt;/p&gt;
+ *
+ * @author Matthew J. Sgarlata
+ * @author Craig R. McClanahan
+ * @author Ted Husted
+ */
+<span class="fc" id="L93">public class ChainServlet extends HttpServlet {</span>
+    private static final long serialVersionUID = 4833344945293509188L;
+
+    // ------------------------------------------------------ Manifest Constants
+
+    /**
+     * The name of the context init parameter containing the name of the
+     * servlet context attribute under which our resulting {@link Catalog}
+     * will be stored.
+     */
+    public static final String CONFIG_ATTR = ChainInit.CONFIG_ATTR;
+
+    /**
+     * The name of the context init parameter containing a comma-delimited
+     * list of class loader resources to be scanned.
+     */
+    public static final String CONFIG_CLASS_RESOURCE =
+        ChainInit.CONFIG_CLASS_RESOURCE;
+
+    /**
+     * The name of the context init parameter containing a comma-delimited
+     * list of web application resources to be scanned.
+     */
+    public static final String CONFIG_WEB_RESOURCE =
+        ChainInit.CONFIG_WEB_RESOURCE;
+
+    /**
+     * The name of the context init parameter containing the fully
+     * qualified class name of the {@code RuleSet} implementation
+     * for configuring our {@link ConfigParser}.
+     */
+    public static final String RULE_SET = ChainInit.RULE_SET;
+
+    // --------------------------------------------------------- Servlet Methods
+
+    /**
+     * Clean up after ourselves as this application shuts down.
+     */
+    @Override
+    public void destroy() {
+<span class="nc" id="L133">        final ServletConfig config = getServletConfig();</span>
+<span class="nc" id="L134">        final ServletContext context = getServletContext();</span>
+<span class="nc" id="L135">        ChainInit.destroy(context, config.getInitParameter(CONFIG_ATTR));</span>
+<span class="nc" id="L136">    }</span>
+
+    /**
+     * Create (if necessary) and configure a {@link Catalog} from the
+     * servlet init parameters that have been specified.
+     *
+     * @throws ServletException if the servlet could not be initialized
+     */
+    @Override
+    public void init() throws ServletException {
+<span class="fc" id="L146">        final Log log = LogFactory.getLog(ChainServlet.class);</span>
+<span class="fc" id="L147">        final ServletConfig config = getServletConfig();</span>
+<span class="fc" id="L148">        final ServletContext context = getServletContext();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (log.isInfoEnabled()) {</span>
+<span class="fc" id="L150">            log.info(&quot;Initializing chain servlet '&quot;</span>
+<span class="fc" id="L151">                     + config.getServletName() + &quot;'&quot;);</span>
+        }
+
+<span class="fc" id="L154">        ChainInit.initialize(context, config.getInitParameter(CONFIG_ATTR), log, false);</span>
+<span class="fc" id="L155">    }</span>
+
+    /**
+     * Does nothing; this servlet's only purpose is to initialize a Chain
+     * and store it in the servlet context.
+     *
+     * @param request the request issued by the client
+     * @param response the response to be returned to the cliengt
+     *
+     * @throws ServletException this exception is never thrown
+     * @throws IOException this exception is never thrown
+     */
+    @Override
+    public void service(HttpServletRequest request,
+                        HttpServletResponse response)
+        throws ServletException, IOException {
+
+          // do nothing
+<span class="nc" id="L173">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
