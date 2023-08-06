@@ -155,12 +155,12 @@
     <scm>
         <connection>scm:git:https://github.com/weblegacy/commons-chain.git</connection>
         <developerConnection>scm:git:git@github.com:weblegacy/commons-chain.git</developerConnection>
-        <url>https://github.com/weblegacy/commons-chain</url>
+        <url>https://github.com/weblegacy/commons-chain/tree/CHAIN_1_X</url>
     </scm>
 
     <modules>
-        <module>core</module>
-        <module>web</module>
+        <module>commons-chain</module>
+        <module>commons-chain-web</module>
     </modules>
 
     <licenses>

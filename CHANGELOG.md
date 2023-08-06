@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Rename sub-modules to maven-standard
 * Some doc-updates
 * Remove unused dependency `commons-beanutils`
 * Delete unused `Utilities`-class
