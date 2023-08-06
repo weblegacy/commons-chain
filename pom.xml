@@ -22,9 +22,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-chain</groupId>
-    <artifactId>commons-chain</artifactId>
+    <artifactId>commons-chain-parent</artifactId>
     <version>1.3-SNAPSHOT</version>
-    <name>Commons Chain</name>
+    <name>Commons Chain :: Parent</name>
+    <packaging>pom</packaging>
     <organization>
         <name>The Apache Software Foundation</name>
         <url>https://www.apache.org</url>
@@ -156,6 +157,10 @@
         <developerConnection>scm:git:git@github.com:weblegacy/commons-chain.git</developerConnection>
         <url>https://github.com/weblegacy/commons-chain</url>
     </scm>
+
+    <modules>
+        <module>core</module>
+    </modules>
 
     <licenses>
         <license>
@@ -453,7 +458,9 @@
                     <archive>
                         <forced>true</forced>
                     </archive>
-                    <excludeDependencies>${commons.osgi.excludeDependencies}</excludeDependencies>
+                    <noWarningProjectTypes>
+                        <noWarningProjectType>pom</noWarningProjectType>
+                    </noWarningProjectTypes>                    <excludeDependencies>${commons.osgi.excludeDependencies}</excludeDependencies>
                     <manifestLocation>${project.build.directory}/osgi</manifestLocation>
                     <instructions>
                         <_nouses>true</_nouses>
@@ -479,56 +486,53 @@
         </plugins>
     </build>
 
+    <dependencyManagement>
+        <dependencies>
 
-    <dependencies>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.4</version>
+            </dependency>
 
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.4</version>
-        </dependency>
+            <dependency>
+                <groupId>commons-digester</groupId>
+                <artifactId>commons-digester</artifactId>
+                <version>2.1</version>
+            </dependency>
 
-        <dependency>
-            <groupId>commons-digester</groupId>
-            <artifactId>commons-digester</artifactId>
-            <version>2.1</version>
-        </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.2</version>
+            </dependency>
 
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javaxServletVersion}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javaxServletVersion}</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>javax.portlet</groupId>
+                <artifactId>portlet-api</artifactId>
+                <version>${javaxPortletVersion}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>javax.portlet</groupId>
-            <artifactId>portlet-api</artifactId>
-            <version>${javaxPortletVersion}</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>javax.faces</groupId>
+                <artifactId>javax.faces-api</artifactId>
+                <version>${javaxFacesVersion}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>javax.faces-api</artifactId>
-            <version>${javaxFacesVersion}</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.10.0</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
+        </dependencies>
+    </dependencyManagement>
 
     <reporting>
         <plugins>
@@ -578,9 +582,9 @@
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
-                    <configLocation>${basedir}/checkstyle.xml</configLocation>
+                    <configLocation>checkstyle.xml</configLocation>
                     <enableRulesSummary>false</enableRulesSummary>
-                    <headerLocation>${basedir}/license-header.txt</headerLocation>
+                    <headerLocation>license-header.txt</headerLocation>
                 </configuration>
             </plugin>
 

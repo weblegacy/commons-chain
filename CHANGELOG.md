@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Move `src` to new submodule `core`
 * Update checkstyle from 10.12.1 to 10.12.2
 * Update junit-jupiter-api from 5.10.0-RC1 to 5.10.0
 * Update `README` and correct link in `CHANGELOG`
