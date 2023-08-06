@@ -26,9 +26,9 @@ For documentation see [https://weblegacy.github.io/commons-chain](https://webleg
 5. Generate site-documentation  
    `mvn site site:stage`  
    or  
-   `mvn clean site site:stage`
+   `mvn clean verify site site:stage`
 6. Publish site-documentation  
-   1. `mvn clean site site:stage`
+   1. `mvn clean verify site site:stage`
    2. `mvn scm-publish:publish-scm`
 7. Generate Assemblies  
    `mvn -DskipTests package`
