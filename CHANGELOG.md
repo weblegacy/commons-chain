@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Rename pom-property `encoding` to `sourceEncoding`
 * SureFire-Report added
 * Rename sub-modules to maven-standard
 * Some doc-updates
