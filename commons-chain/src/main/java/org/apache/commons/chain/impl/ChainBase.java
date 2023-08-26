@@ -100,7 +100,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private Command<C>[] commands = new Command[0];
 
     /**
@@ -229,12 +229,12 @@ public class ChainBase<C extends Context> implements Chain<C> {
 
     /**
      * Return an array of the configured {@link Command}s for this
-     * {@link Chain}. This method is package private, and is used only
+     * {@link Chain}. This method is protected, and is used only
      * for the unit tests.
      *
      * @return an array of the configured {@link Command}s for this {@link Chain}
      */
-    Command<C>[] getCommands() {
+    protected Command<C>[] getCommands() {
         return commands;
     }
 }

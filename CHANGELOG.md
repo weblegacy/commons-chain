@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Refactoring commons-chain test-classes to reuse it in commons-chain-web
 * Correct config-parameters of `japicmp-maven-plugin`
 * Add missing default-constructor (JDK20-warning)
 * Replace `maven-bundle-plugin` with `bnd-maven-plugin`

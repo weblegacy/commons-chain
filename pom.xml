@@ -160,6 +160,7 @@
 
     <modules>
         <module>commons-chain</module>
+        <module>commons-chain-tests</module>
         <module>commons-chain-web</module>
     </modules>
 
@@ -459,21 +460,21 @@
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-maven-plugin</artifactId>
                 <configuration>
-					<bnd>
-						<![CDATA[
-	                        Bundle-SymbolicName: ${commons.osgi.symbolicName}
-	                        Export-Package: ${commons.osgi.export}
-	                        Private-Package: ${commons.osgi.private}
-	                        Import-Package: ${commons.osgi.import}
-	                        DynamicImport-Package: ${commons.osgi.dynamicImport}
-	                        Bundle-DocURL: ${project.url}
-	                        Bundle-Developers:
-	                        Bundle-SCM:
-	                        -includepackage: !*
-	                        -nouses: true
-	                        -failok: true
-						]]>
-					</bnd>
+                    <bnd>
+                        <![CDATA[
+                            Bundle-SymbolicName: ${commons.osgi.symbolicName}
+                            Export-Package: ${commons.osgi.export}
+                            Private-Package: ${commons.osgi.private}
+                            Import-Package: ${commons.osgi.import}
+                            DynamicImport-Package: ${commons.osgi.dynamicImport}
+                            Bundle-DocURL: ${project.url}
+                            Bundle-Developers:
+                            Bundle-SCM:
+                            -includepackage: !*
+                            -nouses: true
+                            -failok: true
+                        ]]>
+                    </bnd>
                 </configuration>
                 <executions>
                     <execution>
@@ -534,10 +535,8 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>commons-chain</artifactId>
+                <artifactId>commons-chain-tests</artifactId>
                 <version>${project.version}</version>
-                <classifier>tests</classifier>
-                <type>test-jar</type>
             </dependency>
 
             <dependency>

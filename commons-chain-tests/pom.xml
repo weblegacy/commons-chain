@@ -28,11 +28,11 @@
         <version>1.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons-chain-web</artifactId>
-    <name>Commons Chain :: Web</name>
+    <artifactId>commons-chain-tests</artifactId>
+    <name>Commons Chain :: Core-Tests</name>
 
     <description>
-        The web-part of commons-chain.
+        The test-classes of core-part of commons-chain.
     </description>
 
     <dependencies>
@@ -42,43 +42,13 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-digester</groupId>
-            <artifactId>commons-digester</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.portlet</groupId>
-            <artifactId>portlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>javax.faces-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>commons-chain-tests</artifactId>
-            <scope>test</scope>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
+            <artifactId>junit-jupiter-engine</artifactId>
         </dependency>
     </dependencies>
 </project>

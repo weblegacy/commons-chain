@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain.web;
+package org.apache.commons.chain.tests.impl;
 
-import org.apache.commons.chain.Context;
+import org.apache.commons.chain.impl.ContextBase;
 import org.apache.commons.chain.tests.ContextTestCase;
-import org.junit.jupiter.api.Test;
 
 /**
  * Test case for the {@code ContextBase} class.
@@ -26,30 +25,17 @@ import org.junit.jupiter.api.Test;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public abstract class ContextBaseTestWeb<C extends Context> extends ContextTestCase<C> {
+public class ContextBaseTestCase extends ContextTestCase<ContextBase> {
 
-    // ---------------------------------------------------------- Constructors
-
-    /**
-     * The Default-Constructor for this class.
-     */
-    public ContextBaseTestWeb() {
-    }
-
-    // ------------------------------------------------ Individual Test Methods
+    // ------------------------------------------------------- Protected Methods
 
     /**
-     * Test serialization
+     * Create a new instance of the appropriate Context type for this test case
      *
-     * @throws Exception any error
+     * @return the new instance of the appropriate Context type
      */
-    @Test
-    public void testSerialization() throws Exception {
-        // ContextBase is implicitly declared Serializable because it
-        // extends HashMap. However, it is not possible to make
-        // the concrete subclasses of WebContext Serializable, because
-        // the underlying container objects that they wrap will not be.
-        // Therefore, skip testing serializability of these implementations
-    	return;
+	@Override
+    protected ContextBase createContext() {
+        return new ContextBase();
     }
 }

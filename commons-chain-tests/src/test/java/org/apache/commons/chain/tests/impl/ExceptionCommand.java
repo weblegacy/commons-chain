@@ -14,42 +14,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain.web;
+package org.apache.commons.chain.tests.impl;
 
+import org.apache.commons.chain.Chain;
+import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.chain.tests.ContextTestCase;
-import org.junit.jupiter.api.Test;
 
 /**
- * Test case for the {@code ContextBase} class.
+ * Implementation of {@link Command} that logs its identifier and
+ * and throws an Exception.
  *
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-public abstract class ContextBaseTestWeb<C extends Context> extends ContextTestCase<C> {
+public class ExceptionCommand extends NonDelegatingCommand {
 
-    // ---------------------------------------------------------- Constructors
+    // ------------------------------------------------------------ Constructor
 
-    /**
-     * The Default-Constructor for this class.
-     */
-    public ContextBaseTestWeb() {
+    public ExceptionCommand() {
+        this("");
     }
 
-    // ------------------------------------------------ Individual Test Methods
+    /**
+     * Construct an instance that will log the specified identifier
+     *
+     * @param id identifier to log for this Command instance
+     */
+    public ExceptionCommand(String id) {
+        super(id);
+    }
+
+    // -------------------------------------------------------- Command Methods
 
     /**
-     * Test serialization
+     * Execution method for this Command
+     *
+     * @param context
+     * @param chain
      *
      * @throws Exception any error
      */
-    @Test
-    public void testSerialization() throws Exception {
-        // ContextBase is implicitly declared Serializable because it
-        // extends HashMap. However, it is not possible to make
-        // the concrete subclasses of WebContext Serializable, because
-        // the underlying container objects that they wrap will not be.
-        // Therefore, skip testing serializability of these implementations
-    	return;
+    public void execute(Context context, Chain<Context> chain) throws Exception {
+        super.execute(context);
+        throw new ArithmeticException(this.id);
     }
 }
