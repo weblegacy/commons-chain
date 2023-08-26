@@ -101,6 +101,12 @@ public abstract class CatalogFactory<C extends Context> {
     public abstract Iterator<String> getNames();
 
     /**
+     * The Default-Constructor for this class.
+     */
+    public CatalogFactory() {
+    }
+
+    /**
      * Return a {@code Command} based on the given commandID.
      *
      * <p>At this time, the structure of commandID is relatively simple: if the

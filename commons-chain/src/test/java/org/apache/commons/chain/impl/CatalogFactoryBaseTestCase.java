@@ -48,6 +48,14 @@ public class CatalogFactoryBaseTestCase {
      */
     protected CatalogFactory<Context> factory = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public CatalogFactoryBaseTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

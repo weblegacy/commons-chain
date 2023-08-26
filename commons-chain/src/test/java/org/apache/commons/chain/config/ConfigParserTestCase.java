@@ -68,6 +68,14 @@ public class ConfigParserTestCase {
      */
     protected ConfigParser parser = null;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ConfigParserTestCase() {
+    }
+
     // ---------------------------------------------------- Overall Test Methods
 
     /**

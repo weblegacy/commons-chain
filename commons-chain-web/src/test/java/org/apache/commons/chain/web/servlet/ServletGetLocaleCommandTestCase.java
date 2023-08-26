@@ -72,6 +72,14 @@ public class ServletGetLocaleCommandTestCase {
      */
     protected ServletGetLocaleCommand command = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ServletGetLocaleCommandTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

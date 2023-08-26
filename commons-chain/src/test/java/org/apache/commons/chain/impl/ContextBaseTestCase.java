@@ -56,6 +56,14 @@ public class ContextBaseTestCase<C extends Context> {
      */
     protected C context = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ContextBaseTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

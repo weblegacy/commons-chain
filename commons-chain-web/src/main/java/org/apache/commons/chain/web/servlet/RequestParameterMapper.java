@@ -42,6 +42,14 @@ public class RequestParameterMapper extends LookupCommand<ServletWebContext> {
     private String catalogKey = ChainProcessor.CATALOG_DEFAULT;
     private String parameter = "command";
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public RequestParameterMapper() {
+    }
+
     // -------------------------------------------------------------- Properties
 
     /**

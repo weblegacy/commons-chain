@@ -57,6 +57,14 @@ public class DispatchLookupCommandTestCase {
      */
     protected Context context = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public DispatchLookupCommandTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

@@ -49,6 +49,14 @@ public class ChainBaseTestCase {
      */
     protected Context context = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ChainBaseTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

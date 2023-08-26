@@ -110,6 +110,14 @@ public class ChainProcessor extends ChainServlet {
      */
     private String command = null;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ChainProcessor() {
+    }
+
     // --------------------------------------------------------- Servlet Methods
 
     /**

@@ -52,6 +52,12 @@ public abstract class DispatchCommand<C extends Context> implements Command<C> {
     protected static final Class<?>[] DEFAULT_SIGNATURE = new Class<?>[] {Context.class};
 
     /**
+     * The Default-Constructor for this class.
+     */
+    public DispatchCommand() {
+    }
+
+    /**
      * Look up the method specified by either "method" or "methodKey"
      * and invoke it, returning a boolean value as interpreted by
      * {@code evaluateResult}.

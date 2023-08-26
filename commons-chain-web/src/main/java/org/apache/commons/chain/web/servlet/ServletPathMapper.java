@@ -40,6 +40,14 @@ public class ServletPathMapper extends LookupCommand<ServletWebContext> {
 
     private String catalogKey = ChainProcessor.CATALOG_DEFAULT;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ServletPathMapper() {
+    }
+
     // -------------------------------------------------------------- Properties
 
     /**

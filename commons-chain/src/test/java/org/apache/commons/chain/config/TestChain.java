@@ -23,4 +23,10 @@ import org.apache.commons.chain.impl.ChainBase;
  * Test implementation of {@code Chain}.
  */
 public class TestChain extends ChainBase<Context> {
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public TestChain() {
+    }
 }

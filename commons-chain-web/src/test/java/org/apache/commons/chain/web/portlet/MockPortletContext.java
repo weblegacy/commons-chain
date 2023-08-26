@@ -40,6 +40,14 @@ public class MockPortletContext implements PortletContext {
     private Map<String, String> parameters = new HashMap<>();
     private Map<String, Object> attributes = new HashMap<>();
 
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public MockPortletContext() {
+    }
+
     // --------------------------------------------------------- Public Methods
 
     public void setPortletContextName(String portletContextName) {

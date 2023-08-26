@@ -24,6 +24,12 @@ public class TestContext extends ContextBase {
     private static final long serialVersionUID = -582126541014253603L;
 
     /**
+     * The Default-Constructor for this class.
+     */
+    public TestContext() {
+    }
+
+    /**
      * Read-only property
      */
     private String readOnly = "readOnly";

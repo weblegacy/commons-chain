@@ -41,6 +41,14 @@ public class ChainResourcesTestCase {
         new TestData(",,",               new String[] {})
     };
 
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ChainResourcesTestCase() {
+    }
+
     // ------------------------------------------------ Individual Test Methods
 
     @Test

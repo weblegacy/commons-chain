@@ -123,6 +123,14 @@ public class ChainServlet extends HttpServlet {
      */
     public static final String RULE_SET = ChainInit.RULE_SET;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ChainServlet() {
+    }
+
     // --------------------------------------------------------- Servlet Methods
 
     /**

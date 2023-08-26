@@ -32,6 +32,14 @@ import org.junit.jupiter.api.Test;
  */
 public class ChainProcessorTestCase {
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ChainProcessorTestCase() {
+    }
+
     // ------------------------------------------------- Individual Test Methods
 
     /**

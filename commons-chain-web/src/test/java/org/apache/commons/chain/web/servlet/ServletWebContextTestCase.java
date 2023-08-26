@@ -73,6 +73,14 @@ public class ServletWebContextTestCase extends ContextBaseTestWeb<ServletWebCont
      */
     protected HttpSession session = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ServletWebContextTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

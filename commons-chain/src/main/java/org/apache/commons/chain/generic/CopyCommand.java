@@ -92,6 +92,14 @@ public class CopyCommand<C extends Context> implements Command<C> {
         this.value = value;
     }
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public CopyCommand() {
+    }
+
     // ---------------------------------------------------------- Filter Methods
 
     /**

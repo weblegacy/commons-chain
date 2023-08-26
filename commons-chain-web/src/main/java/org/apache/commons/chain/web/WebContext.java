@@ -44,6 +44,12 @@ public abstract class WebContext extends ContextBase {
     private static final long serialVersionUID = 6804961872140299027L;
 
     /**
+     * The Default-Constructor for this class.
+     */
+    public WebContext() {
+    }
+
+    /**
      * Return a mutable {@code Map} that maps application scope
      * attribute names to their values.
      *

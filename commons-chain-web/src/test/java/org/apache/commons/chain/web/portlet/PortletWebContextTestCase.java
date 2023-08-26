@@ -74,6 +74,14 @@ public class PortletWebContextTestCase extends ContextBaseTestWeb<PortletWebCont
      */
     protected PortletSession session = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public PortletWebContextTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

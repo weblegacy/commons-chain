@@ -87,6 +87,14 @@ public class ConfigRuleSet extends RuleSetBase {
     private String defineElement = "define";
     private String nameAttribute = "name";
 
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ConfigRuleSet() {
+    }
+
     // ------------------------------------------------------------- Properties
 
     /**

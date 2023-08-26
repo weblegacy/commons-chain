@@ -28,6 +28,16 @@ import org.junit.jupiter.api.Test;
  */
 public class ContextBaseTestWeb<C extends Context> extends ContextBaseTestCase<C> {
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ContextBaseTestWeb() {
+    }
+
+    // ------------------------------------------------ Individual Test Methods
+
     /**
      * Test serialization
      *

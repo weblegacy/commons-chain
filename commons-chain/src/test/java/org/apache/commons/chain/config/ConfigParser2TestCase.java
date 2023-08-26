@@ -70,6 +70,14 @@ public class ConfigParser2TestCase {
      */
     protected ConfigParser parser = null;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ConfigParser2TestCase() {
+    }
+
     // ---------------------------------------------------- Overall Test Methods
 
     /**

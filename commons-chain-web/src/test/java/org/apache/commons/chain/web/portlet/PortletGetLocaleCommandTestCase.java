@@ -73,6 +73,14 @@ public class PortletGetLocaleCommandTestCase {
      */
     protected PortletGetLocaleCommand command = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public PortletGetLocaleCommandTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

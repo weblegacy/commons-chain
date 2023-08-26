@@ -51,6 +51,14 @@ public class RemoveCommand<C extends Context> implements Command<C> {
         this.fromKey = fromKey;
     }
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public RemoveCommand() {
+    }
+
     // ---------------------------------------------------------- Filter Methods
 
     /**

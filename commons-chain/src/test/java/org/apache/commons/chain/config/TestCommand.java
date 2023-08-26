@@ -24,6 +24,13 @@ import org.apache.commons.chain.Context;
  * configurable properties.
  */
 public class TestCommand implements Command<Context> {
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public TestCommand() {
+    }
+
     private String bar = null;
     public String getBar() {
         return this.bar;

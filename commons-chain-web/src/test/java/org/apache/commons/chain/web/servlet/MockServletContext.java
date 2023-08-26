@@ -49,6 +49,14 @@ public class MockServletContext implements ServletContext {
     private Map<String, Object> attributes = new HashMap<>();
     private Map<String, String> parameters = new HashMap<>();
 
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public MockServletContext() {
+    }
+
     // --------------------------------------------------------- Public Methods
 
     public void addInitParameter(String name, String value) {

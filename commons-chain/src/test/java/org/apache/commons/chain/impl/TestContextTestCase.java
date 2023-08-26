@@ -30,6 +30,14 @@ import org.junit.jupiter.api.Test;
  */
 public class TestContextTestCase extends ContextBaseTestCase<TestContext> {
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public TestContextTestCase() {
+    }
+
     // ---------------------------------------------------- Overall Test Methods
 
     /**

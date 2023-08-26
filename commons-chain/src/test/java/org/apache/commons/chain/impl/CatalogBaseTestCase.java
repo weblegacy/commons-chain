@@ -45,6 +45,14 @@ public class CatalogBaseTestCase {
      */
     protected CatalogBase<Context> catalog = null;
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public CatalogBaseTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**

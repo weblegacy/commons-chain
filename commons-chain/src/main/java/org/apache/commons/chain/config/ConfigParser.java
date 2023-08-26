@@ -54,6 +54,14 @@ public class ConfigParser {
      */
     private boolean useContextClassLoader = true;
 
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ConfigParser() {
+    }
+
     // ------------------------------------------------------------- Properties
 
     /**

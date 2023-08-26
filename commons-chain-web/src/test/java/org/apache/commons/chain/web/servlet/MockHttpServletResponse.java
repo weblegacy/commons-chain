@@ -34,6 +34,14 @@ public class MockHttpServletResponse implements HttpServletResponse {
 
     private Locale locale = null;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public MockHttpServletResponse() {
+    }
+
     // ---------------------------------------------------------- Public Methods
 
     // --------------------------------------------- HttpServletResponse Methods

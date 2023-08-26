@@ -120,6 +120,14 @@ public class ChainListener implements ServletContextListener {
      */
     public static final String RULE_SET = ChainInit.RULE_SET;
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public ChainListener() {
+    }
+
     // ------------------------------------------ ServletContextListener Methods
 
     /**

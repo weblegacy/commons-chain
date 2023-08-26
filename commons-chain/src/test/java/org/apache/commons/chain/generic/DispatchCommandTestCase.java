@@ -34,6 +34,14 @@ import org.junit.jupiter.api.Test;
  * */
 public class DispatchCommandTestCase {
 
+    // ---------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+    public DispatchCommandTestCase() {
+    }
+
     // -------------------------------------------------- Overall Test Methods
 
     /**
