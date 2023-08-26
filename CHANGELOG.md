@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Correct config-parameters of `japicmp-maven-plugin`
 * Add missing default-constructor (JDK20-warning)
 * Replace `maven-bundle-plugin` with `bnd-maven-plugin`
 * Rename pom-property `encoding` to `sourceEncoding`

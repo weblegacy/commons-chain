@@ -660,9 +660,13 @@
                             <groupId>commons-chain</groupId>
                             <artifactId>commons-chain</artifactId>
                             <version>${oldversion}</version>
-                            <type>jar</type>
                         </dependency>
                     </oldVersion>
+                    <newVersion>
+                        <file>
+                            <path>${project.build.directory}/${project.artifactId}-${project.version}.${project.packaging}</path>
+                        </file>
+                    </newVersion>
                 </configuration>
             </plugin>
 
