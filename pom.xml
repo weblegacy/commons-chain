@@ -727,8 +727,14 @@
                 <reportSets>
                     <reportSet>
                         <reports>
-                            <report>report</report>
+                            <report>report-aggregate</report>
                         </reports>
+                        <configuration>
+                            <includeCurrentProject>true</includeCurrentProject>
+                            <excludes>
+                                <exclude>org/apache/commons/chain/tests/**</exclude>
+                            </excludes>
+                        </configuration>
                     </reportSet>
                 </reportSets>
             </plugin>
