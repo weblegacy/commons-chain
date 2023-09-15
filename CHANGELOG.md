@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Dependencies adjusted due to the dependency analysis
 * Adapt JoCoCo-Report because the refactored commons-chain test-classes
 * Refactoring commons-chain test-classes to reuse it in commons-chain-web
 * Correct config-parameters of `japicmp-maven-plugin`
