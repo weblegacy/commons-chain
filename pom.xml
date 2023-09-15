@@ -179,7 +179,6 @@
         <project.build.sourceEncoding>${sourceEncoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${sourceEncoding}</project.reporting.outputEncoding>
         <mavenVersion>[3.6.3,4)</mavenVersion>
-        <javaVersion>8</javaVersion>
         <surefireVersion>3.0.0</surefireVersion>
         <oldversion>1.2</oldversion>
         <javaxServletVersion>4.0.1</javaxServletVersion>
@@ -259,7 +258,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
                     <configuration>
-                        <release>${javaVersion}</release>
+                        <verbose>false</verbose>
+                        <release>8</release>
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
                         <compilerArgs>
@@ -372,6 +372,25 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile9</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>9</release>
+                            <compileSourceRoots> 
+                                <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+                            </compileSourceRoots> 
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <executions>
                     <execution>
@@ -382,7 +401,7 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[8,)</version>
+                                    <version>[9,)</version>
                                 </requireJavaVersion>
                                 <requireMavenVersion>
                                     <version>${mavenVersion}</version>
@@ -470,6 +489,7 @@
                             Bundle-DocURL: ${project.url}
                             Bundle-Developers:
                             Bundle-SCM:
+                            Multi-Release: true
                             -includepackage: !*
                             -nouses: true
                             -failok: true
@@ -700,7 +720,7 @@
                     <quiet>true</quiet>
                     <doclint>none</doclint>
                     <notimestamp>true</notimestamp>
-                    <source>${javaVersion}</source>
+                    <release>9</release>
                 </configuration>
                 <reportSets>
                     <reportSet>
