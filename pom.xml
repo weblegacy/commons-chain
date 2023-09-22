@@ -160,7 +160,6 @@
 
     <modules>
         <module>commons-chain</module>
-        <module>commons-chain-tests</module>
         <module>commons-chain-web</module>
     </modules>
 
@@ -260,6 +259,7 @@
                     <configuration>
                         <verbose>false</verbose>
                         <release>8</release>
+                        <testRelease>9</testRelease>
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
                         <compilerArgs>
@@ -555,8 +555,11 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>commons-chain-tests</artifactId>
+                <artifactId>commons-chain</artifactId>
                 <version>${project.version}</version>
+                <classifier>tests</classifier>
+                <type>test-jar</type>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -747,14 +750,8 @@
                 <reportSets>
                     <reportSet>
                         <reports>
-                            <report>report-aggregate</report>
+                            <report>report</report>
                         </reports>
-                        <configuration>
-                            <includeCurrentProject>true</includeCurrentProject>
-                            <excludes>
-                                <exclude>org/apache/commons/chain/tests/**</exclude>
-                            </excludes>
-                        </configuration>
                     </reportSet>
                 </reportSets>
             </plugin>

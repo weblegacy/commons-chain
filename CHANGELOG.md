@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Undo move core-test-classes to separate commons-chain-test
 * Modularization as multi-release jars
 * Dependencies adjusted due to the dependency analysis
 * Adapt JoCoCo-Report because the refactored commons-chain test-classes
