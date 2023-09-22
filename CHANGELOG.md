@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Remove unnecessary Suppress-Warnings
 * Split module `web` into `web`, `web-javax`, `web-javax-faces`, `web-javax-portlet` and `web-javax-servlet`
 * Undo move core-test-classes to separate commons-chain-test
 * Modularization as multi-release jars
