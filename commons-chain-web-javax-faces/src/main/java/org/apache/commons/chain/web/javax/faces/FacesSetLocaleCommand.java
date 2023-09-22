@@ -14,7 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.faces;
+
+import org.apache.commons.chain.web.javax.SetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link SetLocaleCommand} for
+ * the JavaServer Faces API.
+ */
+public class FacesSetLocaleCommand extends SetLocaleCommand<FacesWebContext> {
+
+    /**
+     * Construct a new instance to set the locale into the
+     * JavaServer Faces API.
+     */
+    public FacesSetLocaleCommand() {
+        super((context, locale) -> context.getContext().getViewRoot().setLocale(locale));
+    }
 }

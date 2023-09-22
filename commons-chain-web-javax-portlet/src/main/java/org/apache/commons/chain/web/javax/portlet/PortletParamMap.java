@@ -14,7 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import javax.portlet.PortletRequest;
+
+import org.apache.commons.chain.web.ParameterMap;
+
+/**
+ * Private implementation of {@code Map} for portlet parameter
+ * name-value.
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+final class PortletParamMap extends ParameterMap<PortletRequest, String> {
+
+    /**
+     * The constructor for the portlet parameter name-value.
+     *
+     * @param request the portlet-request for the adapter.
+     */
+    @SuppressWarnings("deprecation")
+    PortletParamMap(PortletRequest request) {
+        super(request, request::getParameter, request::getParameterNames);
+    }
 }

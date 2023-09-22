@@ -14,7 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import org.apache.commons.chain.web.javax.SetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link SetLocaleCommand} for
+ * the Portlet API.
+ */
+public class PortletSetLocaleCommand extends SetLocaleCommand<PortletWebContext> {
+
+    /**
+     * Construct a new instance to set the locale into the
+     * Portlet API.
+     */
+    public PortletSetLocaleCommand() {
+//      super((context, locale) -> context.getResponse().setLocale(locale));
+//      Not supported by the Portlet API
+        super((context, locale) -> { });
+    }
 }

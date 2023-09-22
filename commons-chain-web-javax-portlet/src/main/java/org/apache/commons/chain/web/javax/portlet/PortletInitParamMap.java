@@ -14,7 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import javax.portlet.PortletContext;
+
+import org.apache.commons.chain.web.ParameterMap;
+
+/**
+ * Private implementation of {@code Map} for portlet
+ * context init parameters.
+ *
+ * @author Craig R. McClanahan
+ */
+final class PortletInitParamMap extends ParameterMap<PortletContext, String> {
+
+    /**
+     * The constructor for the portlet context attributes.
+     *
+     * @param context the portlet-context for the adapter.
+     */
+    PortletInitParamMap(PortletContext context) {
+        super(context, context::getInitParameter, context::getInitParameterNames);
+    }
 }

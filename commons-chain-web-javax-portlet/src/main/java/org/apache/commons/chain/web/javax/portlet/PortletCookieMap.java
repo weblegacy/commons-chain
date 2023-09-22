@@ -14,7 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import javax.portlet.PortletRequest;
+
+import org.apache.commons.chain.web.javax.CookieMap;
+
+/**
+ * Private implementation of {@code Map} for portlet cookies.
+ *
+ * @since Chain 1.3
+ */
+final class PortletCookieMap extends CookieMap<PortletRequest> {
+
+    /**
+     * The constructor for the portlet cookies.
+     *
+     * @param request the portlet-request.
+     */
+    PortletCookieMap(PortletRequest request) {
+        super(request, request::getCookies);
+    }
 }

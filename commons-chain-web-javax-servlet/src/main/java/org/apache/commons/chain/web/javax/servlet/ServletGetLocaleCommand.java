@@ -14,7 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.servlet;
+
+import org.apache.commons.chain.web.javax.GetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link GetLocaleCommand} for
+ * the Servlet API.
+ */
+public class ServletGetLocaleCommand extends GetLocaleCommand<ServletWebContext> {
+
+    /**
+     * Construct a new instance to get the locale from the
+     * Servlet API.
+     */
+    public ServletGetLocaleCommand() {
+        super(c -> c.getRequest().getLocale());
+    }
 }

@@ -14,7 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.faces;
+
+import org.apache.commons.chain.web.javax.GetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link GetLocaleCommand} for
+ * the JavaServer Faces API.
+ */
+public class FacesGetLocaleCommand extends GetLocaleCommand<FacesWebContext> {
+
+    /**
+     * Construct a new instance to get the locale from the
+     * JavaServer Faces API.
+     */
+    public FacesGetLocaleCommand() {
+        super(c -> c.getContext().getViewRoot().getLocale());
+    }
 }

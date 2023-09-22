@@ -161,6 +161,10 @@
     <modules>
         <module>commons-chain</module>
         <module>commons-chain-web</module>
+        <module>commons-chain-web-javax</module>
+        <module>commons-chain-web-javax-faces</module>
+        <module>commons-chain-web-javax-portlet</module>
+        <module>commons-chain-web-javax-servlet</module>
     </modules>
 
     <licenses>
@@ -565,6 +569,21 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>commons-chain-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>commons-chain-web</artifactId>
+                <version>${project.version}</version>
+                <classifier>tests</classifier>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>commons-chain-web-javax</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

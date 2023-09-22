@@ -28,47 +28,29 @@
         <version>1.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons-chain-web</artifactId>
-    <name>Commons Chain :: Web</name>
+    <artifactId>commons-chain-web-javax-faces</artifactId>
+    <name>Commons Chain :: Web :: Javax :: Faces</name>
 
     <description>
         The web-part of commons-chain.
     </description>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>commons-chain</artifactId>
-            <scope>test</scope>
+            <artifactId>commons-chain-web-javax</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>commons-chain</artifactId>
-            <classifier>tests</classifier>
-            <type>test-jar</type>
-            <scope>test</scope>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

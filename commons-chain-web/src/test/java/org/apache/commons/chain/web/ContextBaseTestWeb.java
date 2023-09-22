@@ -17,7 +17,7 @@
 package org.apache.commons.chain.web;
 
 import org.apache.commons.chain.Context;
-import org.apache.commons.chain.tests.ContextTestCase;
+import org.apache.commons.chain.ContextTestCase;
 import org.junit.jupiter.api.Test;
 
 /**

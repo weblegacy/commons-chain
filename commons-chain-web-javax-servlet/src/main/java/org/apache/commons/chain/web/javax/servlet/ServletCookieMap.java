@@ -14,7 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.servlet;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.chain.web.javax.CookieMap;
+
+/**
+ * Private implementation of {@code Map} for servlet cookies.
+ *
+ * @version $Revision$ $Date$
+ * @since Chain 1.1
+ */
+final class ServletCookieMap extends CookieMap<HttpServletRequest> {
+
+    /**
+     * The constructor for the servlet cookies.
+     *
+     * @param request the servlet-request.
+     */
+    ServletCookieMap(HttpServletRequest request) {
+        super(request, request::getCookies);
+    }
 }

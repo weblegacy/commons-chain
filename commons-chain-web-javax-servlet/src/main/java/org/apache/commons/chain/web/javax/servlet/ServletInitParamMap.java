@@ -14,7 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.servlet;
+
+import javax.servlet.ServletContext;
+
+import org.apache.commons.chain.web.ParameterMap;
+
+/**
+ * Private implementation of {@code Map} for servlet
+ * context init parameters.
+ *
+ * @author Craig R. McClanahan
+ */
+final class ServletInitParamMap extends ParameterMap<ServletContext, String> {
+
+    /**
+     * The constructor for the servlet context attributes.
+     *
+     * @param context the servlet-context for the adapter.
+     */
+    ServletInitParamMap(ServletContext context) {
+        super(context, context::getInitParameter, context::getInitParameterNames);
+    }
 }

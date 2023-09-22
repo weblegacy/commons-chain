@@ -14,7 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import javax.portlet.PortletContext;
+
+import org.apache.commons.chain.web.MutableParameterMap;
+
+/**
+ * Private implementation of {@code Map} for portlet context
+ * attributes.
+ *
+ * @author Craig R. McClanahan
+ */
+final class PortletApplicationScopeMap extends MutableParameterMap<Object, Object> {
+
+    /**
+     * The constructor for the portlet context attributes.
+     *
+     * @param context the portlet-context for the adapter.
+     */
+    PortletApplicationScopeMap(PortletContext context) {
+        super(context, context::getAttribute, context::getAttributeNames,
+                context::removeAttribute, context::setAttribute);
+    }
 }

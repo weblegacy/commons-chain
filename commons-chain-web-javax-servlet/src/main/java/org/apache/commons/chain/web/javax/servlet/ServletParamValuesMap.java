@@ -14,7 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.servlet;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.chain.web.ParamValuesMap;
+
+/**
+ * Private implementation of {@code Map} for servlet parameter
+ * name-values[].
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+final class ServletParamValuesMap extends ParamValuesMap<HttpServletRequest> {
+
+    /**
+     * The constructor for the servlet parameter name-values[].
+     *
+     * @param request the servlet-request
+     */
+    ServletParamValuesMap(HttpServletRequest request) {
+        super(request, request::getParameterValues, request::getParameterNames);
+    }
 }

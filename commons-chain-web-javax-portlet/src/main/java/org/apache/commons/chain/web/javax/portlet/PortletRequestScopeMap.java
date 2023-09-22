@@ -14,7 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import javax.portlet.PortletRequest;
+
+import org.apache.commons.chain.web.MutableParameterMap;
+
+/**
+ * Private implementation of {@code Map} for portlet request
+ * attributes.
+ *
+ * @author Craig R. McClanahan
+ */
+final class PortletRequestScopeMap extends MutableParameterMap<PortletRequest, Object> {
+
+    /**
+     * The constructor for the portlet request attributes.
+     *
+     * @param request the portlet-request for the adapter.
+     */
+    PortletRequestScopeMap(PortletRequest request) {
+        super(request, request::getAttribute, request::getAttributeNames,
+                request::removeAttribute, request::setAttribute);
+    }
 }

@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
-}
+
+/**
+ * Specialized {@code Context} and {@code Command} implementations
+ * suitable for use in a Portlet API environment.
+ */
+package org.apache.commons.chain.web.javax.portlet;

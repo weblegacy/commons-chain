@@ -14,7 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.servlet;
+
+import javax.servlet.ServletContext;
+
+import org.apache.commons.chain.web.MutableParameterMap;
+
+/**
+ * Private implementation of {@code Map} for servlet context
+ * attributes.
+ *
+ * @author Craig R. McClanahan
+ */
+final class ServletApplicationScopeMap extends MutableParameterMap<ServletContext, Object> {
+
+    /**
+     * The constructor for the servlet context attributes.
+     *
+     * @param context the servlet-context for the adapter.
+     */
+    ServletApplicationScopeMap(ServletContext context) {
+        super(context, context::getAttribute, context::getAttributeNames,
+                context::removeAttribute, context::setAttribute);
+    }
 }

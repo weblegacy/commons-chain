@@ -14,7 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+package org.apache.commons.chain.web.javax.portlet;
+
+import org.apache.commons.chain.web.javax.GetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link AbstractGetLocaleCommand} for
+ * the Portlet API.
+ */
+public class PortletGetLocaleCommand extends GetLocaleCommand<PortletWebContext> {
+
+    /**
+     * Construct a new instance to get the locale from the
+     * Portlet API.
+     */
+    public PortletGetLocaleCommand() {
+        super(c -> c.getRequest().getLocale());
+    }
 }

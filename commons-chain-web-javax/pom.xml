@@ -28,11 +28,11 @@
         <version>1.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons-chain-web</artifactId>
-    <name>Commons Chain :: Web</name>
+    <artifactId>commons-chain-web-javax</artifactId>
+    <name>Commons Chain :: Web :: Javax</name>
 
     <description>
-        The web-part of commons-chain.
+        The web-part (till Jakarta 8) of commons-chain.
     </description>
 
     <build>
@@ -54,15 +54,27 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>commons-chain</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>commons-chain</artifactId>
-            <classifier>tests</classifier>
-            <type>test-jar</type>
-            <scope>test</scope>
+            <artifactId>commons-chain-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 @SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+module org.apache.commons.chain.web.javax.faces {
+    requires transitive org.apache.commons.chain;
+    requires transitive org.apache.commons.chain.web.javax;
+
+    requires commons.logging;
+    requires transitive javax.faces.api;
+
+    exports org.apache.commons.chain.web.javax.faces;
 }

@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 @SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web;
+module org.apache.commons.chain.web.javax.portlet {
+    requires transitive org.apache.commons.chain;
+    requires transitive org.apache.commons.chain.web.javax;
+
+    requires transitive portlet.api;
+
+    exports org.apache.commons.chain.web.javax.portlet;
 }
