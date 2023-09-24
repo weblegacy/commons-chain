@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Delete `module-info`-files from test-classes
 * More granulate package-visibilities with JPMS
 * Remove unnecessary Suppress-Warnings
 * Split module `web` into `web`, `web-javax`, `web-javax-faces`, `web-javax-portlet` and `web-javax-servlet`
