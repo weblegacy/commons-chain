@@ -18,7 +18,7 @@ package org.apache.commons.chain.web.javax.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.chain.web.javax.CookieMap;
+import org.apache.commons.chain.web.javax.internal.CookieMap;
 
 /**
  * Private implementation of {@code Map} for servlet cookies.

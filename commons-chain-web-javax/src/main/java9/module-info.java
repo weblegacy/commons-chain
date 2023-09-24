@@ -23,4 +23,7 @@ module org.apache.commons.chain.web.javax {
     requires transitive javax.servlet.api;
 
     exports org.apache.commons.chain.web.javax;
+    exports org.apache.commons.chain.web.javax.internal to
+        org.apache.commons.chain.web.javax.portlet,
+        org.apache.commons.chain.web.javax.servlet;
 }
