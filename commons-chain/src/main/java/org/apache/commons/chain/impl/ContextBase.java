@@ -539,7 +539,7 @@ public class ContextBase extends HashMap<String, Object> implements Context {
      * Private implementation of {@code Set} that implements the
      * semantics required for the value returned by {@code entrySet()}.
      */
-    private class EntrySetImpl extends AbstractSet<Map.Entry<String, Object>> {
+    private final class EntrySetImpl extends AbstractSet<Map.Entry<String, Object>> {
 
         @Override
         public void clear() {
@@ -589,7 +589,7 @@ public class ContextBase extends HashMap<String, Object> implements Context {
      * Private implementation of {@code Iterator} for the
      * {@code Set} returned by {@code entrySet()}.
      */
-    private class EntrySetIterator implements Iterator<Map.Entry<String, Object>> {
+    private final class EntrySetIterator implements Iterator<Map.Entry<String, Object>> {
 
         private Map.Entry<String, Object> entry = null;
         private Iterator<String> keys = ContextBase.this.keySet().iterator();
@@ -677,7 +677,7 @@ public class ContextBase extends HashMap<String, Object> implements Context {
      * Private implementation of {@code Collection} that implements the
      * semantics required for the value returned by {@code values()}.
      */
-    private class ValuesImpl extends AbstractCollection<Object> {
+    private final class ValuesImpl extends AbstractCollection<Object> {
 
         @Override
         public void clear() {
@@ -722,7 +722,7 @@ public class ContextBase extends HashMap<String, Object> implements Context {
      * Private implementation of {@code Iterator} for the
      * {@code Collection} returned by {@code values()}.
      */
-    private class ValuesIterator implements Iterator<Object> {
+    private final class ValuesIterator implements Iterator<Object> {
 
         private Map.Entry<String, Object> entry = null;
         private Iterator<String> keys = ContextBase.this.keySet().iterator();

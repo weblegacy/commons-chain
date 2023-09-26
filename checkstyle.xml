@@ -86,6 +86,7 @@
       <!-- See https://checkstyle.org/checks/header/index.html              -->
       <module name="Header">
           <property name="headerFile" value="${checkstyle.header.file}"/>
+          <property name="fileExtensions" value="java, xml"/>
       </module>
 
       <module name="TreeWalker">

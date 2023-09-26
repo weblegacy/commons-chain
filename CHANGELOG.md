@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Resolve all `checkstyle`-messages
 * Sync with `sun_checks.xml`
 * Update `checkstyle` from 10.12.2 to 10.12.3
 * Update `maven-surefire-plugin` from 3.0.0 to 3.1.2
