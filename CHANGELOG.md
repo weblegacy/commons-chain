@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-surefire-plugin` from 3.0.0 to 3.1.2
 * Adapt OSGi maven-bundle-plugin configurations
 * Delete `module-info`-files from test-classes
 * More granulate package-visibilities with JPMS
