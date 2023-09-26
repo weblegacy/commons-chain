@@ -35,6 +35,11 @@
         The core-part of commons-chain.
     </description>
 
+    <properties>
+        <!-- Configuration properties for the OSGi maven-bundle-plugin -->
+        <commons.osgi.symbolicName>org.apache.commons.chain</commons.osgi.symbolicName>
+    </properties>
+
    <build>
         <plugins>
             <plugin>

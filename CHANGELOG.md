@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Adapt OSGi maven-bundle-plugin configurations
 * Delete `module-info`-files from test-classes
 * More granulate package-visibilities with JPMS
 * Remove unnecessary Suppress-Warnings

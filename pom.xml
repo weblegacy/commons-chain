@@ -189,10 +189,9 @@
         <javaxFacesVersion>2.3</javaxFacesVersion>
 
         <!-- Configuration properties for the OSGi maven-bundle-plugin -->
-        <commons.osgi.symbolicName>org.apache.commons.chain</commons.osgi.symbolicName>
         <commons.osgi.export>org.apache.commons.*;version=${project.version};-noimport:=true</commons.osgi.export>
-        <commons.osgi.import>!javax.portlet,*</commons.osgi.import>
-        <commons.osgi.dynamicImport>javax.portlet</commons.osgi.dynamicImport>
+        <commons.osgi.import>*</commons.osgi.import>
+        <commons.osgi.dynamicImport />
         <commons.osgi.private />
 
         <!-- location of any manifest file used by maven-jar-plugin -->

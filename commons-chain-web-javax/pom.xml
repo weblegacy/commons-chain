@@ -35,6 +35,11 @@
         The web-part (till Jakarta 8) of commons-chain.
     </description>
 
+    <properties>
+        <!-- Configuration properties for the OSGi maven-bundle-plugin -->
+        <commons.osgi.symbolicName>org.apache.commons.chain.web.javax</commons.osgi.symbolicName>
+    </properties>
+
     <build>
         <plugins>
             <plugin>

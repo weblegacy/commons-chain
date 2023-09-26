@@ -35,6 +35,11 @@
         The web-part of commons-chain.
     </description>
 
+    <properties>
+        <!-- Configuration properties for the OSGi maven-bundle-plugin -->
+        <commons.osgi.symbolicName>org.apache.commons.chain.web.javax.portlet</commons.osgi.symbolicName>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
