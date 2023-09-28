@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Change groupId from `commons-chain` to `io.github.weblegacy`
 * Resolve all `checkstyle`-messages
 * Sync with `sun_checks.xml`
 * Update `checkstyle` from 10.12.2 to 10.12.3
