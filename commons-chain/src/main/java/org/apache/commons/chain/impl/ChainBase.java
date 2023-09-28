@@ -229,12 +229,12 @@ public class ChainBase<C extends Context> implements Chain<C> {
 
     /**
      * Return an array of the configured {@link Command}s for this
-     * {@link Chain}. This method is protected, and is used only
+     * {@link Chain}. This method is package private, and is used only
      * for the unit tests.
      *
      * @return an array of the configured {@link Command}s for this {@link Chain}
      */
-    protected Command<C>[] getCommands() {
+    Command<C>[] getCommands() {
         return commands;
     }
 }

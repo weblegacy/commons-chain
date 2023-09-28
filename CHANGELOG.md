@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Revert `ChainBase.getCommands` from `protected` to `package private`
 * Change groupId from `commons-chain` to `io.github.weblegacy`
 * Resolve all `checkstyle`-messages
 * Sync with `sun_checks.xml`
