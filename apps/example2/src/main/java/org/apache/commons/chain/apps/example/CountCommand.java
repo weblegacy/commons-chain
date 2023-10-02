@@ -19,7 +19,7 @@ package org.apache.commons.chain.apps.example;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.chain.web.WebContext;
+import org.apache.commons.chain.web.javax.WebContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$ $Date$
  */
 
-public class CountCommand implements Command {
+public class CountCommand implements Command<WebContext> {
 
 
     private Log log = LogFactory.getLog(CountCommand.class);
@@ -67,13 +67,12 @@ public class CountCommand implements Command {
      * @return <code>false</code> so that processng will continue
      * @throws Exception If an error occurs during execution.
      */
-    public boolean execute(Context context) throws Exception {
+    public boolean execute(WebContext context) throws Exception {
 
         count++;
         log.info("Executing: " + attribute + "=" + count);
 
-        WebContext webContext = (WebContext)context;
-        webContext.getSessionScope().put(attribute, new Integer(count));
+        context.getSessionScope().put(attribute, count);
 
         return false;
 

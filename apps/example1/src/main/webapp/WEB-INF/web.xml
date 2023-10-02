@@ -17,7 +17,9 @@
  limitations under the License.
 
 -->
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+      metadata-complete="true" version="4.0">
 
     <display-name>Chain Example</display-name>
 
@@ -29,15 +31,14 @@
     <!-- "Path Info" Servlet Configuration (uses default catalog) -->
     <servlet>
         <servlet-name>pathinfo</servlet-name>
-        <servlet-class>org.apache.commons.chain.web.servlet.ChainProcessor</servlet-class>
+        <servlet-class>org.apache.commons.chain.web.javax.servlet.ChainProcessor</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!-- "Request Parameter" Servlet Configuration -->
     <servlet>
         <servlet-name>reqparam</servlet-name>
-        <servlet-class>org.apache.commons.chain.web.servlet.ChainProcessor</servlet-class>
-        <load-on-startup>2</load-on-startup>
+        <servlet-class>org.apache.commons.chain.web.javax.servlet.ChainProcessor</servlet-class>
 
         <!-- Configure catalog name -->
         <init-param>
@@ -45,13 +46,13 @@
             <param-value>reqparam</param-value>
         </init-param>
 
+        <load-on-startup>2</load-on-startup>
     </servlet>
 
     <!-- "Servlet Path" Servlet Configuration -->
     <servlet>
         <servlet-name>servletpath</servlet-name>
-        <servlet-class>org.apache.commons.chain.web.servlet.ChainProcessor</servlet-class>
-        <load-on-startup>3</load-on-startup>
+        <servlet-class>org.apache.commons.chain.web.javax.servlet.ChainProcessor</servlet-class>
 
         <!-- Configure catalog name -->
         <init-param>
@@ -59,6 +60,7 @@
             <param-value>servletpath</param-value>
         </init-param>
 
+        <load-on-startup>3</load-on-startup>
     </servlet>
 
     <!-- "Path Info" Servlet Mappings -->

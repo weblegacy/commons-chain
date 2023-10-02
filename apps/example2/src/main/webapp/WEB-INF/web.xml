@@ -17,7 +17,9 @@
  limitations under the License.
 
 -->
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+      metadata-complete="true" version="4.0">
 
     <display-name>Chain Example</display-name>
 
@@ -29,7 +31,7 @@
     <!-- Configuration Listener -->
     <listener>
         <listener-class>
-            org.apache.commons.chain.web.ChainListener
+            org.apache.commons.chain.web.javax.ChainListener
         </listener-class>
     </listener>
 

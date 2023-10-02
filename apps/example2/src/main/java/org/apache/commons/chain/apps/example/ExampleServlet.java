@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
-import org.apache.commons.chain.web.servlet.ServletWebContext;
+import org.apache.commons.chain.web.javax.servlet.ServletWebContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,6 +32,7 @@ import org.apache.commons.logging.LogFactory;
  * Custom chain servlet implementation.
  */
 public class ExampleServlet extends HttpServlet {
+    private static final long serialVersionUID = 3232461564544399204L;
 
     private String servletName;
 
@@ -65,16 +66,16 @@ public class ExampleServlet extends HttpServlet {
     public void service(HttpServletRequest request,
                         HttpServletResponse response)
         throws IOException, ServletException {
-        
-        CatalogFactory factory = CatalogFactory.getInstance();
-        Catalog catalog = factory.getCatalog(servletName);
+
+        CatalogFactory<ServletWebContext> factory = CatalogFactory.getInstance();
+        Catalog<ServletWebContext> catalog = factory.getCatalog(servletName);
         if (catalog == null) {
             catalog = factory.getCatalog();
         }
 
         ServletWebContext context =
             new ServletWebContext(getServletContext(), request, response);
-        Command command = catalog.getCommand("COMMAND_MAPPER");
+        Command<ServletWebContext> command = catalog.getCommand("COMMAND_MAPPER");
         try {
             command.execute(context);
         } catch (Exception e) {

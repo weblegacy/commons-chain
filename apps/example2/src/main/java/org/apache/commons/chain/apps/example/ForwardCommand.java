@@ -21,7 +21,7 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.chain.web.servlet.ServletWebContext;
+import org.apache.commons.chain.web.javax.servlet.ServletWebContext;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -30,7 +30,7 @@ import javax.servlet.RequestDispatcher;
  * @version $Revision$ $Date$
  */
 
-public class ForwardCommand implements Command {
+public class ForwardCommand implements Command<ServletWebContext> {
 
 
     private Log log = LogFactory.getLog(ForwardCommand.class);
@@ -64,16 +64,15 @@ public class ForwardCommand implements Command {
      * @return <code>false</code> so that processng will continue
      * @throws Exception If an error occurs during execution.
      */
-    public boolean execute(Context context) throws Exception {
+    public boolean execute(ServletWebContext context) throws Exception {
 
         String uri = getForward(context);
         if (uri != null) {
             if (log.isDebugEnabled()) {
                 log.debug("Forwarding to " + uri);
             }
-            ServletWebContext swcontext = (ServletWebContext)context;
-            RequestDispatcher rd = swcontext.getContext().getRequestDispatcher(uri);
-            rd.forward(swcontext.getRequest(), swcontext.getResponse());
+            RequestDispatcher rd = context.getContext().getRequestDispatcher(uri);
+            rd.forward(context.getRequest(), context.getResponse());
             return true;
         } else {
             if (log.isDebugEnabled()) {
@@ -89,7 +88,7 @@ public class ForwardCommand implements Command {
      * @param context The {@link Context} we are operating on
      * @return The uri to forward to
      */
-    protected String getForward(Context context) {
+    protected String getForward(ServletWebContext context) {
         String uri = (String)context.get("forward");
         if (uri == null) {
             uri = getForward();
