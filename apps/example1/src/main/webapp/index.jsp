@@ -17,46 +17,51 @@
 
 -->
 <%@ page language="java"%>
-<%@ page contentType="text/html;charset=ISO-8859-1"%>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
   <head>
     <title>Chain Example Index Page</title>
   </head>
   <body>
 
-  <h1>Chain Example Index Page</h1>
+    <h1>Chain Example Index Page</h1>
 
-  <ul>
-    <li>Path Info Example</li>
     <ul>
-      <li><a href="exec/foo">exec/foo</a></li>
-      <li><a href="exec/bar">exec/bar</a></li>
+      <li>Path Info Example</li>
+      <li>
+        <ul>
+          <li><a href="exec/foo">exec/foo</a></li>
+          <li><a href="exec/bar">exec/bar</a></li>
+        </ul>
+      </li>
+      <li>Request Parameter Example</li>
+      <li>
+        <ul>
+          <li><a href="execute?command=foo">execute?command=foo</a></li>
+          <li><a href="execute?command=bar">execute?command=bar</a></li>
+        </ul>
+      </li>
+      <li>Servlet Path</li>
+      <li>
+        <ul>
+          <li><a href="foo.execute">foo.execute</a></li>
+          <li><a href="bar.execute">bar.execute</a></li>
+        </ul>
+      </li>
     </ul>
-    <li>Request Parameter Example</li>
-    <ul>
-      <li><a href="execute?command=foo">execute?command=foo</a></li>
-      <li><a href="execute?command=bar">execute?command=bar</a></li>
-    </ul>
-    <li>Servlet Path</li>
-    <ul>
-      <li><a href="foo.execute">foo.execute</a></li>
-      <li><a href="bar.execute">bar.execute</a></li>
-    </ul>
-  </ul>
 
-  <table border="1">
-     <tr><th>Example</th><th>Command</th><th>Count</th></tr>
-     <tr><td rowspan="2" valign="top">Path Info</td><td>/foo</td><td><c:out value="${pathinfoFooCount}" default="0"/></td></tr>
-     <tr><td>/bar</td><td><c:out value="${pathinfoBarCount}" default="0"/></td></tr>
-     <tr><td rowspan="2" valign="top">Request Parameter</td><td>foo</td><td><c:out value="${reqparamFooCount}" default="0"/></td></tr>
-     <tr><td>bar</td><td><c:out value="${reqparamBarCount}" default="0"/></td></tr>
-     <tr><td rowspan="2" valign="top">Servlet path</td><td>/foo.execute</td><td><c:out value="${servletpathFooCount}" default="0"/></td></tr>
-     <tr><td>/bar.execute</td><td><c:out value="${servletpathBarCount}" default="0"/></td></tr>
-  </table>
+    <table border="1">
+       <tr><th>Example</th><th>Command</th><th>Count</th></tr>
+       <tr><td rowspan="2" valign="top">Path Info</td><td>/foo</td><td><c:out value="${pathinfoFooCount}" default="0"/></td></tr>
+       <tr><td>/bar</td><td><c:out value="${pathinfoBarCount}" default="0"/></td></tr>
+       <tr><td rowspan="2" valign="top">Request Parameter</td><td>foo</td><td><c:out value="${reqparamFooCount}" default="0"/></td></tr>
+       <tr><td>bar</td><td><c:out value="${reqparamBarCount}" default="0"/></td></tr>
+       <tr><td rowspan="2" valign="top">Servlet path</td><td>/foo.execute</td><td><c:out value="${servletpathFooCount}" default="0"/></td></tr>
+       <tr><td>/bar.execute</td><td><c:out value="${servletpathBarCount}" default="0"/></td></tr>
+    </table>
 
   </body>
 </html>
-

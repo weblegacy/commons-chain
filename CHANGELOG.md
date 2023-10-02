@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Upgrade example-apps to HTML5 and correct html-warnings
 * Upgrade example-apps to JEE8 and new `commons-chain`
 * Revert `ChainBase.getCommands` from `protected` to `package private`
 * Change groupId from `commons-chain` to `io.github.weblegacy`
