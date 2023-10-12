@@ -198,6 +198,20 @@
         <commons.manifestfile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</commons.manifestfile>
     </properties> 
 
+    <profiles>
+        <profile>
+            <id>apps</id>
+            <activation>
+                <property>
+                    <name>apps</name>
+                </property>
+            </activation>
+            <modules>
+                <module>commons-chain-apps</module>
+            </modules>
+        </profile>
+    </profiles>
+
     <build>
         <!-- ensure jars also get NOTICE & LICENSE files -->
         <resources>

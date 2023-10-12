@@ -13,25 +13,32 @@ For documentation see [https://weblegacy.github.io/commons-chain](https://webleg
 * Apache Maven 3.5.4\+
 * JDK 11\+
 
+### MAVEN-Profiles
+
+* **apps** - Includes the example-apps into build
+  * Adds the module `commons-chain-apps`
+
 ### Building-Steps
 
 1. Clean full project  
-   `mvn clean`
+   `mvn -Papps clean`
 2. Build and test project
-   `mvn verify`
+   * with example-apps  
+     `mvn -Papps verify`
+   * without example-apps  
+     `mvn verify`
    * to skip tests  
-     add `-DskipTests` for example `mvn -DskipTests verify`
+     add `-DskipTests` for example `mvn -Papps -DskipTests verify`
 4. Generate source- and javadoc-artifacts  
-   `mvn -DskipTests package`
+   `mvn -Papps -DskipTests package`
 5. Generate site-documentation  
-   `mvn site site:stage`  
-   or  
-   `mvn clean verify site site:stage`
+   `mvn -Papps site site:stage`
 6. Publish site-documentation  
-   1. `mvn clean verify site site:stage`
-   2. `mvn scm-publish:publish-scm`
+   1. `mvn clean verify`
+   2. `mvn site site:stage`
+   3. `mvn scm-publish:publish-scm`
 7. Generate Assemblies  
-   `mvn -DskipTests package`
+   `mvn -Papps -DskipTests package`
 8. Deploy all artifacts to `Central-Repo`  
    * `mvn clean deploy` for SNAPSHOTs
    * `mvn clean deploy` for releases
@@ -39,6 +46,6 @@ For documentation see [https://weblegacy.github.io/commons-chain](https://webleg
 ### Support runs
 
 * Set version number  
-  `mvn versions:set -DnewVersion=...`
+  `mvn -Papps versions:set -DnewVersion=...`
 * Dependency Report  
-  `mvn versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`
+  `mvn -Papps versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`
