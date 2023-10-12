@@ -18,6 +18,7 @@ package org.apache.commons.chain.impl;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
@@ -42,6 +43,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * Construct a {@link Chain} with no configured {@link Command}s.
      */
     public ChainBase() {
+        this(Collections.emptyList());
     }
 
     /**
@@ -54,7 +56,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      *         is {@code null}
      */
     public ChainBase(Command<C> command) {
-        addCommand(command);
+        this(Collections.singletonList(command));
     }
 
     /**
@@ -68,12 +70,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      *         is {@code null}
      */
     public ChainBase(Command<C>[] commands) {
-        if (commands == null) {
-            throw new IllegalArgumentException();
-        }
-        for (Command<C> command : commands) {
-            addCommand(command);
-        }
+        this(Arrays.asList(commands));
     }
 
     /**
@@ -90,7 +87,11 @@ public class ChainBase<C extends Context> implements Chain<C> {
         if (commands == null) {
             throw new IllegalArgumentException();
         }
-        commands.forEach(this::addCommand);
+
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        final Command<C>[] commands_ = commands.toArray(new Command[0]);
+
+        this.commands = commands_;
     }
 
     // ----------------------------------------------------- Instance Variables
@@ -100,8 +101,7 @@ public class ChainBase<C extends Context> implements Chain<C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private Command<C>[] commands = new Command[0];
+    private Command<C>[] commands;
 
     /**
      * Flag indicating whether the configuration of our commands list
