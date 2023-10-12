@@ -203,7 +203,7 @@ public class ParameterMap<P, T> implements Map<String, T> {
      *         {@code null} if there was no mapping for {@code key}.
      *         (A {@code null} return can also indicate that the
      *         parameter-map previously associated {@code null} with
-     *         {@code key.)
+     *         {@code key}.)
      *
      * @throws UnsupportedOperationException because it is an
      *         immutable parameter-map
@@ -241,7 +241,7 @@ public class ParameterMap<P, T> implements Map<String, T> {
      *         {@code null} if there was no mapping for {@code key}.
      *         (A {@code null} return can also indicate that the
      *         parameter-map previously associated {@code null} with
-     *         {@code key.)
+     *         {@code key}.)
      *
      * @throws UnsupportedOperationException because it is an
      *         immutable parameter-map

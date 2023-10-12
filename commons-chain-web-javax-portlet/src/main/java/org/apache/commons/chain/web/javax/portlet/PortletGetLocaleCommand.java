@@ -19,7 +19,7 @@ package org.apache.commons.chain.web.javax.portlet;
 import org.apache.commons.chain.web.javax.GetLocaleCommand;
 
 /**
- * Concrete implementation of {@link AbstractGetLocaleCommand} for
+ * Concrete implementation of {@link GetLocaleCommand} for
  * the Portlet API.
  */
 public class PortletGetLocaleCommand extends GetLocaleCommand<PortletWebContext> {

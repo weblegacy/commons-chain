@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Tipfixes in Javadoc
 * Use inheritance in `site.xml` and remove unnecessary `site.xml`s
 * Include examples to maven-project as profile `apps`
 * Move examples to new directory

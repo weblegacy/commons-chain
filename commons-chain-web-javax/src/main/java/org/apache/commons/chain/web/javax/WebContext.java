@@ -29,7 +29,7 @@ import org.apache.commons.chain.impl.ContextBase;
  * tying the application to a particular underlying Java API (such as
  * servlets). It is expected that a concrete subclass of {@link WebContext}
  * for each API (such as
- * {@link org.apache.commons.chain.web.javax.servlet.ServletWebContext}) will
+ * {@code org.apache.commons.chain.web.javax.servlet.ServletWebContext}) will
  * support adapting that particular API's implementation of request and
  * response objects into this generic framework.
  *

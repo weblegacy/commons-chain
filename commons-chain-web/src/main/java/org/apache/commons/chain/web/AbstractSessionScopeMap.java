@@ -175,7 +175,7 @@ public abstract class AbstractSessionScopeMap<S, R> implements Map<String, Objec
      *         {@code null} if there was no mapping for {@code key}.
      *         (A {@code null} return can also indicate that the
      *         session-map previously associated {@code null} with
-     *         {@code key.)
+     *         {@code key}.)
      */
     @Override
     public Object put(String key, Object value) {
@@ -214,7 +214,7 @@ public abstract class AbstractSessionScopeMap<S, R> implements Map<String, Objec
      *         {@code null} if there was no mapping for {@code key}.
      *         (A {@code null} return can also indicate that the
      *         session-map previously associated {@code null} with
-     *         {@code key.)
+     *         {@code key}.)
      */
     @Override
     public Object remove(Object key) {
@@ -333,7 +333,7 @@ public abstract class AbstractSessionScopeMap<S, R> implements Map<String, Objec
 
     /**
      * Returns {@code true} if a session exists or creates a new
-     * session if the parameter {@¢ode create} is set to {@code true}.
+     * session if the parameter {@code create} is set to {@code true}.
      *
      * @param create {@code true} to create a new session if no
      *               session exists

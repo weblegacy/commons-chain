@@ -117,7 +117,7 @@ public class MutableParameterMap<P, T> extends ParameterMap<P, T> {
      *         {@code null} if there was no mapping for {@code key}.
      *         (A {@code null} return can also indicate that the
      *         parameter-map previously associated {@code null} with
-     *         {@code key.)
+     *         {@code key}.)
      */
     @Override
     public T put(String key, T value) {
@@ -155,7 +155,7 @@ public class MutableParameterMap<P, T> extends ParameterMap<P, T> {
      *         {@code null} if there was no mapping for {@code key}.
      *         (A {@code null} return can also indicate that the
      *         parameter-map previously associated {@code null} with
-     *         {@code key.)
+     *         {@code key}.)
      */
     @Override
     public T remove(Object key) {
