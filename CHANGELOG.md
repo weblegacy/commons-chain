@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Resolve dependency convergence errors
 * Change logging-framework from `commons-logging` to `slf4j-api`
 * Optimize constructors in `ChainBase`
 * Tipfixes in Javadoc
