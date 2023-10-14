@@ -16,29 +16,22 @@
  */
 package org.apache.commons.chain.apps.example;
 
-
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.javax.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * <p>Bar Command</p>
- *
- * @version $Revision$ $Date$
+ * Count Command.
  */
-
 public class CountCommand implements Command<WebContext> {
-
 
     private Logger logger = LoggerFactory.getLogger(CountCommand.class);
 
     private int count;
 
     private String attribute = "count";
-
 
     /**
      * Return the request attribute name to store the count under.
@@ -49,7 +42,6 @@ public class CountCommand implements Command<WebContext> {
         return attribute;
     }
 
-
     /**
      * Set the request attribute name to store the count under.
      *
@@ -59,24 +51,20 @@ public class CountCommand implements Command<WebContext> {
         this.attribute = attribute;
     }
 
-
     /**
-     * <p>Execute the command.</p>
+     * Execute the command.
      *
      * @param context The {@link Context} we are operating on
-     * @return <code>false</code> so that processng will continue
+     * @return {@code false} so that processing will continue
+     *
      * @throws Exception If an error occurs during execution.
      */
     public boolean execute(WebContext context) throws Exception {
-
         count++;
         logger.info("Executing: {}={}", attribute, count);
 
         context.getSessionScope().put(attribute, count);
 
         return false;
-
     }
-
-
 }

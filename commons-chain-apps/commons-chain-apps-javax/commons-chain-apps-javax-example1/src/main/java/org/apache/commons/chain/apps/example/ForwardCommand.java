@@ -16,7 +16,6 @@
  */
 package org.apache.commons.chain.apps.example;
 
-
 import javax.servlet.RequestDispatcher;
 
 import org.apache.commons.chain.Command;
@@ -26,18 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>Foo Command</p>
- *
- * @version $Revision$ $Date$
+ * Forward Command.
  */
-
 public class ForwardCommand implements Command<ServletWebContext> {
-
 
     private Logger logger = LoggerFactory.getLogger(ForwardCommand.class);
 
     private String forward;
-
 
     /**
      * Return the uri to forward to.
@@ -47,7 +41,6 @@ public class ForwardCommand implements Command<ServletWebContext> {
     public String getForward() {
         return forward;
     }
-
 
     /**
      * Set the uri to forward to.
@@ -59,14 +52,14 @@ public class ForwardCommand implements Command<ServletWebContext> {
     }
 
     /**
-     * <p>Execute the command.</p>
+     * Execute the command.
      *
      * @param context The {@link Context} we are operating on
-     * @return <code>false</code> so that processng will continue
+     * @return {@code false} so that processing will continue
+     *
      * @throws Exception If an error occurs during execution.
      */
     public boolean execute(ServletWebContext context) throws Exception {
-
         String uri = getForward(context);
         if (uri != null) {
             logger.debug("Forwarding to {}", uri);
@@ -83,14 +76,14 @@ public class ForwardCommand implements Command<ServletWebContext> {
      * Return the uri to forward to.
      *
      * @param context The {@link Context} we are operating on
+     *
      * @return The uri to forward to
      */
     protected String getForward(ServletWebContext context) {
-        String uri = (String)context.get("forward");
+        String uri = (String) context.get("forward");
         if (uri == null) {
             uri = getForward();
         }
         return uri;
     }
-
 }

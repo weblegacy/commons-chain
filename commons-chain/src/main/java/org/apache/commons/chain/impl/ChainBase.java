@@ -89,9 +89,9 @@ public class ChainBase<C extends Context> implements Chain<C> {
         }
 
         @SuppressWarnings({"unchecked", "rawtypes"})
-        final Command<C>[] commands_ = commands.toArray(new Command[0]);
+        final Command<C>[] cmds = commands.toArray(new Command[0]);
 
-        this.commands = commands_;
+        this.commands = cmds;
     }
 
     // ----------------------------------------------------- Instance Variables

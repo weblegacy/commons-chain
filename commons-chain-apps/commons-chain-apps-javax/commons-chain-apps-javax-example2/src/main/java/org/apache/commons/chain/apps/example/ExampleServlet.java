@@ -39,9 +39,9 @@ public class ExampleServlet extends HttpServlet {
     private String servletName;
 
     /**
-     * <p>Cache the name of the servlet.</p>
+     * Cache the name of the servlet.
      *
-     * @exception ServletException if an initialization error occurs
+     * @throws ServletException if an initialization error occurs
      */
     public void init() throws ServletException {
         super.init();
@@ -50,17 +50,16 @@ public class ExampleServlet extends HttpServlet {
         logger.info("Initializing chain example servlet '{}'", servletName);
     }
 
-
     /**
-     * <p>Configure a {@link ServletWebContext} for the current request, and
-     * pass it to the <code>execute()</code> method of the specified
-     * {@link Command}, loaded from our configured {@link Catalog}.</p>
+     * Configure a {@link ServletWebContext} for the current request, and
+     * pass it to the {@code execute()} method of the specified
+     * {@link Command}, loaded from our configured {@link Catalog}.
      *
      * @param request The request we are processing
      * @param response The response we are creating
      *
-     * @exception IOException if an input/output error occurs
-     * @exception ServletException if a servlet exception occurs
+     * @throws IOException if an input/output error occurs
+     * @throws ServletException if a servlet exception occurs
      */
     public void service(HttpServletRequest request,
                         HttpServletResponse response)
@@ -80,7 +79,5 @@ public class ExampleServlet extends HttpServlet {
         } catch (Exception e) {
             throw new ServletException(e);
         }
-
     }
-
 }
