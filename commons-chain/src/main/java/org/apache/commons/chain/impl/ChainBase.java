@@ -24,8 +24,8 @@ import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Convenience base class for {@link Chain} implementations.
@@ -196,8 +196,8 @@ public class ChainBase<C extends Context> implements Chain<C> {
                     }
                 } catch (Exception e) {
                     // Silently ignore
-                    Log log = LogFactory.getLog(ChainBase.class);
-                    log.trace("Filter-postprocessing", e);
+                    Logger logger = LoggerFactory.getLogger(ChainBase.class);
+                    logger.trace("Filter-postprocessing", e);
                 }
             }
         }

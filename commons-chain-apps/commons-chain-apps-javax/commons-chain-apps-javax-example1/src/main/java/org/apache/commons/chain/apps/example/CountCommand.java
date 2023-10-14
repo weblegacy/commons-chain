@@ -20,8 +20,8 @@ package org.apache.commons.chain.apps.example;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.web.javax.WebContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -33,7 +33,7 @@ import org.apache.commons.logging.LogFactory;
 public class CountCommand implements Command<WebContext> {
 
 
-    private Log log = LogFactory.getLog(CountCommand.class);
+    private Logger logger = LoggerFactory.getLogger(CountCommand.class);
 
     private int count;
 
@@ -70,7 +70,7 @@ public class CountCommand implements Command<WebContext> {
     public boolean execute(WebContext context) throws Exception {
 
         count++;
-        log.info("Executing: " + attribute + "=" + count);
+        logger.info("Executing: {}={}", attribute, count);
 
         context.getSessionScope().put(attribute, count);
 

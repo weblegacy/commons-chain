@@ -19,7 +19,7 @@ module org.apache.commons.chain.web.javax.faces {
     requires transitive org.apache.commons.chain;
     requires transitive org.apache.commons.chain.web.javax;
 
-    requires commons.logging;
+    requires org.slf4j;
     requires transitive javax.faces.api;
 
     exports org.apache.commons.chain.web.javax.faces;

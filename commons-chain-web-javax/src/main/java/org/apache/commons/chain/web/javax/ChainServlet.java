@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.config.ConfigParser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@code Servlet} that automatically scans chain configuration files
@@ -151,15 +151,12 @@ public class ChainServlet extends HttpServlet {
      */
     @Override
     public void init() throws ServletException {
-        final Log log = LogFactory.getLog(ChainServlet.class);
+        final Logger logger = LoggerFactory.getLogger(ChainServlet.class);
         final ServletConfig config = getServletConfig();
         final ServletContext context = getServletContext();
-        if (log.isInfoEnabled()) {
-            log.info("Initializing chain servlet '"
-                     + config.getServletName() + "'");
-        }
+        logger.info("Initializing chain servlet '{}'", config.getServletName());
 
-        ChainInit.initialize(context, config.getInitParameter(CONFIG_ATTR), log, false);
+        ChainInit.initialize(context, config.getInitParameter(CONFIG_ATTR), logger, false);
     }
 
     /**

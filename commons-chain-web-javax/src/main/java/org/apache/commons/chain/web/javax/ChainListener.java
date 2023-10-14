@@ -24,8 +24,8 @@ import javax.servlet.ServletException;
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.config.ConfigParser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@code ServletContextListener} that automatically
@@ -151,12 +151,12 @@ public class ChainListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        final Log log = LogFactory.getLog(ChainListener.class);
-        log.info("Initializing chain listener");
+        final Logger logger = LoggerFactory.getLogger(ChainListener.class);
+        logger.info("Initializing chain listener");
         final ServletContext context = event.getServletContext();
 
         try {
-            ChainInit.initialize(context, context.getInitParameter(CONFIG_ATTR), log, true);
+            ChainInit.initialize(context, context.getInitParameter(CONFIG_ATTR), logger, true);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }

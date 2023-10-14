@@ -19,7 +19,7 @@ module org.apache.commons.chain.web.javax {
     requires transitive org.apache.commons.chain;
     requires transitive org.apache.commons.chain.web;
 
-    requires commons.logging;
+    requires org.slf4j;
     requires transitive javax.servlet.api;
 
     exports org.apache.commons.chain.web.javax;

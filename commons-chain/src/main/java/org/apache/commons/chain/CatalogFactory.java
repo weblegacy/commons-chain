@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.chain.impl.CatalogFactoryBase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A {@link CatalogFactory} is a class used to store and retrieve
@@ -154,15 +154,15 @@ public abstract class CatalogFactory<C extends Context> {
         if (catalogName != null) {
             catalog = this.getCatalog(catalogName);
             if (catalog == null) {
-                Log log = LogFactory.getLog(CatalogFactory.class);
-                log.warn("No catalog found for name: " + catalogName + ".");
+                Logger logger = LoggerFactory.getLogger(CatalogFactory.class);
+                logger.warn("No catalog found for name: {}.", catalogName);
                 return null;
             }
         } else {
             catalog = this.getCatalog();
             if (catalog == null) {
-                Log log = LogFactory.getLog(CatalogFactory.class);
-                log.warn("No default catalog found.");
+                Logger logger = LoggerFactory.getLogger(CatalogFactory.class);
+                logger.warn("No default catalog found.");
                 return null;
             }
         }

@@ -25,8 +25,8 @@ import javax.servlet.ServletContext;
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.web.CheckedConsumer;
 import org.apache.commons.chain.web.CheckedFunction;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility methods for loading class loader and web application resources
@@ -95,7 +95,7 @@ final class ChainResources {
         if (resources == null) {
             return;
         }
-        Log log = LogFactory.getLog(ChainResources.class);
+        Logger logger = LoggerFactory.getLogger(ChainResources.class);
         String[] paths = getResourcePaths(resources);
         String path = null;
         try {
@@ -105,9 +105,7 @@ final class ChainResources {
                 if (url == null) {
                     throw new IllegalStateException("Missing chain config resource '" + path + "'");
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Loading chain config resource '" + path + "'");
-                }
+                logger.debug("Loading chain config resource '{}'", path);
                 parse.accept(url);
             }
         } catch (Exception e) {

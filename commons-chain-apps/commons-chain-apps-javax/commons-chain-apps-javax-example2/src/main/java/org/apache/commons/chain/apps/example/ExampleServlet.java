@@ -17,16 +17,18 @@
 package org.apache.commons.chain.apps.example;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.chain.Catalog;
 import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.web.javax.servlet.ServletWebContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Custom chain servlet implementation.
@@ -43,12 +45,9 @@ public class ExampleServlet extends HttpServlet {
      */
     public void init() throws ServletException {
         super.init();
-        Log log = LogFactory.getLog(ExampleServlet.class);
+        Logger logger = LoggerFactory.getLogger(ExampleServlet.class);
         servletName = getServletConfig().getServletName();
-        if (log.isInfoEnabled()) {
-            log.info("Initializing chain example servlet '"
-                     + servletName + "'");
-        }
+        logger.info("Initializing chain example servlet '{}'", servletName);
     }
 
 

@@ -17,12 +17,13 @@
 package org.apache.commons.chain.apps.example;
 
 
+import javax.servlet.RequestDispatcher;
+
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.chain.web.javax.servlet.ServletWebContext;
-import javax.servlet.RequestDispatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Foo Command</p>
@@ -33,7 +34,7 @@ import javax.servlet.RequestDispatcher;
 public class ForwardCommand implements Command<ServletWebContext> {
 
 
-    private Log log = LogFactory.getLog(ForwardCommand.class);
+    private Logger logger = LoggerFactory.getLogger(ForwardCommand.class);
 
     private String forward;
 
@@ -68,16 +69,12 @@ public class ForwardCommand implements Command<ServletWebContext> {
 
         String uri = getForward(context);
         if (uri != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Forwarding to " + uri);
-            }
+            logger.debug("Forwarding to {}", uri);
             RequestDispatcher rd = context.getContext().getRequestDispatcher(uri);
             rd.forward(context.getRequest(), context.getResponse());
             return true;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("No forward found");
-            }
+            logger.debug("No forward found");
             return false;
         }
     }

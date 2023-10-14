@@ -38,14 +38,14 @@ import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
 
 import org.apache.commons.chain.web.MockEnumeration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Mock Object for {@code ServletContext} (Version 2.3)
  */
 public class MockServletContext implements ServletContext {
-    private Log log = LogFactory.getLog(MockServletContext.class);
+    private Logger logger = LoggerFactory.getLogger(MockServletContext.class);
     private Map<String, Object> attributes = new HashMap<>();
     private Map<String, String> parameters = new HashMap<>();
 
@@ -165,18 +165,18 @@ public class MockServletContext implements ServletContext {
 
     @Override
     public void log(String message) {
-        log.info(message);
+        logger.info(message);
     }
 
     @Deprecated
     @Override
     public void log(Exception exception, String message) {
-        log.error(message, exception);
+        logger.error(message, exception);
     }
 
     @Override
     public void log(String message, Throwable exception) {
-        log.error(message, exception);
+        logger.error(message, exception);
     }
 
     @Override

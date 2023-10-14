@@ -19,7 +19,7 @@ module org.apache.commons.chain {
     requires transitive java.desktop;
     requires transitive java.xml;
 
-    requires commons.logging;
+    requires org.slf4j;
     requires transitive commons.digester;
 
     exports org.apache.commons.chain;

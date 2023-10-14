@@ -31,7 +31,7 @@ import org.apache.commons.chain.config.ConfigParser;
 import org.apache.commons.chain.impl.CatalogBase;
 import org.apache.commons.chain.web.CheckedConsumer;
 import org.apache.commons.digester.RuleSet;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 /**
  * Context-initializer that automatically scans chain configuration files
@@ -144,11 +144,11 @@ final class ChainInit {
      *
      * @param context the servlet-context
      * @param attr the value of the {@code CONFIG_ATTR}
-     * @param log to use for logging
+     * @param logger to use for logging
      * @param parseJarResources {@code true} to parse resources in jar-files
      */
     @SuppressWarnings("deprecation")
-    static void initialize(ServletContext context, String attr, Log log, boolean parseJarResources) throws ServletException {
+    static void initialize(ServletContext context, String attr, Logger logger, boolean parseJarResources) throws ServletException {
         String classResources = context.getInitParameter(CONFIG_CLASS_RESOURCE);
         String ruleSet = context.getInitParameter(RULE_SET);
         String webResources = context.getInitParameter(CONFIG_WEB_RESOURCE);
@@ -190,7 +190,7 @@ final class ChainInit {
             parse = url -> parser.parse(cat, url);
         }
         if (parseJarResources) {
-            parseJarResources(context, parse, log);
+            parseJarResources(context, parse, logger);
         }
         ChainResources.parseClassResources(classResources, parse);
         ChainResources.parseWebResources(context, webResources, parse);
@@ -210,10 +210,10 @@ final class ChainInit {
      * @param <E> the type of the exception from parse-function
      * @param context {@code ServletContext} for this web application
      * @param parse parse-function to parse the XML document
-     * @param log to use for logging
+     * @param logger to use for logging
      */
     private static <E extends Exception> void parseJarResources(ServletContext context,
-                CheckedConsumer<URL, E> parse, Log log) {
+                CheckedConsumer<URL, E> parse, Logger logger) {
 
         Set<String> jars = context.getResourcePaths("/WEB-INF/lib");
         if (jars == null) {
@@ -242,21 +242,15 @@ final class ChainInit {
                     is = resourceURL.openStream();
                 } catch (Exception e) {
                     // means there is no such resource
-                    if (log.isTraceEnabled()) {
-                        log.trace("OpenStream: " + resourceURL, e);
-                    }
+                    logger.atTrace().setMessage("OpenStream: {}").addArgument(resourceURL).setCause(e).log();
                 }
                 if (is == null) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Not Found: " + resourceURL);
-                    }
+                    logger.debug("Not Found: {}", resourceURL);
                     continue;
                 } else {
                     is.close();
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Parsing: " + resourceURL);
-                }
+                logger.debug("Parsing: {}", resourceURL);
                 parse.accept(resourceURL);
             } catch (Exception e) {
                 throw new RuntimeException("Exception parsing chain config resource '"
