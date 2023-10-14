@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Convert `README`s from example-apps to Markdown
 * Resolve all checkstyle-messages
 * Resolve dependency convergence errors
 * Change logging-framework from `commons-logging` to `slf4j-api`
