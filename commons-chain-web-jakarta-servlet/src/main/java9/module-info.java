@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web to
-        org.apache.commons.chain.web.jakarta,
-        org.apache.commons.chain.web.jakarta.servlet,
-        org.apache.commons.chain.web.javax,
-        org.apache.commons.chain.web.javax.portlet,
-        org.apache.commons.chain.web.javax.servlet;
+@SuppressWarnings({"requires-automatic", "requires-transitive-automatic"})
+module org.apache.commons.chain.web.jakarta.servlet {
+    requires transitive org.apache.commons.chain;
+    requires transitive org.apache.commons.chain.web.jakarta;
+
+    requires transitive jakarta.servlet;
+
+    exports org.apache.commons.chain.web.jakarta.servlet;
 }

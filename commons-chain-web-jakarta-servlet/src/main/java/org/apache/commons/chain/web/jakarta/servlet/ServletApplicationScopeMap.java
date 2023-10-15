@@ -14,11 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web to
-        org.apache.commons.chain.web.jakarta,
-        org.apache.commons.chain.web.jakarta.servlet,
-        org.apache.commons.chain.web.javax,
-        org.apache.commons.chain.web.javax.portlet,
-        org.apache.commons.chain.web.javax.servlet;
+package org.apache.commons.chain.web.jakarta.servlet;
+
+import org.apache.commons.chain.web.MutableParameterMap;
+
+import jakarta.servlet.ServletContext;
+
+/**
+ * Private implementation of {@code Map} for servlet context
+ * attributes.
+ *
+ * @author Craig R. McClanahan
+ */
+final class ServletApplicationScopeMap extends MutableParameterMap<ServletContext, Object> {
+
+    /**
+     * The constructor for the servlet context attributes.
+     *
+     * @param context the servlet-context for the adapter.
+     */
+    ServletApplicationScopeMap(ServletContext context) {
+        super(context, context::getAttribute, context::getAttributeNames,
+                context::removeAttribute, context::setAttribute);
+    }
 }

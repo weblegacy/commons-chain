@@ -14,11 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web to
-        org.apache.commons.chain.web.jakarta,
-        org.apache.commons.chain.web.jakarta.servlet,
-        org.apache.commons.chain.web.javax,
-        org.apache.commons.chain.web.javax.portlet,
-        org.apache.commons.chain.web.javax.servlet;
+package org.apache.commons.chain.web.jakarta.servlet;
+
+import org.apache.commons.chain.web.jakarta.SetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link SetLocaleCommand} for
+ * the Servlet API.
+ */
+public class ServletSetLocaleCommand extends SetLocaleCommand<ServletWebContext> {
+
+    /**
+     * Construct a new instance to set the locale into the
+     * Servlet API.
+     */
+    public ServletSetLocaleCommand() {
+        super((context, locale) -> context.getResponse().setLocale(locale));
+    }
 }

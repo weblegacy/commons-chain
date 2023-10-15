@@ -14,11 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web to
-        org.apache.commons.chain.web.jakarta,
-        org.apache.commons.chain.web.jakarta.servlet,
-        org.apache.commons.chain.web.javax,
-        org.apache.commons.chain.web.javax.portlet,
-        org.apache.commons.chain.web.javax.servlet;
+package org.apache.commons.chain.web.jakarta.servlet;
+
+import org.apache.commons.chain.web.ParameterMap;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+/**
+ * Private implementation of {@code Map} for servlet parameter
+ * name-value.
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+final class ServletParamMap extends ParameterMap<HttpServletRequest, String> {
+
+    /**
+     * The constructor for the servlet parameter name-value.
+     *
+     * @param request the servlet-request for the adapter.
+     */
+    ServletParamMap(HttpServletRequest request) {
+        super(request, request::getParameter, request::getParameterNames);
+    }
 }

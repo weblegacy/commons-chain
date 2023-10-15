@@ -14,11 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web to
-        org.apache.commons.chain.web.jakarta,
-        org.apache.commons.chain.web.jakarta.servlet,
-        org.apache.commons.chain.web.javax,
-        org.apache.commons.chain.web.javax.portlet,
-        org.apache.commons.chain.web.javax.servlet;
+package org.apache.commons.chain.web.jakarta.faces;
+
+import org.apache.commons.chain.web.jakarta.GetLocaleCommand;
+
+/**
+ * Concrete implementation of {@link GetLocaleCommand} for
+ * the JavaServer Faces API.
+ */
+public class FacesGetLocaleCommand extends GetLocaleCommand<FacesWebContext> {
+
+    /**
+     * Construct a new instance to get the locale from the
+     * JavaServer Faces API.
+     */
+    public FacesGetLocaleCommand() {
+        super(c -> c.getContext().getViewRoot().getLocale());
+    }
 }

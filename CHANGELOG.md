@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add sub-modules for JEE9+ incl. example-apps (jakarta-namespace)
 * Convert `README`s from example-apps to Markdown
 * Resolve all checkstyle-messages
 * Resolve dependency convergence errors

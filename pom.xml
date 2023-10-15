@@ -161,6 +161,9 @@
     <modules>
         <module>commons-chain</module>
         <module>commons-chain-web</module>
+        <module>commons-chain-web-jakarta</module>
+        <module>commons-chain-web-jakarta-faces</module>
+        <module>commons-chain-web-jakarta-servlet</module>
         <module>commons-chain-web-javax</module>
         <module>commons-chain-web-javax-faces</module>
         <module>commons-chain-web-javax-portlet</module>
@@ -571,6 +574,7 @@
                 <version>${slf4jVersion}</version>
             </dependency>
 
+            <!-- Javax-Part -->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -608,6 +612,32 @@
                 <version>${javaxFacesVersion}</version>
             </dependency>
 
+            <!-- Jakarta-Part -->
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>5.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.faces</groupId>
+                <artifactId>jakarta.faces-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.interceptor</groupId>
+                <artifactId>jakarta.interceptor-api</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.transaction</groupId>
+                <artifactId>jakarta.transaction-api</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+
+            <!-- Test-Part -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
@@ -647,6 +677,12 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>commons-chain-web-javax</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>commons-chain-web-jakarta</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

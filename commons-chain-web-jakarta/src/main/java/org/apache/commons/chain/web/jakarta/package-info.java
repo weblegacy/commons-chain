@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.apache.commons.chain.web {
-    exports org.apache.commons.chain.web to
-        org.apache.commons.chain.web.jakarta,
-        org.apache.commons.chain.web.jakarta.servlet,
-        org.apache.commons.chain.web.javax,
-        org.apache.commons.chain.web.javax.portlet,
-        org.apache.commons.chain.web.javax.servlet;
-}
+
+/**
+ * Basis for specialized {@code Context} implementations suitable for use
+ * in web applications (JEE9+), and generic {@code Command} implementations
+ * useful across web application environments.
+ */
+package org.apache.commons.chain.web.jakarta;
