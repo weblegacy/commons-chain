@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `checkstyle` from 10.12.3 to 10.12.4
 * Fix some more dependency-versions
 * Rename packages from example-apps
 * Add sub-modules for JEE9+ incl. example-apps (jakarta-namespace)
