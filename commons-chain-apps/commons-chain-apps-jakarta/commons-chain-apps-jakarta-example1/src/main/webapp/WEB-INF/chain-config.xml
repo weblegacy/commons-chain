@@ -27,17 +27,17 @@
         <!-- Command that maps "Path Info" patterns to Commands -->
         <chain name="command">
             <command                          className="org.apache.commons.chain.web.jakarta.servlet.PathInfoMapper"/>
-            <command forward="/pathinfo.jsp"  className="org.apache.commons.chain.apps.example.ForwardCommand"/>
+            <command forward="/pathinfo.jsp"  className="org.apache.commons.chain.apps.jakarta.examplea.ForwardCommand"/>
         </chain>
 
         <!-- Foo Command -->
         <chain name="/foo">
-            <command attribute="pathinfoFooCount" className="org.apache.commons.chain.apps.example.CountCommand"/>
+            <command attribute="pathinfoFooCount" className="org.apache.commons.chain.apps.jakarta.examplea.CountCommand"/>
         </chain>
 
         <!-- Bar Command -->
         <chain name="/bar">
-            <command attribute="pathinfoBarCount" className="org.apache.commons.chain.apps.example.CountCommand"/>
+            <command attribute="pathinfoBarCount" className="org.apache.commons.chain.apps.jakarta.examplea.CountCommand"/>
         </chain>
 
     </catalog>
@@ -48,17 +48,17 @@
         <!-- Command that maps a "Request Parameter" to Commands -->
         <chain name="command">
             <command catalogName="reqparam"  className="org.apache.commons.chain.web.jakarta.servlet.RequestParameterMapper"/>
-            <command forward="/reqparam.jsp" className="org.apache.commons.chain.apps.example.ForwardCommand"/>
+            <command forward="/reqparam.jsp" className="org.apache.commons.chain.apps.jakarta.examplea.ForwardCommand"/>
         </chain>
 
         <!-- Foo Command -->
         <chain name="foo">
-            <command attribute="reqparamFooCount" className="org.apache.commons.chain.apps.example.CountCommand"/>
+            <command attribute="reqparamFooCount" className="org.apache.commons.chain.apps.jakarta.examplea.CountCommand"/>
         </chain>
 
         <!-- Bar Command -->
         <chain name="bar">
-            <command attribute="reqparamBarCount" className="org.apache.commons.chain.apps.example.CountCommand"/>
+            <command attribute="reqparamBarCount" className="org.apache.commons.chain.apps.jakarta.examplea.CountCommand"/>
         </chain>
 
     </catalog>
@@ -69,17 +69,17 @@
         <!-- Command that maps "Servlet Path" patterns to Commands -->
         <chain name="command">
             <command catalogName="servletpath"  className="org.apache.commons.chain.web.jakarta.servlet.ServletPathMapper"/>
-            <command forward="/servletpath.jsp" className="org.apache.commons.chain.apps.example.ForwardCommand"/>
+            <command forward="/servletpath.jsp" className="org.apache.commons.chain.apps.jakarta.examplea.ForwardCommand"/>
         </chain>
 
         <!-- Foo Command -->
         <chain name="/foo.execute">
-            <command attribute="servletpathFooCount" className="org.apache.commons.chain.apps.example.CountCommand"/>
+            <command attribute="servletpathFooCount" className="org.apache.commons.chain.apps.jakarta.examplea.CountCommand"/>
         </chain>
 
         <!-- Bar Command -->
         <chain name="/bar.execute">
-            <command attribute="servletpathBarCount" className="org.apache.commons.chain.apps.example.CountCommand"/>
+            <command attribute="servletpathBarCount" className="org.apache.commons.chain.apps.jakarta.examplea.CountCommand"/>
         </chain>
 
 

@@ -18,4 +18,4 @@
 /**
  * The code for the example.
  */
-package org.apache.commons.chain.apps.example;
+package org.apache.commons.chain.apps.jakarta.exampleb;

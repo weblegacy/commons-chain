@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain.apps.example;
+package org.apache.commons.chain.apps.javax.exampleb;
+
+import javax.servlet.RequestDispatcher;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.chain.web.jakarta.servlet.ServletWebContext;
+import org.apache.commons.chain.web.javax.servlet.ServletWebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jakarta.servlet.RequestDispatcher;
 
 /**
  * Forward Command.

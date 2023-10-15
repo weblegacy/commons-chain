@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain.apps.example;
+package org.apache.commons.chain.apps.javax.exampleb;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;

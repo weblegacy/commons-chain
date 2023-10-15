@@ -38,21 +38,21 @@
     <!-- "Path Info" Servlet Configuration -->
     <servlet>
         <servlet-name>pathinfo</servlet-name>
-        <servlet-class>org.apache.commons.chain.apps.example.ExampleServlet</servlet-class>
+        <servlet-class>org.apache.commons.chain.apps.javax.exampleb.ExampleServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!-- "Request Parameter" Servlet Configuration -->
     <servlet>
         <servlet-name>reqparam</servlet-name>
-        <servlet-class>org.apache.commons.chain.apps.example.ExampleServlet</servlet-class>
+        <servlet-class>org.apache.commons.chain.apps.javax.exampleb.ExampleServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
 
     <!-- "Servlet Path" Servlet Configuration -->
     <servlet>
         <servlet-name>servletpath</servlet-name>
-        <servlet-class>org.apache.commons.chain.apps.example.ExampleServlet</servlet-class>
+        <servlet-class>org.apache.commons.chain.apps.javax.exampleb.ExampleServlet</servlet-class>
         <load-on-startup>3</load-on-startup>
     </servlet>
 

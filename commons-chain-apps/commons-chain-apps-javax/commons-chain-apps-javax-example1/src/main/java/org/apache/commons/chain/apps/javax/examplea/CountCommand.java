@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.chain.apps.example;
+package org.apache.commons.chain.apps.javax.examplea;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.chain.web.jakarta.WebContext;
+import org.apache.commons.chain.web.javax.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
