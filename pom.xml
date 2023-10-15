@@ -582,6 +582,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.servlet</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+
+            <dependency>
                 <groupId>javax.servlet.jsp</groupId>
                 <artifactId>jsp-api</artifactId>
                 <version>2.2</version>
@@ -617,6 +623,26 @@
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
                 <version>5.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.el</groupId>
+                <artifactId>jakarta.el-api</artifactId>
+                <version>4.0.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.ejb</groupId>
+                <artifactId>jakarta.ejb-api</artifactId>
+                <version>4.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.faces</artifactId>
+                <classifier>sources</classifier>
+                <version>3.0.5</version>
             </dependency>
 
             <dependency>

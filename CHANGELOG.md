@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Fix some more dependency-versions
 * Rename packages from example-apps
 * Add sub-modules for JEE9+ incl. example-apps (jakarta-namespace)
 * Convert `README`s from example-apps to Markdown
