@@ -36,7 +36,7 @@
     <url>https://weblegacy.github.io/commons-chain/</url>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/weblegacy/commons-chain/issues</url>
+        <url>https://github.com/weblegacy/commons-chain/issues/</url>
     </issueManagement>
     <inceptionYear>2003</inceptionYear>
 
@@ -393,6 +393,21 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-changes-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>validate-changes</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>changes-validate</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>true</failOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <executions>
                     <execution>
@@ -728,11 +743,14 @@
 
             <plugin>
                 <artifactId>maven-changes-plugin</artifactId>
-                <configuration>
-                    <xmlPath>${basedir}/src/changes/changes.xml</xmlPath>
-                </configuration>
                 <reportSets>
                     <reportSet>
+                        <configuration>
+                            <teamlist>team.html</teamlist>
+                            <issueLinkTemplatePerSystem>
+                                <jira>https://issues.apache.org/jira/browse/%ISSUE%</jira>
+                            </issueLinkTemplatePerSystem>
+                        </configuration>
                         <reports>
                             <report>changes-report</report>
                         </reports>

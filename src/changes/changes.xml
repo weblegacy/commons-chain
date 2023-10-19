@@ -33,7 +33,9 @@ property to the number of days since the last release.
 The <action> type attribute can be add,update,fix,remove.
 -->
 
-<document>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <properties>
     <title>Release Notes</title>
   </properties>
@@ -43,37 +45,37 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="niallp" type="add">
          Chain 1.2 is the first OSGi-enabled release.
       </action>
-      <action dev="niallp" type="add" issue="CHAIN-36">
+      <action dev="niallp" type="add" issue="CHAIN-36" system="jira">
          Add Example webapp for Servlet Mapper Commands
       </action>
       <action dev="rahul" type="update">
          Upgrade Commons Logging dependency to 1.1.1
       </action>
-      <action dev="niallp" type="update" issue="CHAIN-32" due-to="Joshua Graham">
+      <action dev="niallp" type="update" issue="CHAIN-32" system="jira" due-to="Joshua Graham">
          Improve instantiation performance of ContextBase subclasses.
       </action>
-      <action dev="niallp" type="update" issue="CHAIN-4" due-to="Joe Germuska">
+      <action dev="niallp" type="update" issue="CHAIN-4" system="jira" due-to="Joe Germuska">
          Update servlet implementation classes to be aware of CatalogFactory
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-44" due-to="FindBugs">
+      <action dev="niallp" type="fix" issue="CHAIN-44" system="jira" due-to="FindBugs">
          CatalogFactory instance variable prevents ChainProcessor from being serializable.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-43" due-to="Ales Dolecek">
+      <action dev="niallp" type="fix" issue="CHAIN-43" system="jira" due-to="Ales Dolecek">
          ChainListener URL translation does not work as expected.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-42" due-to="Isaac Shabtay">
+      <action dev="niallp" type="fix" issue="CHAIN-42" system="jira" due-to="Isaac Shabtay">
          Various scope mappers use incorrect equalization.
       </action>
-      <action dev="skitching" type="fix" issue="CHAIN-41" due-to="Isaac Shabtay">
+      <action dev="skitching" type="fix" issue="CHAIN-41" system="jira" due-to="Isaac Shabtay">
          Ant build fails due to usage of old Digester.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-35">
+      <action dev="niallp" type="fix" issue="CHAIN-35" system="jira">
          PathInfoMapper command can not obtain the current catalog instance.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-34" due-to="Mark Vedder">
+      <action dev="niallp" type="fix" issue="CHAIN-34" system="jira" due-to="Mark Vedder">
          Unbalanced tags in JavaDoc for ContextBase class.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-33">
+      <action dev="niallp" type="fix" issue="CHAIN-33" system="jira">
          Upgrade to Commons Digester 1.8 to fix bug loading webapp resources.
       </action>
       <action dev="niallp" type="fix">
@@ -83,41 +85,41 @@ The <action> type attribute can be add,update,fix,remove.
     </release>
 
     <release version="1.1" date="2006-06-14">
-      <action dev="niallp" type="fix" issue="CHAIN-30">
+      <action dev="niallp" type="fix" issue="CHAIN-30" system="jira">
          ServletSessionScopeMap always forces a Session to be Created.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-31">
+      <action dev="niallp" type="fix" issue="CHAIN-31" system="jira">
          Portlet Map implementations' entry Set should contain Map.Entry elements.
       </action>
-      <action dev="niallp" type="add" issue="CHAIN-28">
+      <action dev="niallp" type="add" issue="CHAIN-28" system="jira">
         Provide a Map of Cookies in the WebContext.
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-29">
+      <action dev="niallp" type="fix" issue="CHAIN-29" system="jira">
          Remove Static Log instances - see
          http://wiki.apache.org/commons/Logging/StaticLog
       </action>
-      <action dev="niallp" type="fix" issue="CHAIN-11">
+      <action dev="niallp" type="fix" issue="CHAIN-11" system="jira">
          Modify DispatchCommand so that it will compile using JDK 1.3 (remove JDK 1.4 method).
       </action>
       <action dev="germuska" type="fix">
          DispatchCommand - fix bug in handling InvocationTargetException.
       </action>
-      <action dev="germuska" type="fix" issue="CHAIN-9" due-to="Wendy Smoak">
+      <action dev="germuska" type="fix" issue="CHAIN-9" system="jira" due-to="Wendy Smoak">
          Maven build updates.
       </action>
       <action dev="germuska" type="update">
          CatalogBase - add constructor which takes an already built map of commands, for easier use in dependency-injection environments.
       </action>
-      <action dev="germuska" type="fix" issue="CHAIN-25">
+      <action dev="germuska" type="fix" issue="CHAIN-25" system="jira">
          DispatchCommand should unwrap InvocationTargetException.
       </action>
       <action dev="germuska" type="update">
          Expose catalogFactory so that subclasses can get at it.
       </action>
-      <action dev="germuska" type="update" issue="CHAIN-3">
+      <action dev="germuska" type="update" issue="CHAIN-3" system="jira">
          Decouple CatalogFactory lookup from LookupAction.
       </action>
-      <action dev="craigmcc" type="fix" issue="CHAIN-12" due-to="Jeff Ramsdale and Dennis Lundberg">
+      <action dev="craigmcc" type="fix" issue="CHAIN-12" system="jira" due-to="Jeff Ramsdale and Dennis Lundberg">
          Make ContextBase live up to the Serializable contract that it inherits by virtue of extending HashMap.
       </action>
       <action dev="martinc" type="update">
@@ -126,52 +128,52 @@ The <action> type attribute can be add,update,fix,remove.
       <action dev="germuska" type="update">
          Add support for using LookupCommand in a way which does not pass through the result from the looked up command.
       </action>
-      <action dev="jmitchell" type="add" issue="CHAIN-14" due-to="Sean Schofield">
+      <action dev="jmitchell" type="add" issue="CHAIN-14" system="jira" due-to="Sean Schofield">
          Add new DispatchLookupCommand.
       </action>
-      <action dev="jmitchell" type="add" issue="CHAIN-26" due-to="Sean Schofield">
+      <action dev="jmitchell" type="add" issue="CHAIN-26" system="jira" due-to="Sean Schofield">
          Add new test for LookupCommand.
       </action>
-      <action dev="germuska" type="add" issue="CHAIN-20">
+      <action dev="germuska" type="add" issue="CHAIN-20" system="jira">
          Add new  DispatchCommand.
       </action>
-      <action dev="jmitchell" type="fix" issue="CHAIN-6" due-to="William Slough and Sean Schofield">
+      <action dev="jmitchell" type="fix" issue="CHAIN-6" system="jira" due-to="William Slough and Sean Schofield">
          CopyCommand does not work unless setValue is called.
       </action>
-      <action dev="craigmcc" type="add" issue="CHAIN-19" due-to="Joe Germuska">
+      <action dev="craigmcc" type="add" issue="CHAIN-19" system="jira" due-to="Joe Germuska">
          Provide a  mechanism for encoding catalog and command in a single string
       </action>
-      <action dev="martinc" type="fix" issue="CHAIN-1" due-to="Sergio Moretto">
+      <action dev="martinc" type="fix" issue="CHAIN-1" system="jira" due-to="Sergio Moretto">
          Code fragment from 'cookbook' is incorrect.
       </action>
     </release>
 
     <release version="1.0" date="2004-12-09" description="Initial Release">
-      <action dev="mardon" type="fix" issue="CHAIN-5" due-to="Manfred Wolff">
+      <action dev="mardon" type="fix" issue="CHAIN-5" system="jira" due-to="Manfred Wolff">
          Make CatalogBase.getCommand() thread safe.
       </action>
-      <action dev="craigmcc" type="update" issue="CHAIN-2" due-to="Sean Schofield">
+      <action dev="craigmcc" type="update" issue="CHAIN-2" system="jira" due-to="Sean Schofield">
          LookupCommand should use new CatalogFactory.
       </action>
-      <action dev="craigmcc" type="fix" issue="CHAIN-10" due-to="Sean Schofield">
+      <action dev="craigmcc" type="fix" issue="CHAIN-10" system="jira" due-to="Sean Schofield">
          Sample catalog.xml missing &lt;catalog&gt; tag.
       </action>
-      <action dev="craigmcc" type="add" issue="CHAIN-7" due-to="Sean Schofield">
+      <action dev="craigmcc" type="add" issue="CHAIN-7" system="jira" due-to="Sean Schofield">
          Add missing new class ConfigCatalogRule.
       </action>
-      <action dev="craigmcc" type="update" issue="CHAIN-21">
+      <action dev="craigmcc" type="update" issue="CHAIN-21" system="jira">
          Make the impl. class of chainbase configurable.
       </action>
-      <action dev="craigmcc" type="fix" issue="CHAIN-23" due-to="Sean Schofield">
+      <action dev="craigmcc" type="fix" issue="CHAIN-23" system="jira" due-to="Sean Schofield">
          Support for new CatalogFactory.
       </action>
-      <action dev="martinc" type="fix" issue="CHAIN-8" due-to="Otis Gospodnetic">
+      <action dev="martinc" type="fix" issue="CHAIN-8" system="jira" due-to="Otis Gospodnetic">
          tabs to spaces, Log name fix.
       </action>
-      <action dev="husted" type="fix" issue="CHAIN-15" due-to="Joe Germuska">
+      <action dev="husted" type="fix" issue="CHAIN-15" system="jira" due-to="Joe Germuska">
          build.properties.sample should add commons-logging.
       </action>
-      <action dev="husted" type="update" issue="CHAIN-22" due-to="Matthew Sgarlata">
+      <action dev="husted" type="update" issue="CHAIN-22" system="jira" due-to="Matthew Sgarlata">
          Added JavaDoc and a toString() method to CatalogBase.
       </action>
     </release>
