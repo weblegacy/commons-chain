@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `changes.xml` and `RELEASE-NOTES.txt`
 * Generate Changes-Report with links to old issues and upgraded `changes.xml`
 * Update `checkstyle` from 10.12.3 to 10.12.4
 * Fix some more dependency-versions
