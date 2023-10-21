@@ -100,7 +100,7 @@ The <action> type attribute can be add,update,fix,remove.
         Update maven-compiler-plugin from 3.10.1 to 3.11.0
       </action>
       <action dev="ste-gr" type="update">
-        Update maven-assembly-plugin from 3.4.1 to 3.5.0
+        Update maven-assembly-plugin from 3.4.1 to 3.6.0
       </action>
       <action dev="ste-gr" type="update">
         Update commons-beanutils from 1.8.3 to 1.9.4

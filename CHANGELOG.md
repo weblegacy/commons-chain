@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-assembly-plugin` from 3.5.0 to 3.6.0
 * Update `maven-fluido-skin` from 1.11.2 to 1.12.0
 * Rework dependencies
 * Update `changes.xml` and `RELEASE-NOTES.txt`
