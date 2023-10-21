@@ -597,34 +597,15 @@
             </dependency>
 
             <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>javax.servlet</artifactId>
-                <version>3.0.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.2</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>javax.servlet.jsp-api</artifactId>
-                <version>2.3.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>javax.el-api</artifactId>
-                <version>3.0.0</version>
-            </dependency>
-
-            <dependency>
                 <groupId>javax.portlet</groupId>
                 <artifactId>portlet-api</artifactId>
                 <version>${javaxPortletVersion}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.enterprise</groupId>
+                        <artifactId>cdi-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -641,16 +622,15 @@
             </dependency>
 
             <dependency>
-                <groupId>jakarta.el</groupId>
-                <artifactId>jakarta.el-api</artifactId>
-                <version>4.0.0</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>jakarta.ejb</groupId>
-                <artifactId>jakarta.ejb-api</artifactId>
-                <version>4.0.1</version>
+                <groupId>jakarta.faces</groupId>
+                <artifactId>jakarta.faces-api</artifactId>
+                <version>3.0.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>jakarta.enterprise</groupId>
+                        <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -658,24 +638,6 @@
                 <artifactId>jakarta.faces</artifactId>
                 <classifier>sources</classifier>
                 <version>3.0.5</version>
-            </dependency>
-
-            <dependency>
-                <groupId>jakarta.faces</groupId>
-                <artifactId>jakarta.faces-api</artifactId>
-                <version>3.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>jakarta.interceptor</groupId>
-                <artifactId>jakarta.interceptor-api</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>jakarta.transaction</groupId>
-                <artifactId>jakarta.transaction-api</artifactId>
-                <version>2.0.1</version>
             </dependency>
 
             <!-- Test-Part -->
