@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `bnd-maven-plugin` from 6.4.0 to 7.0.0
 * Update `spotbugs` from 4.7.3 to 4.8.0
 * Update `spotbugs-maven-plugin` from 4.7.3.4 to 4.7.3.6
 * Update `japicmp-maven-plugin` from 0.17.2 to 0.18.2
