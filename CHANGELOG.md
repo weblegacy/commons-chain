@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-clean-plugin` from 3.2.0 to 3.3.1
 * Update `maven-checkstyle-plugin` from 3.2.2 to 3.3.0
 * Update `maven-assembly-plugin` from 3.5.0 to 3.6.0
 * Update `maven-fluido-skin` from 1.11.2 to 1.12.0
