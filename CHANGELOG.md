@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `spotbugs` from 4.7.3 to 4.8.0
 * Update `spotbugs-maven-plugin` from 4.7.3.4 to 4.7.3.6
 * Update `japicmp-maven-plugin` from 0.17.2 to 0.18.2
 * Update `maven-project-info-reports-plugin` from 3.4.3 to 3.4.5
