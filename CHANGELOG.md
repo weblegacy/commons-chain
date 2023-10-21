@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `jacoco-maven-plugin` from 0.8.10 to 0.8.11
 * Correct `README.md` prerequesits
 * Update `bnd-maven-plugin` from 6.4.0 to 7.0.0
 * Update `spotbugs` from 4.7.3 to 4.8.0
