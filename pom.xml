@@ -184,7 +184,7 @@
         <propertiesEncoding>ISO-8859-1</propertiesEncoding>
         <project.build.sourceEncoding>${sourceEncoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${sourceEncoding}</project.reporting.outputEncoding>
-        <mavenVersion>[3.6.3,4)</mavenVersion>
+        <mavenVersion>[3.8.1,4)</mavenVersion>
         <surefireVersion>3.1.2</surefireVersion>
         <oldversion>1.2</oldversion>
         <javaxServletVersion>4.0.1</javaxServletVersion>
@@ -360,7 +360,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.7.3.4</version>
+                    <version>4.7.3.6</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
