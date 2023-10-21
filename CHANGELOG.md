@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-fluido-skin` from 1.11.2 to 1.12.0
 * Rework dependencies
 * Update `changes.xml` and `RELEASE-NOTES.txt`
 * Generate Changes-Report with links to old issues and upgraded `changes.xml`
