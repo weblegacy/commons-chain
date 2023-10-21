@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `japicmp-maven-plugin` from 0.17.2 to 0.18.2
 * Update `maven-project-info-reports-plugin` from 3.4.3 to 3.4.5
 * Update `maven-pmd-plugin` from 3.20.0 to 3.21.0
 * Update `maven-javadoc-plugin` from 3.5.0 to 3.6.0
