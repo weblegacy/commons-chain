@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-javadoc-plugin` from 3.5.0 to 3.6.0
 * Update `maven-enforcer-plugin` from 3.3.0 to 3.4.1
 * Update `maven-dependency-plugin` from 3.5.0 to 3.6.0
 * Update `maven-clean-plugin` from 3.2.0 to 3.3.1
