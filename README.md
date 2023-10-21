@@ -10,8 +10,8 @@ For documentation see [https://weblegacy.github.io/commons-chain](https://webleg
 
 ### Prerequesits
 
-* Apache Maven 3.5.4\+
-* JDK 11\+
+* Apache Maven 3.8.1\+
+* JDK 9\+
 
 ### MAVEN-Profiles
 
