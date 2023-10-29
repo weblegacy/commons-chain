@@ -61,7 +61,7 @@ The <action> type attribute can be add,update,fix,remove.
         Upgrade checkstyle.xml for current checkstyle-version 10.12.4
       </action>
       <action dev="ste-gr" type="update">
-        Update maven-checkstyle-plugin from 3.1.2 to 3.3.0
+        Update maven-checkstyle-plugin from 3.1.2 to 3.3.1
       </action>
       <action dev="ste-gr" type="update">
         Update maven-javadoc-plugin from 3.5.0 to 3.6.0

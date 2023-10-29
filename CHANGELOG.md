@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-checkstyle-plugin` from 3.3.0 to 3.3.1
 * Update `jacoco-maven-plugin` from 0.8.10 to 0.8.11
 * Correct `README.md` prerequesits
 * Update `bnd-maven-plugin` from 6.4.0 to 7.0.0
