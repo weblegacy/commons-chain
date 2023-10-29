@@ -67,7 +67,7 @@ The <action> type attribute can be add,update,fix,remove.
         Update maven-javadoc-plugin from 3.5.0 to 3.6.0
       </action>
       <action dev="ste-gr" type="update">
-        Update maven-clean-plugin from 3.2.0 to 3.3.1
+        Update maven-clean-plugin from 3.2.0 to 3.3.2
       </action>
       <action dev="ste-gr" type="update">
         Update maven-surefire-plugin from 3.0.0-M7 to 3.1.2
