@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Update `maven-surefire-[report-]plugin` from 3.1.2 to 3.2.1
 * Update `maven-jxr-plugin` from 3.3.0 to 3.3.1
 * Update `maven-dependency-plugin` from 3.6.0 to 3.6.1
 * Update `maven-clean-plugin` from 3.3.1 to 3.3.2

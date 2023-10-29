@@ -70,7 +70,7 @@ The <action> type attribute can be add,update,fix,remove.
         Update maven-clean-plugin from 3.2.0 to 3.3.2
       </action>
       <action dev="ste-gr" type="update">
-        Update maven-surefire-plugin from 3.0.0-M7 to 3.1.2
+        Update maven-surefire-[report-]plugin from 3.0.0-M7 to 3.2.1
       </action>
       <action dev="ste-gr" type="update">
         Change maven-default-skin to maven-fluido-skin 1.12.0
