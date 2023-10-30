@@ -217,6 +217,52 @@
                 <module>commons-chain-apps</module>
             </modules>
         </profile>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
@@ -303,6 +349,10 @@
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>3.4.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
@@ -412,6 +462,10 @@
                     <configuration>
                         <skipDeploy>true</skipDeploy>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
