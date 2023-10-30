@@ -59,10 +59,11 @@ public interface CheckedFunction<T, R, E extends Throwable> {
      * function and then applies this function
      *
      * @throws NullPointerException if before is null
+     * @throws E the possible exception
      *
      * @see #andThen(Function)
      */
-    default <V> CheckedFunction<V, R, E> compose(CheckedFunction<? super V, ? extends T, E> before) {
+    default <V> CheckedFunction<V, R, E> compose(CheckedFunction<? super V, ? extends T, E> before) throws E {
         Objects.requireNonNull(before);
         return (V v) -> apply(before.apply(v));
     }
@@ -81,10 +82,11 @@ public interface CheckedFunction<T, R, E extends Throwable> {
      * applies the {@code after} function
      *
      * @throws NullPointerException if after is null
+     * @throws E the possible exception
      *
      * @see #compose(Function)
      */
-    default <V> CheckedFunction<T, V, E> andThen(CheckedFunction<? super R, ? extends V, E> after) {
+    default <V> CheckedFunction<T, V, E> andThen(CheckedFunction<? super R, ? extends V, E> after) throws E {
         Objects.requireNonNull(after);
         return (T t) -> after.apply(apply(t));
     }
@@ -97,8 +99,10 @@ public interface CheckedFunction<T, R, E extends Throwable> {
      *            to the function
      *
      * @return a function that always returns its input argument
+     *
+     * @throws E the possible exception
      */
-    static <T, E extends Throwable> CheckedFunction<T, T, E> identity() {
+    static <T, E extends Throwable> CheckedFunction<T, T, E> identity() throws E {
         return t -> t;
     }
 }

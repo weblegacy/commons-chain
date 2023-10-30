@@ -2,13 +2,14 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Add missing throws-tag in JavaDocs
 * Update `maven-surefire-[report-]plugin` from 3.1.2 to 3.2.1
 * Update `maven-jxr-plugin` from 3.3.0 to 3.3.1
 * Update `maven-dependency-plugin` from 3.6.0 to 3.6.1
 * Update `maven-clean-plugin` from 3.3.1 to 3.3.2
 * Update `maven-checkstyle-plugin` from 3.3.0 to 3.3.1
 * Update `jacoco-maven-plugin` from 0.8.10 to 0.8.11
-* Correct `README.md` prerequesits
+* Correct `README.md` prerequisites
 * Update `bnd-maven-plugin` from 6.4.0 to 7.0.0
 * Update `spotbugs` from 4.7.3 to 4.8.0
 * Update `spotbugs-maven-plugin` from 4.7.3.4 to 4.7.3.6

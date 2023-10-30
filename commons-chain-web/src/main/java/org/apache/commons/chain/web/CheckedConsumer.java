@@ -57,6 +57,7 @@ public interface CheckedConsumer<T, E extends Throwable> {
      * operation followed by the {@code after} operation
      *
      * @throws NullPointerException if {@code after} is null
+     * @throws E the possible exception
      */
     default CheckedConsumer<T, E> andThen(CheckedConsumer<? super T, E> after) throws E {
         Objects.requireNonNull(after);
