@@ -18,13 +18,14 @@ package org.apache.commons.chain.impl;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Convenience base class for {@link Chain} implementations.
@@ -41,8 +42,9 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
     /**
      * Construct a {@link Chain} with no configured {@link Command}s.
      */
-<span class="fc" id="L44">    public ChainBase() {</span>
-<span class="fc" id="L45">    }</span>
+    public ChainBase() {
+<span class="fc" id="L46">        this(Collections.emptyList());</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      * Construct a {@link Chain} configured with the specified
@@ -53,9 +55,9 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
      * @throws IllegalArgumentException if {@code command}
      *         is {@code null}
      */
-<span class="nc" id="L56">    public ChainBase(Command&lt;C&gt; command) {</span>
-<span class="nc" id="L57">        addCommand(command);</span>
-<span class="nc" id="L58">    }</span>
+    public ChainBase(Command&lt;C&gt; command) {
+<span class="nc" id="L59">        this(Collections.singletonList(command));</span>
+<span class="nc" id="L60">    }</span>
 
     /**
      * Construct a {@link Chain} configured with the specified
@@ -67,14 +69,9 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
      *         or one of the individual {@link Command} elements,
      *         is {@code null}
      */
-<span class="nc" id="L70">    public ChainBase(Command&lt;C&gt;[] commands) {</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (commands == null) {</span>
-<span class="nc" id="L72">            throw new IllegalArgumentException();</span>
-        }
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        for (Command&lt;C&gt; command : commands) {</span>
-<span class="nc" id="L75">            addCommand(command);</span>
-        }
-<span class="nc" id="L77">    }</span>
+    public ChainBase(Command&lt;C&gt;[] commands) {
+<span class="nc" id="L73">        this(Arrays.asList(commands));</span>
+<span class="nc" id="L74">    }</span>
 
     /**
      * Construct a {@link Chain} configured with the specified
@@ -86,12 +83,16 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
      *         or one of the individual {@link Command} elements,
      *         is {@code null}
      */
-<span class="nc" id="L89">    public ChainBase(Collection&lt;Command&lt;C&gt;&gt; commands) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (commands == null) {</span>
-<span class="nc" id="L91">            throw new IllegalArgumentException();</span>
+<span class="fc" id="L86">    public ChainBase(Collection&lt;Command&lt;C&gt;&gt; commands) {</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (commands == null) {</span>
+<span class="nc" id="L88">            throw new IllegalArgumentException();</span>
         }
-<span class="nc" id="L93">        commands.forEach(this::addCommand);</span>
-<span class="nc" id="L94">    }</span>
+
+        @SuppressWarnings({&quot;unchecked&quot;, &quot;rawtypes&quot;})
+<span class="fc" id="L92">        final Command&lt;C&gt;[] cmds = commands.toArray(new Command[0]);</span>
+
+<span class="fc" id="L94">        this.commands = cmds;</span>
+<span class="fc" id="L95">    }</span>
 
     // ----------------------------------------------------- Instance Variables
 
@@ -100,14 +101,13 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.
      */
-<span class="pc" id="L103">    @SuppressWarnings(&quot;unchecked&quot;)</span>
-    private Command&lt;C&gt;[] commands = new Command[0];
+    private Command&lt;C&gt;[] commands;
 
     /**
      * Flag indicating whether the configuration of our commands list
      * has been frozen by a call to the {@code execute()} method.
      */
-<span class="pc" id="L110">    private boolean frozen = false;</span>
+<span class="fc" id="L110">    private boolean frozen = false;</span>
 
     // ---------------------------------------------------------- Chain Methods
 
@@ -196,8 +196,8 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
                     }
 <span class="nc" id="L197">                } catch (Exception e) {</span>
                     // Silently ignore
-<span class="nc" id="L199">                    Log log = LogFactory.getLog(ChainBase.class);</span>
-<span class="nc" id="L200">                    log.trace(&quot;Filter-postprocessing&quot;, e);</span>
+<span class="nc" id="L199">                    Logger logger = LoggerFactory.getLogger(ChainBase.class);</span>
+<span class="nc" id="L200">                    logger.trace(&quot;Filter-postprocessing&quot;, e);</span>
 <span class="fc" id="L201">                }</span>
             }
         }
@@ -238,4 +238,4 @@ public class ChainBase&lt;C extends Context&gt; implements Chain&lt;C&gt; {
 <span class="fc" id="L238">        return commands;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

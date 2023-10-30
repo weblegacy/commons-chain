@@ -34,7 +34,7 @@ import org.apache.commons.chain.Context;
  *
  * @since Chain 1.1
  */
-<span class="fc" id="L37">public abstract class DispatchCommand&lt;C extends Context&gt; implements Command&lt;C&gt; {</span>
+public abstract class DispatchCommand&lt;C extends Context&gt; implements Command&lt;C&gt; {
 
     /** The cache of methods. */
 <span class="fc" id="L40">    private Map&lt;String, Method&gt; methods = new WeakHashMap&lt;&gt;();</span>
@@ -50,6 +50,12 @@ import org.apache.commons.chain.Context;
      * {@code Context} as their only argument.
      */
 <span class="fc" id="L52">    protected static final Class&lt;?&gt;[] DEFAULT_SIGNATURE = new Class&lt;?&gt;[] {Context.class};</span>
+
+    /**
+     * The Default-Constructor for this class.
+     */
+<span class="fc" id="L57">    public DispatchCommand() {</span>
+<span class="fc" id="L58">    }</span>
 
     /**
      * Look up the method specified by either &quot;method&quot; or &quot;methodKey&quot;
@@ -70,20 +76,20 @@ import org.apache.commons.chain.Context;
      */
     @Override
     public boolean execute(C context) throws Exception {
-<span class="pc bpc" id="L73" title="1 of 4 branches missed.">        if (this.getMethod() == null &amp;&amp; this.getMethodKey() == null) {</span>
-<span class="nc" id="L74">            throw new IllegalStateException(&quot;Neither 'method' nor 'methodKey' properties are defined &quot;);</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">        if (this.getMethod() == null &amp;&amp; this.getMethodKey() == null) {</span>
+<span class="nc" id="L80">            throw new IllegalStateException(&quot;Neither 'method' nor 'methodKey' properties are defined &quot;);</span>
         }
 
-<span class="fc" id="L77">        Method methodObject = extractMethod(context);</span>
+<span class="fc" id="L83">        Method methodObject = extractMethod(context);</span>
 
         try {
-<span class="fc" id="L80">            return evaluateResult(methodObject.invoke(this, getArguments(context)));</span>
-<span class="nc" id="L81">        } catch (InvocationTargetException e) {</span>
-<span class="nc" id="L82">            Throwable cause = e.getTargetException();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (cause instanceof Exception) {</span>
-<span class="nc" id="L84">                throw (Exception) cause;</span>
+<span class="fc" id="L86">            return evaluateResult(methodObject.invoke(this, getArguments(context)));</span>
+<span class="nc" id="L87">        } catch (InvocationTargetException e) {</span>
+<span class="nc" id="L88">            Throwable cause = e.getTargetException();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">            if (cause instanceof Exception) {</span>
+<span class="nc" id="L90">                throw (Exception) cause;</span>
             }
-<span class="nc" id="L86">            throw e;</span>
+<span class="nc" id="L92">            throw e;</span>
         }
     }
 
@@ -102,28 +108,28 @@ import org.apache.commons.chain.Context;
      * @throws NullPointerException if no methodName cannot be determined
      */
     protected Method extractMethod(C context) throws NoSuchMethodException {
-<span class="fc" id="L105">        String methodName = this.getMethod();</span>
+<span class="fc" id="L111">        String methodName = this.getMethod();</span>
 
-<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (methodName == null) {</span>
-<span class="fc" id="L108">            Object methodContextObj = context.get(this.getMethodKey());</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            if (methodContextObj == null) {</span>
-<span class="nc" id="L110">                throw new NullPointerException(&quot;No value found in context under &quot; + this.getMethodKey());</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (methodName == null) {</span>
+<span class="fc" id="L114">            Object methodContextObj = context.get(this.getMethodKey());</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">            if (methodContextObj == null) {</span>
+<span class="nc" id="L116">                throw new NullPointerException(&quot;No value found in context under &quot; + this.getMethodKey());</span>
             }
-<span class="fc" id="L112">            methodName = methodContextObj.toString();</span>
+<span class="fc" id="L118">            methodName = methodContextObj.toString();</span>
         }
 
-<span class="fc" id="L115">        Method theMethod = null;</span>
+<span class="fc" id="L121">        Method theMethod = null;</span>
 
-<span class="fc" id="L117">        synchronized (methods) {</span>
-<span class="fc" id="L118">            theMethod = methods.get(methodName);</span>
+<span class="fc" id="L123">        synchronized (methods) {</span>
+<span class="fc" id="L124">            theMethod = methods.get(methodName);</span>
 
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">            if (theMethod == null) {</span>
-<span class="fc" id="L121">                theMethod = getClass().getMethod(methodName, getSignature());</span>
-<span class="fc" id="L122">                methods.put(methodName, theMethod);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">            if (theMethod == null) {</span>
+<span class="fc" id="L127">                theMethod = getClass().getMethod(methodName, getSignature());</span>
+<span class="fc" id="L128">                methods.put(methodName, theMethod);</span>
             }
-<span class="fc" id="L124">        }</span>
+<span class="fc" id="L130">        }</span>
 
-<span class="fc" id="L126">        return theMethod;</span>
+<span class="fc" id="L132">        return theMethod;</span>
     }
 
     /**
@@ -136,7 +142,7 @@ import org.apache.commons.chain.Context;
      * @return The evaluated result/
      */
     protected boolean evaluateResult(Object o) {
-<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        return o instanceof Boolean &amp;&amp; ((Boolean) o).booleanValue();</span>
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">        return o instanceof Boolean &amp;&amp; ((Boolean) o).booleanValue();</span>
     }
 
     /**
@@ -145,7 +151,7 @@ import org.apache.commons.chain.Context;
      * @return The method signature.
      */
     protected Class&lt;?&gt;[] getSignature() {
-<span class="fc" id="L148">        return DEFAULT_SIGNATURE;</span>
+<span class="fc" id="L154">        return DEFAULT_SIGNATURE;</span>
     }
 
     /**
@@ -161,7 +167,7 @@ import org.apache.commons.chain.Context;
      * @return The method arguments.
      */
     protected Object[] getArguments(C context) {
-<span class="fc" id="L164">        return new Object[] {context};</span>
+<span class="fc" id="L170">        return new Object[] {context};</span>
     }
 
     /**
@@ -170,7 +176,7 @@ import org.apache.commons.chain.Context;
      * @return The method name.
      */
     public String getMethod() {
-<span class="fc" id="L173">        return method;</span>
+<span class="fc" id="L179">        return method;</span>
     }
 
     /**
@@ -179,7 +185,7 @@ import org.apache.commons.chain.Context;
      * @return The Context key for the method name.
      */
     public String getMethodKey() {
-<span class="fc" id="L182">        return methodKey;</span>
+<span class="fc" id="L188">        return methodKey;</span>
     }
 
     /**
@@ -188,8 +194,8 @@ import org.apache.commons.chain.Context;
      * @param method The method name.
      */
     public void setMethod(String method) {
-<span class="fc" id="L191">        this.method = method;</span>
-<span class="fc" id="L192">    }</span>
+<span class="fc" id="L197">        this.method = method;</span>
+<span class="fc" id="L198">    }</span>
 
     /**
      * Set the Context key for the method name.
@@ -197,7 +203,7 @@ import org.apache.commons.chain.Context;
      * @param methodKey The Context key for the method name.
      */
     public void setMethodKey(String methodKey) {
-<span class="fc" id="L200">        this.methodKey = methodKey;</span>
-<span class="fc" id="L201">    }</span>
+<span class="fc" id="L206">        this.methodKey = methodKey;</span>
+<span class="fc" id="L207">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

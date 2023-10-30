@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Web :: Javax</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.javax</a> &gt; <span class="el_source">WebContext.java</span></div><h1>WebContext.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web.javax;
+
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.impl.ContextBase;
+
+/**
+ * Extended {@link Context} that provides web based applications that use
+ * it a &quot;generic&quot; view of HTTP related requests and responses, without
+ * tying the application to a particular underlying Java API (such as
+ * servlets). It is expected that a concrete subclass of {@link WebContext}
+ * for each API (such as
+ * {@code org.apache.commons.chain.web.javax.servlet.ServletWebContext}) will
+ * support adapting that particular API's implementation of request and
+ * response objects into this generic framework.
+ *
+ * &lt;p&gt;The characteristics of a web request/response are made visible via
+ * a series of JavaBeans properties (and mapped to read-only attributes
+ * of the same name, as supported by {@link ContextBase}.&lt;/p&gt;
+ *
+ * @author Craig R. McClanahan
+ * @version $Revision$ $Date$
+ */
+public abstract class WebContext extends ContextBase {
+    private static final long serialVersionUID = 6804961872140299027L;
+
+    /**
+     * The Default-Constructor for this class.
+     */
+<span class="nc" id="L49">    public WebContext() {</span>
+<span class="nc" id="L50">    }</span>
+
+    /**
+     * Return a mutable {@code Map} that maps application scope
+     * attribute names to their values.
+     *
+     * @return Application scope Map.
+     */
+    public abstract Map&lt;String, Object&gt; getApplicationScope();
+
+    /**
+     * Return an immutable {@code Map} that maps header names to
+     * the first (or only) header value (as a String). Header names must
+     * be matched in a case-insensitive manner.
+     *
+     * @return Header values Map.
+     */
+    public abstract Map&lt;String, String&gt; getHeader();
+
+    /**
+     * Return an immutable {@code Map} that maps header names to
+     * the set of all values specified in the request (as a String array).
+     * Header names must be matched in a case-insensitive manner.
+     *
+     * @return Header values Map.
+     */
+    public abstract Map&lt;String, String[]&gt; getHeaderValues();
+
+    /**
+     * Return an immutable {@code Map} that maps context application
+     * initialization parameters to their values.
+     *
+     * @return Initialization parameter Map.
+     */
+    public abstract Map&lt;String, String&gt; getInitParam();
+
+    /**
+     * Return an immutable {@code Map} that maps request parameter
+     * names to the first (or only) value (as a String).
+     *
+     * @return Request parameter Map.
+     */
+    public abstract Map&lt;String, String&gt; getParam();
+
+    /**
+     * Return an immutable {@code Map} that maps request parameter
+     * names to the set of all values (as a String array).
+     *
+     * @return Request parameter Map.
+     */
+    public abstract Map&lt;String, String[]&gt; getParamValues();
+
+    /**
+     * Return an immutable {@code Map} that maps cookie names to
+     * the set of cookies specified in the request.
+     *
+     * @return Map of Cookies.
+     *
+     * @since Chain 1.1
+     */
+    public abstract Map&lt;String, Cookie&gt; getCookies();
+
+    /**
+     * Return a mutable {@code Map} that maps request scope
+     * attribute names to their values.
+     *
+     * @return Request scope Map.
+     */
+    public abstract Map&lt;String, Object&gt; getRequestScope();
+
+    /**
+     * Return a mutable {@code Map} that maps session scope
+     * attribute names to their values.
+     *
+     * @return Session scope Map.
+     */
+    public abstract Map&lt;String, Object&gt; getSessionScope();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

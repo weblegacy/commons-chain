@@ -74,7 +74,7 @@ import org.apache.commons.digester.RuleSetBase;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-<span class="fc" id="L77">public class ConfigRuleSet extends RuleSetBase {</span>
+public class ConfigRuleSet extends RuleSetBase {
 
     // ----------------------------------------------------- Instance Variables
 
@@ -87,6 +87,14 @@ import org.apache.commons.digester.RuleSetBase;
 <span class="fc" id="L87">    private String defineElement = &quot;define&quot;;</span>
 <span class="fc" id="L88">    private String nameAttribute = &quot;name&quot;;</span>
 
+    // ----------------------------------------------------------- Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+<span class="fc" id="L95">    public ConfigRuleSet() {</span>
+<span class="fc" id="L96">    }</span>
+
     // ------------------------------------------------------------- Properties
 
     /**
@@ -96,7 +104,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The Catalog's class name.
      */
     public String getCatalogClass() {
-<span class="nc" id="L99">        return this.catalogClass;</span>
+<span class="nc" id="L107">        return this.catalogClass;</span>
     }
 
     /**
@@ -107,8 +115,8 @@ import org.apache.commons.digester.RuleSetBase;
      *        implementation class
      */
     public void setCatalogClass(String catalogClass) {
-<span class="nc" id="L110">        this.catalogClass = catalogClass;</span>
-<span class="nc" id="L111">    }</span>
+<span class="nc" id="L118">        this.catalogClass = catalogClass;</span>
+<span class="nc" id="L119">    }</span>
 
     /**
      * Return the element name of a catalog element.
@@ -116,7 +124,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The element name of a catalog element.
      */
     public String getCatalogElement() {
-<span class="fc" id="L119">        return this.catalogElement;</span>
+<span class="fc" id="L127">        return this.catalogElement;</span>
     }
 
     /**
@@ -125,8 +133,8 @@ import org.apache.commons.digester.RuleSetBase;
      * @param catalogElement The new element name
      */
     public void setCatalogElement(String catalogElement) {
-<span class="nc" id="L128">        this.catalogElement = catalogElement;</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L136">        this.catalogElement = catalogElement;</span>
+<span class="nc" id="L137">    }</span>
 
     /**
      * Return the fully qualified {@link org.apache.commons.chain.Chain}
@@ -135,7 +143,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The Chain's class name.
      */
     public String getChainClass() {
-<span class="fc" id="L138">        return this.chainClass;</span>
+<span class="fc" id="L146">        return this.chainClass;</span>
     }
 
     /**
@@ -146,8 +154,8 @@ import org.apache.commons.digester.RuleSetBase;
      *        implementation class
      */
     public void setChainClass(String chainClass) {
-<span class="nc" id="L149">        this.chainClass = chainClass;</span>
-<span class="nc" id="L150">    }</span>
+<span class="nc" id="L157">        this.chainClass = chainClass;</span>
+<span class="nc" id="L158">    }</span>
 
     /**
      * Return the element name of a chain element.
@@ -155,7 +163,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The element name of a catalog element.
      */
     public String getChainElement() {
-<span class="fc" id="L158">        return this.chainElement;</span>
+<span class="fc" id="L166">        return this.chainElement;</span>
     }
 
     /**
@@ -164,8 +172,8 @@ import org.apache.commons.digester.RuleSetBase;
      * @param chainElement The new element name
      */
     public void setChainElement(String chainElement) {
-<span class="nc" id="L167">        this.chainElement = chainElement;</span>
-<span class="nc" id="L168">    }</span>
+<span class="nc" id="L175">        this.chainElement = chainElement;</span>
+<span class="nc" id="L176">    }</span>
 
     /**
      * Return the attribute name of a class attribute.
@@ -173,7 +181,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The attribute name of a class attribute.
      */
     public String getClassAttribute() {
-<span class="fc" id="L176">        return this.classAttribute;</span>
+<span class="fc" id="L184">        return this.classAttribute;</span>
     }
 
     /**
@@ -182,8 +190,8 @@ import org.apache.commons.digester.RuleSetBase;
      * @param classAttribute The new attribute name
      */
     public void setClassAttribute(String classAttribute) {
-<span class="nc" id="L185">        this.classAttribute = classAttribute;</span>
-<span class="nc" id="L186">    }</span>
+<span class="nc" id="L193">        this.classAttribute = classAttribute;</span>
+<span class="nc" id="L194">    }</span>
 
     /**
      * Return the element name of a command element.
@@ -191,7 +199,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The element name of a command element.
      */
     public String getCommandElement() {
-<span class="fc" id="L194">        return this.commandElement;</span>
+<span class="fc" id="L202">        return this.commandElement;</span>
     }
 
     /**
@@ -200,8 +208,8 @@ import org.apache.commons.digester.RuleSetBase;
      * @param commandElement The new element name
      */
     public void setCommandElement(String commandElement) {
-<span class="nc" id="L203">        this.commandElement = commandElement;</span>
-<span class="nc" id="L204">    }</span>
+<span class="nc" id="L211">        this.commandElement = commandElement;</span>
+<span class="nc" id="L212">    }</span>
 
     /**
      * Return the element name of a define element.
@@ -209,7 +217,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The element name of a define element.
      */
     public String getDefineElement() {
-<span class="fc" id="L212">        return this.defineElement;</span>
+<span class="fc" id="L220">        return this.defineElement;</span>
     }
 
     /**
@@ -218,8 +226,8 @@ import org.apache.commons.digester.RuleSetBase;
      * @param defineElement The new element name
      */
     public void setDefineElement(String defineElement) {
-<span class="nc" id="L221">        this.defineElement = defineElement;</span>
-<span class="nc" id="L222">    }</span>
+<span class="nc" id="L229">        this.defineElement = defineElement;</span>
+<span class="nc" id="L230">    }</span>
 
     /**
      * Return the attribute name of a name attribute.
@@ -227,7 +235,7 @@ import org.apache.commons.digester.RuleSetBase;
      * @return The attribute name of an attribute element.
      */
     public String getNameAttribute() {
-<span class="fc" id="L230">        return this.nameAttribute;</span>
+<span class="fc" id="L238">        return this.nameAttribute;</span>
     }
 
     /**
@@ -236,8 +244,8 @@ import org.apache.commons.digester.RuleSetBase;
      * @param nameAttribute The new attribute name
      */
     public void setNameAttribute(String nameAttribute) {
-<span class="nc" id="L239">        this.nameAttribute = nameAttribute;</span>
-<span class="nc" id="L240">    }</span>
+<span class="nc" id="L247">        this.nameAttribute = nameAttribute;</span>
+<span class="nc" id="L248">    }</span>
 
     // --------------------------------------------------------- Public Methods
 
@@ -253,30 +261,30 @@ import org.apache.commons.digester.RuleSetBase;
     @Override
     public void addRuleInstances(Digester digester) {
         // Add rules for a catalog element
-<span class="fc" id="L256">        digester.addRule(&quot;*/&quot; + getCatalogElement(),</span>
+<span class="fc" id="L264">        digester.addRule(&quot;*/&quot; + getCatalogElement(),</span>
                          new ConfigCatalogRule(nameAttribute, catalogClass));
-<span class="fc" id="L258">        digester.addSetProperties(&quot;*/&quot; + getCatalogElement());</span>
+<span class="fc" id="L266">        digester.addSetProperties(&quot;*/&quot; + getCatalogElement());</span>
 
         // Add rules for a chain element
-<span class="fc" id="L261">        digester.addObjectCreate(&quot;*/&quot; + getChainElement(),</span>
-<span class="fc" id="L262">                                 getChainClass(),</span>
-<span class="fc" id="L263">                                 getClassAttribute());</span>
-<span class="fc" id="L264">        digester.addSetProperties(&quot;*/&quot; + getChainElement());</span>
-<span class="fc" id="L265">        digester.addRule(&quot;*/&quot; + getChainElement(),</span>
+<span class="fc" id="L269">        digester.addObjectCreate(&quot;*/&quot; + getChainElement(),</span>
+<span class="fc" id="L270">                                 getChainClass(),</span>
+<span class="fc" id="L271">                                 getClassAttribute());</span>
+<span class="fc" id="L272">        digester.addSetProperties(&quot;*/&quot; + getChainElement());</span>
+<span class="fc" id="L273">        digester.addRule(&quot;*/&quot; + getChainElement(),</span>
                          new ConfigRegisterRule(nameAttribute));
 
         // Add rules for a command element
-<span class="fc" id="L269">        digester.addObjectCreate(&quot;*/&quot; + getCommandElement(),</span>
+<span class="fc" id="L277">        digester.addObjectCreate(&quot;*/&quot; + getCommandElement(),</span>
                                  null,
-<span class="fc" id="L271">                                 getClassAttribute());</span>
-<span class="fc" id="L272">        digester.addSetProperties(&quot;*/&quot; + getCommandElement());</span>
-<span class="fc" id="L273">        digester.addRule(&quot;*/&quot; + getCommandElement(),</span>
+<span class="fc" id="L279">                                 getClassAttribute());</span>
+<span class="fc" id="L280">        digester.addSetProperties(&quot;*/&quot; + getCommandElement());</span>
+<span class="fc" id="L281">        digester.addRule(&quot;*/&quot; + getCommandElement(),</span>
                          new ConfigRegisterRule(nameAttribute));
 
         // Add rules for a define element
-<span class="fc" id="L277">        digester.addRule(&quot;*/&quot; + getDefineElement(),</span>
-<span class="fc" id="L278">                         new ConfigDefineRule(getNameAttribute(),</span>
-<span class="fc" id="L279">                                              getClassAttribute()));</span>
-<span class="fc" id="L280">    }</span>
+<span class="fc" id="L285">        digester.addRule(&quot;*/&quot; + getDefineElement(),</span>
+<span class="fc" id="L286">                         new ConfigDefineRule(getNameAttribute(),</span>
+<span class="fc" id="L287">                                              getClassAttribute()));</span>
+<span class="fc" id="L288">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

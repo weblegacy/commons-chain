@@ -547,7 +547,7 @@
 <a class="jxr_linenumber" name="L539" href="#L539">539</a> <em class="jxr_javadoccomment">     * Private implementation of {@code Set} that implements the</em>
 <a class="jxr_linenumber" name="L540" href="#L540">540</a> <em class="jxr_javadoccomment">     * semantics required for the value returned by {@code entrySet()}.</em>
 <a class="jxr_linenumber" name="L541" href="#L541">541</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L542" href="#L542">542</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> EntrySetImpl <strong class="jxr_keyword">extends</strong> AbstractSet&lt;Map.Entry&lt;String, Object&gt;&gt; {
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> EntrySetImpl <strong class="jxr_keyword">extends</strong> AbstractSet&lt;Map.Entry&lt;String, Object&gt;&gt; {
 <a class="jxr_linenumber" name="L543" href="#L543">543</a> 
 <a class="jxr_linenumber" name="L544" href="#L544">544</a>         @Override
 <a class="jxr_linenumber" name="L545" href="#L545">545</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> clear() {
@@ -597,7 +597,7 @@
 <a class="jxr_linenumber" name="L589" href="#L589">589</a> <em class="jxr_javadoccomment">     * Private implementation of {@code Iterator} for the</em>
 <a class="jxr_linenumber" name="L590" href="#L590">590</a> <em class="jxr_javadoccomment">     * {@code Set} returned by {@code entrySet()}.</em>
 <a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L592" href="#L592">592</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> EntrySetIterator <strong class="jxr_keyword">implements</strong> Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; {
+<a class="jxr_linenumber" name="L592" href="#L592">592</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> EntrySetIterator <strong class="jxr_keyword">implements</strong> Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; {
 <a class="jxr_linenumber" name="L593" href="#L593">593</a> 
 <a class="jxr_linenumber" name="L594" href="#L594">594</a>         <strong class="jxr_keyword">private</strong> Map.Entry&lt;String, Object&gt; entry = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L595" href="#L595">595</a>         <strong class="jxr_keyword">private</strong> Iterator&lt;String&gt; keys = ContextBase.<strong class="jxr_keyword">this</strong>.keySet().iterator();
@@ -685,7 +685,7 @@
 <a class="jxr_linenumber" name="L677" href="#L677">677</a> <em class="jxr_javadoccomment">     * Private implementation of {@code Collection} that implements the</em>
 <a class="jxr_linenumber" name="L678" href="#L678">678</a> <em class="jxr_javadoccomment">     * semantics required for the value returned by {@code values()}.</em>
 <a class="jxr_linenumber" name="L679" href="#L679">679</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L680" href="#L680">680</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> ValuesImpl <strong class="jxr_keyword">extends</strong> AbstractCollection&lt;Object&gt; {
+<a class="jxr_linenumber" name="L680" href="#L680">680</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> ValuesImpl <strong class="jxr_keyword">extends</strong> AbstractCollection&lt;Object&gt; {
 <a class="jxr_linenumber" name="L681" href="#L681">681</a> 
 <a class="jxr_linenumber" name="L682" href="#L682">682</a>         @Override
 <a class="jxr_linenumber" name="L683" href="#L683">683</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> clear() {
@@ -730,7 +730,7 @@
 <a class="jxr_linenumber" name="L722" href="#L722">722</a> <em class="jxr_javadoccomment">     * Private implementation of {@code Iterator} for the</em>
 <a class="jxr_linenumber" name="L723" href="#L723">723</a> <em class="jxr_javadoccomment">     * {@code Collection} returned by {@code values()}.</em>
 <a class="jxr_linenumber" name="L724" href="#L724">724</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L725" href="#L725">725</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> ValuesIterator <strong class="jxr_keyword">implements</strong> Iterator&lt;Object&gt; {
+<a class="jxr_linenumber" name="L725" href="#L725">725</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> ValuesIterator <strong class="jxr_keyword">implements</strong> Iterator&lt;Object&gt; {
 <a class="jxr_linenumber" name="L726" href="#L726">726</a> 
 <a class="jxr_linenumber" name="L727" href="#L727">727</a>         <strong class="jxr_keyword">private</strong> Map.Entry&lt;String, Object&gt; entry = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L728" href="#L728">728</a>         <strong class="jxr_keyword">private</strong> Iterator&lt;String&gt; keys = ContextBase.<strong class="jxr_keyword">this</strong>.keySet().iterator();

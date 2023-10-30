@@ -28,7 +28,7 @@ import org.apache.commons.chain.Context;
  * @author Craig R. McClanahan
  * @version $Revision$ $Date$
  */
-<span class="nc" id="L31">public class CopyCommand&lt;C extends Context&gt; implements Command&lt;C&gt; {</span>
+public class CopyCommand&lt;C extends Context&gt; implements Command&lt;C&gt; {
 
     // -------------------------------------------------------------- Properties
 
@@ -92,6 +92,14 @@ import org.apache.commons.chain.Context;
 <span class="nc" id="L92">        this.value = value;</span>
 <span class="nc" id="L93">    }</span>
 
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * The Default-Constructor for this class.
+     */
+<span class="nc" id="L100">    public CopyCommand() {</span>
+<span class="nc" id="L101">    }</span>
+
     // ---------------------------------------------------------- Filter Methods
 
     /**
@@ -106,19 +114,19 @@ import org.apache.commons.chain.Context;
      */
     @Override
     public boolean execute(C context) throws Exception {
-<span class="nc" id="L109">        Object value = this.value;</span>
+<span class="nc" id="L117">        Object value = this.value;</span>
 
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L112">            value = context.get(getFromKey());</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (value == null) {</span>
+<span class="nc" id="L120">            value = context.get(getFromKey());</span>
         }
 
-<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (value != null) {</span>
-<span class="nc" id="L116">            context.put(getToKey(), value);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (value != null) {</span>
+<span class="nc" id="L124">            context.put(getToKey(), value);</span>
         } else {
-<span class="nc" id="L118">            context.remove(getToKey());</span>
+<span class="nc" id="L126">            context.remove(getToKey());</span>
         }
 
-<span class="nc" id="L121">        return false;</span>
+<span class="nc" id="L129">        return false;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

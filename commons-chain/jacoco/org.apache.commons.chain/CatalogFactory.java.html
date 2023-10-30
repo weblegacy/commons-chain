@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.chain.impl.CatalogFactoryBase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A {@link CatalogFactory} is a class used to store and retrieve
@@ -38,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Sean Schofield
  * @version $Revision$ $Date$
  */
-<span class="fc" id="L41">public abstract class CatalogFactory&lt;C extends Context&gt; {</span>
+public abstract class CatalogFactory&lt;C extends Context&gt; {
 
     // ------------------------------------------------------- Static Variables
 
@@ -101,6 +101,12 @@ import org.apache.commons.logging.LogFactory;
     public abstract Iterator&lt;String&gt; getNames();
 
     /**
+     * The Default-Constructor for this class.
+     */
+<span class="fc" id="L106">    public CatalogFactory() {</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
      * Return a {@code Command} based on the given commandID.
      *
      * &lt;p&gt;At this time, the structure of commandID is relatively simple: if the
@@ -129,39 +135,39 @@ import org.apache.commons.logging.LogFactory;
      * @since Chain 1.1
      */
     public &lt;CMD extends Command&lt;C&gt;&gt; CMD getCommand(String commandID) {
-<span class="fc" id="L132">        String commandName = commandID;</span>
-<span class="fc" id="L133">        String catalogName = null;</span>
-<span class="fc" id="L134">        Catalog&lt;C&gt; catalog = null;</span>
+<span class="fc" id="L138">        String commandName = commandID;</span>
+<span class="fc" id="L139">        String catalogName = null;</span>
+<span class="fc" id="L140">        Catalog&lt;C&gt; catalog = null;</span>
 
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (commandID != null) {</span>
-<span class="fc" id="L137">            int splitPos = commandID.indexOf(DELIMITER);</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">            if (splitPos != -1) {</span>
-<span class="fc" id="L139">                catalogName = commandID.substring(0, splitPos);</span>
-<span class="fc" id="L140">                commandName = commandID.substring(splitPos + DELIMITER.length());</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">                if (commandName.contains(DELIMITER)) {</span>
-<span class="fc" id="L142">                    throw new IllegalArgumentException(&quot;commandID [&quot;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (commandID != null) {</span>
+<span class="fc" id="L143">            int splitPos = commandID.indexOf(DELIMITER);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (splitPos != -1) {</span>
+<span class="fc" id="L145">                catalogName = commandID.substring(0, splitPos);</span>
+<span class="fc" id="L146">                commandName = commandID.substring(splitPos + DELIMITER.length());</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                if (commandName.contains(DELIMITER)) {</span>
+<span class="fc" id="L148">                    throw new IllegalArgumentException(&quot;commandID [&quot;</span>
                             + commandID + &quot;] has too many delimiters (reserved for future use)&quot;);
                 }
             }
         }
 
-<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (catalogName != null) {</span>
-<span class="fc" id="L149">            catalog = this.getCatalog(catalogName);</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">            if (catalog == null) {</span>
-<span class="fc" id="L151">                Log log = LogFactory.getLog(CatalogFactory.class);</span>
-<span class="fc" id="L152">                log.warn(&quot;No catalog found for name: &quot; + catalogName + &quot;.&quot;);</span>
-<span class="fc" id="L153">                return null;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (catalogName != null) {</span>
+<span class="fc" id="L155">            catalog = this.getCatalog(catalogName);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">            if (catalog == null) {</span>
+<span class="fc" id="L157">                Logger logger = LoggerFactory.getLogger(CatalogFactory.class);</span>
+<span class="fc" id="L158">                logger.warn(&quot;No catalog found for name: {}.&quot;, catalogName);</span>
+<span class="fc" id="L159">                return null;</span>
             }
         } else {
-<span class="fc" id="L156">            catalog = this.getCatalog();</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">            if (catalog == null) {</span>
-<span class="nc" id="L158">                Log log = LogFactory.getLog(CatalogFactory.class);</span>
-<span class="nc" id="L159">                log.warn(&quot;No default catalog found.&quot;);</span>
-<span class="nc" id="L160">                return null;</span>
+<span class="fc" id="L162">            catalog = this.getCatalog();</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">            if (catalog == null) {</span>
+<span class="nc" id="L164">                Logger logger = LoggerFactory.getLogger(CatalogFactory.class);</span>
+<span class="nc" id="L165">                logger.warn(&quot;No default catalog found.&quot;);</span>
+<span class="nc" id="L166">                return null;</span>
             }
         }
 
-<span class="fc" id="L164">        return catalog.getCommand(commandName);</span>
+<span class="fc" id="L170">        return catalog.getCommand(commandName);</span>
     }
 
     // -------------------------------------------------------- Static Methods
@@ -179,11 +185,11 @@ import org.apache.commons.logging.LogFactory;
      * @return the per-application singleton instance of {@link CatalogFactory}
      */
     public static &lt;C extends Context&gt; CatalogFactory&lt;C&gt; getInstance() {
-<span class="fc" id="L182">        ClassLoader cl = getClassLoader();</span>
+<span class="fc" id="L188">        ClassLoader cl = getClassLoader();</span>
 
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L185">        CatalogFactory&lt;C&gt; ret = (CatalogFactory&lt;C&gt;) FACTORIES.computeIfAbsent(cl, k -&gt; new CatalogFactoryBase&lt;&gt;());</span>
-<span class="fc" id="L186">        return ret;</span>
+<span class="fc" id="L191">        CatalogFactory&lt;C&gt; ret = (CatalogFactory&lt;C&gt;) FACTORIES.computeIfAbsent(cl, k -&gt; new CatalogFactoryBase&lt;&gt;());</span>
+<span class="fc" id="L192">        return ret;</span>
     }
 
     /**
@@ -193,8 +199,8 @@ import org.apache.commons.logging.LogFactory;
      * service, to allow for garbage collection.
      */
     public static void clear() {
-<span class="fc" id="L196">        FACTORIES.remove(getClassLoader());</span>
-<span class="fc" id="L197">    }</span>
+<span class="fc" id="L202">        FACTORIES.remove(getClassLoader());</span>
+<span class="fc" id="L203">    }</span>
 
     // ------------------------------------------------------- Private Methods
 
@@ -206,11 +212,11 @@ import org.apache.commons.logging.LogFactory;
      * @return the relevant {@code ClassLoader} to use as a Map key for this request
      */
     private static ClassLoader getClassLoader() {
-<span class="fc" id="L209">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (cl == null) {</span>
-<span class="nc" id="L211">            cl = CatalogFactory.class.getClassLoader();</span>
+<span class="fc" id="L215">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        if (cl == null) {</span>
+<span class="nc" id="L217">            cl = CatalogFactory.class.getClassLoader();</span>
         }
-<span class="fc" id="L213">        return cl;</span>
+<span class="fc" id="L219">        return cl;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

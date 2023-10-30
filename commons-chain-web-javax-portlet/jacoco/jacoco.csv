@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletWebContext,39,236,1,35,2,62,2,32,1,15
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletInitParamMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletParamMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletRequestScopeMap,0,24,0,0,0,3,0,1,0,1
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletApplicationScopeMap,0,24,0,0,0,3,0,1,0,1
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletGetLocaleCommand,0,8,0,0,0,2,0,2,0,2
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletSetLocaleCommand,5,0,0,0,2,0,2,0,2,0
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletCookieMap,0,9,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletParamValuesMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Javax :: Portlet,org.apache.commons.chain.web.javax.portlet,PortletSessionScopeMap,0,46,0,0,0,6,0,4,0,4

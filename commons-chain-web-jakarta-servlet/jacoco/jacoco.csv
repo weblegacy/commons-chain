@@ -1,0 +1,17 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletWebContext,39,244,0,36,2,62,1,33,1,15
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletHeaderValuesMap,0,20,0,0,0,2,0,2,0,2
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletPathMapper,47,0,4,0,17,0,7,0,5,0
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletGetLocaleCommand,0,8,0,0,0,2,0,2,0,2
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletCookieMap,0,9,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletHeaderMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletInitParamMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletParamValuesMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,PathInfoMapper,47,0,4,0,17,0,7,0,5,0
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletSessionScopeMap,0,45,0,0,0,6,0,3,0,3
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletSetLocaleCommand,0,9,0,0,0,2,0,2,0,2
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletApplicationScopeMap,0,24,0,0,0,3,0,1,0,1
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletParamMap,0,14,0,0,0,2,0,1,0,1
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ChainProcessor,71,39,7,1,23,12,6,2,2,2
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,RequestParameterMapper,50,0,2,0,18,0,8,0,7,0
+Commons Chain :: Web :: Jakarta :: Servlet,org.apache.commons.chain.web.jakarta.servlet,ServletRequestScopeMap,0,24,0,0,0,3,0,1,0,1

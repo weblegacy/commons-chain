@@ -563,8 +563,11 @@
       <xs:enumeration value="METHOD_ABSTRACT_ADDED_IN_IMPLEMENTED_INTERFACE"/>
       <xs:enumeration value="METHOD_DEFAULT_ADDED_IN_IMPLEMENTED_INTERFACE"/>
       <xs:enumeration value="METHOD_NEW_DEFAULT"/>
+      <xs:enumeration value="METHOD_NEW_STATIC_ADDED_TO_INTERFACE"/>
       <xs:enumeration value="METHOD_MOVED_TO_SUPERCLASS"/>
       <xs:enumeration value="METHOD_ABSTRACT_NOW_DEFAULT"/>
+      <xs:enumeration value="METHOD_NON_STATIC_IN_INTERFACE_NOW_STATIC"/>
+      <xs:enumeration value="METHOD_STATIC_IN_INTERFACE_NO_LONGER_STATIC"/>
       <xs:enumeration value="FIELD_STATIC_AND_OVERRIDES_STATIC"/>
       <xs:enumeration value="FIELD_LESS_ACCESSIBLE_THAN_IN_SUPERCLASS"/>
       <xs:enumeration value="FIELD_NOW_FINAL"/>

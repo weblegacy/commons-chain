@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax.internal,CookieMap,174,0,24,0,36,0,23,0,11,0
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,ChainInit,254,0,26,0,73,0,18,0,5,0
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,SetLocaleCommand,27,0,0,0,9,0,4,0,4,0
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,WebContext,3,0,0,0,2,0,1,0,1,0
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,GetLocaleCommand,27,0,0,0,9,0,4,0,4,0
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,ChainResources,103,51,8,8,24,12,7,5,3,1
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,ChainServlet,38,0,0,0,13,0,4,0,4,0
+Commons Chain :: Web :: Javax,org.apache.commons.chain.web.javax,ChainListener,36,0,0,0,13,0,3,0,3,0

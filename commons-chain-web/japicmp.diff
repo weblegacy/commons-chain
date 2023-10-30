@@ -1,4 +1,4 @@
-Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/commons-chain-web/target/commons-chain-web-1.3-SNAPSHOT.jar against /home/stefan/.m2/repository/commons-chain/commons-chain/1.2/commons-chain-1.2.jar
+Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/commons-chain-web/target/commons-chain-web-1.3.0.jar against /home/stefan/.m2/repository/commons-chain/commons-chain/1.2/commons-chain-1.2.jar
 ---! REMOVED INTERFACE: PUBLIC(-) ABSTRACT(-) org.apache.commons.chain.Catalog  (not serializable)
 	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
 	---! REMOVED SUPERCLASS: java.lang.Object
@@ -221,89 +221,7 @@ Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/c
 	---! REMOVED METHOD: PROTECTED(-) ABSTRACT(-) java.util.Locale getLocale(org.apache.commons.chain.Context)
 	---! REMOVED METHOD: PUBLIC(-) java.lang.String getLocaleKey()
 	---! REMOVED METHOD: PUBLIC(-) void setLocaleKey(java.lang.String)
----! REMOVED CLASS: PUBLIC(-) ABSTRACT(-) org.apache.commons.chain.web.AbstractSetLocaleCommand  (not serializable)
-	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
-	---! REMOVED INTERFACE: org.apache.commons.chain.Command
-	---! REMOVED SUPERCLASS: java.lang.Object
-	---! REMOVED CONSTRUCTOR: PUBLIC(-) AbstractSetLocaleCommand()
-	---  REMOVED METHOD: PUBLIC(-) boolean execute(org.apache.commons.chain.Context)
-		---  REMOVED EXCEPTION: java.lang.Exception
-	---! REMOVED METHOD: PUBLIC(-) java.lang.String getLocaleKey()
-	---! REMOVED METHOD: PROTECTED(-) ABSTRACT(-) void setLocale(org.apache.commons.chain.Context, java.util.Locale)
-	---! REMOVED METHOD: PUBLIC(-) void setLocaleKey(java.lang.String)
-===  UNCHANGED CLASS: PUBLIC org.apache.commons.chain.web.ChainListener  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: java.util.EventListener
-	===  UNCHANGED INTERFACE: javax.servlet.ServletContextListener
-	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CONFIG_CLASS_RESOURCE
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String RULE_SET
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CONFIG_ATTR
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CONFIG_WEB_RESOURCE
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ChainListener()
-	===  UNCHANGED METHOD: PUBLIC void contextDestroyed(javax.servlet.ServletContextEvent)
-	===  UNCHANGED METHOD: PUBLIC void contextInitialized(javax.servlet.ServletContextEvent)
-===  UNCHANGED CLASS: PUBLIC org.apache.commons.chain.web.ChainServlet  (compatible)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: javax.servlet.ServletConfig
-	===  UNCHANGED INTERFACE: javax.servlet.Servlet
-	===  UNCHANGED INTERFACE: java.io.Serializable
-	===  UNCHANGED SUPERCLASS: javax.servlet.http.HttpServlet (<- javax.servlet.http.HttpServlet)
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CONFIG_CLASS_RESOURCE
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String RULE_SET
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CONFIG_ATTR
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CONFIG_WEB_RESOURCE
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ChainServlet()
-	===  UNCHANGED METHOD: PUBLIC void destroy()
-	===  UNCHANGED METHOD: PUBLIC void init()
-		===  UNCHANGED EXCEPTION: javax.servlet.ServletException
-	===  UNCHANGED METHOD: PUBLIC void service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		===  UNCHANGED EXCEPTION: javax.servlet.ServletException
-		===  UNCHANGED EXCEPTION: java.io.IOException
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.faces.FacesGetLocaleCommand  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	***! MODIFIED SUPERCLASS: org.apache.commons.chain.web.GetLocaleCommand (<- org.apache.commons.chain.web.AbstractGetLocaleCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC FacesGetLocaleCommand()
-	---! REMOVED METHOD: PROTECTED(-) java.util.Locale getLocale(org.apache.commons.chain.Context)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.faces.FacesSetLocaleCommand  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	***! MODIFIED SUPERCLASS: org.apache.commons.chain.web.SetLocaleCommand (<- org.apache.commons.chain.web.AbstractSetLocaleCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC FacesSetLocaleCommand()
-	---! REMOVED METHOD: PROTECTED(-) void setLocale(org.apache.commons.chain.Context, java.util.Locale)
-===! UNCHANGED CLASS: PUBLIC org.apache.commons.chain.web.faces.FacesWebContext  (compatible)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: java.lang.Cloneable
-	===  UNCHANGED INTERFACE: java.util.Map
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Context
-	===  UNCHANGED INTERFACE: java.io.Serializable
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.web.WebContext (<- org.apache.commons.chain.web.WebContext)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC FacesWebContext()
-	===  UNCHANGED CONSTRUCTOR: PUBLIC FacesWebContext(javax.faces.context.FacesContext)
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getApplicationScope()
-	===  UNCHANGED METHOD: PUBLIC javax.faces.context.FacesContext getContext()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,javax.servlet.http.Cookie> getCookies()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getHeader()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String[]> getHeaderValues()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getInitParam()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getParam()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String[]> getParamValues()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getRequestScope()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getSessionScope()
-	===  UNCHANGED METHOD: PUBLIC void initialize(javax.faces.context.FacesContext)
-	===  UNCHANGED METHOD: PUBLIC void release()
-+++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.GetLocaleCommand  (not serializable)
-	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
-	GENERIC TEMPLATES: +++ C:org.apache.commons.chain.web.WebContext
-	+++  NEW INTERFACE: org.apache.commons.chain.Command
-	+++  NEW SUPERCLASS: java.lang.Object
-	+++  NEW CONSTRUCTOR: PUBLIC(+) GetLocaleCommand(java.util.function.Function<C,java.util.Locale>)
-	+++  NEW METHOD: PUBLIC(+) boolean execute(org.apache.commons.chain.web.WebContext)
-		+++  NEW EXCEPTION: java.lang.Exception
-	+++  NEW METHOD: PUBLIC(+) java.lang.String getLocaleKey()
-	+++  NEW METHOD: PUBLIC(+) void setLocaleKey(java.lang.String)
-+++  NEW CLASS: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.internal.AbstractSessionScopeMap  (not serializable)
++++  NEW CLASS: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.AbstractSessionScopeMap  (not serializable)
 	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
 	GENERIC TEMPLATES: +++ R:java.lang.Object, +++ S:java.lang.Object
 	+++  NEW INTERFACE: java.util.Map
@@ -312,7 +230,7 @@ Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/c
 	+++  NEW METHOD: PUBLIC(+) void clear()
 	+++  NEW METHOD: PUBLIC(+) boolean containsKey(java.lang.Object)
 	+++  NEW METHOD: PUBLIC(+) boolean containsValue(java.lang.Object)
-	+++  NEW METHOD: PROTECTED(+) ABSTRACT(+) org.apache.commons.chain.web.internal.MutableParameterMap<S,java.lang.Object> createParameterMap()
+	+++  NEW METHOD: PROTECTED(+) ABSTRACT(+) org.apache.commons.chain.web.MutableParameterMap<S,java.lang.Object> createParameterMap()
 	+++  NEW METHOD: PUBLIC(+) java.util.Set<java.util.Map$Entry<java.lang.String,java.lang.Object>> entrySet()
 	+++  NEW METHOD: PUBLIC(+) boolean equals(java.lang.Object)
 	+++  NEW METHOD: PUBLIC(+) java.lang.Object get(java.lang.Object)
@@ -330,49 +248,120 @@ Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/c
 	+++  NEW METHOD: PUBLIC(+) int size()
 	+++  NEW METHOD: PUBLIC(+) java.lang.String toString()
 	+++  NEW METHOD: PUBLIC(+) java.util.Collection<java.lang.Object> values()
-+++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.internal.CheckedConsumer  (not serializable)
+---! REMOVED CLASS: PUBLIC(-) ABSTRACT(-) org.apache.commons.chain.web.AbstractSetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: java.lang.Object
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) AbstractSetLocaleCommand()
+	---  REMOVED METHOD: PUBLIC(-) boolean execute(org.apache.commons.chain.Context)
+		---  REMOVED EXCEPTION: java.lang.Exception
+	---! REMOVED METHOD: PUBLIC(-) java.lang.String getLocaleKey()
+	---! REMOVED METHOD: PROTECTED(-) ABSTRACT(-) void setLocale(org.apache.commons.chain.Context, java.util.Locale)
+	---! REMOVED METHOD: PUBLIC(-) void setLocaleKey(java.lang.String)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.ChainListener  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: java.util.EventListener
+	---! REMOVED INTERFACE: javax.servlet.ServletContextListener
+	---! REMOVED SUPERCLASS: java.lang.Object
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CONFIG_CLASS_RESOURCE
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String RULE_SET
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CONFIG_ATTR
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CONFIG_WEB_RESOURCE
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ChainListener()
+	---! REMOVED METHOD: PUBLIC(-) void contextDestroyed(javax.servlet.ServletContextEvent)
+	---! REMOVED METHOD: PUBLIC(-) void contextInitialized(javax.servlet.ServletContextEvent)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.ChainServlet  (class removed)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: javax.servlet.ServletConfig
+	---! REMOVED INTERFACE: javax.servlet.Servlet
+	---! REMOVED INTERFACE: java.io.Serializable
+	---! REMOVED SUPERCLASS: javax.servlet.http.HttpServlet
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CONFIG_CLASS_RESOURCE
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String RULE_SET
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CONFIG_ATTR
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CONFIG_WEB_RESOURCE
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ChainServlet()
+	---! REMOVED METHOD: PUBLIC(-) void destroy()
+	---! REMOVED METHOD: PUBLIC(-) void init()
+		---  REMOVED EXCEPTION: javax.servlet.ServletException
+	---! REMOVED METHOD: PUBLIC(-) void service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		---  REMOVED EXCEPTION: javax.servlet.ServletException
+		---  REMOVED EXCEPTION: java.io.IOException
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.CheckedConsumer  (not serializable)
 	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
 	GENERIC TEMPLATES: +++ E:java.lang.Throwable, +++ T:java.lang.Object
 	+++  NEW SUPERCLASS: java.lang.Object
 	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) void accept(java.lang.Object)
 		+++  NEW EXCEPTION: java.lang.Throwable
-	+++  NEW METHOD: PUBLIC(+) org.apache.commons.chain.web.internal.CheckedConsumer andThen(org.apache.commons.chain.web.internal.CheckedConsumer<? super T,E>)
+	+++  NEW METHOD: PUBLIC(+) org.apache.commons.chain.web.CheckedConsumer andThen(org.apache.commons.chain.web.CheckedConsumer<? super T,E>)
 		+++  NEW EXCEPTION: java.lang.Throwable
 	+++  NEW ANNOTATION: java.lang.FunctionalInterface
-+++* NEW INTERFACE: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.internal.CheckedFunction  (not serializable)
++++* NEW INTERFACE: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.CheckedFunction  (not serializable)
 	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
 	GENERIC TEMPLATES: +++ E:java.lang.Throwable, +++ R:java.lang.Object, +++ T:java.lang.Object
 	+++  NEW SUPERCLASS: java.lang.Object
-	+++* NEW METHOD: PUBLIC(+) org.apache.commons.chain.web.internal.CheckedFunction<T,V,E> andThen(org.apache.commons.chain.web.internal.CheckedFunction<? super R,? extends V,E>)
+	+++* NEW METHOD: PUBLIC(+) org.apache.commons.chain.web.CheckedFunction andThen(org.apache.commons.chain.web.CheckedFunction<? super R,? extends V,E>)
+		+++  NEW EXCEPTION: java.lang.Throwable
 		GENERIC TEMPLATES: +++ V:java.lang.Object
 	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object apply(java.lang.Object)
 		+++  NEW EXCEPTION: java.lang.Throwable
-	+++* NEW METHOD: PUBLIC(+) org.apache.commons.chain.web.internal.CheckedFunction<V,R,E> compose(org.apache.commons.chain.web.internal.CheckedFunction<? super V,? extends T,E>)
+	+++* NEW METHOD: PUBLIC(+) org.apache.commons.chain.web.CheckedFunction compose(org.apache.commons.chain.web.CheckedFunction<? super V,? extends T,E>)
+		+++  NEW EXCEPTION: java.lang.Throwable
 		GENERIC TEMPLATES: +++ V:java.lang.Object
-	+++* NEW METHOD: PUBLIC(+) STATIC(+) org.apache.commons.chain.web.internal.CheckedFunction<T,T,E> identity()
+	+++* NEW METHOD: PUBLIC(+) STATIC(+) org.apache.commons.chain.web.CheckedFunction identity()
+		+++  NEW EXCEPTION: java.lang.Throwable
 		GENERIC TEMPLATES: +++ E:java.lang.Throwable, +++ T:java.lang.Object
 	+++  NEW ANNOTATION: java.lang.FunctionalInterface
-+++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.internal.CookieMap  (not serializable)
-	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
-	GENERIC TEMPLATES: +++ P:java.lang.Object
-	+++  NEW INTERFACE: java.util.Map
-	+++  NEW SUPERCLASS: org.apache.commons.chain.web.internal.ParameterMap
-	+++  NEW CONSTRUCTOR: PUBLIC(+) CookieMap(java.lang.Object, java.util.function.Supplier<javax.servlet.http.Cookie[]>)
-	+++  NEW METHOD: PUBLIC(+) boolean containsKey(java.lang.Object)
-	+++  NEW METHOD: PUBLIC(+) boolean containsValue(java.lang.Object)
-	+++  NEW METHOD: PUBLIC(+) java.util.Set<java.util.Map$Entry<java.lang.String,javax.servlet.http.Cookie>> entrySet()
-	+++  NEW METHOD: PUBLIC(+) boolean equals(java.lang.Object)
-	+++  NEW METHOD: PUBLIC(+) javax.servlet.http.Cookie get(java.lang.Object)
-	+++  NEW METHOD: PUBLIC(+) int hashCode()
-	+++  NEW METHOD: PUBLIC(+) boolean isEmpty()
-	+++  NEW METHOD: PUBLIC(+) java.util.Set<java.lang.String> keySet()
-	+++  NEW METHOD: PUBLIC(+) int size()
-	+++  NEW METHOD: PUBLIC(+) java.util.Collection<javax.servlet.http.Cookie> values()
-+++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.internal.MutableParameterMap  (not serializable)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.faces.FacesGetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.AbstractGetLocaleCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) FacesGetLocaleCommand()
+	---! REMOVED METHOD: PROTECTED(-) java.util.Locale getLocale(org.apache.commons.chain.Context)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.faces.FacesSetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.AbstractSetLocaleCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) FacesSetLocaleCommand()
+	---! REMOVED METHOD: PROTECTED(-) void setLocale(org.apache.commons.chain.Context, java.util.Locale)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.faces.FacesWebContext  (class removed)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: java.lang.Cloneable
+	---! REMOVED INTERFACE: java.util.Map
+	---! REMOVED INTERFACE: org.apache.commons.chain.Context
+	---! REMOVED INTERFACE: java.io.Serializable
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.WebContext
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) FacesWebContext()
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) FacesWebContext(javax.faces.context.FacesContext)
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getApplicationScope()
+	---! REMOVED METHOD: PUBLIC(-) javax.faces.context.FacesContext getContext()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getCookies()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getHeader()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getHeaderValues()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getInitParam()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getParam()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getParamValues()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getRequestScope()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getSessionScope()
+	---! REMOVED METHOD: PUBLIC(-) void initialize(javax.faces.context.FacesContext)
+	---! REMOVED METHOD: PUBLIC(-) void release()
+***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.MapEntry  (not serializable)
+	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
+	GENERIC TEMPLATES: +++ T:java.lang.Object
+	===  UNCHANGED INTERFACE: java.util.Map$Entry
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) MapEntry(java.lang.Object, java.lang.Object, boolean)
+	+++  NEW CONSTRUCTOR: PUBLIC(+) MapEntry(java.lang.String, java.lang.Object, boolean)
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) java.lang.Object getKey()
+	===  UNCHANGED METHOD: PUBLIC java.lang.Object getValue()
+	===  UNCHANGED METHOD: PUBLIC int hashCode()
+	===  UNCHANGED METHOD: PUBLIC java.lang.Object setValue(java.lang.Object)
++++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.MutableParameterMap  (not serializable)
 	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
 	GENERIC TEMPLATES: +++ P:java.lang.Object, +++ T:java.lang.Object
 	+++  NEW INTERFACE: java.util.Map
-	+++  NEW SUPERCLASS: org.apache.commons.chain.web.internal.ParameterMap
+	+++  NEW SUPERCLASS: org.apache.commons.chain.web.ParameterMap
 	+++  NEW CONSTRUCTOR: PUBLIC(+) MutableParameterMap(java.lang.Object, java.util.function.Function<java.lang.String,T>, java.util.function.Supplier<java.util.Enumeration<java.lang.String>>, java.util.function.Consumer<java.lang.String>, java.util.function.BiConsumer<java.lang.String,T>)
 	+++  NEW METHOD: PUBLIC(+) void clear()
 	+++  NEW METHOD: PUBLIC(+) boolean containsValue(java.lang.Object)
@@ -382,7 +371,7 @@ Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/c
 	+++  NEW METHOD: PUBLIC(+) java.lang.Object put(java.lang.String, java.lang.Object)
 	+++  NEW METHOD: PUBLIC(+) void putAll(java.util.Map<? extends java.lang.String,? extends T>)
 	+++  NEW METHOD: PUBLIC(+) java.lang.Object remove(java.lang.Object)
-+++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.internal.ParameterMap  (not serializable)
++++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.ParameterMap  (not serializable)
 	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
 	GENERIC TEMPLATES: +++ P:java.lang.Object, +++ T:java.lang.Object
 	+++  NEW INTERFACE: java.util.Map
@@ -408,185 +397,151 @@ Comparing source compatibility of /home/stefan/eclipse-workspace/commons-chain/c
 	+++  NEW METHOD: PUBLIC(+) int size()
 	+++  NEW METHOD: PUBLIC(+) java.lang.String toString()
 	+++  NEW METHOD: PUBLIC(+) java.util.Collection<T> values()
-+++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.internal.ParamValuesMap  (not serializable)
++++  NEW CLASS: PUBLIC(+) org.apache.commons.chain.web.ParamValuesMap  (not serializable)
 	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
 	GENERIC TEMPLATES: +++ P:java.lang.Object
 	+++  NEW INTERFACE: java.util.Map
-	+++  NEW SUPERCLASS: org.apache.commons.chain.web.internal.ParameterMap
+	+++  NEW SUPERCLASS: org.apache.commons.chain.web.ParameterMap
 	+++  NEW CONSTRUCTOR: PUBLIC(+) ParamValuesMap(java.lang.Object, java.util.function.Function<java.lang.String,java.lang.String[]>, java.util.function.Supplier<java.util.Enumeration<java.lang.String>>)
 	+++  NEW METHOD: PUBLIC(+) boolean containsValue(java.lang.Object)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.MapEntry  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	GENERIC TEMPLATES: +++ T:java.lang.Object
-	===  UNCHANGED INTERFACE: java.util.Map$Entry
-	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
-	---! REMOVED CONSTRUCTOR: PUBLIC(-) MapEntry(java.lang.Object, java.lang.Object, boolean)
-	+++  NEW CONSTRUCTOR: PUBLIC(+) MapEntry(java.lang.String, java.lang.Object, boolean)
-	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
-	===  UNCHANGED METHOD: PUBLIC SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) java.lang.Object getKey()
-	===  UNCHANGED METHOD: PUBLIC java.lang.Object getValue()
-	===  UNCHANGED METHOD: PUBLIC int hashCode()
-	===  UNCHANGED METHOD: PUBLIC java.lang.Object setValue(java.lang.Object)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.portlet.PortletGetLocaleCommand  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	***! MODIFIED SUPERCLASS: org.apache.commons.chain.web.GetLocaleCommand (<- org.apache.commons.chain.web.AbstractGetLocaleCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC PortletGetLocaleCommand()
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.portlet.PortletGetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.AbstractGetLocaleCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) PortletGetLocaleCommand()
 	---! REMOVED METHOD: PROTECTED(-) java.util.Locale getLocale(org.apache.commons.chain.Context)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.portlet.PortletSetLocaleCommand  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	***! MODIFIED SUPERCLASS: org.apache.commons.chain.web.SetLocaleCommand (<- org.apache.commons.chain.web.AbstractSetLocaleCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC PortletSetLocaleCommand()
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.portlet.PortletSetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.AbstractSetLocaleCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) PortletSetLocaleCommand()
 	---! REMOVED METHOD: PROTECTED(-) void setLocale(org.apache.commons.chain.Context, java.util.Locale)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.portlet.PortletWebContext  (field changed from nontransient to transient)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: java.lang.Cloneable
-	===  UNCHANGED INTERFACE: java.util.Map
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Context
-	===  UNCHANGED INTERFACE: java.io.Serializable
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.web.WebContext (<- org.apache.commons.chain.web.WebContext)
-	***! MODIFIED FIELD: PRIVATE (<- PROTECTED) javax.portlet.PortletRequest request
-	***! MODIFIED FIELD: PRIVATE (<- PROTECTED) javax.portlet.PortletResponse response
-	***! MODIFIED FIELD: PRIVATE (<- PROTECTED) javax.portlet.PortletContext context
-	===  UNCHANGED CONSTRUCTOR: PUBLIC PortletWebContext(javax.portlet.PortletContext, javax.portlet.PortletRequest, javax.portlet.PortletResponse)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC PortletWebContext()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getApplicationScope()
-	===  UNCHANGED METHOD: PUBLIC javax.portlet.PortletContext getContext()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,javax.servlet.http.Cookie> getCookies()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getHeader()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String[]> getHeaderValues()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getInitParam()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getParam()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String[]> getParamValues()
-	===  UNCHANGED METHOD: PUBLIC javax.portlet.PortletRequest getRequest()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getRequestScope()
-	===  UNCHANGED METHOD: PUBLIC javax.portlet.PortletResponse getResponse()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getSessionScope()
-	===  UNCHANGED METHOD: PUBLIC void initialize(javax.portlet.PortletContext, javax.portlet.PortletRequest, javax.portlet.PortletResponse)
-	===  UNCHANGED METHOD: PUBLIC void release()
-===  UNCHANGED CLASS: PUBLIC org.apache.commons.chain.web.servlet.ChainProcessor  (compatible)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: javax.servlet.ServletConfig
-	===  UNCHANGED INTERFACE: javax.servlet.Servlet
-	===  UNCHANGED INTERFACE: java.io.Serializable
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.web.ChainServlet (<- org.apache.commons.chain.web.ChainServlet)
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CATALOG
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String CATALOG_DEFAULT
-	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String COMMAND
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ChainProcessor()
-	===  UNCHANGED METHOD: PUBLIC void destroy()
-	===  UNCHANGED METHOD: PUBLIC void init()
-		===  UNCHANGED EXCEPTION: javax.servlet.ServletException
-	===  UNCHANGED METHOD: PUBLIC void service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		===  UNCHANGED EXCEPTION: java.io.IOException
-		===  UNCHANGED EXCEPTION: javax.servlet.ServletException
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.servlet.PathInfoMapper  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Filter
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.generic.LookupCommand (<- org.apache.commons.chain.generic.LookupCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC PathInfoMapper()
-	===  UNCHANGED METHOD: PROTECTED SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) org.apache.commons.chain.Catalog getCatalog(org.apache.commons.chain.Context)
-	+++  NEW METHOD: PROTECTED(+) org.apache.commons.chain.Catalog<org.apache.commons.chain.web.servlet.ServletWebContext> getCatalog(org.apache.commons.chain.web.servlet.ServletWebContext)
-	===  UNCHANGED METHOD: PUBLIC java.lang.String getCatalogKey()
-		+++  NEW ANNOTATION: java.lang.Deprecated
-	===  UNCHANGED METHOD: PROTECTED SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) java.lang.String getCommandName(org.apache.commons.chain.Context)
-	+++  NEW METHOD: PROTECTED(+) java.lang.String getCommandName(org.apache.commons.chain.web.servlet.ServletWebContext)
-	===  UNCHANGED METHOD: PUBLIC void setCatalogKey(java.lang.String)
-		+++  NEW ANNOTATION: java.lang.Deprecated
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.servlet.RequestParameterMapper  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Filter
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.generic.LookupCommand (<- org.apache.commons.chain.generic.LookupCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC RequestParameterMapper()
-	===  UNCHANGED METHOD: PROTECTED SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) org.apache.commons.chain.Catalog getCatalog(org.apache.commons.chain.Context)
-	+++  NEW METHOD: PROTECTED(+) org.apache.commons.chain.Catalog<org.apache.commons.chain.web.servlet.ServletWebContext> getCatalog(org.apache.commons.chain.web.servlet.ServletWebContext)
-	===  UNCHANGED METHOD: PUBLIC java.lang.String getCatalogKey()
-	===  UNCHANGED METHOD: PROTECTED SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) java.lang.String getCommandName(org.apache.commons.chain.Context)
-	+++  NEW METHOD: PROTECTED(+) java.lang.String getCommandName(org.apache.commons.chain.web.servlet.ServletWebContext)
-	===  UNCHANGED METHOD: PUBLIC java.lang.String getParameter()
-		+++  NEW ANNOTATION: java.lang.Deprecated
-	===  UNCHANGED METHOD: PUBLIC void setCatalogKey(java.lang.String)
-		+++  NEW ANNOTATION: java.lang.Deprecated
-	===  UNCHANGED METHOD: PUBLIC void setParameter(java.lang.String)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.servlet.ServletGetLocaleCommand  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	***! MODIFIED SUPERCLASS: org.apache.commons.chain.web.GetLocaleCommand (<- org.apache.commons.chain.web.AbstractGetLocaleCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ServletGetLocaleCommand()
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.portlet.PortletWebContext  (class removed)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: java.lang.Cloneable
+	---! REMOVED INTERFACE: java.util.Map
+	---! REMOVED INTERFACE: org.apache.commons.chain.Context
+	---! REMOVED INTERFACE: java.io.Serializable
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.WebContext
+	---! REMOVED FIELD: PROTECTED(-) javax.portlet.PortletRequest request
+	---! REMOVED FIELD: PROTECTED(-) javax.portlet.PortletResponse response
+	---! REMOVED FIELD: PROTECTED(-) javax.portlet.PortletContext context
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) PortletWebContext(javax.portlet.PortletContext, javax.portlet.PortletRequest, javax.portlet.PortletResponse)
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) PortletWebContext()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getApplicationScope()
+	---! REMOVED METHOD: PUBLIC(-) javax.portlet.PortletContext getContext()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getCookies()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getHeader()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getHeaderValues()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getInitParam()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getParam()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getParamValues()
+	---! REMOVED METHOD: PUBLIC(-) javax.portlet.PortletRequest getRequest()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getRequestScope()
+	---! REMOVED METHOD: PUBLIC(-) javax.portlet.PortletResponse getResponse()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getSessionScope()
+	---! REMOVED METHOD: PUBLIC(-) void initialize(javax.portlet.PortletContext, javax.portlet.PortletRequest, javax.portlet.PortletResponse)
+	---! REMOVED METHOD: PUBLIC(-) void release()
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.ChainProcessor  (class removed)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: javax.servlet.ServletConfig
+	---! REMOVED INTERFACE: javax.servlet.Servlet
+	---! REMOVED INTERFACE: java.io.Serializable
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.ChainServlet
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CATALOG
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String CATALOG_DEFAULT
+	---! REMOVED FIELD: PUBLIC(-) STATIC(-) FINAL(-) java.lang.String COMMAND
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ChainProcessor()
+	---! REMOVED METHOD: PUBLIC(-) void destroy()
+	---! REMOVED METHOD: PUBLIC(-) void init()
+		---  REMOVED EXCEPTION: javax.servlet.ServletException
+	---! REMOVED METHOD: PUBLIC(-) void service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		---  REMOVED EXCEPTION: java.io.IOException
+		---  REMOVED EXCEPTION: javax.servlet.ServletException
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.PathInfoMapper  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED INTERFACE: org.apache.commons.chain.Filter
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.generic.LookupCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) PathInfoMapper()
+	---! REMOVED METHOD: PROTECTED(-) org.apache.commons.chain.Catalog getCatalog(org.apache.commons.chain.Context)
+	---! REMOVED METHOD: PUBLIC(-) java.lang.String getCatalogKey()
+	---! REMOVED METHOD: PROTECTED(-) java.lang.String getCommandName(org.apache.commons.chain.Context)
+	---! REMOVED METHOD: PUBLIC(-) void setCatalogKey(java.lang.String)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.RequestParameterMapper  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED INTERFACE: org.apache.commons.chain.Filter
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.generic.LookupCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) RequestParameterMapper()
+	---! REMOVED METHOD: PROTECTED(-) org.apache.commons.chain.Catalog getCatalog(org.apache.commons.chain.Context)
+	---! REMOVED METHOD: PUBLIC(-) java.lang.String getCatalogKey()
+	---! REMOVED METHOD: PROTECTED(-) java.lang.String getCommandName(org.apache.commons.chain.Context)
+	---! REMOVED METHOD: PUBLIC(-) java.lang.String getParameter()
+	---! REMOVED METHOD: PUBLIC(-) void setCatalogKey(java.lang.String)
+	---! REMOVED METHOD: PUBLIC(-) void setParameter(java.lang.String)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.ServletGetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.AbstractGetLocaleCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ServletGetLocaleCommand()
 	---! REMOVED METHOD: PROTECTED(-) java.util.Locale getLocale(org.apache.commons.chain.Context)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.servlet.ServletPathMapper  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Filter
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.generic.LookupCommand (<- org.apache.commons.chain.generic.LookupCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ServletPathMapper()
-	===  UNCHANGED METHOD: PROTECTED SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) org.apache.commons.chain.Catalog getCatalog(org.apache.commons.chain.Context)
-	+++  NEW METHOD: PROTECTED(+) org.apache.commons.chain.Catalog<org.apache.commons.chain.web.servlet.ServletWebContext> getCatalog(org.apache.commons.chain.web.servlet.ServletWebContext)
-	===  UNCHANGED METHOD: PUBLIC java.lang.String getCatalogKey()
-		+++  NEW ANNOTATION: java.lang.Deprecated
-	===  UNCHANGED METHOD: PROTECTED SYNTHETIC (<- NON_SYNTHETIC) BRIDGE (<- NON_BRIDGE) java.lang.String getCommandName(org.apache.commons.chain.Context)
-	+++  NEW METHOD: PROTECTED(+) java.lang.String getCommandName(org.apache.commons.chain.web.servlet.ServletWebContext)
-	===  UNCHANGED METHOD: PUBLIC void setCatalogKey(java.lang.String)
-		+++  NEW ANNOTATION: java.lang.Deprecated
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.servlet.ServletSetLocaleCommand  (not serializable)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Command
-	***! MODIFIED SUPERCLASS: org.apache.commons.chain.web.SetLocaleCommand (<- org.apache.commons.chain.web.AbstractSetLocaleCommand)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ServletSetLocaleCommand()
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.ServletPathMapper  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED INTERFACE: org.apache.commons.chain.Filter
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.generic.LookupCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ServletPathMapper()
+	---! REMOVED METHOD: PROTECTED(-) org.apache.commons.chain.Catalog getCatalog(org.apache.commons.chain.Context)
+	---! REMOVED METHOD: PUBLIC(-) java.lang.String getCatalogKey()
+	---! REMOVED METHOD: PROTECTED(-) java.lang.String getCommandName(org.apache.commons.chain.Context)
+	---! REMOVED METHOD: PUBLIC(-) void setCatalogKey(java.lang.String)
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.ServletSetLocaleCommand  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: org.apache.commons.chain.Command
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.AbstractSetLocaleCommand
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ServletSetLocaleCommand()
 	---! REMOVED METHOD: PROTECTED(-) void setLocale(org.apache.commons.chain.Context, java.util.Locale)
-***! MODIFIED CLASS: PUBLIC org.apache.commons.chain.web.servlet.ServletWebContext  (field changed from nontransient to transient)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: java.lang.Cloneable
-	===  UNCHANGED INTERFACE: java.util.Map
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Context
-	===  UNCHANGED INTERFACE: java.io.Serializable
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.web.WebContext (<- org.apache.commons.chain.web.WebContext)
-	***! MODIFIED FIELD: PRIVATE (<- PROTECTED) javax.servlet.http.HttpServletRequest request
-	***! MODIFIED FIELD: PRIVATE (<- PROTECTED) javax.servlet.http.HttpServletResponse response
-	***! MODIFIED FIELD: PRIVATE (<- PROTECTED) javax.servlet.ServletContext context
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ServletWebContext(javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC ServletWebContext()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getApplicationScope()
-	===  UNCHANGED METHOD: PUBLIC javax.servlet.ServletContext getContext()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,javax.servlet.http.Cookie> getCookies()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getHeader()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String[]> getHeaderValues()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getInitParam()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String> getParam()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.String[]> getParamValues()
-	===  UNCHANGED METHOD: PUBLIC javax.servlet.http.HttpServletRequest getRequest()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getRequestScope()
-	===  UNCHANGED METHOD: PUBLIC javax.servlet.http.HttpServletResponse getResponse()
-	===* UNCHANGED METHOD: PUBLIC java.util.Map<java.lang.String,java.lang.Object> getSessionScope()
-	===  UNCHANGED METHOD: PUBLIC void initialize(javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	===  UNCHANGED METHOD: PUBLIC void release()
-+++  NEW CLASS: PUBLIC(+) ABSTRACT(+) org.apache.commons.chain.web.SetLocaleCommand  (not serializable)
-	+++  CLASS FILE FORMAT VERSION: 52.0 <- n.a.
-	GENERIC TEMPLATES: +++ C:org.apache.commons.chain.web.WebContext
-	+++  NEW INTERFACE: org.apache.commons.chain.Command
-	+++  NEW SUPERCLASS: java.lang.Object
-	+++  NEW CONSTRUCTOR: PUBLIC(+) SetLocaleCommand(java.util.function.BiConsumer<C,java.util.Locale>)
-	+++  NEW METHOD: PUBLIC(+) boolean execute(org.apache.commons.chain.web.WebContext)
-		+++  NEW EXCEPTION: java.lang.Exception
-	+++  NEW METHOD: PUBLIC(+) java.lang.String getLocaleKey()
-	+++  NEW METHOD: PUBLIC(+) void setLocaleKey(java.lang.String)
-===! UNCHANGED CLASS: PUBLIC ABSTRACT org.apache.commons.chain.web.WebContext  (compatible)
-	***! CLASS FILE FORMAT VERSION: 52.0 <- 47.0
-	===  UNCHANGED INTERFACE: java.lang.Cloneable
-	===  UNCHANGED INTERFACE: java.util.Map
-	===! UNCHANGED INTERFACE: org.apache.commons.chain.Context
-	===  UNCHANGED INTERFACE: java.io.Serializable
-	===  UNCHANGED SUPERCLASS: org.apache.commons.chain.impl.ContextBase (<- org.apache.commons.chain.impl.ContextBase)
-	===  UNCHANGED CONSTRUCTOR: PUBLIC WebContext()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.Object> getApplicationScope()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,javax.servlet.http.Cookie> getCookies()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.String> getHeader()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.String[]> getHeaderValues()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.String> getInitParam()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.String> getParam()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.String[]> getParamValues()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.Object> getRequestScope()
-	===* UNCHANGED METHOD: PUBLIC ABSTRACT java.util.Map<java.lang.String,java.lang.Object> getSessionScope()
+---! REMOVED CLASS: PUBLIC(-) org.apache.commons.chain.web.servlet.ServletWebContext  (class removed)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: java.lang.Cloneable
+	---! REMOVED INTERFACE: java.util.Map
+	---! REMOVED INTERFACE: org.apache.commons.chain.Context
+	---! REMOVED INTERFACE: java.io.Serializable
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.web.WebContext
+	---! REMOVED FIELD: PROTECTED(-) javax.servlet.http.HttpServletRequest request
+	---! REMOVED FIELD: PROTECTED(-) javax.servlet.http.HttpServletResponse response
+	---! REMOVED FIELD: PROTECTED(-) javax.servlet.ServletContext context
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ServletWebContext(javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ServletWebContext()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getApplicationScope()
+	---! REMOVED METHOD: PUBLIC(-) javax.servlet.ServletContext getContext()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getCookies()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getHeader()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getHeaderValues()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getInitParam()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getParam()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getParamValues()
+	---! REMOVED METHOD: PUBLIC(-) javax.servlet.http.HttpServletRequest getRequest()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getRequestScope()
+	---! REMOVED METHOD: PUBLIC(-) javax.servlet.http.HttpServletResponse getResponse()
+	---! REMOVED METHOD: PUBLIC(-) java.util.Map getSessionScope()
+	---! REMOVED METHOD: PUBLIC(-) void initialize(javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	---! REMOVED METHOD: PUBLIC(-) void release()
+---! REMOVED CLASS: PUBLIC(-) ABSTRACT(-) org.apache.commons.chain.web.WebContext  (class removed)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 47.0
+	---! REMOVED INTERFACE: java.lang.Cloneable
+	---! REMOVED INTERFACE: java.util.Map
+	---! REMOVED INTERFACE: org.apache.commons.chain.Context
+	---! REMOVED INTERFACE: java.io.Serializable
+	---! REMOVED SUPERCLASS: org.apache.commons.chain.impl.ContextBase
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) WebContext()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getApplicationScope()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getCookies()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getHeader()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getHeaderValues()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getInitParam()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getParam()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getParamValues()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getRequestScope()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.Map getSessionScope()

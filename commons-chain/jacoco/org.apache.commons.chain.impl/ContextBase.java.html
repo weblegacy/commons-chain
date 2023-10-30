@@ -539,7 +539,7 @@ public class ContextBase extends HashMap&lt;String, Object&gt; implements Contex
      * Private implementation of {@code Set} that implements the
      * semantics required for the value returned by {@code entrySet()}.
      */
-<span class="fc" id="L542">    private class EntrySetImpl extends AbstractSet&lt;Map.Entry&lt;String, Object&gt;&gt; {</span>
+<span class="fc" id="L542">    private final class EntrySetImpl extends AbstractSet&lt;Map.Entry&lt;String, Object&gt;&gt; {</span>
 
         @Override
         public void clear() {
@@ -589,7 +589,7 @@ public class ContextBase extends HashMap&lt;String, Object&gt; implements Contex
      * Private implementation of {@code Iterator} for the
      * {@code Set} returned by {@code entrySet()}.
      */
-<span class="fc" id="L592">    private class EntrySetIterator implements Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; {</span>
+<span class="fc" id="L592">    private final class EntrySetIterator implements Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; {</span>
 
 <span class="fc" id="L594">        private Map.Entry&lt;String, Object&gt; entry = null;</span>
 <span class="fc" id="L595">        private Iterator&lt;String&gt; keys = ContextBase.this.keySet().iterator();</span>
@@ -677,7 +677,7 @@ public class ContextBase extends HashMap&lt;String, Object&gt; implements Contex
      * Private implementation of {@code Collection} that implements the
      * semantics required for the value returned by {@code values()}.
      */
-<span class="nc" id="L680">    private class ValuesImpl extends AbstractCollection&lt;Object&gt; {</span>
+<span class="nc" id="L680">    private final class ValuesImpl extends AbstractCollection&lt;Object&gt; {</span>
 
         @Override
         public void clear() {
@@ -722,7 +722,7 @@ public class ContextBase extends HashMap&lt;String, Object&gt; implements Contex
      * Private implementation of {@code Iterator} for the
      * {@code Collection} returned by {@code values()}.
      */
-<span class="nc" id="L725">    private class ValuesIterator implements Iterator&lt;Object&gt; {</span>
+<span class="nc" id="L725">    private final class ValuesIterator implements Iterator&lt;Object&gt; {</span>
 
 <span class="nc" id="L727">        private Map.Entry&lt;String, Object&gt; entry = null;</span>
 <span class="nc" id="L728">        private Iterator&lt;String&gt; keys = ContextBase.this.keySet().iterator();</span>
@@ -744,4 +744,4 @@ public class ContextBase extends HashMap&lt;String, Object&gt; implements Contex
 <span class="nc" id="L744">        }</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

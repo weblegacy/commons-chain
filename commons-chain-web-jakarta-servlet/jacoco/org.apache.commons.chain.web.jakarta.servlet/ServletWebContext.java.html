@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServletWebContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Commons Chain :: Web :: Jakarta :: Servlet</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.chain.web.jakarta.servlet</a> &gt; <span class="el_source">ServletWebContext.java</span></div><h1>ServletWebContext.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.chain.web.jakarta.servlet;
+
+import java.util.Map;
+
+import org.apache.commons.chain.web.jakarta.WebContext;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+/**
+ * Concrete implementation of {@link WebContext} suitable for use in
+ * Servlets and JSP pages. The abstract methods are mapped to the appropriate
+ * collections of the underlying servlet context, request, and response
+ * instances that are passed to the constructor (or the initialize method).
+ *
+ * @author Craig R. McClanahan
+ */
+public class ServletWebContext extends WebContext {
+    private static final long serialVersionUID = 5302874006663111922L;
+
+    // ------------------------------------------------------ Instance Variables
+
+    /**
+     * The lazily instantiated {@code Map} of application scope
+     * attributes.
+     */
+<span class="pc" id="L45">    private transient Map&lt;String, Object&gt; applicationScope = null;</span>
+
+    /**
+     * The {@code ServletContext} for this web application.
+     */
+<span class="pc" id="L50">    private transient ServletContext context = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of header name-value
+     * combinations (immutable).
+     */
+<span class="pc" id="L56">    private transient Map&lt;String, String&gt; header = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of header name-values
+     * combinations (immutable).
+     */
+<span class="pc" id="L62">    private transient Map&lt;String, String[]&gt; headerValues = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of context initialization
+     * parameters.
+     */
+<span class="pc" id="L68">    private transient Map&lt;String, String&gt; initParam = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of cookies.
+     */
+<span class="pc" id="L73">    private transient Map&lt;String, Cookie&gt; cookieValues = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of request
+     * parameter name-value.
+     */
+<span class="pc" id="L79">    private transient Map&lt;String, String&gt; param = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of request
+     * parameter name-values.
+     */
+<span class="pc" id="L85">    private transient Map&lt;String, String[]&gt; paramValues = null;</span>
+
+    /**
+     * The {@code HttpServletRequest} for this request.
+     */
+<span class="pc" id="L90">    private transient HttpServletRequest request = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of request scope
+     * attributes.
+     */
+<span class="pc" id="L96">    private transient Map&lt;String, Object&gt; requestScope = null;</span>
+
+    /**
+     * The {@code HttpServletResponse} for this request.
+     */
+<span class="pc" id="L101">    private transient HttpServletResponse response = null;</span>
+
+    /**
+     * The lazily instantiated {@code Map} of session scope
+     * attributes.
+     */
+<span class="pc" id="L107">    private transient Map&lt;String, Object&gt; sessionScope = null;</span>
+
+    // ------------------------------------------------------------ Constructors
+
+    /**
+     * Construct an uninitialized {@link ServletWebContext} instance.
+     */
+<span class="nc" id="L114">    public ServletWebContext() {</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * Construct a {@link ServletWebContext} instance that is initialized
+     * with the specified Servlet API objects.
+     *
+     * @param context The {@code ServletContext} for this web application
+     * @param request The {@code HttpServletRequest} for this request
+     * @param response The {@code HttpServletResponse} for this request
+     */
+    public ServletWebContext(ServletContext context,
+                             HttpServletRequest request,
+<span class="fc" id="L127">                             HttpServletResponse response) {</span>
+
+<span class="fc" id="L129">        initialize(context, request, response);</span>
+<span class="fc" id="L130">    }</span>
+
+    // ---------------------------------------------------------- Public Methods
+
+    /**
+     * Return the {@link ServletContext} for this context.
+     *
+     * @return The {@code ServletContext} for this context.
+     */
+    public ServletContext getContext() {
+<span class="fc" id="L140">        return this.context;</span>
+    }
+
+    /**
+     * Return the {@link HttpServletRequest} for this context.
+     *
+     * @return The {@code HttpServletRequest} for this context.
+     */
+    public HttpServletRequest getRequest() {
+<span class="fc" id="L149">        return this.request;</span>
+    }
+
+    /**
+     * Return the {@link HttpServletResponse} for this context.
+     *
+     * @return The {@code HttpServletResponse} for this context.
+     */
+    public HttpServletResponse getResponse() {
+<span class="fc" id="L158">        return this.response;</span>
+    }
+
+    /**
+     * Initialize (or reinitialize) this {@link ServletWebContext} instance
+     * for the specified Servlet API objects.
+     *
+     * @param context The {@code ServletContext} for this web application
+     * @param request The {@code HttpServletRequest} for this request
+     * @param response The {@code HttpServletResponse} for this request
+     */
+    public void initialize(ServletContext context,
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
+
+        // Save the specified Servlet API object references
+<span class="fc" id="L174">        this.context = context;</span>
+<span class="fc" id="L175">        this.request = request;</span>
+<span class="fc" id="L176">        this.response = response;</span>
+
+        // Perform other setup as needed
+<span class="fc" id="L179">    }</span>
+
+    /**
+     * Release references to allocated resources acquired in
+     * {@code initialize()} of via subsequent processing. After this
+     * method is called, subsequent calls to any other method than
+     * {@code initialize()} will return undefined results.
+     */
+    public void release() {
+        // Release references to allocated collections
+<span class="fc" id="L189">        applicationScope = null;</span>
+<span class="fc" id="L190">        header = null;</span>
+<span class="fc" id="L191">        headerValues = null;</span>
+<span class="fc" id="L192">        initParam = null;</span>
+<span class="fc" id="L193">        param = null;</span>
+<span class="fc" id="L194">        paramValues = null;</span>
+<span class="fc" id="L195">        cookieValues = null;</span>
+<span class="fc" id="L196">        requestScope = null;</span>
+<span class="fc" id="L197">        sessionScope = null;</span>
+
+        // Release references to Servlet API objects
+<span class="fc" id="L200">        context = null;</span>
+<span class="fc" id="L201">        request = null;</span>
+<span class="fc" id="L202">        response = null;</span>
+<span class="fc" id="L203">    }</span>
+
+    // ------------------------------------------------------ WebContext Methods
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Application scope Map.
+     */
+    @Override
+    public Map&lt;String, Object&gt; getApplicationScope() {
+<span class="fc bfc" id="L214" title="All 4 branches covered.">        if (applicationScope == null &amp;&amp; context != null) {</span>
+<span class="fc" id="L215">            applicationScope = new ServletApplicationScopeMap(context);</span>
+        }
+<span class="fc" id="L217">        return applicationScope;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Header values Map.
+     */
+    @Override
+    public Map&lt;String, String&gt; getHeader() {
+<span class="fc bfc" id="L227" title="All 4 branches covered.">        if (header == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L228">            header = new ServletHeaderMap(request);</span>
+        }
+<span class="fc" id="L230">        return header;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Header values Map.
+     */
+    @Override
+    public Map&lt;String, String[]&gt; getHeaderValues() {
+<span class="fc bfc" id="L240" title="All 4 branches covered.">        if (headerValues == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L241">            headerValues = new ServletHeaderValuesMap(request);</span>
+        }
+<span class="fc" id="L243">        return headerValues;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Initialization parameter Map.
+     */
+    @Override
+    public Map&lt;String, String&gt; getInitParam() {
+<span class="fc bfc" id="L253" title="All 4 branches covered.">        if (initParam == null &amp;&amp; context != null) {</span>
+<span class="fc" id="L254">            initParam = new ServletInitParamMap(context);</span>
+        }
+<span class="fc" id="L256">        return initParam;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Request parameter Map.
+     */
+    @Override
+    public Map&lt;String, String&gt; getParam() {
+<span class="fc bfc" id="L266" title="All 4 branches covered.">        if (param == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L267">            param = new ServletParamMap(request);</span>
+        }
+<span class="fc" id="L269">        return param;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Request parameter Map.
+     */
+    @Override
+    public Map&lt;String, String[]&gt; getParamValues() {
+<span class="fc bfc" id="L279" title="All 4 branches covered.">        if (paramValues == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L280">            paramValues = new ServletParamValuesMap(request);</span>
+        }
+<span class="fc" id="L282">        return paramValues;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Map of Cookies.
+     * @since Chain 1.1
+     */
+    @Override
+    public Map&lt;String, Cookie&gt; getCookies() {
+<span class="fc bfc" id="L293" title="All 4 branches covered.">        if (cookieValues == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L294">            cookieValues = new ServletCookieMap(request);</span>
+        }
+<span class="fc" id="L296">        return cookieValues;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Request scope Map.
+     */
+    @Override
+    public Map&lt;String, Object&gt; getRequestScope() {
+<span class="fc bfc" id="L306" title="All 4 branches covered.">        if (requestScope == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L307">            requestScope = new ServletRequestScopeMap(request);</span>
+        }
+<span class="fc" id="L309">        return requestScope;</span>
+    }
+
+    /**
+     * See the {@link WebContext}'s Javadoc.
+     *
+     * @return Session scope Map.
+     */
+    @Override
+    public Map&lt;String, Object&gt; getSessionScope() {
+<span class="fc bfc" id="L319" title="All 4 branches covered.">        if (sessionScope == null &amp;&amp; request != null) {</span>
+<span class="fc" id="L320">            sessionScope = new ServletSessionScopeMap(request);</span>
+        }
+<span class="fc" id="L322">        return sessionScope;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
