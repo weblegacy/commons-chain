@@ -2,6 +2,7 @@
 
 ## 1.3 / YYYY-MM-DD
 
+* Set better javadoc-options for generating JavaDocs
 * Add missing throws-tag in JavaDocs
 * Update `maven-surefire-[report-]plugin` from 3.1.2 to 3.2.1
 * Update `maven-jxr-plugin` from 3.3.0 to 3.3.1
