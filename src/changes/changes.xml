@@ -41,7 +41,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
 
-    <release version="1.3-SNAPSHOT" date="2008-06-02" description="Submodules / JEE9+ / Generics / JPMS / SLF4J">
+    <release version="1.3.0" date="2023-10-31" description="Submodules / JEE9+ / Generics / JPMS / SLF4J">
       <action dev="ste-gr" type="add">
         Add release-profile and update README.md
       </action>

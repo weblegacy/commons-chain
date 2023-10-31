@@ -24,7 +24,7 @@
     <parent>
         <groupId>io.github.weblegacy</groupId>
         <artifactId>commons-chain-apps-javax</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.3.0</version>
     </parent>
 
     <artifactId>commons-chain-apps-javax-example2</artifactId>

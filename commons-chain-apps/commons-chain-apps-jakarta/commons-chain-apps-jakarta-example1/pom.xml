@@ -24,7 +24,7 @@
     <parent>
         <groupId>io.github.weblegacy</groupId>
         <artifactId>commons-chain-apps-jakarta</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.3.0</version>
     </parent>
 
     <artifactId>commons-chain-apps-jakarta-example1</artifactId>

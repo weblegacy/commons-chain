@@ -1,7 +1,8 @@
 # Changes
 
-## 1.3 / YYYY-MM-DD
+## 1.3.0 / 2023-10-31
 
+* Set version to 1.3.0
 * Add release-profile and update `README.md`
 * Set better javadoc-options for generating JavaDocs
 * Add missing throws-tag in JavaDocs

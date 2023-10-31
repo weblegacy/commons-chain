@@ -1,7 +1,7 @@
 $Id$
 
                            Commons Chain Package
-                                Version 1.3
+                               Version 1.3.0
                                Release Notes
 
 INTRODUCTION:
@@ -14,12 +14,12 @@ o https://weblegacy.github.io/commons-chain/
 
 COMPATIBILITY
 =============
-Chain 1.3 (Core) is nearly binary and source compatible with version 1.2.
+Chain 1.3.0 (Core) is nearly binary and source compatible with version 1.2.
 
 For detail differences see
 o https://weblegacy.github.io/commons-chain/commons-chain/japicmp.html
 
-The packages from Chain 1.3 (Web-part) are renamed:
+The packages from Chain 1.3.0 (Web-part) are renamed:
 JEE8-compatible
 o org.apache.commons.chain.web.faces   --> org.apache.commons.chain.web.javax.faces
 o org.apache.commons.chain.web.portlet --> org.apache.commons.chain.web.javax.portlet
