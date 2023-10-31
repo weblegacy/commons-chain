@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"l":"org.apache.commons.chain.web.jakarta"},{"l":"org.apache.commons.chain.web.jakarta.internal"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.commons.chain.web.jakarta"},{"l":"org.apache.commons.chain.web.jakarta.internal"}];updateSearchResults();

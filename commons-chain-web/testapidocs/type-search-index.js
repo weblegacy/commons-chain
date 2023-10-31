@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html"},{"p":"org.apache.commons.chain.web","l":"ContextBaseTestWeb"},{"p":"org.apache.commons.chain.web","l":"MockEnumeration"},{"p":"org.apache.commons.chain.web","l":"MockPrincipal"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.apache.commons.chain.web","l":"ContextBaseTestWeb"},{"p":"org.apache.commons.chain.web","l":"MockEnumeration"},{"p":"org.apache.commons.chain.web","l":"MockPrincipal"}];updateSearchResults();
