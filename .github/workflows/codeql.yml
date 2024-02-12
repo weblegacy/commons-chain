@@ -69,7 +69,7 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Build with Maven
-      run: mvn -B -Papps --file pom.xml
+      run: mvn -B -Papps package --file pom.xml
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
